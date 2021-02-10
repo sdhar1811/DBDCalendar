@@ -1,1 +1,74 @@
-<p>register works!</p>
+<div class="container">
+    <mat-card class="mat-elevation-z5 signup-panel">
+      <div class="flex-vertical">
+        <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input
+              
+              matInput
+              placeholder="Enter your first name"
+            />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input
+              
+              matInput
+              placeholder="Enter your last name"
+            />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Gender</mat-label>
+            <mat-select>
+              <mat-option value="option1">Male</mat-option>
+              <mat-option value="option2">Female</mat-option>
+              <mat-option value="option3">Other</mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Email ID</mat-label>
+            <input
+              
+              matInput
+              placeholder="Enter your email ID"
+            />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input
+            
+            matInput
+            placeholder="Enter your username"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            
+            type="password"
+            matInput
+            placeholder="Enter your password"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input
+              
+              type="password"
+              matInput
+              placeholder="Confirm your password"
+            />
+          </mat-form-field>
+
+        <button
+          mat-raised-button
+          class="btn-animation"
+          color="primary"
+          style="margin: 0.5em;"
+        >
+          Sign Up
+        </button>
+      </div>
+    </mat-card>
+</div>  
