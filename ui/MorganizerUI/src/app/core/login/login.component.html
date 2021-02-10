@@ -1,1 +1,42 @@
-<p>login works!</p>
+<div class="container">
+  <mat-card class="mat-elevation-z5 login-panel">
+    <div class="flex-vertical">
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input
+          [(ngModel)]="username"
+          matInput
+          placeholder="Enter your username"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          [(ngModel)]="password"
+          type="password"
+          matInput
+          placeholder="Enter your password"
+        />
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        class="btn-animation"
+        color="primary"
+        style="margin: 0.5em"
+        (click)="login()"
+      >
+        Login
+      </button>
+      <button
+        mat-raised-button
+        class="btn-animation"
+        color="primary"
+        style="margin: 0.5em"
+      >
+        Sign Up
+      </button>
+    </div>
+  </mat-card>
+</div>
