@@ -1,5 +1,6 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class LoginComponent implements OnInit {
   username: string;
   password: string;
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService, private router: Router) {}
 
   ngOnInit(): void {}
   login() {
@@ -25,5 +26,9 @@ export class LoginComponent implements OnInit {
           window.alert('login Failed');
         }
       );
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
   }
 }
