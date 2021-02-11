@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, Input } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 
@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  
+  @Input() clickedSignUp:string;
+  
   username: string;
   password: string;
   constructor(private loginService: LoginService, private router: Router) {}
@@ -29,6 +32,9 @@ export class LoginComponent implements OnInit {
   }
 
   goToRegister() {
-    this.router.navigate(['/register']);
+    console.log('hi');
+    console.log(this.clickedSignUp);
+    this.clickedSignUp = 'true';
+    this.router.navigate(['']);
   }
 }
