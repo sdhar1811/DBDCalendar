@@ -18,8 +18,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { APP_CONFIG, APPCONFIG } from './app.config';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import {MatSelectModule} from '@angular/material/select';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,13 +42,16 @@ import {MatSelectModule} from '@angular/material/select';
     MatIconModule,
     FormsModule,
     HttpClientModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     {
       provide: APP_CONFIG,
       useValue: APPCONFIG,
     },
+    MatNativeDateModule 
   ],
   bootstrap: [AppComponent],
 })
