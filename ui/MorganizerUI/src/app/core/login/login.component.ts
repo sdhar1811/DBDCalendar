@@ -1,5 +1,6 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, Input } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,12 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  
+  @Input() clickedSignUp:string;
+  
   username: string;
   password: string;
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService, private router: Router) {}
 
   ngOnInit(): void {}
   login() {
@@ -25,5 +29,12 @@ export class LoginComponent implements OnInit {
           window.alert('login Failed');
         }
       );
+  }
+
+  goToRegister() {
+    console.log('hi');
+    console.log(this.clickedSignUp);
+    this.clickedSignUp = 'true';
+    this.router.navigate(['']);
   }
 }
