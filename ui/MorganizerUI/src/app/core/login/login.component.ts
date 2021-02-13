@@ -20,9 +20,8 @@ export class LoginComponent implements OnInit {
       .validateCredentials(this.username, this.password)
       .subscribe(
         (response) => {
-          if (response) {
-            window.alert('login Successful');
-          }
+          console.log('sdasd');
+          this.router.navigateByUrl('home');
         },
         (error) => {
           window.alert('login Failed');
