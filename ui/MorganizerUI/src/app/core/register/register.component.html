@@ -3,61 +3,101 @@
     <div class="flex-vertical">
       <mat-form-field appearance="outline">
         <mat-label>First Name</mat-label>
-        <input matInput placeholder="Enter your first name" />
+        <input
+          [(ngModel)]="userModel.firstName"
+          matInput
+          placeholder="Enter your first name"
+        />
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Middle Name</mat-label>
-        <input matInput placeholder="Enter your middle name" />
+        <input
+          [(ngModel)]="userModel.middleName"
+          matInput
+          placeholder="Enter your middle name"
+        />
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Last Name</mat-label>
-        <input matInput placeholder="Enter your last name" />
+        <input
+          [(ngModel)]="userModel.lastName"
+          matInput
+          placeholder="Enter your last name"
+        />
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Gender</mat-label>
-        <mat-select>
-          <mat-option value="option1">Male</mat-option>
-          <mat-option value="option2">Female</mat-option>
-          <mat-option value="option3">Other</mat-option>
+        <mat-select [(ngModel)]="userModel.gender">
+          <mat-option value="male">Male</mat-option>
+          <mat-option value="female">Female</mat-option>
+          <mat-option value="other">Other</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="outline">
-            <mat-label>Date of Birth</mat-label>
-            <input matInput [matDatepicker]="datepicker">
-            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-            <mat-datepicker #datepicker>
-              <mat-datepicker-actions>
-                <button mat-button matDatepickerCancel>Cancel</button>
-                <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-              </mat-datepicker-actions>
-            </mat-datepicker>
-        </mat-form-field>
+        <mat-label>Date of Birth</mat-label>
+        <input [(ngModel)]="birthdate" matInput [matDatepicker]="datepicker" />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="datepicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #datepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>
+              Apply
+            </button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Email ID</mat-label>
-        <input matInput placeholder="Enter your email ID" />
+        <input
+          [(ngModel)]="userModel.email"
+          matInput
+          placeholder="Enter your email ID"
+        />
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Phone Number</mat-label>
-        <input matInput placeholder="Enter your phone number" />
+        <input
+          [(ngModel)]="userModel.phoneNumber"
+          matInput
+          placeholder="Enter your phone number"
+        />
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
-        <input matInput placeholder="Enter your username" />
+        <input
+          [(ngModel)]="userModel.username"
+          matInput
+          placeholder="Enter your username"
+        />
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
-        <input type="password" matInput placeholder="Enter your password" />
+        <input
+          [(ngModel)]="userModel.password"
+          type="password"
+          matInput
+          placeholder="Enter your password"
+        />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Confirm Password</mat-label>
-        <input type="password" matInput placeholder="Confirm your password" />
+        <input
+          [(ngModel)]="confirmPassword"
+          type="password"
+          matInput
+          placeholder="Confirm your password"
+        />
       </mat-form-field>
       <button
         mat-raised-button
         class="btn-animation"
         color="primary"
         style="margin: 0.5em"
+        (click)="registerUser()"
       >
         Sign Up
       </button>
