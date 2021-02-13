@@ -20,8 +20,6 @@ export class LoginService {
       username: username,
       password: password,
     };
-    return this.http.post(this.loginURL, {
-      params: params,
-    });
+    return this.http.post(this.loginURL, params);
   }
 }

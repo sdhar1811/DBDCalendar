@@ -21,6 +21,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { RegisterDialogComponent } from './core/register/register-dialog/register-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +31,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     LoginComponent,
     RegisterComponent,
     LandingComponent,
+    RegisterDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,14 +47,15 @@ import { MatNativeDateModule } from '@angular/material/core';
     HttpClientModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatDialogModule,
   ],
   providers: [
     {
       provide: APP_CONFIG,
       useValue: APPCONFIG,
     },
-    MatNativeDateModule 
+    MatNativeDateModule,
   ],
   bootstrap: [AppComponent],
 })
