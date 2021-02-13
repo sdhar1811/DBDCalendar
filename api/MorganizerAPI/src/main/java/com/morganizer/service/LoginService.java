@@ -2,7 +2,7 @@ package com.morganizer.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +23,9 @@ public class LoginService {
 	SecurePassword securePassword;
 
 	public boolean validateUser(UserModel enteredDetails) {
-		Optional<UserCredentials> userCredentials = userCredentialsRepo.findById(enteredDetails.getUsername());
-		if (userCredentials.isPresent()) {
-			UserCredentials dbCredentails = userCredentials.get();
+		List<UserCredentials> userCredentials = userCredentialsRepo.findByUsername(enteredDetails.getUsername());
+		if (userCredentials.size()>0) {
+			UserCredentials dbCredentails = userCredentials.get(0);
 			try {				
 				return securePassword.verifyPassword(enteredDetails.getPassword(), Base64.getDecoder().decode(dbCredentails.getSalt()),
 						dbCredentails.getHash());
