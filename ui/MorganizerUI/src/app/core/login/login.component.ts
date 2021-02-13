@@ -8,9 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  
-  @Input() clickedSignUp:string;
-  
+  @Input() clickedSignUp: string;
+
   username: string;
   password: string;
   constructor(private loginService: LoginService, private router: Router) {}
@@ -32,9 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   goToRegister() {
-    console.log('hi');
-    console.log(this.clickedSignUp);
-    this.clickedSignUp = 'true';
-    this.router.navigate(['']);
+    // this.clickedSignUp = 'true';
+    this.router.navigateByUrl('register');
   }
 }
