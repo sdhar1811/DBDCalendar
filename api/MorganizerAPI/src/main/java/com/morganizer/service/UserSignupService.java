@@ -16,13 +16,13 @@ import com.morganizer.utils.SecurePassword;
 
 @Service
 public class UserSignupService {
-	
+
 	@Autowired
 	UserDetailsRepository userDetailsRepo;
-	
+
 	@Autowired
 	SecurePassword securePassword;
-	
+
 	@Autowired
 	UserCredentailsRepository userCredentialsRepo;
 	
@@ -31,19 +31,24 @@ public class UserSignupService {
 	
 	
 	public void registerUser(UserModel userInfo) throws Exception {
-		storeUserDetails(userInfo);		
+		storeUserDetails(userInfo);
 	}
-	
-	public void storeUserDetails(UserModel userInfo) {
-		if(userInfo!=null) {
-			UserDetailsEntity user = new UserDetailsEntity(userInfo.getFirstName(),userInfo.getLastName(),userInfo.getEmail(),userInfo.getGender(),userInfo.getBirthdate(),userInfo.getPhoneNumber());
+
+	public void storeUserDetails(UserModel userInfo) throws Exception {
+		if (userInfo != null) {
+			UserDetailsEntity user = new UserDetailsEntity(userInfo.getFirstName(), userInfo.getLastName(),
+					userInfo.getEmail(), userInfo.getGender(), userInfo.getBirthdate(), userInfo.getPhoneNumber(),
+					null);
+			userDetailsRepo.save(user);
+			encryptPassword(userInfo);
 		}
+
 	}
-	
+
 	public void encryptPassword(UserModel userDetails) throws Exception {
 		byte[] salt = PasswordUtil.getSalt(20);
 		String hashedPassword = securePassword.generateSecurePassword(userDetails.getPassword(), salt);
-				userCredentialsRepo.save(new UserCredentials(userDetails.getUsername(), hashedPassword,
+		userCredentialsRepo.save(new UserCredentials(userDetails.getUsername(), hashedPassword,
 				Base64.getEncoder().encodeToString(salt)));
 	}
 	
