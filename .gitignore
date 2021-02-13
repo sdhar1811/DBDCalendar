@@ -74,3 +74,8 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+
+.metadata
+api/MorganizerAPI/bin
+api/MorganizerAPI/target
