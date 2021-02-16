@@ -54,7 +54,16 @@
       >
         Day
       </div>
+
+      
     </div>
+    <div
+        class="btn btn-primary"
+        (click)="setView(CalendarView.Day)"
+        [class.active]="view === CalendarView.Day"
+      >
+        + Create New Event 
+      </div>
   </div>
 </div>
 <br />
