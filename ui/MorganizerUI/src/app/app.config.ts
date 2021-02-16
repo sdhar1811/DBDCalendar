@@ -9,8 +9,8 @@ export interface IAppConfig {
 }
 export const APPCONFIG: IAppConfig = {
   morganizerAPIEndpoint: environment.morgainzedAPIURL,
-  login: '/login',
-  logout: '/logout',
-  register: '/register',
+  login: '/user/login',
+  logout: '/user/logout',
+  register: '/user/register',
 };
 export const APP_CONFIG = new InjectionToken<IAppConfig>('app.config');

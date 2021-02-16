@@ -1,22 +1,34 @@
 package com.morganizer.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity(name="morganizer_users")
 public class UserDetailsEntity {
 
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)	
+	@Column(name="user_id")
 	private long id;
 	private String firstName;
 	private String lastName;
+	private String middleName;
 	private String email;
 	private String birthdate;
 	private String phoneNumber;
-	private int gender;
+	private String gender;
 
-	public UserDetailsEntity(String firstName, String lastName, String email, int gender, String birthdate,
-			String phoneNumber) {
+	public UserDetailsEntity(String firstName, String lastName, String email, String gender, String birthdate,
+			String phoneNumber,String middleName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.birthdate = birthdate;
 		this.phoneNumber = phoneNumber;
+		this.middleName = middleName;
+		this.gender=gender;
 	}
 
 	public long getId() {
@@ -67,12 +79,19 @@ public class UserDetailsEntity {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public int getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(int gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
+	}
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
 	}
 
 }

@@ -8,9 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  
-  @Input() clickedSignUp:string;
-  
+  @Input() clickedSignUp: string;
+
   username: string;
   password: string;
   constructor(private loginService: LoginService, private router: Router) {}
@@ -21,9 +20,8 @@ export class LoginComponent implements OnInit {
       .validateCredentials(this.username, this.password)
       .subscribe(
         (response) => {
-          if (response) {
-            window.alert('login Successful');
-          }
+          console.log('sdasd');
+          this.router.navigateByUrl('home');
         },
         (error) => {
           window.alert('login Failed');
@@ -32,9 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   goToRegister() {
-    console.log('hi');
-    console.log(this.clickedSignUp);
-    this.clickedSignUp = 'true';
-    this.router.navigate(['']);
+    // this.clickedSignUp = 'true';
+    this.router.navigateByUrl('register');
   }
 }

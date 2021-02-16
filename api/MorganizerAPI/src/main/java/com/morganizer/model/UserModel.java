@@ -3,7 +3,7 @@ package com.morganizer.model;
 public class UserModel {
 	String username;
 	String password;
-	int gender;
+	String gender;
 	String email;
 	String firstName;
 	String lastName;
@@ -23,10 +23,10 @@ public class UserModel {
 		this.password = password;
 	}
 
-	public int getGender() {
+	public String getGender() {
 		return gender;
 	}
-	public void setGender(int gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	public String getEmail() {
