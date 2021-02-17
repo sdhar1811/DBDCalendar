@@ -1,22 +1,50 @@
 package com.morganizer.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity(name="users")
 public class UserDetailsEntity {
 
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)	
+	@Column(name="user_id")
 	private long id;
+	
 	private String firstName;
 	private String lastName;
+	private String middleName;
+	private String userName;
 	private String email;
 	private String birthdate;
+	
+	@Column(name = "mobile")
 	private String phoneNumber;
-	private int gender;
+	private String gender;
+	
+	private long roleid;
+	
+	public long getRoleid() {
+		return roleid;
+	}
 
-	public UserDetailsEntity(String firstName, String lastName, String email, int gender, String birthdate,
-			String phoneNumber) {
+	public void setRoleid(long roleid) {
+		this.roleid = roleid;
+	}
+
+	public UserDetailsEntity(String firstName, String lastName, String middleName, String userName,
+			String email, String birthdate, String phoneNumber, String gender) {
+		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.middleName = middleName;
+		this.userName = userName;
 		this.email = email;
 		this.birthdate = birthdate;
 		this.phoneNumber = phoneNumber;
+		this.gender = gender;
 	}
 
 	public long getId() {
@@ -43,6 +71,22 @@ public class UserDetailsEntity {
 		this.lastName = lastName;
 	}
 
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -67,12 +111,16 @@ public class UserDetailsEntity {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public int getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(int gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
+	
+
+	
 
 }
