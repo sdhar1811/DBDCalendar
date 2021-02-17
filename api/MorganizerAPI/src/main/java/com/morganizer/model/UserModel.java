@@ -7,6 +7,8 @@ public class UserModel {
 	String email;
 	String firstName;
 	String lastName;
+	String middelName;
+	
 	String birthdate;
 	String phoneNumber;
 	
@@ -58,5 +60,12 @@ public class UserModel {
 	}
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	
+	public String getMiddelName() {
+		return middelName;
+	}
+	public void setMiddelName(String middelName) {
+		this.middelName = middelName;
 	}
 }
