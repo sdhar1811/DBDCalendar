@@ -6,29 +6,45 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name="morganizer_users")
+@Entity(name="users")
 public class UserDetailsEntity {
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)	
 	@Column(name="user_id")
 	private long id;
+	
 	private String firstName;
 	private String lastName;
 	private String middleName;
+	private String userName;
 	private String email;
 	private String birthdate;
+	
+	@Column(name = "mobile")
 	private String phoneNumber;
 	private String gender;
+	
+	private long roleid;
+	
+	public long getRoleid() {
+		return roleid;
+	}
 
-	public UserDetailsEntity(String firstName, String lastName, String email, String gender, String birthdate,
-			String phoneNumber,String middleName) {
+	public void setRoleid(long roleid) {
+		this.roleid = roleid;
+	}
+
+	public UserDetailsEntity(String firstName, String lastName, String middleName, String userName,
+			String email, String birthdate, String phoneNumber, String gender) {
+		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.middleName = middleName;
+		this.userName = userName;
 		this.email = email;
 		this.birthdate = birthdate;
 		this.phoneNumber = phoneNumber;
-		this.middleName = middleName;
-		this.gender=gender;
+		this.gender = gender;
 	}
 
 	public long getId() {
@@ -53,6 +69,22 @@ public class UserDetailsEntity {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getEmail() {
@@ -86,12 +118,9 @@ public class UserDetailsEntity {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public String getMiddleName() {
-		return middleName;
-	}
+	
+	
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
+	
 
 }
