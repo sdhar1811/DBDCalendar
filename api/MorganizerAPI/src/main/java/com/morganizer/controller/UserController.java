@@ -24,8 +24,7 @@ public class UserController {
 	UserSignupService signUpService;
 	
 	@Autowired
-	UserSignupService userSignupService;
-	
+	UserSignupService userSignupService;	
 	
 	@PostMapping("/login")
 	public void validateUserCredentials(@RequestBody UserModel userDetails) {
