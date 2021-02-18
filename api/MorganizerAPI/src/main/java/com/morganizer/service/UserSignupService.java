@@ -52,7 +52,7 @@ public class UserSignupService {
 		byte[] salt = PasswordUtil.getSalt(20);
 		String hashedPassword = securePassword.generateSecurePassword(userDetails.getPassword(), salt);
 		userCredentialsRepo.save(new UserCredentials(userDetails.getUsername(), hashedPassword,
-				Base64.getEncoder().encodeToString(salt)));
+				Base64.getEncoder().encodeToString(salt), userDetails.getEmail()));
 	}
 
 	public void fetchUserRole(String username) throws Exception {
