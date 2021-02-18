@@ -16,3 +16,17 @@
   color: rgba(48, 48, 250, 0.96);
   transition: 0.5s ease-in-out;
 }
+.navigation-btns {
+  justify-content: space-between;
+}
+.btn-left-align {
+  float: left;
+}
+.btn-right-align {
+  float: right;
+}
+.register-title {
+  color: #673ab7;
+  text-align: center;
+  font-weight: bold;
+}

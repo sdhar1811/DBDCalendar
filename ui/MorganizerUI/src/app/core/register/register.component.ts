@@ -11,6 +11,7 @@ import { RegisterDialogComponent } from './register-dialog/register-dialog.compo
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  tabIndex = 0;
   userModel: UserModel = new UserModel();
   confirmPassword: string;
   birthdate: string;
@@ -51,5 +52,14 @@ export class RegisterComponent implements OnInit {
     let tempDate = paramDate.toLocaleDateString('en-GB');
     tempDate = tempDate.split('/');
     return tempDate[2] + '-' + tempDate[1] + '-' + tempDate[0];
+  }
+  incrementIndex() {
+    this.tabIndex++;
+  }
+  decrementIndex() {
+    this.tabIndex--;
+  }
+  tabSelectionChanged(event) {
+    this.tabIndex = event;
   }
 }
