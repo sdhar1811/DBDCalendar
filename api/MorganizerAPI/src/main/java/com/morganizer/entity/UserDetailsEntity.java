@@ -24,14 +24,14 @@ public class UserDetailsEntity {
 	private String phoneNumber;
 	private String gender;
 	
-	private long roleid;
+	private long roleId = 1;
 	
 	public long getRoleid() {
-		return roleid;
+		return roleId;
 	}
 
 	public void setRoleid(long roleid) {
-		this.roleid = roleid;
+		this.roleId = roleid;
 	}
 
 	public UserDetailsEntity(String firstName, String lastName, String middleName, String userName,
