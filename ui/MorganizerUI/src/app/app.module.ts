@@ -26,6 +26,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { HomeScreenComponent } from './core/home-screen/home-screen.component';
+import { MatTabsModule } from '@angular/material/tabs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +54,7 @@ import { HomeScreenComponent } from './core/home-screen/home-screen.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
+    MatTabsModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
