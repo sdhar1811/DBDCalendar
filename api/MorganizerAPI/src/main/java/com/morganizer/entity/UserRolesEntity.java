@@ -1,26 +1,31 @@
 package com.morganizer.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity(name = "roles")
 public class UserRolesEntity {
 
-	private long roleId;
-	private String roleType;
+	@Id
+	private long roleid;
+	private String roletype ;
 	
-	public UserRolesEntity(long roleId, String roleType) {
+	public UserRolesEntity(long roleid, String roleType) {
 		super();
-		this.roleId = roleId;
-		this.roleType = roleType;
+		this.roleid = roleid;
+		this.roletype  = roleType;
 	}
 	
 	public long getRoleId() {
-		return roleId;
+		return roleid;
 	}
-	public void setRoleId(long roleId) {
-		this.roleId = roleId;
+	public void setRoleId(long roleid) {
+		this.roleid = roleid;
 	}
 	public String getRoleType() {
-		return roleType;
+		return roletype;
 	}
 	public void setRoleType(String roleType) {
-		this.roleType = roleType;
+		this.roletype = roleType;
 	}	
 }

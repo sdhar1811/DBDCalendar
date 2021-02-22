@@ -28,6 +28,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { HomeScreenComponent } from './core/home-screen/home-screen.component';
 import { ResetPasswordComponent } from './core/reset-password/reset-password.component';
 import { ResetPasswordDialogComponent } from './core/reset-password/reset-password-dialog/reset-password-dialog.component';
+import { MatTabsModule } from '@angular/material/tabs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +58,7 @@ import { ResetPasswordDialogComponent } from './core/reset-password/reset-passwo
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
+    MatTabsModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
