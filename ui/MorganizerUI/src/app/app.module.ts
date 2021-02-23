@@ -29,6 +29,9 @@ import { HomeScreenComponent } from './core/home-screen/home-screen.component';
 import { ResetPasswordComponent } from './core/reset-password/reset-password.component';
 import { ResetPasswordDialogComponent } from './core/reset-password/reset-password-dialog/reset-password-dialog.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ToDoListComponent } from './to-do-list/to-do-list.component';
+import { RightPanelComponent } from './core/home-screen/right-panel/right-panel.component';
+import { LeftPanelComponent } from './core/home-screen/left-panel/left-panel.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +44,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     HomeScreenComponent,
     ResetPasswordComponent,
     ResetPasswordDialogComponent,
+    ToDoListComponent,
+    RightPanelComponent,
+    LeftPanelComponent,
   ],
   imports: [
     BrowserModule,
