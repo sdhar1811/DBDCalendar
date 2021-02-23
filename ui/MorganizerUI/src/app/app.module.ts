@@ -27,6 +27,9 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { HomeScreenComponent } from './core/home-screen/home-screen.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ToDoListComponent } from './to-do-list/to-do-list.component';
+import { RightPanelComponent } from './core/home-screen/right-panel/right-panel.component';
+import { LeftPanelComponent } from './core/home-screen/left-panel/left-panel.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +40,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     LandingComponent,
     RegisterDialogComponent,
     HomeScreenComponent,
+    ToDoListComponent,
+    RightPanelComponent,
+    LeftPanelComponent,
   ],
   imports: [
     BrowserModule,
