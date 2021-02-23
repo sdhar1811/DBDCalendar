@@ -28,13 +28,11 @@ public class UserController {
 	
 	@PostMapping("/login")
 	public void validateUserCredentials(@RequestBody UserModel userDetails) {
-		System.out.println(loginService.validateUser(userDetails));
+		loginService.validateUser(userDetails);
 		
 	}
 	@PostMapping("/register")
-	public void registerUser(@RequestBody UserModel userDetails) throws Exception {
-		System.out.println("password:"+userDetails.getPassword());
-		System.out.println("Gender:"+userDetails.getGender());
+	public void registerUser(@RequestBody UserModel userDetails) throws Exception {		
 		signUpService.registerUser(userDetails);
 		
 	}
