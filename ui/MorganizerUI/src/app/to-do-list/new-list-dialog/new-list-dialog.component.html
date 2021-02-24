@@ -1,0 +1,11 @@
+<div class="container">
+  <mat-form-field appearance="outline">
+    <mat-label>Task </mat-label>
+    <input
+      (keyup.enter)="saveName()"
+      [(ngModel)]="data.name"
+      matInput
+      placeholder="Enter list name"
+    />
+  </mat-form-field>
+</div>

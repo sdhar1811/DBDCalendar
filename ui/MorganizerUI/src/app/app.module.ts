@@ -15,7 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { APP_CONFIG, APPCONFIG } from './app.config';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
@@ -32,6 +32,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ToDoListComponent } from './to-do-list/to-do-list.component';
 import { RightPanelComponent } from './core/home-screen/right-panel/right-panel.component';
 import { LeftPanelComponent } from './core/home-screen/left-panel/left-panel.component';
+import { NewListDialogComponent } from './to-do-list/new-list-dialog/new-list-dialog.component';
+import { MatRadioModule } from '@angular/material/radio';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +49,7 @@ import { LeftPanelComponent } from './core/home-screen/left-panel/left-panel.com
     ToDoListComponent,
     RightPanelComponent,
     LeftPanelComponent,
+    NewListDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,10 +68,12 @@ import { LeftPanelComponent } from './core/home-screen/left-panel/left-panel.com
     MatNativeDateModule,
     MatDialogModule,
     MatTabsModule,
+    MatRadioModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    ReactiveFormsModule,
   ],
   providers: [
     {
