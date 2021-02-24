@@ -26,6 +26,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { HomeScreenComponent } from './core/home-screen/home-screen.component';
+import { ResetPasswordComponent } from './core/reset-password/reset-password.component';
+import { ResetPasswordDialogComponent } from './core/reset-password/reset-password-dialog/reset-password-dialog.component';
 import { MatTabsModule } from '@angular/material/tabs';
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     LandingComponent,
     RegisterDialogComponent,
     HomeScreenComponent,
+    ResetPasswordComponent,
+    ResetPasswordDialogComponent,
   ],
   imports: [
     BrowserModule,
