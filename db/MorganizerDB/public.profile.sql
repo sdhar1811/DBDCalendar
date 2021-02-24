@@ -12,3 +12,6 @@ CREATE TABLE public.profile
 )
 
 TABLESPACE pg_default;
+
+ALTER TABLE public.profile
+    OWNER to postgres;
