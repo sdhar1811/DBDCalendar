@@ -28,7 +28,6 @@ export class RegisterComponent implements OnInit {
       this.confirmPassword !== undefined &&
       this.confirmPassword === this.userModel.password
     ) {
-      console.log(this.userModel);
       this.userModel.birthdate = this.transformDateToSQL(this.birthdate);
       this.registerService
         .registerUser(this.userModel)

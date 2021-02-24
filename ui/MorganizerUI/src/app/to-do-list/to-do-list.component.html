@@ -1,0 +1,60 @@
+<div class="container">
+  <mat-card class="mat-elevation-z5 todo-panel">
+    <div class="flex-vertical">
+      <mat-form-field appearance="outline">
+        <mat-label>Todo List</mat-label>
+        <mat-select [formControl]="selectedTodoList">
+          <mat-option *ngFor="let list of todoLists" [value]="list">{{
+            list.name
+          }}</mat-option>
+          <mat-option
+            ><button mat-raised-button (click)="addNewList()">
+              Create New List
+            </button></mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Calendar</mat-label>
+        <mat-select [formControl]="selectedCalendar">
+          <mat-option
+            *ngFor="let calendar of calendarList"
+            [value]="calendar"
+            >{{ calendar.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Assignee</mat-label>
+        <mat-select [formControl]="assignee">
+          <mat-option *ngFor="let person of assigneeList" [value]="person">{{
+            person.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input
+          [(ngModel)]="taskTitle"
+          matInput
+          (keyup.enter)="addNewTask()"
+          placeholder="Enter task title"
+        />
+      </mat-form-field>
+
+      <mat-card
+        style="margin-bottom: 10px"
+        class="mat-elevation-z5"
+        *ngFor="let task of tasks; let i = index"
+      >
+        <mat-radio-button style="float: left" value="1"></mat-radio-button>
+        <mat-label style="overflow-wrap: hide">{{ task.name }}</mat-label>
+        <mat-icon
+          (click)="removeTask(i)"
+          class="material-icons delete-task-icon"
+          >delete</mat-icon
+        >
+      </mat-card>
+    </div>
+  </mat-card>
+</div>

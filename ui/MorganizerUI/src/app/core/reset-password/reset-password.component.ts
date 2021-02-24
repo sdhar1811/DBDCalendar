@@ -35,8 +35,6 @@ export class ResetPasswordComponent implements OnInit {
       this.confirmPassword !== undefined &&
       this.confirmPassword === this.resetPasswordModel.oldpassword
     ) {
-      console.log(this.resetPasswordModel);
-
       // if (
       //   this.resetPasswordModel.answer !== undefined &&
       //   this.answer === this.resetPasswordModel.answer

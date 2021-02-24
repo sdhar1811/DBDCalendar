@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit {
       .validateCredentials(this.username, this.password)
       .subscribe(
         (response) => {
-          console.log('sdasd');
           this.router.navigateByUrl('home');
         },
         (error) => {
