@@ -1,5 +1,6 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, Input } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,11 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  @Input() clickedSignUp: string;
+
   username: string;
   password: string;
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService, private router: Router) {}
 
   ngOnInit(): void {}
   login() {
@@ -17,13 +20,17 @@ export class LoginComponent implements OnInit {
       .validateCredentials(this.username, this.password)
       .subscribe(
         (response) => {
-          if (response) {
-            window.alert('login Successful');
-          }
+          console.log('sdasd');
+          this.router.navigateByUrl('home');
         },
         (error) => {
           window.alert('login Failed');
         }
       );
+  }
+
+  goToRegister() {
+    // this.clickedSignUp = 'true';
+    this.router.navigateByUrl('register');
   }
 }

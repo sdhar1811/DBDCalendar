@@ -18,7 +18,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { APP_CONFIG, APPCONFIG } from './app.config';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { RegisterDialogComponent } from './core/register/register-dialog/register-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { HomeScreenComponent } from './core/home-screen/home-screen.component';
+import { MatTabsModule } from '@angular/material/tabs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +35,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     LoginComponent,
     RegisterComponent,
     LandingComponent,
+    RegisterDialogComponent,
+    HomeScreenComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,12 +50,22 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     MatIconModule,
     FormsModule,
     HttpClientModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDialogModule,
+    MatTabsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [
     {
       provide: APP_CONFIG,
       useValue: APPCONFIG,
     },
+    MatNativeDateModule,
   ],
   bootstrap: [AppComponent],
 })
