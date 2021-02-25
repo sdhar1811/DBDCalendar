@@ -39,6 +39,10 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { ToDoListComponent } from './to-do-list/to-do-list.component';
 import { RightPanelComponent } from './core/home-screen/right-panel/right-panel.component';
 import { NewListDialogComponent } from './to-do-list/new-list-dialog/new-list-dialog.component';
+import { AddProfileComponent } from './add-profile/add-profile.component';
+import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +60,7 @@ import { NewListDialogComponent } from './to-do-list/new-list-dialog/new-list-di
     LeftPanelComponent,
     NewListDialogComponent,
     EditTaskComponent,
+    AddProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,6 +89,7 @@ import { NewListDialogComponent } from './to-do-list/new-list-dialog/new-list-di
     MatRippleModule,
     MatTooltipModule,
     TextFieldModule,
+    NgxMatColorPickerModule,
   ],
   providers: [
     {
@@ -91,6 +97,10 @@ import { NewListDialogComponent } from './to-do-list/new-list-dialog/new-list-di
       useValue: APPCONFIG,
     },
     MatNativeDateModule,
+    { 
+      provide: MAT_COLOR_FORMATS, 
+      useValue: NGX_MAT_COLOR_FORMATS 
+    },
   ],
   bootstrap: [AppComponent],
 })
