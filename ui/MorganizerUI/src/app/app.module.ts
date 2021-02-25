@@ -40,8 +40,11 @@ import { ToDoListComponent } from './to-do-list/to-do-list.component';
 import { RightPanelComponent } from './core/home-screen/right-panel/right-panel.component';
 import { NewListDialogComponent } from './to-do-list/new-list-dialog/new-list-dialog.component';
 import { AddProfileComponent } from './add-profile/add-profile.component';
-import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
-
+import {
+  MAT_COLOR_FORMATS,
+  NgxMatColorPickerModule,
+  NGX_MAT_COLOR_FORMATS,
+} from '@angular-material-components/color-picker';
 
 @NgModule({
   declarations: [
@@ -97,9 +100,9 @@ import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } fro
       useValue: APPCONFIG,
     },
     MatNativeDateModule,
-    { 
-      provide: MAT_COLOR_FORMATS, 
-      useValue: NGX_MAT_COLOR_FORMATS 
+    {
+      provide: MAT_COLOR_FORMATS,
+      useValue: NGX_MAT_COLOR_FORMATS,
     },
   ],
   bootstrap: [AppComponent],
