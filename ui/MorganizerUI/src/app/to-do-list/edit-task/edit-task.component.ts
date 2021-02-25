@@ -8,9 +8,6 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { take } from 'rxjs/operators';
-import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'app-edit-task',
@@ -20,23 +17,35 @@ import { ThemePalette } from '@angular/material/core';
 export class EditTaskComponent implements OnInit {
   selectedCalendar = new FormControl();
   @Input() data;
+  @Input() taskIndex;
   @Output() closeEmitter = new EventEmitter();
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
-  constructor(private _ngZone: NgZone) {}
+  calendarList = [];
+  constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getCalendarList();
+  }
   closeEditMode() {
-    console.log('sdasdsa');
-    this.closeEmitter.emit('asjdkasd');
+    this.closeEmitter.emit(null);
+  }
+
+  getCalendarList() {
+    this.calendarList.push({ name: 'Personal', id: '1' });
+    this.calendarList.push({ name: 'Work', id: '2' });
+    this.calendarList.push({ name: 'College', id: '3' });
+    if (this.data[this.taskIndex].calendar?.length > 0) {
+      this.selectedCalendar.setValue(this.data[this.taskIndex].calendar);
+    }
   }
   removeTask() {
-    this.data.tasks.splice(this.data.index, 1);
+    this.data.splice(this.taskIndex, 1);
+    this.closeEmitter.emit(null);
   }
-
-  // triggerResize() {
-  //   this._ngZone.onStable
-  //     .pipe(take(1))
-  //     .subscribe(() => this.autosize.resizeToFitContent(true));
-  // }
+  updateSelectedCalendar() {
+    this.data[this.taskIndex].calendar = this.selectedCalendar.value;
+  }
+  selectSavedValues(c1: any, c2: any) {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
 }
