@@ -1,60 +1,90 @@
-<div class="container">
-  <mat-card class="mat-elevation-z5 todo-panel">
-    <div class="flex-vertical">
-      <mat-form-field appearance="outline">
-        <mat-label>Todo List</mat-label>
-        <mat-select [formControl]="selectedTodoList">
-          <mat-option *ngFor="let list of todoLists" [value]="list">{{
-            list.name
-          }}</mat-option>
-          <mat-option
-            ><button mat-raised-button (click)="addNewList()">
-              Create New List
-            </button></mat-option
-          >
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Calendar</mat-label>
-        <mat-select [formControl]="selectedCalendar">
-          <mat-option
-            *ngFor="let calendar of calendarList"
-            [value]="calendar"
-            >{{ calendar.name }}</mat-option
-          >
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Assignee</mat-label>
-        <mat-select [formControl]="assignee">
-          <mat-option *ngFor="let person of assigneeList" [value]="person">{{
-            person.name
-          }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <input
-          [(ngModel)]="taskTitle"
-          matInput
-          (keyup.enter)="addNewTask()"
-          placeholder="Enter task title"
-        />
-      </mat-form-field>
-
-      <mat-card
-        style="margin-bottom: 10px"
-        class="mat-elevation-z5"
-        *ngFor="let task of tasks; let i = index"
-      >
-        <mat-radio-button style="float: left" value="1"></mat-radio-button>
-        <mat-label style="overflow-wrap: hide">{{ task.name }}</mat-label>
-        <mat-icon
-          (click)="removeTask(i)"
-          class="material-icons delete-task-icon"
-          >delete</mat-icon
-        >
-      </mat-card>
+<mat-card class="mat-elevation-z5 todo-panel">
+  <div class="flex-vertical" *ngIf="!editMode">
+    <div
+      style="
+        border-bottom: solid #d1d1d1;
+        border-bottom-width: 2px;
+        margin-bottom: 10px;
+      "
+    >
+      <div style="color: gray">Tasks</div>
     </div>
-  </mat-card>
-</div>
+    <mat-form-field appearance="outline">
+      <mat-label>Task List</mat-label>
+      <mat-select [formControl]="selectedTodoList">
+        <mat-option *ngFor="let list of todoLists" [value]="list">{{
+          list.name
+        }}</mat-option>
+        <mat-option
+          ><button
+            class="add-task-list-btn"
+            mat-raised-button
+            (click)="addNewList()"
+          >
+            Create New List
+          </button></mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <!-- <mat-form-field appearance="outline">
+      <mat-label>Calendar</mat-label>
+      <mat-select [formControl]="selectedCalendar">
+        <mat-option *ngFor="let calendar of calendarList" [value]="calendar">{{
+          calendar.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+    <mat-form-field appearance="outline">
+      <mat-label>Assignee</mat-label>
+      <mat-select [formControl]="assignee" multiple>
+        <mat-option *ngFor="let person of assigneeList" [value]="person">{{
+          person.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <input
+        [(ngModel)]="taskTitle"
+        matInput
+        (keyup.enter)="addNewTask()"
+        placeholder="Enter tasks here..."
+      />
+    </mat-form-field>
+
+    <mat-card
+      style="margin-bottom: 10px"
+      class="mat-elevation-z5 task-card"
+      *ngFor="let task of tasks; let i = index"
+    >
+      <div class="row">
+        <div class="col-md-2" style="align-self: center">
+          <!-- style="float: left; margin: 0 10px" -->
+          <mat-checkbox
+            [(ngModel)]="task.checked"
+            (change)="sortTaskList()"
+          ></mat-checkbox>
+        </div>
+        <div class="col-md-8">
+          <mat-label
+            [ngClass]="task.checked ? 'strike-through' : none"
+            style="overflow-wrap: break-word"
+            >{{ task.name }}</mat-label
+          >
+        </div>
+        <div class="col-md-2" style="align-self: center">
+          <mat-icon
+            matTooltip="Edit Task"
+            (click)="editTask(i)"
+            class="material-icons md-18 edit-task-icon"
+            >mode</mat-icon
+          >
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div *ngIf="editMode">
+    <app-edit-task (closeEmitter)="closeEditMode($event)"></app-edit-task>
+  </div>
+</mat-card>
+<!-- </div> -->

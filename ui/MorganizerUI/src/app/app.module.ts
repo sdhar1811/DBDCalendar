@@ -29,11 +29,16 @@ import { HomeScreenComponent } from './core/home-screen/home-screen.component';
 import { ResetPasswordComponent } from './core/reset-password/reset-password.component';
 import { ResetPasswordDialogComponent } from './core/reset-password/reset-password-dialog/reset-password-dialog.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { LeftPanelComponent } from './core/home-screen/left-panel/left-panel.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { EditTaskComponent } from './to-do-list/edit-task/edit-task.component';
+import { MatRippleModule } from '@angular/material/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { ToDoListComponent } from './to-do-list/to-do-list.component';
 import { RightPanelComponent } from './core/home-screen/right-panel/right-panel.component';
-import { LeftPanelComponent } from './core/home-screen/left-panel/left-panel.component';
 import { NewListDialogComponent } from './to-do-list/new-list-dialog/new-list-dialog.component';
-import { MatRadioModule } from '@angular/material/radio';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +55,7 @@ import { MatRadioModule } from '@angular/material/radio';
     RightPanelComponent,
     LeftPanelComponent,
     NewListDialogComponent,
+    EditTaskComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +80,10 @@ import { MatRadioModule } from '@angular/material/radio';
       useFactory: adapterFactory,
     }),
     ReactiveFormsModule,
+    MatCheckboxModule,
+    MatRippleModule,
+    MatTooltipModule,
+    TextFieldModule,
   ],
   providers: [
     {
