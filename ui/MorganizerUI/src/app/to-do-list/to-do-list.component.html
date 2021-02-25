@@ -1,5 +1,5 @@
 <mat-card class="mat-elevation-z5 todo-panel">
-  <div class="flex-vertical" *ngIf="!editMode">
+  <div #createList class="flex-vertical" *ngIf="!editMode">
     <div
       style="
         border-bottom: solid #d1d1d1;
@@ -16,13 +16,9 @@
           list.name
         }}</mat-option>
         <mat-option
-          ><button
-            class="add-task-list-btn"
-            mat-raised-button
-            (click)="addNewList()"
-          >
+          ><div class="add-task-list-btn" (click)="addNewList()">
             Create New List
-          </button></mat-option
+          </div></mat-option
         >
       </mat-select>
     </mat-form-field>
@@ -69,7 +65,7 @@
           <mat-label
             [ngClass]="task.checked ? 'strike-through' : none"
             style="overflow-wrap: break-word"
-            >{{ task.name }}</mat-label
+            >{{ task.title }}</mat-label
           >
         </div>
         <div class="col-md-2" style="align-self: center">
@@ -84,7 +80,11 @@
     </mat-card>
   </div>
   <div *ngIf="editMode">
-    <app-edit-task (closeEmitter)="closeEditMode($event)"></app-edit-task>
+    <app-edit-task
+      (closeEmitter)="closeEditMode($event)"
+      [data]="tasks"
+      [taskIndex]="taskIndex"
+    ></app-edit-task>
   </div>
 </mat-card>
 <!-- </div> -->
