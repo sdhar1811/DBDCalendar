@@ -1,21 +1,30 @@
 <div style="border-bottom: solid #d1d1d1; border-bottom-width: 2px">
-  <mat-icon
-    style="cursor: pointer"
-    matRipple
-    matTooltip="Back"
-    [matTooltipPosition]="'right'"
-    [matRippleCentered]="true"
-    (click)="closeEditMode()"
-    class="material-icons md-24"
-    >keyboard_arrow_left</mat-icon
-  >
-  <mat-icon
-    style="float: right"
-    matTooltip="Delete Task"
-    class="material-icons md-18 delete-task"
-    click="removeTask()"
-    >delete</mat-icon
-  >
+  <div class="row">
+    <div class="col-md-2">
+      <mat-icon
+        style="cursor: pointer; color: gray"
+        matRipple
+        matTooltip="Back"
+        [matTooltipPosition]="'right'"
+        [matRippleCentered]="true"
+        (click)="closeEditMode()"
+        class="material-icons md-24"
+        >keyboard_arrow_left</mat-icon
+      >
+    </div>
+    <div class="col-md-8" style="text-align: center; color: gray">
+      <mat-label>Edit Task</mat-label>
+    </div>
+    <div class="col-md-2">
+      <mat-icon
+        style="float: right"
+        matTooltip="Delete Task"
+        class="material-icons md-18 delete-task"
+        click="removeTask()"
+        >delete</mat-icon
+      >
+    </div>
+  </div>
 </div>
 <div class="flex-vertical" style="margin-top: 10px; margin-left: 10px">
   <mat-form-field appearance="outline" style="width: 100%">
