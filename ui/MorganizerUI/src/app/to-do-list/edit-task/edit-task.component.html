@@ -1,0 +1,58 @@
+<div style="border-bottom: solid #d1d1d1; border-bottom-width: 2px">
+  <mat-icon
+    style="cursor: pointer"
+    matRipple
+    matTooltip="Back"
+    [matTooltipPosition]="'right'"
+    [matRippleCentered]="true"
+    (click)="closeEditMode()"
+    class="material-icons md-24"
+    >keyboard_arrow_left</mat-icon
+  >
+  <mat-icon
+    style="float: right"
+    matTooltip="Delete Task"
+    class="material-icons md-18 delete-task"
+    click="removeTask()"
+    >delete</mat-icon
+  >
+</div>
+<div class="flex-vertical" style="margin-top: 10px; margin-left: 10px">
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Title</mat-label>
+    <input matInput placeholder="Enter title" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Task Details</mat-label>
+    <textarea
+      matInput
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="5"
+      placeholder="Add details"
+    ></textarea>
+  </mat-form-field>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Calendar</mat-label>
+    <mat-select [formControl]="selectedCalendar">
+      <mat-option>kajshdkjsahdkjsa</mat-option>
+      <mat-option>aaaaa</mat-option>
+      <!-- <mat-option *ngFor="let calendar of calendarList" [value]="calendar">{{
+          calendar.name
+        }}</mat-option> -->
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline" style="width: 100%">
+    <mat-label>Due Date/Time</mat-label>
+    <input matInput [matDatepicker]="datepicker" />
+    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+    <mat-datepicker #datepicker>
+      <mat-datepicker-actions>
+        <button mat-button matDatepickerCancel>Cancel</button>
+        <button mat-raised-button color="primary" matDatepickerApply>
+          Apply
+        </button>
+      </mat-datepicker-actions>
+    </mat-datepicker>
+  </mat-form-field>
+</div>

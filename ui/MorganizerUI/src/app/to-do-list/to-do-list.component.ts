@@ -12,6 +12,7 @@ export class ToDoListComponent implements OnInit {
   selectedTodoList = new FormControl();
   selectedCalendar = new FormControl();
   assignee = new FormControl();
+  editMode = false;
 
   todoLists = [
     { name: 'My List', id: 1 },
@@ -32,7 +33,9 @@ export class ToDoListComponent implements OnInit {
 
   constructor(public dialog: MatDialog) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.sortTaskList();
+  }
 
   addNewList() {
     const dialogRef = this.dialog.open(NewListDialogComponent, {
@@ -40,7 +43,10 @@ export class ToDoListComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.name !== '') {
-        this.todoLists.push({ name: result.name, id: undefined });
+        this.todoLists.push({
+          name: result.name,
+          id: undefined,
+        });
         this.selectedTodoList.setValue(
           this.todoLists[this.todoLists.length - 1]
         );
@@ -48,10 +54,22 @@ export class ToDoListComponent implements OnInit {
     });
   }
   addNewTask() {
-    this.tasks.push({ name: this.taskTitle, status: 'pending' });
+    this.tasks.push({ name: this.taskTitle, checked: false });
+    this.sortTaskList();
     this.taskTitle = '';
   }
   removeTask(index) {
     this.tasks.splice(index, 1);
+  }
+  editTask(index) {
+    this.editMode = true;
+  }
+  sortTaskList() {
+    this.tasks.sort((task1, task2) => {
+      return task1.checked - task2.checked;
+    });
+  }
+  closeEditMode(event) {
+    this.editMode = false;
   }
 }
