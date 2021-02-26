@@ -1,0 +1,38 @@
+.container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
+}
+.addprofile-panel {
+  width: 50%;
+}
+.btn-animation:hover {
+  background-color: rgba(24, 217, 231, 0.96);
+  color: rgba(48, 48, 250, 0.96);
+  transition: 0.5s ease-in-out;
+}
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+.material-icons.md-18 {
+  font-size: 18px;
+}
+.material-icons.md-24 {
+  font-size: 24px;
+}
+.material-icons.md-36 {
+  font-size: 36px;
+}
+.material-icons.md-48 {
+  font-size: 48px;
+}
+.delete-task-icon {
+  float: right;
+  cursor: pointer;
+  color: #a90000;
+}
