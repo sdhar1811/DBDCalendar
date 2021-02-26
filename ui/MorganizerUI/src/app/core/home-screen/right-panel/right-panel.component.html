@@ -6,6 +6,14 @@
       class="material-icons md-36 task-icon"
       >sticky_note_2</mat-icon
     >
+    <br>
+    <mat-icon
+      (click)="showTaskPanel = !showTaskPanel; toggleTaskPanel()"
+      matTooltip="Add Profile"
+      class="material-icons md-36 task-icon"
+      style = "margin-top: 10px;"
+      >person_add</mat-icon
+    >
   </div>
 </div>
 <div *ngIf="showTaskPanel">
