@@ -28,7 +28,7 @@ public class UserController {
 	
 	
 	@PostMapping("/login")
-	public void validateUserCredentials(@RequestBody UserModel userDetails) {
+	public void validateUserCredentials(@RequestBody UserModel userDetails) throws Exception {
 		loginService.validateUser(userDetails);
 		
 	}
