@@ -8,11 +8,24 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-edit-task',
   templateUrl: './edit-task.component.html',
   styleUrls: ['./edit-task.component.scss'],
+  animations: [
+    trigger('todoInOutAnimation', [
+      transition(':enter', [
+        style({ transform: 'translateX(150%)' }),
+        animate('0.5s'),
+      ]),
+      transition(':leave', [
+        style({ transform: 'translateX(200%)' }),
+        animate('1s ease-in'),
+      ]),
+    ]),
+  ],
 })
 export class EditTaskComponent implements OnInit {
   selectedCalendar = new FormControl();

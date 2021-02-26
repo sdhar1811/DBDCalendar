@@ -22,7 +22,7 @@ import { NewListDialogComponent } from './new-list-dialog/new-list-dialog.compon
         animate('0.5s'),
       ]),
       transition(':leave', [
-        style({ transform: 'translateX(100%)' }),
+        style({ transform: 'translateX(200%)' }),
         animate('1s ease-in'),
       ]),
     ]),
