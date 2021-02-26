@@ -11,6 +11,8 @@
 .task-icon {
   cursor: pointer;
   color: blueviolet;
+  margin: 10px;
+  margin-bottom: 20px;
 }
 .material-icons.md-18 {
   font-size: 18px;
@@ -23,4 +25,8 @@
 }
 .material-icons.md-40 {
   font-size: 40px;
+}
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
 }
