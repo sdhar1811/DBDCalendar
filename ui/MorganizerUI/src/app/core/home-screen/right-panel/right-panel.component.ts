@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-right-panel',
@@ -6,7 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./right-panel.component.scss'],
 })
 export class RightPanelComponent implements OnInit {
+  @Input() showTaskPanel;
+  @Output() updateRightPanelStatus = new EventEmitter();
+
   constructor() {}
 
   ngOnInit(): void {}
+  toggleTaskPanel() {
+    this.updateRightPanelStatus.emit(this.showTaskPanel);
+  }
+  closeTaskPanel() {
+    this.showTaskPanel = false;
+    this.updateRightPanelStatus.emit(false);
+  }
 }

@@ -1,26 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NewListDialogComponent } from './new-list-dialog/new-list-dialog.component';
 
 @Component({
   selector: 'app-to-do-list',
   templateUrl: './to-do-list.component.html',
   styleUrls: ['./to-do-list.component.scss'],
+  animations: [
+    trigger('todoInOutAnimation', [
+      transition(':enter', [
+        style({ transform: 'translateX(150%)' }),
+        animate('0.5s'),
+      ]),
+      transition(':leave', [
+        style({ transform: 'translateX(100%)' }),
+        animate('1s ease-in'),
+      ]),
+    ]),
+  ],
 })
 export class ToDoListComponent implements OnInit {
   selectedTodoList = new FormControl();
   selectedCalendar = new FormControl();
+  @ViewChild('createList', { static: false }) public createListRef: ElementRef;
+  @Output() closeTaskPanel = new EventEmitter();
   assignee = new FormControl();
+
   editMode = false;
+  taskIndex = 0;
 
   todoLists = [
     { name: 'My List', id: 1 },
     { name: 'School List', id: 2 },
-  ];
-  calendarList = [
-    { name: 'My Calendar', id: 1 },
-    { name: 'Work Calendar', id: 2 },
   ];
   assigneeList = [
     { name: 'Sharad', id: 1 },
@@ -39,7 +59,8 @@ export class ToDoListComponent implements OnInit {
 
   addNewList() {
     const dialogRef = this.dialog.open(NewListDialogComponent, {
-      data: { name: this.name },
+      hasBackdrop: true,
+      data: { name: this.name, positionRef: this.createListRef },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.name !== '') {
@@ -54,7 +75,13 @@ export class ToDoListComponent implements OnInit {
     });
   }
   addNewTask() {
-    this.tasks.push({ name: this.taskTitle, checked: false });
+    this.tasks.push({
+      title: this.taskTitle,
+      description: null,
+      calendar: [],
+      duedate: '',
+      checked: false,
+    });
     this.sortTaskList();
     this.taskTitle = '';
   }
@@ -62,6 +89,8 @@ export class ToDoListComponent implements OnInit {
     this.tasks.splice(index, 1);
   }
   editTask(index) {
+    this.taskIndex = index;
+
     this.editMode = true;
   }
   sortTaskList() {
@@ -71,5 +100,8 @@ export class ToDoListComponent implements OnInit {
   }
   closeEditMode(event) {
     this.editMode = false;
+  }
+  close() {
+    this.closeTaskPanel.emit(null);
   }
 }

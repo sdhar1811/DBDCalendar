@@ -20,7 +20,7 @@
         style="float: right"
         matTooltip="Delete Task"
         class="material-icons md-18 delete-task"
-        click="removeTask()"
+        (click)="removeTask()"
         >delete</mat-icon
       >
     </div>
@@ -29,31 +29,43 @@
 <div class="flex-vertical" style="margin-top: 10px; margin-left: 10px">
   <mat-form-field appearance="outline" style="width: 100%">
     <mat-label>Title</mat-label>
-    <input matInput placeholder="Enter title" />
+    <input
+      matInput
+      [(ngModel)]="data[taskIndex].title"
+      placeholder="Enter title"
+    />
   </mat-form-field>
   <mat-form-field appearance="outline" style="width: 100%">
     <mat-label>Task Details</mat-label>
     <textarea
       matInput
       cdkTextareaAutosize
-      cdkAutosizeMinRows="1"
+      cdkAutosizeMinRows="0"
       cdkAutosizeMaxRows="5"
+      [(ngModel)]="data[taskIndex].description"
       placeholder="Add details"
     ></textarea>
   </mat-form-field>
   <mat-form-field appearance="outline" style="width: 100%">
     <mat-label>Calendar</mat-label>
-    <mat-select [formControl]="selectedCalendar">
-      <mat-option>kajshdkjsahdkjsa</mat-option>
-      <mat-option>aaaaa</mat-option>
-      <!-- <mat-option *ngFor="let calendar of calendarList" [value]="calendar">{{
-          calendar.name
-        }}</mat-option> -->
+    <mat-select
+      [formControl]="selectedCalendar"
+      multiple
+      [compareWith]="selectSavedValues"
+      (selectionChange)="updateSelectedCalendar()"
+    >
+      <mat-option *ngFor="let calendar of calendarList" [value]="calendar">{{
+        calendar.name
+      }}</mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field appearance="outline" style="width: 100%">
     <mat-label>Due Date/Time</mat-label>
-    <input matInput [matDatepicker]="datepicker" />
+    <input
+      [(ngModel)]="data[taskIndex].duedate"
+      matInput
+      [matDatepicker]="datepicker"
+    />
     <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
     <mat-datepicker #datepicker>
       <mat-datepicker-actions>
