@@ -16,10 +16,13 @@ public class UserCredentials {
 	@Column(name = "passhash")
 	private String hash;
 	private String salt;
-	
 	private String email;
 	
-	
+	/*  Includes security question */
+	 
+	@Column(name = "questionid")
+	private int questionId;
+	private String answer;
 
 	public UserCredentials() {
 		
@@ -30,6 +33,15 @@ public class UserCredentials {
 		this.hash = hash;
 		this.salt = salt;
 		this.email = email;
+	}
+	
+	public UserCredentials(String username, String hash, String salt, String email, int questionId, String answer) {
+		this.username = username;
+		this.hash = hash;
+		this.salt = salt;
+		this.email = email;
+		this.questionId = questionId;
+		this.answer = answer;
 	}
 
 	public String getUsername() {
@@ -63,4 +75,21 @@ public class UserCredentials {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public int getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+	
 }
