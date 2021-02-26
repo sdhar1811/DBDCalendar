@@ -22,7 +22,7 @@ public class LoginService {
 	@Autowired
 	SecurePassword securePassword;
 
-	public boolean validateUser(UserModel enteredDetails) {
+	public boolean validateUser(UserModel enteredDetails) throws Exception {
 		List<UserCredentials> userCredentials = userCredentialsRepo.findByUsername(enteredDetails.getUsername());
 		if (userCredentials.size()>0) {
 			UserCredentials dbCredentails = userCredentials.get(0);
@@ -33,8 +33,7 @@ public class LoginService {
 				ex.printStackTrace();
 			}
 		}
-		return false;
-
+		throw new Exception("Invalid Credentials");
 	}
 
 	public void registerUser(UserModel userDetails) throws Exception {
