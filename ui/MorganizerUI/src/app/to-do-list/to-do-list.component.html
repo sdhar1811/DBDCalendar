@@ -1,13 +1,23 @@
-<mat-card class="mat-elevation-z5 todo-panel">
+<mat-card [@todoInOutAnimation] class="mat-elevation-z5 todo-panel">
   <div #createList class="flex-vertical" *ngIf="!editMode">
     <div
+      class="row justify-content-between"
       style="
         border-bottom: solid #d1d1d1;
         border-bottom-width: 2px;
         margin-bottom: 10px;
+        color: gray;
       "
     >
-      <div style="color: gray">Tasks</div>
+      <div class="col-md-10">Tasks</div>
+      <div class="col-md-2" class="task-panel-close">
+        <mat-icon
+          matTooltip="Close Tasks"
+          (click)="close()"
+          class="material-icons md-18"
+          >close</mat-icon
+        >
+      </div>
     </div>
     <mat-form-field appearance="outline">
       <mat-label>Task List</mat-label>

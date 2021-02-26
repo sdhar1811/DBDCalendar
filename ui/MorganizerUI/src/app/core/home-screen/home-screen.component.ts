@@ -39,7 +39,9 @@ const colors: any = {
 })
 export class HomeScreenComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
-
+  showRightPanel = false;
+  calendarClass = 'col-md-9';
+  rightPanelClass = 'col-md-1';
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -181,5 +183,9 @@ export class HomeScreenComponent implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+  updateRightPanelStatus(value) {
+    this.showRightPanel = value;
+    console.log('home-component');
   }
 }

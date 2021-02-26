@@ -1,4 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NewListDialogComponent } from './new-list-dialog/new-list-dialog.component';
@@ -7,12 +15,24 @@ import { NewListDialogComponent } from './new-list-dialog/new-list-dialog.compon
   selector: 'app-to-do-list',
   templateUrl: './to-do-list.component.html',
   styleUrls: ['./to-do-list.component.scss'],
+  animations: [
+    trigger('todoInOutAnimation', [
+      transition(':enter', [
+        style({ transform: 'translateX(150%)' }),
+        animate('0.5s'),
+      ]),
+      transition(':leave', [
+        style({ transform: 'translateX(100%)' }),
+        animate('1s ease-in'),
+      ]),
+    ]),
+  ],
 })
 export class ToDoListComponent implements OnInit {
   selectedTodoList = new FormControl();
   selectedCalendar = new FormControl();
   @ViewChild('createList', { static: false }) public createListRef: ElementRef;
-
+  @Output() closeTaskPanel = new EventEmitter();
   assignee = new FormControl();
 
   editMode = false;
@@ -80,5 +100,8 @@ export class ToDoListComponent implements OnInit {
   }
   closeEditMode(event) {
     this.editMode = false;
+  }
+  close() {
+    this.closeTaskPanel.emit(null);
   }
 }

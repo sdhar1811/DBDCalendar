@@ -1,1 +1,13 @@
-<app-to-do-list></app-to-do-list>
+<div *ngIf="!showTaskPanel" class="icon-drawer mat-elevation-z2">
+  <div class="icons">
+    <mat-icon
+      (click)="showTaskPanel = !showTaskPanel; toggleTaskPanel()"
+      matTooltip="Create Tasks"
+      class="material-icons md-36 task-icon"
+      >sticky_note_2</mat-icon
+    >
+  </div>
+</div>
+<div *ngIf="showTaskPanel">
+  <app-to-do-list (closeTaskPanel)="closeTaskPanel()"></app-to-do-list>
+</div>

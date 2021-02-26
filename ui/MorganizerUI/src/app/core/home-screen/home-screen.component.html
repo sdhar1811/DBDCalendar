@@ -2,7 +2,8 @@
   <div class="col-md-2">
     <app-left-panel></app-left-panel>
   </div>
-  <div class="col-md-7">
+
+  <div [ngClass]="showRightPanel ? 'col-md-7' : 'col-md-9'">
     <div class="row text-center" style="margin: 10px">
       <div class="col-md-4">
         <div class="btn-group">
@@ -60,8 +61,12 @@
             Day
           </div>
         </div>
-        <div class="btn btn-primary" (click)="addEvent()">
-          + Create New Event
+        <div
+          class="btn btn-primary"
+          style="margin-left: 1px"
+          (click)="addEvent()"
+        >
+          + Create
         </div>
       </div>
     </div>
@@ -98,7 +103,13 @@
       </mwl-calendar-day-view>
     </div>
   </div>
-  <div class="col-md-3" style="margin-top: 10px">
-    <app-right-panel></app-right-panel>
+  <div
+    [ngClass]="showRightPanel ? 'col-md-3' : 'col-md-1'"
+    style="margin-top: 1px"
+  >
+    <app-right-panel
+      [showTaskPanel]="showRightPanel"
+      (updateRightPanelStatus)="updateRightPanelStatus($event)"
+    ></app-right-panel>
   </div>
 </div>
