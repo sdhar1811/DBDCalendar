@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.morganizer.entity.UserCredentials;
 import com.morganizer.entity.UserDetailsEntity;
+import com.morganizer.error.handler.InvalidCredentialsException;
+import com.morganizer.error.handler.UnsupportedHashingExceptionHandler;
 import com.morganizer.model.UserModel;
 import com.morganizer.repository.UserCredentailsRepository;
 import com.morganizer.repository.UserDetailsRepository;
+import com.morganizer.utils.ErrorMessageConstants;
 import com.morganizer.utils.PasswordUtil;
 import com.morganizer.utils.SecurePassword;
 
@@ -37,10 +40,10 @@ public class LoginService {
 					return user==null?null:user.get(0);
 				}
 			} catch (NoSuchAlgorithmException ex) {
-				ex.printStackTrace();
+				throw new UnsupportedHashingExceptionHandler(ex.getMessage());
 			}
 		}
-		throw new Exception("Invalid Credentials");
+		throw new InvalidCredentialsException(ErrorMessageConstants.LOGIN_INVALID_MESSAGE);
 	}
 
 	public void registerUser(UserModel userDetails) throws Exception {
