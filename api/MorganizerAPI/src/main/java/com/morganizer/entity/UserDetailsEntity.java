@@ -34,6 +34,9 @@ public class UserDetailsEntity {
 		this.roleId = roleid;
 	}
 
+	public UserDetailsEntity() {
+		
+	}
 	public UserDetailsEntity(String firstName, String lastName, String middleName, String userName,
 			String email, String birthdate, String phoneNumber, String gender) {
 		super();
