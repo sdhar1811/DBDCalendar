@@ -1,10 +1,14 @@
 package com.morganizer.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.morganizer.dto.ProfileRequest;
 import com.morganizer.entity.ProfileEntity;
 import com.morganizer.repository.ProfileRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-
+@Service
 public class ProfileService {
 
     @Autowired
@@ -20,4 +24,10 @@ public class ProfileService {
         }
 
     }
+
+	public List<ProfileEntity> fetchAll(Long userId) {
+		
+		return profileRepository.findByUserId(userId);
+		
+	}
 }
