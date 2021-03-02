@@ -49,17 +49,19 @@
 }
 
 
-.mat-checkbox:hover {
+
+
+::ng-deep .custom-frame {
+  & .mat-checkbox-background,
   .mat-checkbox-frame {
-    border-color: #8416b8 !important;
+    border-radius: 70% !important;
   }
 }
 
-::ng-deep .mat-checkbox-checked .mat-checkbox-background,
-  .mat-checkbox-indeterminate .mat-checkbox-background {
-  background-color: #8416b8 !important;
-}
-
+// ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+//   .mat-checkbox-indeterminate .mat-checkbox-background {
+//   background-color: #8416b8 !important;
+// }
 
 
 // ::ng-deep

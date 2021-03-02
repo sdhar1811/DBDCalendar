@@ -49,7 +49,8 @@
       <div class="row">
         <div class="col-md-2" style="align-self: center">
           <!-- style="float: left; margin: 0 10px" -->
-          <mat-checkbox matTooltip="{{task.checked? 'Mark incomplete': 'Mark complete'}}" [(ngModel)]="task.checked"
+          <mat-checkbox color="primary" class="custom-frame" matTooltip="{{task.checked? 'Mark incomplete': 'Mark complete'}}"
+            [(ngModel)]="task.checked"
             (change)="sortTaskList()">
           </mat-checkbox>
         </div>
