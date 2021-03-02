@@ -186,6 +186,5 @@ export class HomeScreenComponent implements OnInit {
   }
   updateRightPanelStatus(value) {
     this.showRightPanel = value;
-    console.log('home-component');
   }
 }
