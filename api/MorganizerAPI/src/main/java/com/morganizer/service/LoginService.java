@@ -8,8 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morganizer.entity.UserCredentials;
+import com.morganizer.entity.UserDetailsEntity;
+import com.morganizer.error.handler.InvalidCredentialsException;
+import com.morganizer.error.handler.UnsupportedHashingExceptionHandler;
 import com.morganizer.model.UserModel;
 import com.morganizer.repository.UserCredentailsRepository;
+import com.morganizer.repository.UserDetailsRepository;
+import com.morganizer.utils.ErrorMessageConstants;
 import com.morganizer.utils.PasswordUtil;
 import com.morganizer.utils.SecurePassword;
 
@@ -18,23 +23,27 @@ public class LoginService {
 
 	@Autowired
 	UserCredentailsRepository userCredentialsRepo;
+	@Autowired
+	UserDetailsRepository userDetailsRepo;
 
 	@Autowired
 	SecurePassword securePassword;
 
-	public boolean validateUser(UserModel enteredDetails) {
+	public UserDetailsEntity validateUser(UserModel enteredDetails) throws Exception {
 		List<UserCredentials> userCredentials = userCredentialsRepo.findByUsername(enteredDetails.getUsername());
 		if (userCredentials.size()>0) {
 			UserCredentials dbCredentails = userCredentials.get(0);
 			try {				
-				return securePassword.verifyPassword(enteredDetails.getPassword(), Base64.getDecoder().decode(dbCredentails.getSalt()),
-						dbCredentails.getHash());
+				if(securePassword.verifyPassword(enteredDetails.getPassword(), Base64.getDecoder().decode(dbCredentails.getSalt()),
+						dbCredentails.getHash())) {
+					List<UserDetailsEntity> user = userDetailsRepo.findByUserName(enteredDetails.getUsername());
+					return user==null?null:user.get(0);
+				}
 			} catch (NoSuchAlgorithmException ex) {
-				ex.printStackTrace();
+				throw new UnsupportedHashingExceptionHandler(ex.getMessage());
 			}
 		}
-		return false;
-
+		throw new InvalidCredentialsException(ErrorMessageConstants.LOGIN_INVALID_MESSAGE);
 	}
 
 	public void registerUser(UserModel userDetails) throws Exception {

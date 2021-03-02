@@ -11,8 +11,8 @@
 .login-panel {
   width: max-content;
 }
-.btn-animation:hover {
-  background-color: rgba(24, 217, 231, 0.96);
-  color: rgba(48, 48, 250, 0.96);
-  transition: 0.5s ease-in-out;
+.login-title {
+  color: #673ab7;
+  text-align: center;
+  font-weight: bold;
 }

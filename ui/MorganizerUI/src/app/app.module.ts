@@ -40,6 +40,7 @@ import { ToDoListComponent } from './to-do-list/to-do-list.component';
 import { RightPanelComponent } from './core/home-screen/right-panel/right-panel.component';
 import { NewListDialogComponent } from './to-do-list/new-list-dialog/new-list-dialog.component';
 import { AddProfileComponent } from './add-profile/add-profile.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {
   MAT_COLOR_FORMATS,
   NgxMatColorPickerModule,
@@ -93,6 +94,7 @@ import {
     MatTooltipModule,
     TextFieldModule,
     NgxMatColorPickerModule,
+    MatButtonToggleModule,
   ],
   providers: [
     {

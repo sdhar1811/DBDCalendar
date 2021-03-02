@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.morganizer.entity.UserDetailsEntity;
 import com.morganizer.model.UserModel;
 import com.morganizer.service.LoginService;
 import com.morganizer.service.UserSignupService;
@@ -28,8 +29,8 @@ public class UserController {
 	
 	
 	@PostMapping("/login")
-	public void validateUserCredentials(@RequestBody UserModel userDetails) {
-		loginService.validateUser(userDetails);
+	public UserDetailsEntity validateUserCredentials(@RequestBody UserModel userDetails) throws Exception {
+		return loginService.validateUser(userDetails);
 		
 	}
 	@PostMapping("/register")
