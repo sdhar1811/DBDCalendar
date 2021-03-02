@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.morganizer.entity.UserDetailsEntity;
 
-public interface UserDetailsRepository extends JpaRepository<UserDetailsEntity, Integer> {
+public interface UserDetailsRepository extends JpaRepository<UserDetailsEntity, Long> {
 
 	List<UserDetailsEntity> findByUserName(String userName);
 

@@ -3,12 +3,15 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { TodoListService } from '../services/todo-list.service';
+import { StoreService } from 'src/app/services/store.service';
 import { NewListDialogComponent } from './new-list-dialog/new-list-dialog.component';
 
 @Component({
@@ -32,6 +35,7 @@ export class ToDoListComponent implements OnInit {
   selectedTodoList = new FormControl();
   selectedCalendar = new FormControl();
   @ViewChild('createList', { static: false }) public createListRef: ElementRef;
+
   @Output() closeTaskPanel = new EventEmitter();
   assignee = new FormControl();
 
@@ -51,10 +55,28 @@ export class ToDoListComponent implements OnInit {
   taskTitle: string;
   tasks = [];
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private taskService: TodoListService,
+    private storeService: StoreService
+  ) {}
 
   ngOnInit(): void {
+    this.populateTaskLOV();
     this.sortTaskList();
+  }
+
+  populateTaskLOV() {
+    this.taskService
+      .getTask(this.storeService.getProperty('loggedInUser').id)
+      .subscribe((response) => {
+        if (response) {
+          response.forEach((task) => {
+            this.todoLists.push({ name: task.title, id: task.id });
+            this.selectedTodoList.setValue(this.todoLists[0]);
+          });
+        }
+      });
   }
 
   addNewList() {
@@ -64,13 +86,25 @@ export class ToDoListComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.name !== '') {
-        this.todoLists.push({
-          name: result.name,
-          id: undefined,
-        });
-        this.selectedTodoList.setValue(
-          this.todoLists[this.todoLists.length - 1]
-        );
+        this.taskService
+          .createTask(
+            result.name,
+            this.storeService.getProperty('loggedInUser').id
+          )
+          .subscribe(
+            (response) => {
+              this.todoLists.push({
+                name: response['title'],
+                id: response['id'],
+              });
+              this.selectedTodoList.setValue(
+                this.todoLists[this.todoLists.length - 1]
+              );
+            },
+            (error) => {
+              window.alert(error.error.message);
+            }
+          );
       }
     });
   }
