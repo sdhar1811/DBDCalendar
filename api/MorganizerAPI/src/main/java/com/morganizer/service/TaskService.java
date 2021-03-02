@@ -18,6 +18,9 @@ public class TaskService {
 	
 	@Autowired
 	private TaskRepository taskRepo;
+	
+	@Autowired
+	private UserDetailsRepository userDetailsRepo;
 
 	public List<TaskResponse> fetchAllTasks(long userId) {
 		List<TaskEntity> tasks =taskRepo.findByUserId(userId);
@@ -26,6 +29,14 @@ public class TaskService {
 			taskList.add(new TaskResponse(taskEntity.getId(), taskEntity.getTitle()));
 		}
 		return taskList;
+	}
+
+	public TaskResponse createTask(TaskRequest task) {
+		// TODO Auto-generated method stub
+		UserDetailsEntity userDetails = userDetailsRepo.getOne(task.getUserId());
+		TaskEntity taskEntity = taskRepo.save(new TaskEntity(task.getTitle(), userDetails));
+		return new TaskResponse(taskEntity.getId(), taskEntity.getTitle());
+		
 	}
 
 }
