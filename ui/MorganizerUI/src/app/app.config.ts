@@ -10,6 +10,8 @@ export interface IAppConfig {
   task;
   createTask: string;
   fetchAllTasks: any;
+  event: string;
+  updateEvent: string;
 }
 export const APPCONFIG: IAppConfig = {
   morganizerAPIEndpoint: environment.morgainzedAPIURL,
@@ -20,5 +22,7 @@ export const APPCONFIG: IAppConfig = {
   task: '/tasks',
   createTask: '/create',
   fetchAllTasks: (userId: string) => `/all/${userId}`,
+  event: '/event',
+  updateEvent: '/update'
 };
 export const APP_CONFIG = new InjectionToken<IAppConfig>('app.config');

@@ -17,6 +17,7 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { Subject } from 'rxjs';
+import { EventService } from 'src/app/services/event.service';
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -116,7 +117,7 @@ export class HomeScreenComponent implements OnInit {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal) {}
+  constructor(private modal: NgbModal, private eventService: EventService) {}
 
   ngOnInit(): void {}
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -146,9 +147,19 @@ export class HomeScreenComponent implements OnInit {
           end: newEnd,
         };
       }
+      
       return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
+    event.start = newStart;
+    event.end = newEnd;
+    this.eventService.updateEvent(event).subscribe((response) => {
+      if (response){
+        console.log("Event updated");
+      }
+    }, (error) => {
+      window.alert("#TODO: Something went wrong.");
+    });
+    // this.handleEvent('Dropped or resized', event);
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
