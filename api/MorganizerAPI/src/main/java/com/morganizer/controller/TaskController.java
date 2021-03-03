@@ -22,7 +22,8 @@ public class TaskController {
 	
 	@Autowired
 	TaskService taskService;
-	
+
+
 
 	@GetMapping("/all/{userId}")
 	public List<TaskResponse> fetchAllTasks(@PathVariable long userId){
@@ -33,6 +34,10 @@ public class TaskController {
 	public TaskResponse createTasks(@RequestBody TaskRequest task){
 		return taskService.createTask(task);
 	}
-	
+
+	@PostMapping("/updateTask")
+	public void updateStatus(Long itemId, boolean itemStatus){
+		taskService.updateStatus(itemId,itemStatus);
+	}
 
 }
