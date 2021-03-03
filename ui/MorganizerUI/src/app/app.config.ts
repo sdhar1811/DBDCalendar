@@ -23,6 +23,6 @@ export const APPCONFIG: IAppConfig = {
   createTask: '/create',
   fetchAllTasks: (userId: string) => `/all/${userId}`,
   event: '/event',
-  updateEvent: '/update'
+  updateEvent: '/update',
 };
 export const APP_CONFIG = new InjectionToken<IAppConfig>('app.config');

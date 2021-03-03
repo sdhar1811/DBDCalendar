@@ -147,18 +147,21 @@ export class HomeScreenComponent implements OnInit {
           end: newEnd,
         };
       }
-      
+
       return iEvent;
     });
     event.start = newStart;
     event.end = newEnd;
-    this.eventService.updateEvent(event).subscribe((response) => {
-      if (response){
-        console.log("Event updated");
+    this.eventService.updateEvent(event).subscribe(
+      (response) => {
+        if (response) {
+          console.log('Event updated');
+        }
+      },
+      (error) => {
+        window.alert('#TODO: Something went wrong.');
       }
-    }, (error) => {
-      window.alert("#TODO: Something went wrong.");
-    });
+    );
     // this.handleEvent('Dropped or resized', event);
   }
 
@@ -195,6 +198,7 @@ export class HomeScreenComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+
   updateRightPanelStatus(value) {
     this.showRightPanel = value;
   }

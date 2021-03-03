@@ -7,6 +7,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class RightPanelComponent implements OnInit {
   @Input() showTaskPanel;
+
+  taskPanel: boolean = false;
+  profilePanel: boolean = false;
+
   @Output() updateRightPanelStatus = new EventEmitter();
 
   constructor() {}
@@ -17,6 +21,8 @@ export class RightPanelComponent implements OnInit {
   }
   closeTaskPanel() {
     this.showTaskPanel = false;
+    this.taskPanel = false;
+    this.profilePanel = false;
     this.updateRightPanelStatus.emit(false);
   }
 }

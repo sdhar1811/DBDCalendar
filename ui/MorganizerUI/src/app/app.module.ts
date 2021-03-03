@@ -46,6 +46,8 @@ import {
   NgxMatColorPickerModule,
   NGX_MAT_COLOR_FORMATS,
 } from '@angular-material-components/color-picker';
+import { ColorCircleModule } from 'ngx-color/circle';
+import { NgxColorsModule } from 'ngx-colors';
 
 @NgModule({
   declarations: [
@@ -95,6 +97,8 @@ import {
     TextFieldModule,
     NgxMatColorPickerModule,
     MatButtonToggleModule,
+    ColorCircleModule,
+    NgxColorsModule,
   ],
   providers: [
     {
