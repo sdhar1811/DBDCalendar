@@ -7,6 +7,9 @@ import com.morganizer.dto.EventDetailsRequest;
 import com.morganizer.repository.EventDetailsRepository;
 import com.morganizer.entity.NotificationTypesEntity;
 import com.morganizer.repository.NotificationTypeRepository;
+import com.morganizer.entity.RecurringOptionsEntity;
+import com.morganizer.repository.RecurringOptionsRepository;
+
 
 import java.util.List;
 
@@ -18,6 +21,10 @@ public class EventService {
 
     @Autowired
     public NotificationTypeRepository notificationTypeRepository;
+
+    @Autowired
+    public RecurringOptionsRepository recurringOptionsRepository;
+
 	
 	public void deleteEvent(EventDetailsRequest eventDetailsReq) {
 
@@ -32,4 +39,9 @@ public class EventService {
     public List<NotificationTypesEntity> getNotificationType(){
         return notificationTypeRepository.findAll();
     }
+    public List<RecurringOptionsEntity> getRecurringOptions(){
+        return recurringOptionsRepository.findAll();
+    }
 }
+
+
