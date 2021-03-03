@@ -198,6 +198,7 @@ export class HomeScreenComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+
   updateRightPanelStatus(value) {
     this.showRightPanel = value;
   }

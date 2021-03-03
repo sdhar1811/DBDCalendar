@@ -5,10 +5,9 @@ import { APP_CONFIG, IAppConfig } from '../app.config';
 import { EventModel } from './model/event-model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EventService {
-
   eventURL: string;
   constructor(
     @Inject(APP_CONFIG) private appConfig: IAppConfig,
@@ -17,7 +16,10 @@ export class EventService {
     this.eventURL = appConfig.morganizerAPIEndpoint + appConfig.event;
   }
 
-  updateEvent(calendarEvent: CalendarEvent ) {
-    return this.http.post(this.eventURL + this.appConfig.updateEvent, calendarEvent );
+  updateEvent(calendarEvent: CalendarEvent) {
+    return this.http.post(
+      this.eventURL + this.appConfig.updateEvent,
+      calendarEvent
+    );
   }
 }
