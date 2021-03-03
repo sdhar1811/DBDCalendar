@@ -1,9 +1,22 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-add-profile',
   templateUrl: './add-profile.component.html',
   styleUrls: ['./add-profile.component.scss'],
+  animations: [
+    trigger('addprofileInOutAnimation', [
+      transition(':enter', [
+        style({ transform: 'translateX(150%)' }),
+        animate('0.5s'),
+      ]),
+      transition(':leave', [
+        style({ transform: 'translateX(200%)' }),
+        animate('1s ease-in'),
+      ]),
+    ]),
+  ]
 })
 export class AddProfileComponent implements OnInit {
   state = { hex: '#f44336' };

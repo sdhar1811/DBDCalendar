@@ -49,6 +49,13 @@ import {
 } from '@angular-material-components/color-picker';
 import { ColorCircleModule } from 'ngx-color/circle';
 import { NgxColorsModule } from 'ngx-colors';
+import { CreateEventComponent } from './create-event/create-event.component';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import {
+  NgxMatDatetimePickerModule, 
+  NgxMatNativeDateModule, 
+  NgxMatTimepickerModule 
+} from '@angular-material-components/datetime-picker';
 
 @NgModule({
   declarations: [
@@ -68,6 +75,7 @@ import { NgxColorsModule } from 'ngx-colors';
     NewListDialogComponent,
     EditTaskComponent,
     AddProfileComponent,
+    CreateEventComponent,
   ],
   imports: [
     BrowserModule,
@@ -101,6 +109,10 @@ import { NgxColorsModule } from 'ngx-colors';
     MatExpansionModule,
     ColorCircleModule,
     NgxColorsModule,
+    FlatpickrModule.forRoot(),
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
   ],
   providers: [
     {
