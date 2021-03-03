@@ -26,3 +26,17 @@ body {
 .material-icons.md-48 {
   font-size: 48px;
 }
+.cal-month-view .cal-cell .cal-event {
+  width: 100%;
+  border-radius: 0;
+  margin: 0px;
+}
+.cal-month-view .cal-day-badge {
+  background-color: #326277fa;
+}
+.cal-header {
+  background-color: #c0e9fa;
+}
+.cal-month-view .cal-events {
+  margin: 0px;
+}

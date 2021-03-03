@@ -41,6 +41,7 @@ import { RightPanelComponent } from './core/home-screen/right-panel/right-panel.
 import { NewListDialogComponent } from './to-do-list/new-list-dialog/new-list-dialog.component';
 import { AddProfileComponent } from './add-profile/add-profile.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
 import {
   MAT_COLOR_FORMATS,
   NgxMatColorPickerModule,
@@ -95,6 +96,7 @@ import {
     TextFieldModule,
     NgxMatColorPickerModule,
     MatButtonToggleModule,
+    MatExpansionModule,
   ],
   providers: [
     {
