@@ -8,13 +8,20 @@
             <mat-icon>account_circle</mat-icon>
           </mat-panel-description> -->
       </mat-expansion-panel-header>
-      <ul>
-        <li *ngFor="let profile of profiles">
-          <mat-checkbox [(ngModel)]="profile.value">{{
-            profile.name
-          }}</mat-checkbox>
-        </li>
-      </ul>
+      <table>
+        <tr *ngFor="let profile of profiles">
+          <td>
+            <ui-switch
+              size="small"
+              [(ngModel)]="profile.value"
+              color="{{ profile.color }}"
+            ></ui-switch>
+          </td>
+          <td style="vertical-align: bottom">
+            {{ profile.name }}
+          </td>
+        </tr>
+      </table>
     </mat-expansion-panel>
     <mat-expansion-panel style="box-shadow: none" [expanded]="'true'">
       <mat-expansion-panel-header>
@@ -24,11 +31,16 @@
             <mat-icon>account_circle</mat-icon>
           </mat-panel-description> -->
       </mat-expansion-panel-header>
-      <ul>
+      <tr *ngFor="let calendar of calendars">
+        <td>
+          <mat-checkbox>{{ calendar.name }}</mat-checkbox>
+        </td>
+      </tr>
+      <!-- <ul>
         <li *ngFor="let calendar of calendars">
           <mat-checkbox>{{ calendar.name }}</mat-checkbox>
         </li>
-      </ul>
+      </ul> -->
     </mat-expansion-panel>
   </mat-accordion>
   <!-- <mat-card-subtitle>Calendar</mat-card-subtitle>

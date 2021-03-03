@@ -42,6 +42,7 @@ import { NewListDialogComponent } from './to-do-list/new-list-dialog/new-list-di
 import { AddProfileComponent } from './add-profile/add-profile.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { UiSwitchModule } from 'ngx-ui-switch';
 import {
   MAT_COLOR_FORMATS,
   NgxMatColorPickerModule,
@@ -52,9 +53,9 @@ import { NgxColorsModule } from 'ngx-colors';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import {
-  NgxMatDatetimePickerModule, 
-  NgxMatNativeDateModule, 
-  NgxMatTimepickerModule 
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 
 @NgModule({
@@ -113,6 +114,7 @@ import {
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
+    UiSwitchModule,
   ],
   providers: [
     {

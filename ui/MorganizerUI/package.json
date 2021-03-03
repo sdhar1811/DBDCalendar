@@ -36,6 +36,7 @@
     "jquery": "^3.5.1",
     "ngx-color": "^6.2.0",
     "ngx-colors": "^2.6.0",
+    "ngx-ui-switch": "^10.0.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
