@@ -4,8 +4,7 @@ package com.morganizer.dto;
 public class TaskRequest {
 	private String title;
 	private Long userId;
-	
-	
+
 	public TaskRequest(String title, Long userId) {
 		this.title=title;
 		this.userId=userId;
