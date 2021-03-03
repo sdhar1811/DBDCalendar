@@ -42,6 +42,7 @@ import { NewListDialogComponent } from './to-do-list/new-list-dialog/new-list-di
 import { AddProfileComponent } from './add-profile/add-profile.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { UiSwitchModule } from 'ngx-ui-switch';
 import {
   MAT_COLOR_FORMATS,
   NgxMatColorPickerModule,
@@ -107,12 +108,16 @@ import {
     NgxMatColorPickerModule,
     MatButtonToggleModule,
     MatExpansionModule,
+<<<<<<< HEAD
     ColorCircleModule,
     NgxColorsModule,
     FlatpickrModule.forRoot(),
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
+=======
+    UiSwitchModule,
+>>>>>>> Task:51- added hovering pop-up and left-sidepanel controls
   ],
   providers: [
     {
