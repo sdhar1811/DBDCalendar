@@ -25,6 +25,8 @@ public class EventDetailsRequest {
 	public void setEventId(long eventId) {
 		this.eventId = eventId;
 	}
+
+	
     
     
     
