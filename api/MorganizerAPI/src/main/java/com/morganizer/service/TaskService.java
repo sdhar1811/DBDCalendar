@@ -3,6 +3,8 @@ package com.morganizer.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.morganizer.entity.ItemEntity;
+import com.morganizer.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,9 @@ public class TaskService {
 	
 	@Autowired
 	private TaskRepository taskRepo;
+
+	@Autowired
+	private ItemRepository itemRepository;
 	
 	@Autowired
 	private UserDetailsRepository userDetailsRepo;
@@ -37,6 +42,13 @@ public class TaskService {
 		TaskEntity taskEntity = taskRepo.save(new TaskEntity(task.getTitle(), userDetails));
 		return new TaskResponse(taskEntity.getId(), taskEntity.getTitle());
 		
+	}
+
+	public void updateStatus(Long itemId, boolean itemStatus){
+
+		ItemEntity itemEntity = itemRepository.getOne(itemId);
+		itemRepository.save(itemEntity);
+
 	}
 
 }
