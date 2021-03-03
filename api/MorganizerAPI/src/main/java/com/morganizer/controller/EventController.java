@@ -1,5 +1,6 @@
 package com.morganizer.controller;
 
+import com.morganizer.entity.EventDetailsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,5 +36,10 @@ public class EventController {
     @GetMapping("/fetchAll/{recurringOptionsId}")
     public List<RecurringOptionsEntity> getRecurringOptions() {
         return eventService.getRecurringOptions();
+    }
+
+    @GetMapping("/fetchAll/{userId}")
+    public List<EventDetailsEntity> fetchAllEvents(Long userId){
+	    return eventService.fetchAllEvents(userId);
     }
 }
