@@ -1,5 +1,6 @@
 package com.morganizer.service;
 
+import com.morganizer.entity.EventDetailsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,10 @@ public class EventService {
     }
     public List<RecurringOptionsEntity> getRecurringOptions(){
         return recurringOptionsRepository.findAll();
+    }
+
+    public List<EventDetailsEntity> fetchAllEvents(Long userId) {
+	    return eventDetailsRepository.findByUserId(userId);
     }
 }
 
