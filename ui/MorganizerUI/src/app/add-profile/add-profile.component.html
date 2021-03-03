@@ -1,71 +1,83 @@
-<div class="container">
-  <mat-card class="mat-elevation-z5 addprofile-panel">
-    <div class="flex-vertical">
-      <mat-form-field appearance="outline">
-        <mat-label>First Name</mat-label>
-        <input
-          matInput
-          placeholder="Enter your first name"
-        />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Middle Name</mat-label>
-        <input
-          matInput
-          placeholder="Enter your middle name"
-        />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Last Name</mat-label>
-        <input
-          matInput
-          placeholder="Enter your last name"
-        />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Gender</mat-label>
-        <mat-select>
-          <mat-option value="male">Male</mat-option>
-          <mat-option value="female">Female</mat-option>
-          <mat-option value="other">Other</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Date of Birth</mat-label>
-        <input matInput [matDatepicker]="datepicker" />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="datepicker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #datepicker>
-          <mat-datepicker-actions>
-            <button mat-button matDatepickerCancel>Cancel</button>
-            <button mat-raised-button color="primary" matDatepickerApply>
-              Apply
-            </button>
-          </mat-datepicker-actions>
-        </mat-datepicker>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Email ID</mat-label>
-        <input
-          matInput
-          placeholder="Enter your email ID"
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          matInput
-          [ngxMatColorPicker]="picker"
-          [disabled]="'false'"
-        />
-        <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-        <ngx-mat-color-picker
-          #picker
-          [touchUi]="'false'"
-          [color]="'red'"
-        ></ngx-mat-color-picker>
-      </mat-form-field>
+<mat-card [@addprofileInOutAnimation] class="addprofile-panel">
+  <div class="flex-vertical">
+    <div
+      class="row justify-content-between"
+      style="
+        border-bottom: solid #d1d1d1;
+        border-bottom-width: 2px;
+        margin-bottom: 10px;
+        color: gray;
+      "
+    >
+      <div class="col-md-10">Add Profile</div>
+      <div class="col-md-2" class="task-panel-close">
+        <mat-icon
+          (click)="close()"
+          matTooltip="Close Tasks"
+          class="material-icons md-18"
+          >close</mat-icon
+        >
+      </div>
     </div>
-  </mat-card>
-</div>
+    <div class="row">
+      <div class="col-md-10">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput required placeholder="Enter name" />
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <div>
+          <ngx-colors
+            ngx-colors-trigger
+            [(ngModel)]="color"
+            [palette]="colorPalette"
+            [hideTextInput]="'true'"
+            [hideColorPicker]="'false'"
+            >Color</ngx-colors
+          >
+        </div>
+      </div>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Gender</mat-label>
+      <mat-select>
+        <mat-option value="male">Male</mat-option>
+        <mat-option value="female">Female</mat-option>
+        <mat-option value="other">Other</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email ID</mat-label>
+      <input matInput required placeholder="Enter your email ID" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Phone Number</mat-label>
+      <input required matInput placeholder="Enter your phone number" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Date of Birth</mat-label>
+      <input matInput required [matDatepicker]="datepicker" />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="datepicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #datepicker>
+        <mat-datepicker-actions>
+          <button mat-button matDatepickerCancel>Cancel</button>
+          <button mat-raised-button color="primary" matDatepickerApply>
+            Apply
+          </button>
+        </mat-datepicker-actions>
+      </mat-datepicker>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" style="margin: 0.5em">
+      Add Profile
+    </button>
+  </div>
+</mat-card>
