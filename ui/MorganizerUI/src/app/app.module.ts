@@ -53,9 +53,9 @@ import { NgxColorsModule } from 'ngx-colors';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import {
-  NgxMatDatetimePickerModule, 
-  NgxMatNativeDateModule, 
-  NgxMatTimepickerModule 
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 
 @NgModule({
@@ -108,16 +108,13 @@ import {
     NgxMatColorPickerModule,
     MatButtonToggleModule,
     MatExpansionModule,
-<<<<<<< HEAD
     ColorCircleModule,
     NgxColorsModule,
     FlatpickrModule.forRoot(),
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
-=======
     UiSwitchModule,
->>>>>>> Task:51- added hovering pop-up and left-sidepanel controls
   ],
   providers: [
     {
