@@ -78,7 +78,7 @@ export class HomeScreenComponent implements OnInit {
     {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
-      title: 'A 3 day event',
+      title: 'Sprint-2',
       color: colors.red,
       actions: this.actions,
       allDay: true,
@@ -88,12 +88,12 @@ export class HomeScreenComponent implements OnInit {
       },
       draggable: true,
     },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
+    // {
+    //   start: startOfDay(new Date()),
+    //   title: 'An event with no end date',
+    //   color: colors.yellow,
+    //   actions: this.actions,
+    // },
     {
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
@@ -102,8 +102,8 @@ export class HomeScreenComponent implements OnInit {
       allDay: true,
     },
     {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
+      start: addHours(subDays(startOfDay(new Date()), -3), 1),
+      end: addHours(subDays(startOfDay(new Date()), -3), 2),
       title: 'A draggable and resizable event',
       color: colors.yellow,
       actions: this.actions,
@@ -147,18 +147,21 @@ export class HomeScreenComponent implements OnInit {
           end: newEnd,
         };
       }
-      
+
       return iEvent;
     });
     event.start = newStart;
     event.end = newEnd;
-    this.eventService.updateEvent(event).subscribe((response) => {
-      if (response){
-        console.log("Event updated");
+    this.eventService.updateEvent(event).subscribe(
+      (response) => {
+        if (response) {
+          console.log('Event updated');
+        }
+      },
+      (error) => {
+        window.alert('#TODO: Something went wrong.');
       }
-    }, (error) => {
-      window.alert("#TODO: Something went wrong.");
-    });
+    );
     // this.handleEvent('Dropped or resized', event);
   }
 
