@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.morganizer.dto.TaskItemRequest;
 import com.morganizer.dto.TaskRequest;
 import com.morganizer.dto.TaskResponse;
 import com.morganizer.service.TaskService;
@@ -22,8 +23,6 @@ public class TaskController {
 	
 	@Autowired
 	TaskService taskService;
-
-
 
 	@GetMapping("/all/{userId}")
 	public List<TaskResponse> fetchAllTasks(@PathVariable long userId){
@@ -40,4 +39,8 @@ public class TaskController {
 		taskService.updateStatus(itemId,itemStatus);
 	}
 
+	@PostMapping("/addItem")
+	public void createItem(@RequestBody TaskItemRequest taskItem){
+		taskService.addItem(taskItem);
+	}
 }
