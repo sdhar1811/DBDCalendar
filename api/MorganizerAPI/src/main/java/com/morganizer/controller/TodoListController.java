@@ -52,6 +52,7 @@ public class TodoListController {
 	public void createItem(@RequestBody TaskItemRequest taskItem){
 		taskService.addItem(taskItem);
 	}
+	
 	@DeleteMapping("/deleteItem")
     public void deleteItem(@RequestBody TaskRequest task) {
 		taskService.deleteItem(task);
