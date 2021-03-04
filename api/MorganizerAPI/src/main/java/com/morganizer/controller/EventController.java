@@ -47,13 +47,13 @@ public class EventController {
         return eventService.fetchAllEvents(userId);
     }
 
-    @GetMapping("/fetchEventCategories")
-    public List<EventCategoriesEntity> fetchEventCategories() {
-        return eventService.fetchEventCategories();
-    }
-    
     @PostMapping("/add")
     public EventRequest addEvent(@RequestBody EventRequest eventRequest) {
     	return eventService.addEvent(eventRequest);
+    }
+    
+    @GetMapping("/fetchEventCategories")
+    public List<EventCategoriesEntity> fetchEventCategories(){
+	    return eventService.fetchEventCategories();
     }
 }
