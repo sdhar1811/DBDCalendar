@@ -3,15 +3,18 @@ package com.morganizer.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.morganizer.entity.ItemEntity;
-import com.morganizer.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.morganizer.dto.TaskItemRequest;
 import com.morganizer.dto.TaskRequest;
 import com.morganizer.dto.TaskResponse;
+import com.morganizer.entity.ItemEntity;
 import com.morganizer.entity.TaskEntity;
+import com.morganizer.entity.TaskListItemsEntity;
 import com.morganizer.entity.UserDetailsEntity;
+import com.morganizer.repository.ItemRepository;
+import com.morganizer.repository.TaskListItemsRepository;
 import com.morganizer.repository.TaskRepository;
 import com.morganizer.repository.UserDetailsRepository;
 
@@ -26,6 +29,9 @@ public class TaskService {
 	
 	@Autowired
 	private UserDetailsRepository userDetailsRepo;
+	
+	@Autowired
+	private TaskListItemsRepository taskListItemsRepo;
 
 	public List<TaskResponse> fetchAllTasks(long userId) {
 		List<TaskEntity> tasks =taskRepo.findByUserId(userId);
@@ -49,6 +55,13 @@ public class TaskService {
 		ItemEntity itemEntity = itemRepository.getOne(itemId);
 		itemRepository.save(itemEntity);
 
+	}
+	
+	public void addItem(TaskItemRequest item) {
+		// TODO Auto-generated method stub
+		
+//		TaskListItemsEntity itemEntity = taskListItemsRepo.save(new TaskListItemsEntity(item));
+		
 	}
 
 }
