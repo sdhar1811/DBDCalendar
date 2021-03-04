@@ -121,7 +121,11 @@ export class HomeScreenComponent implements OnInit {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal, private eventService: EventService, private dialog: MatDialog) {}
+  constructor(
+    private modal: NgbModal,
+    private eventService: EventService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {}
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -171,24 +175,61 @@ export class HomeScreenComponent implements OnInit {
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
-  }
-
-  addEvent(): void {
-    let eventModel = new EventModel();
-    let dialogRef = this.dialog.open(CreateEventComponent, {
+    //this.modal.open(this.modalContent, { size: 'lg' });
+    console.log(action);
+    if (action=='Clicked'){
+      console.log("Now clicked");
+      let eventModel = new EventModel();
+      eventModel.title = event.title;
+      eventModel.startTime = event.start;
+      eventModel.endTime = event.end;
+      eventModel.color = event.color;
+      let dialogRef = this.dialog.open(CreateEventComponent, {
       data: eventModel,
-      width: '600px'
+      width: '600px',
     });
 
     dialogRef.afterClosed().subscribe((response) => {
       console.log(JSON.stringify(response));
+
+      this.events = this.events.map((iEvent) => {
+        if (iEvent === event) {
+          return {
+            ...event,
+            title: response.title,
+            start: response.startTime,
+            end: response.endTime,
+            color: response.color,
+          };
+        }
+
+        return iEvent;
+      });
+    });
+    }
+
+
+
+
+  }
+
+  addEvent(): void {
+    let eventModel = new EventModel();
+    eventModel.color = {primary: '', secondary: ''}
+    let dialogRef = this.dialog.open(CreateEventComponent, {
+      data: eventModel,
+      width: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe((response) => {
+      console.log(JSON.stringify(response));
+
       this.events = [
         ...this.events,
         {
           title: response.title,
-          start: startOfDay(response.startTime),
-          end: endOfDay(response.endTime),
+          start: response.startTime,
+          end: response.endTime,
           color: response.color,
           draggable: true,
           resizable: {
@@ -197,8 +238,7 @@ export class HomeScreenComponent implements OnInit {
           },
         },
       ];
-    })
-    
+    });
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
