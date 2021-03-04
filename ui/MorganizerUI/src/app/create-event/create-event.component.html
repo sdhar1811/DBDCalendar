@@ -9,7 +9,8 @@
           color: gray;
         "
       >
-        <div class="col-md-10">Create Event</div>
+        <div class="col-md-10" *ngIf="!editFlag">Create Event</div>
+        <div class="col-md-10" *ngIf="editFlag">Edit Event</div>
         <div class="col-md-2" class="task-panel-close">
           <mat-icon
             matTooltip="Close"
@@ -38,7 +39,7 @@
           </div>
         </div>
       </div>
-  
+
       <mat-form-field appearance="outline">
         <mat-label>Event Category</mat-label>
         <mat-select>
@@ -47,7 +48,7 @@
           <mat-option value="home">Home</mat-option>
         </mat-select>
       </mat-form-field>
-  
+
       <mat-form-field>
         <input [(ngModel)]="data.startTime" matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a start date and time">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -106,9 +107,11 @@
         </mat-select>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" style="margin: 0.5em" (click)="createEvent()">
+      <button mat-raised-button color="primary" style="margin: 0.5em" (click)="createEvent()" *ngIf="!editFlag">
         Create Event
+      </button>
+      <button mat-raised-button color="primary" style="margin: 0.5em" (click)="updateEvent()" *ngIf="editFlag">
+        Update Event
       </button>
     </div>
   </div>
-  
