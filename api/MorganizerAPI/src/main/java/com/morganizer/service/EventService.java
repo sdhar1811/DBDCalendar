@@ -17,6 +17,8 @@ import com.morganizer.repository.NotificationTypeRepository;
 import com.morganizer.repository.RecurringModeRepository;
 import com.morganizer.repository.UserDetailsRepository;
 import com.morganizer.utils.DateTimeUtil;
+import com.morganizer.entity.EventCategoriesEntity;
+import com.morganizer.repository.EventCategoriesRepository;
 
 @Service
 public class EventService {
@@ -31,6 +33,9 @@ public class EventService {
 
 	@Autowired
 	public RecurringModeRepository recurringModeRepository;
+
+	@Autowired
+    public EventCategoriesRepository eventCategoriesRepository;
 
 	public void deleteEvent(EventRequest eventDetailsReq) {
 
