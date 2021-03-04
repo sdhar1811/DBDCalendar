@@ -14,7 +14,7 @@ public class TaskListItemsEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
-	private int itemId;
+	private long itemId;
 	
 	@ManyToOne
 	@JoinColumn(name="category_id",referencedColumnName="id")
