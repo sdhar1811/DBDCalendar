@@ -1,18 +1,20 @@
 package com.morganizer.controller;
 
-import com.morganizer.dto.ProfileRequest;
-import com.morganizer.service.ProfileService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import sun.java2d.cmm.Profile;
+import com.morganizer.dto.ProfileRequest;
+import com.morganizer.dto.ProfileResponse;
+import com.morganizer.service.ProfileService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -28,7 +30,11 @@ public class ProfileController {
     }
     
     @GetMapping("/fetchAll/{userId}")
-    public void deleteProfile(@PathVariable Long userId) {
-        profileService.fetchAll(userId);
+    public List<ProfileResponse> fetchAll(@PathVariable Long userId) {
+        return profileService.fetchAll(userId);
+    }
+    @PostMapping("/add")
+    public ProfileResponse addProfile(@RequestBody ProfileRequest profileRequest) {
+    	return profileService.addProfile(profileRequest);
     }
 }

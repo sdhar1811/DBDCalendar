@@ -15,18 +15,39 @@ public class ProfileEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long profileId;
 
-    private String firstName;
-    private String lastName;
-    private String middleName;
+    private String name;
     private String email;
     private String phoneNumber;
     private String gender;
     private String birthdate;
     private String color;
+    
+    
+    
+    
+    
 
     @ManyToOne
     @JoinColumn(name="user_id",referencedColumnName = "user_id")
     private UserDetailsEntity user;
+
+    
+    public ProfileEntity() {
+    	
+    }
+    
+    
+	public ProfileEntity( String name, String email, String phoneNumber, String gender, String birthdate,
+			String color, UserDetailsEntity user) {
+		super();		
+		this.name = name;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.gender = gender;
+		this.birthdate = birthdate;
+		this.color = color;
+		this.user = user;
+	}
 
 	public long getProfileId() {
 		return profileId;
@@ -34,30 +55,6 @@ public class ProfileEntity {
 
 	public void setProfileId(long profileId) {
 		this.profileId = profileId;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getMiddleName() {
-		return middleName;
-	}
-
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
 	}
 
 	public String getEmail() {
@@ -107,6 +104,16 @@ public class ProfileEntity {
 	public void setUser(UserDetailsEntity user) {
 		this.user = user;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
     
     
 
