@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.morganizer.dto.TaskItemRequest;
 import com.morganizer.dto.TaskRequest;
 import com.morganizer.dto.TodoListRequest;
 import com.morganizer.dto.TodoListResponse;
@@ -25,8 +26,6 @@ public class TodoListController {
 	
 	@Autowired
 	TodoListService taskService;
-
-
 
 	@GetMapping("/all/{userId}")
 	public List<TodoListResponse> fetchAllTasks(@PathVariable long userId){
@@ -47,4 +46,8 @@ public class TodoListController {
 		taskService.addTasks(taskRequest);
 	}
 
+	@PostMapping("/addItem")
+	public void createItem(@RequestBody TaskItemRequest taskItem){
+		taskService.addItem(taskItem);
+	}
 }
