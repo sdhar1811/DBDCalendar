@@ -8,4 +8,5 @@ export class EventModel {
   location: string;
   participant: string[];
   lastUpdatedOn: string;
+  color: any;
 }

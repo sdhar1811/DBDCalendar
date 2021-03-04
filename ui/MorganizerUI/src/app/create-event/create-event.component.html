@@ -1,4 +1,4 @@
-<mat-card class="createevent-panel">
+<div class="createevent-panel">
     <div class="flex-vertical">
       <div
         class="row justify-content-between"
@@ -12,8 +12,9 @@
         <div class="col-md-10">Create Event</div>
         <div class="col-md-2" class="task-panel-close">
           <mat-icon
-            matTooltip="Close Tasks"
+            matTooltip="Close"
             class="material-icons md-18"
+            (click)= "close()"
             >close</mat-icon
           >
         </div>
@@ -22,7 +23,7 @@
         <div class="col-md-10">
           <mat-form-field appearance="outline">
             <mat-label>Title</mat-label>
-            <input matInput required placeholder="Enter Event Title" />
+            <input [(ngModel)]="data.title"  matInput required placeholder="Enter Event Title" />
           </mat-form-field>
         </div>
         <div class="col-md-2">
@@ -48,7 +49,7 @@
       </mat-form-field>
   
       <mat-form-field>
-        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a start date and time">
+        <input [(ngModel)]="data.startTime" matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a start date and time">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #picker>
           <!-- Custom icon or text of Apply icon -->
@@ -60,7 +61,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput [ngxMatDatetimePicker]="picker2" placeholder="Choose an end date and time">
+        <input [(ngModel)]="data.endTime" matInput [ngxMatDatetimePicker]="picker2" placeholder="Choose an end date and time">
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #picker2>
           <!-- Custom icon or text of Apply icon -->
@@ -105,9 +106,9 @@
         </mat-select>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" style="margin: 0.5em">
+      <button mat-raised-button color="primary" style="margin: 0.5em" (click)="createEvent()">
         Create Event
       </button>
     </div>
-  </mat-card>
+  </div>
   
