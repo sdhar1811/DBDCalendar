@@ -49,4 +49,5 @@ public class EventController {
     public List<EventCategoriesEntity> fetchEventCategories() {
         return eventService.fetchEventCategories();
     }
+
 }
