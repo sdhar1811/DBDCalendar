@@ -2,6 +2,8 @@ package com.morganizer.controller;
 
 import java.util.List;
 
+import com.morganizer.entity.EventCategoriesEntity;
+import com.morganizer.entity.EventDetailsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,12 +24,12 @@ import com.morganizer.service.EventService;
 public class EventController {
     @Autowired
     EventService eventService;
-	
-	@DeleteMapping("/deleteEvent")
+
+    @DeleteMapping("/deleteEvent")
     public void deleteEvent(@RequestBody EventDetailsRequest eventDetailsRequest) {
         eventService.deleteEvent(eventDetailsRequest);
     }
-	
+
     @GetMapping("/fetchAll/{notificationTypeId}")
     public List<NotificationTypesEntity> getNotificationType() {
         return eventService.getNotificationType();
@@ -39,7 +41,12 @@ public class EventController {
     }
 
     @GetMapping("/fetchAll/{userId}")
-    public List<EventDetailsEntity> fetchAllEvents(Long userId){
-	    return eventService.fetchAllEvents(userId);
+    public List<EventDetailsEntity> fetchAllEvents(Long userId) {
+        return eventService.fetchAllEvents(userId);
+    }
+
+    @GetMapping("/fetchEventCategories")
+    public List<EventCategoriesEntity> fetchEventCategories() {
+        return eventService.fetchEventCategories();
     }
 }
