@@ -30,12 +30,12 @@ public class TaskController {
 		return taskService.fetchAllTasks(userId);
 	}
 	
-	@PostMapping("/createTask")
+	@PostMapping("/create")
 	public TaskResponse createTasks(@RequestBody TaskRequest task){
 		return taskService.createTask(task);
 	}
 
-	@PostMapping("/updateTask")
+	@PostMapping("/update")
 	public void updateStatus(Long itemId, boolean itemStatus){
 		taskService.updateStatus(itemId,itemStatus);
 	}
