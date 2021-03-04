@@ -34,6 +34,27 @@ public class EventDetailsEntity {
 	private String[] participant; 
 	
 	private Timestamp lastUpdatedOn;
+	
+	
+	public EventDetailsEntity() {
+		
+	}
+	
+
+	public EventDetailsEntity(UserDetailsEntity user, String eventTitle, String eventDescription, Timestamp startTime,
+			Timestamp endTime, RecurringModeEntity recurringMode, String location, String[] participant,
+			Timestamp lastUpdatedOn) {
+		super();
+		this.user = user;
+		this.eventTitle = eventTitle;
+		this.eventDescription = eventDescription;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.recurringMode = recurringMode;
+		this.location = location;
+		this.participant = participant;
+		this.lastUpdatedOn = lastUpdatedOn;
+	}
 
 	public long getId() {
 		return id;
