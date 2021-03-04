@@ -9,11 +9,11 @@ import com.morganizer.dto.EventDetailsRequest;
 import com.morganizer.entity.EventCategoriesEntity;
 import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.NotificationTypesEntity;
-import com.morganizer.entity.RecurringOptionsEntity;
+import com.morganizer.entity.RecurringModeEntity;
 import com.morganizer.repository.EventCategoriesRepository;
 import com.morganizer.repository.EventDetailsRepository;
 import com.morganizer.repository.NotificationTypeRepository;
-import com.morganizer.repository.RecurringOptionsRepository;
+import com.morganizer.repository.RecurringModeRepository;
 
 @Service
 public class EventService {
