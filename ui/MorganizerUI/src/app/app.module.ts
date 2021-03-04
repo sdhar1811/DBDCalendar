@@ -57,6 +57,7 @@ import {
   NgxMatNativeDateModule,
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -115,6 +116,7 @@ import {
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
     UiSwitchModule,
+    MatMenuModule,
   ],
   providers: [
     {

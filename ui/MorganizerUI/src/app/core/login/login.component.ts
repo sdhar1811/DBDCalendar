@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
         (response) => {
           this.router.navigateByUrl('home');
           this.storeService.setProperty('loggedInUser', response);
+          this.storeService.setLoggedInUserDetails(response);
         },
         (error) => {
           this.loginFailed = true;
