@@ -24,4 +24,6 @@ public class EventController {
         eventService.deleteEvent(eventDetailsRequest);
     }
 	
+	
+	
 }
