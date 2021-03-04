@@ -60,25 +60,17 @@
         }}</mat-option>
       </mat-select>
     </mat-form-field>
+
     <mat-form-field appearance="outline" style="width: 100%">
-      <mat-label>Due Date/Time</mat-label>
-      <input
-        [(ngModel)]="data[taskIndex].duedate"
-        matInput
-        [matDatepicker]="datepicker"
-      />
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="datepicker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #datepicker>
-        <mat-datepicker-actions>
-          <button mat-button matDatepickerCancel>Cancel</button>
-          <button mat-raised-button color="primary" matDatepickerApply>
-            Apply
-          </button>
-        </mat-datepicker-actions>
-      </mat-datepicker>
+      <input [(ngModel)]="data[taskIndex].duedate" matInput [ngxMatDatetimePicker]="picker" placeholder="Due date and time">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker>
+        <!-- Custom icon or text of Apply icon -->
+        <ng-template>
+          <!-- <mat-icon>star</mat-icon> -->
+          <span>OK</span>
+        </ng-template>
+      </ngx-mat-datetime-picker>
     </mat-form-field>
   </div>
 </div>
