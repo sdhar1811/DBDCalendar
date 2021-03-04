@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.morganizer.dto.EventDetailsRequest;
 import com.morganizer.dto.TaskItemRequest;
 import com.morganizer.dto.TaskRequest;
 import com.morganizer.dto.TaskResponse;
@@ -63,5 +64,14 @@ public class TaskService {
 //		TaskListItemsEntity itemEntity = taskListItemsRepo.save(new TaskListItemsEntity(item));
 		
 	}
+	
+	 public void deleteItem(TaskRequest task) {
+
+	        try {
+	        	taskListItemsRepo.deleteById(task.getItemId());
+	        } catch (Exception ex) {
+	            // throw custom exception for no such event present to be deleted
+	        }
+	    }
 
 }
