@@ -1,7 +1,10 @@
 package com.morganizer.controller;
 
+<<<<<<< HEAD
 import java.util.List;
 
+=======
+>>>>>>> 8bfe0bb (Task#57 event controller modified:)
 import com.morganizer.entity.EventCategoriesEntity;
 import com.morganizer.entity.EventDetailsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,33 +29,13 @@ import com.morganizer.service.EventService;
 public class EventController {
     @Autowired
     EventService eventService;
-<<<<<<< HEAD
-	
 	@DeleteMapping("/remove/{eventId}")
     public void deleteEvent(@PathVariable Long eventId) {
 		eventService.deleteEvent(eventId);
     }
 	
     @GetMapping("/notification/types")
-=======
-
-    @DeleteMapping("/deleteEvent")
-    public void deleteEvent(@RequestBody EventDetailsRequest eventDetailsRequest) {
-        eventService.deleteEvent(eventDetailsRequest);
-    }
-
-    @GetMapping("/fetchAll/{notificationTypeId}")
->>>>>>> 063012c (Task#57 event controller modified:)
     public List<NotificationTypesEntity> getNotificationType() {
-        return eventService.getNotificationType();
-    }
-
-    @GetMapping("/recurring/modes")
-    public List<RecurringModeEntity> getRecurringModes() {
-        return eventService.getRecurringModes();
-    }
-
-    @GetMapping("/fetchAll/{userId}")
     public List<EventDetailsEntity> fetchAllEvents(Long userId) {
         return eventService.fetchAllEvents(userId);
     }
