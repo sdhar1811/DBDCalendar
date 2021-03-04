@@ -1,20 +1,20 @@
 package com.morganizer.controller;
 
-import com.morganizer.entity.EventDetailsEntity;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.morganizer.dto.EventDetailsRequest;
-import com.morganizer.service.EventService;
+import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.NotificationTypesEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import com.morganizer.entity.RecurringOptionsEntity;
-
-import java.util.List;
+import com.morganizer.entity.RecurringModeEntity;
+import com.morganizer.service.EventService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -34,8 +34,8 @@ public class EventController {
     }
 
     @GetMapping("/fetchAll/{recurringOptionsId}")
-    public List<RecurringOptionsEntity> getRecurringOptions() {
-        return eventService.getRecurringOptions();
+    public List<RecurringModeEntity> getRecurringModes() {
+        return eventService.getRecurringModes();
     }
 
     @GetMapping("/fetchAll/{userId}")

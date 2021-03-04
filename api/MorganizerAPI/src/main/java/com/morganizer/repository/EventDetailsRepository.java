@@ -8,7 +8,7 @@ import com.morganizer.entity.EventDetailsEntity;
 
 public interface EventDetailsRepository extends JpaRepository<EventDetailsEntity, Long>{
 	
-	void deleteByEventIdAndUserId(Long eventId,Long userId);
+	void deleteByIdAndUserId(Long eventId,Long userId);
     
 	List<EventDetailsEntity> findByUserId(Long userId);
 }
