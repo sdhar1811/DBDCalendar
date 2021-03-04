@@ -1,18 +1,19 @@
 package com.morganizer.service;
 
-import com.morganizer.entity.EventDetailsEntity;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morganizer.dto.EventDetailsRequest;
-import com.morganizer.repository.EventDetailsRepository;
+import com.morganizer.entity.EventCategoriesEntity;
+import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.NotificationTypesEntity;
-import com.morganizer.repository.NotificationTypeRepository;
 import com.morganizer.entity.RecurringOptionsEntity;
+import com.morganizer.repository.EventCategoriesRepository;
+import com.morganizer.repository.EventDetailsRepository;
+import com.morganizer.repository.NotificationTypeRepository;
 import com.morganizer.repository.RecurringOptionsRepository;
-
-
-import java.util.List;
 
 @Service
 public class EventService {
@@ -25,6 +26,9 @@ public class EventService {
 
     @Autowired
     public RecurringOptionsRepository recurringOptionsRepository;
+    
+    @Autowired
+    public EventCategoriesRepository eventCategoriesRepository;
 
 	
 	public void deleteEvent(EventDetailsRequest eventDetailsReq) {
@@ -47,6 +51,12 @@ public class EventService {
     public List<EventDetailsEntity> fetchAllEvents(Long userId) {
 	    return eventDetailsRepository.findByUserId(userId);
     }
+    
+    public List<EventCategoriesEntity> fetchEventCategories() {
+	    return eventCategoriesRepository.findAll();
+    }
+    
+    
 }
 
 
