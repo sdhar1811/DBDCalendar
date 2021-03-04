@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-header',
@@ -6,7 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+  loggedInUser: any;
+  constructor(private storeService: StoreService, private router: Router) {}
+  ngOnInit() {
+    this.storeService.loggedInUserChange.subscribe((value) => {
+      this.loggedInUser = value;
+    });
+  }
+  logOut() {
+    // this.storeService.loggedInUserChange.unsubscribe();
+    this.loggedInUser = undefined;
+    this.router.navigate(['login']);
+  }
 }
