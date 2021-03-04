@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morganizer.dto.EventRequest;
+import com.morganizer.dto.EventDetailsRequest;
 import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.NotificationTypesEntity;
 import com.morganizer.entity.RecurringModeEntity;
@@ -83,4 +84,8 @@ public class EventService {
 				savedEntity.getParticipant(), savedEntity.getLastUpdatedOn().toString());
 
 	}
+
+	public List<EventCategoriesEntity> fetchEventCategories() {
+        return eventCategoriesRepository.findAll();
+    }
 }
