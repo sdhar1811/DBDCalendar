@@ -18,6 +18,10 @@ import {
 } from 'angular-calendar';
 import { Subject } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateEventComponent } from 'src/app/create-event/create-event.component';
+import { EventModel } from 'src/app/services/model/event-model';
+
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -117,7 +121,7 @@ export class HomeScreenComponent implements OnInit {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal, private eventService: EventService) {}
+  constructor(private modal: NgbModal, private eventService: EventService, private dialog: MatDialog) {}
 
   ngOnInit(): void {}
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -159,7 +163,7 @@ export class HomeScreenComponent implements OnInit {
         }
       },
       (error) => {
-        window.alert('#TODO: Something went wrong.');
+        // window.alert('#TODO: Something went wrong.');
       }
     );
     // this.handleEvent('Dropped or resized', event);
@@ -167,24 +171,34 @@ export class HomeScreenComponent implements OnInit {
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    // this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
+    let eventModel = new EventModel();
+    let dialogRef = this.dialog.open(CreateEventComponent, {
+      data: eventModel,
+      width: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe((response) => {
+      console.log(JSON.stringify(response));
+      this.events = [
+        ...this.events,
+        {
+          title: response.title,
+          start: startOfDay(response.startTime),
+          end: endOfDay(response.endTime),
+          color: response.color,
+          draggable: true,
+          resizable: {
+            beforeStart: true,
+            afterEnd: true,
+          },
         },
-      },
-    ];
+      ];
+    })
+    
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {

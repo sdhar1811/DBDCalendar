@@ -1,18 +1,17 @@
 package com.morganizer.service;
 
-import com.morganizer.entity.EventDetailsEntity;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morganizer.dto.EventDetailsRequest;
-import com.morganizer.repository.EventDetailsRepository;
+import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.NotificationTypesEntity;
+import com.morganizer.entity.RecurringModeEntity;
+import com.morganizer.repository.EventDetailsRepository;
 import com.morganizer.repository.NotificationTypeRepository;
-import com.morganizer.entity.RecurringOptionsEntity;
-import com.morganizer.repository.RecurringOptionsRepository;
-
-
-import java.util.List;
+import com.morganizer.repository.RecurringModeRepository;
 
 @Service
 public class EventService {
@@ -24,13 +23,13 @@ public class EventService {
     public NotificationTypeRepository notificationTypeRepository;
 
     @Autowired
-    public RecurringOptionsRepository recurringOptionsRepository;
+    public RecurringModeRepository recurringModeRepository;
 
 	
 	public void deleteEvent(EventDetailsRequest eventDetailsReq) {
 
         try {
-            eventDetailsRepository.deleteByEventIdAndUserId(eventDetailsReq.getEventId(),eventDetailsReq.getUserId());
+            eventDetailsRepository.deleteByIdAndUserId(eventDetailsReq.getEventId(),eventDetailsReq.getUserId());
         }
         catch (Exception ex){
             //throw custom exception for no such event present to be deleted
@@ -40,8 +39,8 @@ public class EventService {
     public List<NotificationTypesEntity> getNotificationType(){
         return notificationTypeRepository.findAll();
     }
-    public List<RecurringOptionsEntity> getRecurringOptions(){
-        return recurringOptionsRepository.findAll();
+    public List<RecurringModeEntity> getRecurringModes(){
+        return recurringModeRepository.findAll();
     }
 
     public List<EventDetailsEntity> fetchAllEvents(Long userId) {
