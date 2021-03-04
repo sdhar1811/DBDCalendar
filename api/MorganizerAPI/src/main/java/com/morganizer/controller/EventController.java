@@ -26,6 +26,7 @@ import com.morganizer.service.EventService;
 public class EventController {
     @Autowired
     EventService eventService;
+<<<<<<< HEAD
 	
 	@DeleteMapping("/remove/{eventId}")
     public void deleteEvent(@PathVariable Long eventId) {
@@ -33,6 +34,15 @@ public class EventController {
     }
 	
     @GetMapping("/notification/types")
+=======
+
+    @DeleteMapping("/deleteEvent")
+    public void deleteEvent(@RequestBody EventDetailsRequest eventDetailsRequest) {
+        eventService.deleteEvent(eventDetailsRequest);
+    }
+
+    @GetMapping("/fetchAll/{notificationTypeId}")
+>>>>>>> 063012c (Task#57 event controller modified:)
     public List<NotificationTypesEntity> getNotificationType() {
         return eventService.getNotificationType();
     }
