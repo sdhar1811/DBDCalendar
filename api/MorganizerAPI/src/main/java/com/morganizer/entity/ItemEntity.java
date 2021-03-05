@@ -2,13 +2,15 @@ package com.morganizer.entity;
 
 import java.sql.Timestamp;
 
-
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 // TO-DO
-//@Entity(name="todo_items")
+@Entity(name="todo_items")
 public class ItemEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -19,7 +21,18 @@ public class ItemEntity {
 	private String repeatType;
 	private boolean complete;
 	
+	@ManyToOne
+	@JoinColumn(name = "task_id", referencedColumnName = "id")
+	private TaskEntity task;
 	
+	
+	
+	public TaskEntity getTask() {
+		return task;
+	}
+	public void setTask(TaskEntity task) {
+		this.task = task;
+	}
 	
 	public long getId() {
 		return id;

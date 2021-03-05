@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "~ngx-ui-switch/ui-switch.component.scss";
 html,
 body {
   height: 100%;
@@ -25,4 +26,18 @@ body {
 }
 .material-icons.md-48 {
   font-size: 48px;
+}
+.cal-month-view .cal-cell .cal-event {
+  width: 100%;
+  border-radius: 0;
+  margin: 0px;
+}
+.cal-month-view .cal-day-badge {
+  background-color: #326277fa;
+}
+.cal-header {
+  background-color: #c0e9fa;
+}
+.cal-month-view .cal-events {
+  margin: 0px;
 }

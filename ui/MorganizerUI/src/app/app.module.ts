@@ -41,11 +41,23 @@ import { RightPanelComponent } from './core/home-screen/right-panel/right-panel.
 import { NewListDialogComponent } from './to-do-list/new-list-dialog/new-list-dialog.component';
 import { AddProfileComponent } from './add-profile/add-profile.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { UiSwitchModule } from 'ngx-ui-switch';
 import {
   MAT_COLOR_FORMATS,
   NgxMatColorPickerModule,
   NGX_MAT_COLOR_FORMATS,
 } from '@angular-material-components/color-picker';
+import { ColorCircleModule } from 'ngx-color/circle';
+import { NgxColorsModule } from 'ngx-colors';
+import { CreateEventComponent } from './create-event/create-event.component';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule,
+} from '@angular-material-components/datetime-picker';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -65,6 +77,7 @@ import {
     NewListDialogComponent,
     EditTaskComponent,
     AddProfileComponent,
+    CreateEventComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,6 +108,15 @@ import {
     TextFieldModule,
     NgxMatColorPickerModule,
     MatButtonToggleModule,
+    MatExpansionModule,
+    ColorCircleModule,
+    NgxColorsModule,
+    FlatpickrModule.forRoot(),
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
+    UiSwitchModule,
+    MatMenuModule,
   ],
   providers: [
     {
