@@ -11,72 +11,41 @@
     "
   >
     <div class="row text-center" style="margin: 10px">
+
       <div class="col-md-5">
         <div class="row">
           <div class="col-md-3 col-sm-4">
             <button
               mat-raised-button
               style="margin-left: 1px"
-              (click)="addEvent()"
-            >
-              + Create
+              (click)="addEvent()">+ Create
             </button>
           </div>
+
           <div class="col-md-8">
-            <div class="btn-group">
-              <button
-                mat-raised-button
-                mwlCalendarPreviousView
-                [view]="view"
-                [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()"
-              >
-                <mat-icon>keyboard_arrow_left</mat-icon>
-              </button>
-              <!-- <div
-            class="btn btn-primary"
-            mwlCalendarPreviousView
-            [view]="view"
-            [(viewDate)]="viewDate"
-            (viewDateChange)="closeOpenMonthViewDay()"
-          >
-            Previous
-          </div> -->
-              <button
-                mat-raised-button
-                color="basic"
-                mwlCalendarToday
-                [(viewDate)]="viewDate"
-              >
-                Today
-              </button>
-              <button
-                mat-raised-button
-                mwlCalendarNextView
-                [view]="view"
-                [(viewDate)]="viewDate"
-                (viewDateChange)="closeOpenMonthViewDay()"
-              >
-                <mat-icon>keyboard_arrow_right</mat-icon>
-              </button>
-              <!-- <button
-            mat-raised-button
-            color="primary"
-            mwlCalendarNextView
-            [view]="view"
-            [(viewDate)]="viewDate"
-            (viewDateChange)="closeOpenMonthViewDay()"
-          >
-            Next
-          </button> -->
-            </div>
+            <button
+              mat-raised-button
+              color="basic"
+              mwlCalendarToday
+              [(viewDate)]="viewDate"
+              matTooltip = "{{viewDate | date : 'EEEE, MMMM d'}}"
+            >
+              Today
+            </button>
           </div>
         </div>
       </div>
+
       <div class="col-md-3">
-        <h3>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h3>
+        <h2>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h2>
       </div>
+
       <div class="col-md-4">
+        <button mat-raised-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()">
+          <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+
         <mat-button-toggle-group class="btn-group">
           <mat-button-toggle
             mat-raised-button
@@ -100,9 +69,15 @@
             Day
           </mat-button-toggle>
         </mat-button-toggle-group>
+        <button mat-raised-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
       </div>
     </div>
+
     <br />
+
     <div [ngSwitch]="view" class="mat-elevation-z5">
       <mwl-calendar-month-view
         *ngSwitchCase="CalendarView.Month"
@@ -134,7 +109,10 @@
       >
       </mwl-calendar-day-view>
     </div>
+
+
   </div>
+
   <div
     [ngClass]="
       showRightPanel
@@ -143,6 +121,7 @@
     "
     style="margin-top: 1px"
   >
+
     <app-right-panel
       [showTaskPanel]="showRightPanel"
       (updateRightPanelStatus)="updateRightPanelStatus($event)"

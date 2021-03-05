@@ -177,45 +177,41 @@ export class HomeScreenComponent implements OnInit {
     this.modalData = { event, action };
     //this.modal.open(this.modalContent, { size: 'lg' });
     console.log(action);
-    if (action=='Clicked'){
-      console.log("Now clicked");
+    if (action == 'Clicked') {
+      console.log('Now clicked');
       let eventModel = new EventModel();
       eventModel.title = event.title;
       eventModel.startTime = event.start;
       eventModel.endTime = event.end;
       eventModel.color = event.color;
       let dialogRef = this.dialog.open(CreateEventComponent, {
-      data: eventModel,
-      width: '600px',
-    });
-
-    dialogRef.afterClosed().subscribe((response) => {
-      console.log(JSON.stringify(response));
-
-      this.events = this.events.map((iEvent) => {
-        if (iEvent === event) {
-          return {
-            ...event,
-            title: response.title,
-            start: response.startTime,
-            end: response.endTime,
-            color: response.color,
-          };
-        }
-
-        return iEvent;
+        data: eventModel,
+        width: '600px',
       });
-    });
+
+      dialogRef.afterClosed().subscribe((response) => {
+        console.log(JSON.stringify(response));
+
+        this.events = this.events.map((iEvent) => {
+          if (iEvent === event) {
+            return {
+              ...event,
+              title: response.title,
+              start: response.startTime,
+              end: response.endTime,
+              color: response.color,
+            };
+          }
+
+          return iEvent;
+        });
+      });
     }
-
-
-
-
   }
 
   addEvent(): void {
     let eventModel = new EventModel();
-    eventModel.color = {primary: '', secondary: ''}
+    eventModel.color = { primary: '', secondary: '' };
     let dialogRef = this.dialog.open(CreateEventComponent, {
       data: eventModel,
       width: '600px',
