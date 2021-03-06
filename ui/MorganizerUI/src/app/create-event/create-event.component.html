@@ -24,7 +24,7 @@
         <div class="col-md-10">
           <mat-form-field appearance="outline">
             <mat-label>Title</mat-label>
-            <input [(ngModel)]="data.title"  matInput required placeholder="Enter Event Title" />
+            <input [(ngModel)]="data.title" matInput required placeholder="Enter Event Title" />
           </mat-form-field>
         </div>
         <div class="col-md-2">
@@ -38,6 +38,7 @@
             >
           </div>
         </div>
+
       </div>
 
       <mat-form-field appearance="outline">
@@ -110,8 +111,13 @@
       <button mat-raised-button color="primary" style="margin: 0.5em" (click)="createEvent()" *ngIf="!editFlag">
         Create Event
       </button>
-      <button mat-raised-button color="primary" style="margin: 0.5em" (click)="updateEvent()" *ngIf="editFlag">
-        Update Event
-      </button>
-    </div>
+      <div *ngIf="editFlag">
+        <button mat-raised-button color="primary" style="margin: 0.5em" (click)="deleteEvent()" *ngIf="editFlag">
+          Delete Event
+        </button>
+          <button mat-raised-button color="primary" style="margin: 0.5em" (click)="updateEvent()" *ngIf="editFlag">
+            Update Event
+          </button>
+      </div>
+</div>
   </div>

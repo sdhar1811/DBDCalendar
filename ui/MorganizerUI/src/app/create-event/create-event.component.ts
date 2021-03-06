@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Input, Output } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-create-event',
@@ -7,8 +8,11 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
   styleUrls: ['./create-event.component.scss'],
 })
 export class CreateEventComponent implements OnInit {
+  @Input() eventIndex;
+  @Output() closeEmitter = new EventEmitter();
   color: any;
   editFlag: boolean = false;
+
 
   constructor(
     private dialogRef: MatDialogRef<CreateEventComponent>,
@@ -47,5 +51,11 @@ export class CreateEventComponent implements OnInit {
     this.data.color = { primary: this.color, secondary: this.color };
     console.log(JSON.stringify(this.data));
     this.close();
+  }
+
+  deleteEvent():void {
+    const eventIndex = this.data.indexOf();
+    this.data.splice(eventIndex, 1);
+    this.closeEmitter.emit(null);
   }
 }
