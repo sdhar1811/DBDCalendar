@@ -25,11 +25,11 @@
         <mat-option *ngFor="let list of todoLists" [value]="list">{{
           list.name
         }}</mat-option>
-        <mat-option
-          ><div class="add-task-list-btn" (click)="addNewList()">
+        <mat-option>
+          <div class="add-task-list-btn" (click)="addNewList()">
             Create New List
-          </div></mat-option
-        >
+          </div>
+        </mat-option>
       </mat-select>
     </mat-form-field>
     <!-- <mat-form-field appearance="outline">
@@ -67,9 +67,15 @@
         <div class="col-md-2" style="align-self: center">
           <!-- style="float: left; margin: 0 10px" -->
           <mat-checkbox
+            color="primary"
+            class="custom-frame"
+            matTooltip="{{
+              task.checked ? 'Mark incomplete' : 'Mark complete'
+            }}"
             [(ngModel)]="task.checked"
             (change)="sortTaskList()"
-          ></mat-checkbox>
+          >
+          </mat-checkbox>
         </div>
         <div class="col-md-8">
           <mat-label
@@ -83,8 +89,8 @@
             matTooltip="Edit Task"
             (click)="editTask(i)"
             class="material-icons md-18 edit-task-icon"
-            >mode</mat-icon
-          >
+            >mode
+          </mat-icon>
         </div>
       </div>
     </mat-card>

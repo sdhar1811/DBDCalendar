@@ -3,6 +3,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { flipAnimation, headShakeAnimation } from 'angular-animations';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private storeService: StoreService
   ) {
     this.createForm();
   }
@@ -43,10 +45,12 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (response) => {
           this.router.navigateByUrl('home');
+          this.storeService.setProperty('loggedInUser', response);
+          this.storeService.setLoggedInUserDetails(response);
         },
         (error) => {
           this.loginFailed = true;
-          console.log(error);
+
           this.errorMessage = error.error;
         }
       );

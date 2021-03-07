@@ -47,10 +47,19 @@
     transition: 0.5s ease-in-out;
   }
 }
-::ng-deep .mat-checkbox-checked .mat-checkbox-background,
-.mat-checkbox-indeterminate .mat-checkbox-background {
-  background-color: rgb(55, 243, 8) !important;
+
+::ng-deep .custom-frame {
+  & .mat-checkbox-background,
+  .mat-checkbox-frame {
+    border-radius: 70% !important;
+  }
 }
+
+// ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+//   .mat-checkbox-indeterminate .mat-checkbox-background {
+//   background-color: #8416b8 !important;
+// }
+
 // ::ng-deep
 //   .mat-checkbox:not(.mat-checkbox-disabled)
 //   .mat-checkbox-ripple

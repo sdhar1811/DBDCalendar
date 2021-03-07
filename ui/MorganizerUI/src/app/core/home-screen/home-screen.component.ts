@@ -17,6 +17,11 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { Subject } from 'rxjs';
+import { EventService } from 'src/app/services/event.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateEventComponent } from 'src/app/create-event/create-event.component';
+import { EventModel } from 'src/app/services/model/event-model';
+
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -77,7 +82,7 @@ export class HomeScreenComponent implements OnInit {
     {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
-      title: 'A 3 day event',
+      title: 'Sprint-2',
       color: colors.red,
       actions: this.actions,
       allDay: true,
@@ -87,12 +92,12 @@ export class HomeScreenComponent implements OnInit {
       },
       draggable: true,
     },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
+    // {
+    //   start: startOfDay(new Date()),
+    //   title: 'An event with no end date',
+    //   color: colors.yellow,
+    //   actions: this.actions,
+    // },
     {
       start: subDays(endOfMonth(new Date()), 3),
       end: addDays(endOfMonth(new Date()), 3),
@@ -101,8 +106,8 @@ export class HomeScreenComponent implements OnInit {
       allDay: true,
     },
     {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
+      start: addHours(subDays(startOfDay(new Date()), -3), 1),
+      end: addHours(subDays(startOfDay(new Date()), -3), 2),
       title: 'A draggable and resizable event',
       color: colors.yellow,
       actions: this.actions,
@@ -116,7 +121,11 @@ export class HomeScreenComponent implements OnInit {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal) {}
+  constructor(
+    private modal: NgbModal,
+    private eventService: EventService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {}
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -146,31 +155,90 @@ export class HomeScreenComponent implements OnInit {
           end: newEnd,
         };
       }
+
       return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
+    event.start = newStart;
+    event.end = newEnd;
+    this.eventService.updateEvent(event).subscribe(
+      (response) => {
+        if (response) {
+          console.log('Event updated');
+        }
+      },
+      (error) => {
+        // window.alert('#TODO: Something went wrong.');
+      }
+    );
+    // this.handleEvent('Dropped or resized', event);
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    //this.modal.open(this.modalContent, { size: 'lg' });
+    console.log(action);
+    if (action=='Clicked'){
+      console.log("Now clicked");
+      let eventModel = new EventModel();
+      eventModel.title = event.title;
+      eventModel.startTime = event.start;
+      eventModel.endTime = event.end;
+      eventModel.color = event.color;
+      let dialogRef = this.dialog.open(CreateEventComponent, {
+      data: eventModel,
+      width: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe((response) => {
+      console.log(JSON.stringify(response));
+
+      this.events = this.events.map((iEvent) => {
+        if (iEvent === event) {
+          return {
+            ...event,
+            title: response.title,
+            start: response.startTime,
+            end: response.endTime,
+            color: response.color,
+          };
+        }
+
+        return iEvent;
+      });
+    });
+    }
+
+
+
+
   }
 
   addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
+    let eventModel = new EventModel();
+    eventModel.color = {primary: '', secondary: ''}
+    let dialogRef = this.dialog.open(CreateEventComponent, {
+      data: eventModel,
+      width: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe((response) => {
+      console.log(JSON.stringify(response));
+
+      this.events = [
+        ...this.events,
+        {
+          title: response.title,
+          start: response.startTime,
+          end: response.endTime,
+          color: response.color,
+          draggable: true,
+          resizable: {
+            beforeStart: true,
+            afterEnd: true,
+          },
         },
-      },
-    ];
+      ];
+    });
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
@@ -184,8 +252,8 @@ export class HomeScreenComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+
   updateRightPanelStatus(value) {
     this.showRightPanel = value;
-    console.log('home-component');
   }
 }

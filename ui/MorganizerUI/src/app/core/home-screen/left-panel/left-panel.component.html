@@ -1,1 +1,54 @@
-<p>left-panel works!</p>
+<mat-card class="mat-elevation-z5" style="height: 100%">
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel style="box-shadow: none" [expanded]="'true'">
+      <mat-expansion-panel-header>
+        <mat-panel-title> <strong>My Profiles</strong> </mat-panel-title>
+        <!-- <mat-panel-description>
+            Type your name and age
+            <mat-icon>account_circle</mat-icon>
+          </mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <table>
+        <tr *ngFor="let profile of profiles">
+          <td>
+            <ui-switch
+              size="small"
+              [(ngModel)]="profile.value"
+              color="{{ profile.color }}"
+            ></ui-switch>
+          </td>
+          <td style="vertical-align: bottom">
+            {{ profile.name }}
+          </td>
+        </tr>
+      </table>
+    </mat-expansion-panel>
+    <mat-expansion-panel style="box-shadow: none" [expanded]="'true'">
+      <mat-expansion-panel-header>
+        <mat-panel-title> <strong>My Calendars</strong> </mat-panel-title>
+        <!-- <mat-panel-description>
+            Type your name and age
+            <mat-icon>account_circle</mat-icon>
+          </mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <tr *ngFor="let calendar of calendars">
+        <td>
+          <mat-checkbox>{{ calendar.name }}</mat-checkbox>
+        </td>
+      </tr>
+      <!-- <ul>
+        <li *ngFor="let calendar of calendars">
+          <mat-checkbox>{{ calendar.name }}</mat-checkbox>
+        </li>
+      </ul> -->
+    </mat-expansion-panel>
+  </mat-accordion>
+  <!-- <mat-card-subtitle>Calendar</mat-card-subtitle>
+  <div class="row">
+    <ul>
+      <li *ngFor="let profile of profiles">
+        <mat-checkbox [color]="profile.color">{{ profile.name }}</mat-checkbox>
+      </li>
+    </ul>
+  </div> -->
+</mat-card>
