@@ -1,9 +1,11 @@
 .icon-drawer {
   //   border-left: solid 1px gray;
   float: right;
-  width: 50%;
+  /* width: 50%; */
   height: 100%;
   text-align: center;
+  border-left: solid 1px darkgray;
+  border-bottom: solid 1px darkgray;
 }
 .icons {
   margin-top: 20px;
@@ -29,4 +31,21 @@
 .flex-vertical {
   display: flex;
   flex-direction: column;
+}
+
+.example-container {
+  // width: 500px;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 20px;
 }
