@@ -1,8 +1,7 @@
-<div class="row mh-100">
+<div class="row">
   <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
     <app-left-panel></app-left-panel>
   </div>
-
   <div
     [ngClass]="
       showRightPanel
@@ -11,9 +10,9 @@
     "
   >
     <div class="row text-center" style="margin: 10px">
-      <div class="col-md-5">
+      <div class="col-md-5 col-lg-5 col-sm-5">
         <div class="row">
-          <div class="col-md-3">
+          <div class="col-md-3 col-lg-3 col-sm-3">
             <button
               mat-raised-button
               style="margin-left: 1px"
@@ -22,7 +21,7 @@
               + Create
             </button>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-8 col-lg-8 col-sm-8">
             <div class="btn-group">
               <button
                 mat-raised-button
@@ -33,15 +32,6 @@
               >
                 <mat-icon>keyboard_arrow_left</mat-icon>
               </button>
-              <!-- <div
-            class="btn btn-primary"
-            mwlCalendarPreviousView
-            [view]="view"
-            [(viewDate)]="viewDate"
-            (viewDateChange)="closeOpenMonthViewDay()"
-          >
-            Previous
-          </div> -->
               <button
                 mat-raised-button
                 color="basic"
@@ -59,24 +49,14 @@
               >
                 <mat-icon>keyboard_arrow_right</mat-icon>
               </button>
-              <!-- <button
-            mat-raised-button
-            color="primary"
-            mwlCalendarNextView
-            [view]="view"
-            [(viewDate)]="viewDate"
-            (viewDateChange)="closeOpenMonthViewDay()"
-          >
-            Next
-          </button> -->
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3 col-lg-3 col-sm-3">
         <h3>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h3>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 col-lg-4 col-sm-4">
         <mat-button-toggle-group class="btn-group">
           <mat-button-toggle
             mat-raised-button
@@ -141,7 +121,7 @@
         ? 'col-xl-3 col-lg-3 col-md-3 col-sm-3 mat-elevation-z5'
         : 'col-xl-1 col-lg-1 col-md-1 col-sm-1'
     "
-    style="margin-top: 1px"
+    style="margin-top: 1px; padding-right: 1px"
   >
     <app-right-panel
       [showTaskPanel]="showRightPanel"
