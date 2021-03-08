@@ -7,10 +7,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.morganizer.entity.ResetQuestionsEntity;
 import com.morganizer.entity.UserCredentials;
 import com.morganizer.entity.UserDetailsEntity;
 import com.morganizer.entity.UserRolesEntity;
 import com.morganizer.model.UserModel;
+import com.morganizer.repository.ResetQuestionsRepository;
 import com.morganizer.repository.UserCredentailsRepository;
 import com.morganizer.repository.UserDetailsRepository;
 import com.morganizer.repository.UserRolesRepository;
@@ -31,6 +33,9 @@ public class UserSignupService {
 
 	@Autowired
 	UserRolesRepository userRolesRepo;
+	
+	@Autowired
+	ResetQuestionsRepository resetQnArepo;
 
 
 	public void registerUser(UserModel userInfo) throws Exception {
@@ -54,7 +59,7 @@ public class UserSignupService {
 		userCredentialsRepo.save(new UserCredentials(userDetails.getUsername(), hashedPassword,
 				Base64.getEncoder().encodeToString(salt), userDetails.getEmail()));
 	}
-
+	
 	public void fetchUserRole(String username) throws Exception {
 		List<UserDetailsEntity> userRoleList = userDetailsRepo.findByUserName(username);
 
@@ -63,6 +68,25 @@ public class UserSignupService {
 			
 			if (userRolesOptional.isPresent()) {
 				System.out.println(userRolesOptional.get().getRoleType());
+			}
+		}
+	}
+	
+	public void saveResetPassword(UserModel userDetails) throws Exception {
+		byte[] salt = PasswordUtil.getSalt(20);
+		String hashedPassword = securePassword.generateSecurePassword(userDetails.getPassword(), salt);
+		userCredentialsRepo.save(new UserCredentials(userDetails.getUsername(), hashedPassword,
+				Base64.getEncoder().encodeToString(salt), userDetails.getEmail()));
+	}
+	
+	public void fetchSecurityQnA(String username)throws Exception {
+		List<UserCredentials> userQnA = userCredentialsRepo.findByUsername(username);
+		
+		if (userQnA.size()>0) {
+			Optional<ResetQuestionsEntity> resetQnA = resetQnArepo.findById(userQnA.get(0).getQuestionId());
+			
+			if (resetQnA.isPresent()) {
+				System.out.println(resetQnA.get().getQuestiontext());
 			}
 		}
 	}

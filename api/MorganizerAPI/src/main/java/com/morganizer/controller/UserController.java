@@ -37,5 +37,15 @@ public class UserController {
 	public void fetchRoles(@RequestParam String username) throws Exception {
 		userSignupService.fetchUserRole(username);
 	}
+	
+	@GetMapping("/reset/username")
+	public void fetchResetQnA(@RequestParam String username) throws Exception {
+		userSignupService.fetchSecurityQnA(username);
+	}
+	
+	@PostMapping("/reset/newpasswd")
+	public void resetPassword(@RequestBody UserModel userDetails) throws Exception {
+		userSignupService.saveResetPassword(userDetails);
+	}
 
 }
