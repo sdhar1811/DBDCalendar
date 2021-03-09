@@ -9,6 +9,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 export class CreateEventComponent implements OnInit {
   color: any;
   editFlag: boolean = false;
+  calendars = [];
 
   constructor(
     private dialogRef: MatDialogRef<CreateEventComponent>,
@@ -19,12 +20,9 @@ export class CreateEventComponent implements OnInit {
     console.log('color');
     console.log(this.data.color.primary);
     console.log(this.data.startTime);
+    this.fetchCalendars();
     this.editFlag = this.data.color.primary == '' ? false : true;
     this.color =
-
-
-
-
       this.data.color.primary == '' ? '#973000' : this.data.color.primary;
   }
 
@@ -47,5 +45,14 @@ export class CreateEventComponent implements OnInit {
     this.data.color = { primary: this.color, secondary: this.color };
     console.log(JSON.stringify(this.data));
     this.close();
+  }
+
+  fetchCalendars()  {
+    this.calendars.push({ name: 'Work', color: 'red', value: '' });
+    this.calendars.push({ name: 'Personal', color: 'red', value: '' });
+    this.calendars.push({ name: 'Gym', color: 'red', value: '' });
+    this.calendars.push({ name: 'College', color: 'red', value: '' });
+    this.calendars.push({ name: 'Home', color: 'red', value: '' });
+    this.calendars.push({ name: 'Market', color: 'red', value: '' });
   }
 }
