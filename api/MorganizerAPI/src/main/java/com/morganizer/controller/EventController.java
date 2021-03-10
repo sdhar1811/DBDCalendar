@@ -26,13 +26,13 @@ import com.morganizer.service.EventService;
 public class EventController {
     @Autowired
     EventService eventService;
-	
-	@DeleteMapping("/deleteEvent")
-    public void deleteEvent(@RequestBody EventRequest eventDetailsRequest) {
+
+    @DeleteMapping("/deleteEvent")
+    public void deleteEvent(@RequestBody EventDetailsRequest eventDetailsRequest) {
         eventService.deleteEvent(eventDetailsRequest);
     }
-	
-    @GetMapping("/notification/types")
+
+    @GetMapping("/fetchAll/{notificationTypeId}")
     public List<NotificationTypesEntity> getNotificationType() {
         return eventService.getNotificationType();
     }
@@ -47,13 +47,9 @@ public class EventController {
         return eventService.fetchAllEvents(userId);
     }
 
-    @PostMapping("/add")
-    public EventRequest addEvent(@RequestBody EventRequest eventRequest) {
-    	return eventService.addEvent(eventRequest);
-    }
-    
     @GetMapping("/fetchEventCategories")
-    public List<EventCategoriesEntity> fetchEventCategories(){
-	    return eventService.fetchEventCategories();
+    public List<EventCategoriesEntity> fetchEventCategories() {
+        return eventService.fetchEventCategories();
     }
+
 }
