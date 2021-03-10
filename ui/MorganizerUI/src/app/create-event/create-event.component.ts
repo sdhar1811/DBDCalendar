@@ -12,6 +12,7 @@ export class CreateEventComponent implements OnInit {
   @Output() closeEmitter = new EventEmitter();
   color: any;
   editFlag: boolean = false;
+  calendars = [];
 
 
   constructor(
@@ -23,12 +24,9 @@ export class CreateEventComponent implements OnInit {
     console.log('color');
     console.log(this.data.color.primary);
     console.log(this.data.startTime);
+    this.fetchCalendars();
     this.editFlag = this.data.color.primary == '' ? false : true;
     this.color =
-
-
-
-
       this.data.color.primary == '' ? '#973000' : this.data.color.primary;
   }
 
@@ -57,5 +55,14 @@ export class CreateEventComponent implements OnInit {
     const eventIndex = this.data.indexOf();
     this.data.splice(eventIndex, 1);
     this.closeEmitter.emit(null);
+  }
+
+  fetchCalendars()  {
+    this.calendars.push({ name: 'Work', color: 'red', value: '' });
+    this.calendars.push({ name: 'Personal', color: 'red', value: '' });
+    this.calendars.push({ name: 'Gym', color: 'red', value: '' });
+    this.calendars.push({ name: 'College', color: 'red', value: '' });
+    this.calendars.push({ name: 'Home', color: 'red', value: '' });
+    this.calendars.push({ name: 'Market', color: 'red', value: '' });
   }
 }

@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class RightPanelComponent implements OnInit {
   @Input() showTaskPanel;
+  showFiller = false;
 
   taskPanel: boolean = false;
   profilePanel: boolean = false;

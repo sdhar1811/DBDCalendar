@@ -42,11 +42,9 @@
       </div>
 
       <mat-form-field appearance="outline">
-        <mat-label>Event Category</mat-label>
+        <mat-label>Choose Calendar</mat-label>
         <mat-select>
-          <mat-option value="work">Work</mat-option>
-          <mat-option value="school">School</mat-option>
-          <mat-option value="home">Home</mat-option>
+          <mat-option *ngFor="let calendar of calendars" [value]="calendar">{{ calendar.name }}</mat-option>
         </mat-select>
       </mat-form-field>
 
