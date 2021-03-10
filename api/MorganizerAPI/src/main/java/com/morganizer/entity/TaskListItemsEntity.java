@@ -49,7 +49,7 @@ public class TaskListItemsEntity {
 		this.task = task;
 	}
 
-	public int getItemId() {
+	public long getItemId() {
 		return itemId;
 	}
 
