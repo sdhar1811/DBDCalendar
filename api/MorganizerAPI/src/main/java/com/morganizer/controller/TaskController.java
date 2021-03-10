@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.morganizer.dto.EventDetailsRequest;
 import com.morganizer.dto.TaskItemRequest;
 import com.morganizer.dto.TaskRequest;
 import com.morganizer.dto.TaskResponse;

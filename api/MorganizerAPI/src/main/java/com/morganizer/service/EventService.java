@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morganizer.dto.EventRequest;
-import com.morganizer.dto.EventDetailsRequest;
 import com.morganizer.entity.EventCategoriesEntity;
 import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.NotificationTypesEntity;
@@ -19,7 +18,6 @@ import com.morganizer.repository.NotificationTypeRepository;
 import com.morganizer.repository.RecurringModeRepository;
 import com.morganizer.repository.UserDetailsRepository;
 import com.morganizer.utils.DateTimeUtil;
-import com.morganizer.repository.EventCategoriesRepository;
 
 @Service
 public class EventService {
