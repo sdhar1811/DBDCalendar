@@ -22,6 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateEventComponent } from 'src/app/create-event/create-event.component';
 import { EventModel } from 'src/app/services/model/event-model';
 
+
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -60,14 +61,14 @@ export class HomeScreenComponent implements OnInit {
 
   actions: CalendarEventAction[] = [
     {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
+      label: '<i class="material-icons md-18">edit</i>',
       a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.handleEvent('Edited', event);
       },
     },
     {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
+      label: '<i class="material-icons md-18">delete</i>',
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter((iEvent) => iEvent !== event);
@@ -103,6 +104,7 @@ export class HomeScreenComponent implements OnInit {
       end: addDays(endOfMonth(new Date()), 3),
       title: 'A long event that spans 2 months',
       color: colors.blue,
+      actions: this.actions,
       allDay: true,
     },
     {
@@ -128,6 +130,7 @@ export class HomeScreenComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -141,6 +144,8 @@ export class HomeScreenComponent implements OnInit {
       this.viewDate = date;
     }
   }
+
+
 
   eventTimesChanged({
     event,
@@ -173,49 +178,67 @@ export class HomeScreenComponent implements OnInit {
     // this.handleEvent('Dropped or resized', event);
   }
 
+
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    //this.modal.open(this.modalContent, { size: 'lg' });
     console.log(action);
-    if (action=='Clicked'){
-      console.log("Now clicked");
+    if (action == 'Edited' || action== 'Clicked') {
       let eventModel = new EventModel();
       eventModel.title = event.title;
       eventModel.startTime = event.start;
       eventModel.endTime = event.end;
       eventModel.color = event.color;
       let dialogRef = this.dialog.open(CreateEventComponent, {
-      data: eventModel,
-      width: '600px',
-    });
-
-    dialogRef.afterClosed().subscribe((response) => {
-      console.log(JSON.stringify(response));
-
-      this.events = this.events.map((iEvent) => {
-        if (iEvent === event) {
-          return {
-            ...event,
-            title: response.title,
-            start: response.startTime,
-            end: response.endTime,
-            color: response.color,
-          };
-        }
-
-        return iEvent;
+        data: eventModel,
+        width: '600px',
       });
-    });
+
+      dialogRef.afterClosed().subscribe((response) => {
+        console.log(JSON.stringify(response));
+
+        this.events = this.events.map((iEvent) => {
+          if (iEvent === event) {
+            return {
+              ...event,
+              title: response.title,
+              start: response.startTime,
+              end: response.endTime,
+              color: response.color,
+            };
+          }
+
+          return iEvent;
+        });
+      });
     }
 
+    /*  action = Delete event ---on edit screen - the delete button is not same as action
+        delete action on calendar works fine
+    */
+    else if (action == 'Deleted') {
+      this.deleteEvent(event);
+      // let eventModel = new EventModel();
+      // eventModel.title = event.title;
+      // eventModel.startTime = event.start;
+      // eventModel.endTime = event.end;
+      // eventModel.color = event.color;
+      // let dialogRef = this.dialog.open(CreateEventComponent, {
+      //   data: eventModel,
+      //   width: '600px',
+      // });
 
-
-
+      // dialogRef.afterClosed().subscribe((response) => {
+      //   this.events = this.events.filter((delete_event) => delete_event !== event);
+      // });
+    }
+    /*delete on edit screen ends here*/
   }
+
+
 
   addEvent(): void {
     let eventModel = new EventModel();
-    eventModel.color = {primary: '', secondary: ''}
+    eventModel.color = { primary: '', secondary: '' };
     let dialogRef = this.dialog.open(CreateEventComponent, {
       data: eventModel,
       width: '600px',
@@ -231,6 +254,7 @@ export class HomeScreenComponent implements OnInit {
           start: response.startTime,
           end: response.endTime,
           color: response.color,
+          actions: this.actions,
           draggable: true,
           resizable: {
             beforeStart: true,

@@ -8,12 +8,9 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./create-event.component.scss'],
 })
 export class CreateEventComponent implements OnInit {
-  @Input() eventIndex;
-  @Output() closeEmitter = new EventEmitter();
   color: any;
   editFlag: boolean = false;
   calendars = [];
-
 
   constructor(
     private dialogRef: MatDialogRef<CreateEventComponent>,
@@ -21,9 +18,9 @@ export class CreateEventComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('color');
-    console.log(this.data.color.primary);
-    console.log(this.data.startTime);
+    //console.log('color');
+    //console.log(this.data.color.primary);
+    //console.log(this.data.startTime);
     this.fetchCalendars();
     this.editFlag = this.data.color.primary == '' ? false : true;
     this.color =
@@ -51,13 +48,12 @@ export class CreateEventComponent implements OnInit {
     this.close();
   }
 
-  deleteEvent():void {
-    const eventIndex = this.data.indexOf();
-    this.data.splice(eventIndex, 1);
-    this.closeEmitter.emit(null);
+  cancelUpdateToEvent(): void {
+    this.close();
+    /* Still displays edited event - All changes should be nullified*/
   }
 
-  fetchCalendars()  {
+  fetchCalendars() {
     this.calendars.push({ name: 'Work', color: 'red', value: '' });
     this.calendars.push({ name: 'Personal', color: 'red', value: '' });
     this.calendars.push({ name: 'Gym', color: 'red', value: '' });

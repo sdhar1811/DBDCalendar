@@ -59,6 +59,7 @@ import {
 } from '@angular-material-components/datetime-picker';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     UiSwitchModule,
     MatMenuModule,
     MatSidenavModule,
+    FontAwesomeModule,
   ],
   providers: [
     {

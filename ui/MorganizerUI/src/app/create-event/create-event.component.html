@@ -110,8 +110,8 @@
         Create Event
       </button>
       <div *ngIf="editFlag">
-        <button mat-raised-button color="primary" style="margin: 0.5em" (click)="deleteEvent()" *ngIf="editFlag">
-          Delete Event
+        <button mat-raised-button color="primary" style="margin: 0.5em" (click)="cancelUpdateToEvent()" *ngIf="editFlag">
+          Cancel
         </button>
           <button mat-raised-button color="primary" style="margin: 0.5em" (click)="updateEvent()" *ngIf="editFlag">
             Update Event
