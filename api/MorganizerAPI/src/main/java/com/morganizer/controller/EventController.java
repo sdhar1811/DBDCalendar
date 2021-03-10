@@ -1,12 +1,8 @@
 package com.morganizer.controller;
 
-<<<<<<< HEAD
 import java.util.List;
 
-=======
->>>>>>> 8bfe0bb (Task#57 event controller modified:)
 import com.morganizer.entity.EventCategoriesEntity;
-import com.morganizer.entity.EventDetailsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.morganizer.dto.EventRequest;
-import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.NotificationTypesEntity;
 import com.morganizer.entity.RecurringModeEntity;
 import com.morganizer.service.EventService;
@@ -36,8 +31,17 @@ public class EventController {
 	
     @GetMapping("/notification/types")
     public List<NotificationTypesEntity> getNotificationType() {
-    public List<EventDetailsEntity> fetchAllEvents(Long userId) {
-        return eventService.fetchAllEvents(userId);
+        return eventService.getNotificationType();
+    }
+
+    @GetMapping("/recurring/modes")
+    public List<RecurringModeEntity> getRecurringModes() {
+        return eventService.getRecurringModes();
+    }
+
+    @GetMapping("/fetchAll/{userId}")
+    public List<EventRequest> fetchAllEvents(@PathVariable Long userId){
+	    return eventService.fetchAllEvents(userId);
     }
 
     @PostMapping("/add")

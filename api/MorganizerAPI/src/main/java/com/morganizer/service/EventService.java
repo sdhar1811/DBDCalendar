@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morganizer.dto.EventRequest;
-import com.morganizer.dto.EventDetailsRequest;
 import com.morganizer.entity.EventCategoriesEntity;
 import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.NotificationTypesEntity;
