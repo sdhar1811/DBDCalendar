@@ -22,4 +22,11 @@ export class EventService {
       calendarEvent
     );
   }
+
+  getAllEvents(userId: string) {
+    console.log("Service call");
+    return this.http.get<EventModel[]>(
+      this.eventURL + this.appConfig.fetchAllEvents(userId),
+    );
+  }
 }
