@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Input, Output } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-create-event',
@@ -17,9 +18,9 @@ export class CreateEventComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('color');
-    console.log(this.data.color.primary);
-    console.log(this.data.startTime);
+    //console.log('color');
+    //console.log(this.data.color.primary);
+    //console.log(this.data.startTime);
     this.fetchCalendars();
     this.editFlag = this.data.color.primary == '' ? false : true;
     this.color =
@@ -47,7 +48,12 @@ export class CreateEventComponent implements OnInit {
     this.close();
   }
 
-  fetchCalendars()  {
+  cancelUpdateToEvent(): void {
+    this.close();
+    /* Still displays edited event - All changes should be nullified*/
+  }
+
+  fetchCalendars() {
     this.calendars.push({ name: 'Work', color: 'red', value: '' });
     this.calendars.push({ name: 'Personal', color: 'red', value: '' });
     this.calendars.push({ name: 'Gym', color: 'red', value: '' });
