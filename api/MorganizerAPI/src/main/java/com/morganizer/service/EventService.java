@@ -32,11 +32,12 @@ public class EventService {
 	@Autowired
 	public RecurringModeRepository recurringModeRepository;
 
-	public void deleteEvent(EventRequest eventDetailsReq) {
+	public void deleteEvent(Long eventId) {
 
 		try {
-			eventDetailsRepository.deleteByIdAndUserId(eventDetailsReq.getEventId(), eventDetailsReq.getUserId());
+			eventDetailsRepository.deleteById(eventId);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			// throw custom exception for no such event present to be deleted
 		}
 	}

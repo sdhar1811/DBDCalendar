@@ -27,14 +27,20 @@ export class EventService {
 
   getAllEvents(userId: string) {
     return this.http.get<EventModel[]>(
-      this.eventURL + this.appConfig.fetchAllEvents(userId),
+      this.eventURL + this.appConfig.fetchAllEvents(userId)
     );
   }
 
   addEvent(event: EventModel) {
-    event.userId = 3;// this.storeService.getProperty('loggedInUser').id;
-    return this.http.post(
-      this.eventURL + this.appConfig.addEvent, event
+    event.userId = 3; // this.storeService.getProperty('loggedInUser').id;
+    return this.http.post(this.eventURL + this.appConfig.addEvent, event);
+  }
+
+  deleteEvent(calendarEvent: number) {
+
+    console.log(calendarEvent);
+    return this.http.delete(
+      this.eventURL + this.appConfig.deleteEvent(calendarEvent)
     );
   }
 }

@@ -72,7 +72,6 @@ export class CreateEventComponent implements OnInit {
 
   cancelUpdateToEvent(): void {
     this.close();
-    /* Still displays edited event - All changes should be nullified*/
   }
 
   fetchCalendars() {
