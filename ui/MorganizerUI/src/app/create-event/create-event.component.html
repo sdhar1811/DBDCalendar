@@ -19,28 +19,28 @@
           >close</mat-icon
         >
       </div>
-      <div class="row">
-        <div class="col-md-10">
-          <mat-form-field appearance="outline">
-            <mat-label>Title</mat-label>
-            <input
-              [(ngModel)]="data.title"
-              matInput
-              required
-              placeholder="Enter Event Title"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-md-2">
-          <div>
-            <ngx-colors
-              ngx-colors-trigger
-              [hideTextInput]="'true'"
-              [hideColorPicker]="'false'"
-              [(ngModel)]="color"
-              >Color</ngx-colors
-            >
-          </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <mat-form-field appearance="outline">
+          <mat-label>Title</mat-label>
+          <input
+            [(ngModel)]="data.title"
+            matInput
+            required
+            placeholder="Enter Event Title"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <div>
+          <ngx-colors
+            ngx-colors-trigger
+            [hideTextInput]="'true'"
+            [hideColorPicker]="'false'"
+            [(ngModel)]="color"
+            >Color</ngx-colors
+          >
         </div>
       </div>
     </div>
@@ -71,89 +71,84 @@
       </ngx-mat-datetime-picker>
     </mat-form-field>
 
-        <mat-form-field>
-          <input
-            [(ngModel)]="data.endTime"
-            matInput
-            [ngxMatDatetimePicker]="picker2"
-            placeholder="Choose an end date and time"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker2"
-          ></mat-datepicker-toggle>
-          <ngx-mat-datetime-picker #picker2>
-            <!-- Custom icon or text of Apply icon -->
-            <ng-template>
-              <!-- <mat-icon>star</mat-icon> -->
-              <span>OK</span>
-            </ng-template>
-          </ngx-mat-datetime-picker>
-        </mat-form-field>
+    <mat-form-field>
+      <input
+        [(ngModel)]="data.endTime"
+        matInput
+        [ngxMatDatetimePicker]="picker2"
+        placeholder="Choose an end date and time"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker2>
+        <!-- Custom icon or text of Apply icon -->
+        <ng-template>
+          <!-- <mat-icon>star</mat-icon> -->
+          <span>OK</span>
+        </ng-template>
+      </ngx-mat-datetime-picker>
+    </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Location</mat-label>
-          <input required matInput placeholder="Enter the location" />
-        </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Location</mat-label>
+      <input required matInput placeholder="Enter the location" />
+    </mat-form-field>
 
-        <mat-form-field appearance="outline" style="width: 100%">
-          <mat-label>Event Details</mat-label>
-          <textarea
-            matInput
-            cdkTextareaAutosize
-            cdkAutosizeMinRows="0"
-            cdkAutosizeMaxRows="5"
-            placeholder="Add details"
-          ></textarea>
-        </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Event Details</mat-label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="0"
+        cdkAutosizeMaxRows="5"
+        placeholder="Add details"
+      ></textarea>
+    </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Reminder</mat-label>
-          <mat-select>
-            <mat-option value="five">5 minutes</mat-option>
-            <mat-option value="ten">10 minutes</mat-option>
-            <mat-option value="fifteen">15 minutes</mat-option>
-          </mat-select>
-        </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Reminder</mat-label>
+      <mat-select>
+        <mat-option value="five">5 minutes</mat-option>
+        <mat-option value="ten">10 minutes</mat-option>
+        <mat-option value="fifteen">15 minutes</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Notification Type</mat-label>
-          <mat-select>
-            <mat-option value="email">Email</mat-option>
-            <mat-option value="text">Text</mat-option>
-          </mat-select>
-        </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Notification Type</mat-label>
+      <mat-select>
+        <mat-option value="email">Email</mat-option>
+        <mat-option value="text">Text</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-        <button
-          mat-raised-button
-          color="primary"
-          style="margin: 0.5em"
-          (click)="createEvent()"
-          *ngIf="!editFlag"
-        >
-          Create Event
-        </button>
-        <div *ngIf="editFlag">
-          <button
-            mat-raised-button
-            color="primary"
-            style="margin: 0.5em"
-            (click)="cancelUpdateToEvent()"
-            *ngIf="editFlag"
-          >
-            Cancel
-          </button>
-          <button
-            mat-raised-button
-            color="primary"
-            style="margin: 0.5em"
-            (click)="editEvent()"
-            *ngIf="editFlag"
-          >
-            Update Event
-          </button>
-        </div>
-      </div>
+    <button
+      mat-raised-button
+      color="primary"
+      style="margin: 0.5em"
+      (click)="createEvent()"
+      *ngIf="!editFlag"
+    >
+      Create Event
+    </button>
+    <div *ngIf="editFlag">
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin: 0.5em"
+        (click)="cancelUpdateToEvent()"
+        *ngIf="editFlag"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin: 0.5em"
+        (click)="editEvent()"
+        *ngIf="editFlag"
+      >
+        Update Event
+      </button>
     </div>
   </div>
 </div>

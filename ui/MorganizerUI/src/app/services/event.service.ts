@@ -47,7 +47,4 @@ export class EventService {
   triggerEventDropped(event) {
     this.eventDropped.next(event);
   }
-  triggerEventDropped(event) {
-    this.eventDropped.next(event);
-  }
 }
