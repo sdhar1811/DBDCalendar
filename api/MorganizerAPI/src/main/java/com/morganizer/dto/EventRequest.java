@@ -9,7 +9,7 @@ public class EventRequest {
 	private String startTime;
 	private String endTime;
 	private String location;
-	private String details;
+	private String description;
 	private String reminder;
 	private String notificationType;
 	private long recurringModeId;
@@ -27,7 +27,7 @@ public class EventRequest {
 	}
 
 	public EventRequest(long userId, long eventId, String title, String category, String startTime, String endTime,
-			String location, String details, String reminder, String notificationType, long recurringMode,
+			String location, String description, String reminder, String notificationType, long recurringMode,
 			String[] participant, String lastUpdateOn, String color) {
 		super();
 		this.userId = userId;
@@ -37,7 +37,7 @@ public class EventRequest {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.location = location;
-		this.details = details;
+		this.description = description;
 		this.reminder = reminder;
 		this.notificationType = notificationType;
 		this.recurringModeId = recurringMode;
@@ -94,12 +94,12 @@ public class EventRequest {
 		this.location = location;
 	}
 
-	public String getDetails() {
-		return details;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDetails(String details) {
-		this.details = details;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getReminder() {

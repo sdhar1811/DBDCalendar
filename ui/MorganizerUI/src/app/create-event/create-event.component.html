@@ -80,7 +80,7 @@
       <mat-form-field appearance="outline" style="width: 100%">
         <mat-label>Event Details</mat-label>
         <textarea
-          [(ngModel)]="data.descriptions"
+          [(ngModel)]="data.description"
           matInput
           cdkTextareaAutosize
           cdkAutosizeMinRows="0"
@@ -114,7 +114,7 @@
         <button mat-raised-button color="primary" style="margin: 0.5em" (click)="cancelUpdateToEvent()" *ngIf="editFlag">
           Cancel
         </button>
-          <button mat-raised-button color="primary" style="margin: 0.5em" (click)="updateEvent()" *ngIf="editFlag">
+          <button mat-raised-button color="primary" style="margin: 0.5em" (click)="editEvent()" *ngIf="editFlag">
             Update Event
           </button>
       </div>

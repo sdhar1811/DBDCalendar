@@ -95,7 +95,7 @@ export class HomeScreenComponent implements OnInit {
   //       afterEnd: true,
   //     },
   //     draggable: true,
-      
+
   //   },
   //   // {
   //   //   start: startOfDay(new Date()),
@@ -134,36 +134,33 @@ export class HomeScreenComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    
+
     this.fetchAllEvents();
-    // console.log(this.asyncEvents$);
   }
 
   fetchAllEvents(){
-    this.asyncEvents$ =  this.eventService.getAllEvents('3')
-      .pipe(
-        map(results  => {
-          console.log(results);
-          return results.map((eventModel: EventModel) => {
-            return {
-              title: eventModel.title,
-              start: new Date(eventModel.startTime+' UTC'),
-              end: new Date(eventModel.endTime+' UTC'),
-              color: {primary: eventModel.color, secondary : eventModel.color},
-              actions: this.actions,
-              resizable: {
-                beforeStart: true,
-                afterEnd: true,
-              },
-              draggable: true,
-              meta: {
-                eventModel,
-              },
-            };
-          });
-        })
-      );
-      console.log(this.asyncEvents$);
+    this.asyncEvents$ = this.eventService.getAllEvents('3').pipe(
+      map((results) => {
+        console.log(results);
+        return results.map((eventModel: EventModel) => {
+          return {
+            title: eventModel.title,
+            start: new Date(eventModel.startTime + ' UTC'),
+            end: new Date(eventModel.endTime + ' UTC'),
+            color: { primary: eventModel.color, secondary: eventModel.color },
+            actions: this.actions,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true,
+            },
+            draggable: true,
+            meta: {
+              eventModel,
+            },
+          };
+        });
+      })
+    );
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -220,19 +217,19 @@ export class HomeScreenComponent implements OnInit {
     this.modalData = { event, action };
     console.log(action);
     if (action == 'Edited' || action== 'Clicked') {
-      let eventModel = new EventModel();
-      eventModel.title = event.title;
-      eventModel.startTime = event.start;
-      eventModel.endTime = event.end;
-      eventModel.color = event.color;
+      let editEvent = new EventModel();
+      editEvent = event.meta.eventModel;
+
+      editEvent.startTime = event.start;
+      editEvent.endTime = event.end;
       let dialogRef = this.dialog.open(CreateEventComponent, {
-        data: eventModel,
+        data: editEvent,
         width: '600px',
       });
 
       dialogRef.afterClosed().subscribe((response) => {
         console.log(JSON.stringify(response));
-
+        this.fetchAllEvents();
         // this.asyncEvents$ = this.asyncEvents$.map((iEvent) => {
         //   if (iEvent === event) {
         //     return {

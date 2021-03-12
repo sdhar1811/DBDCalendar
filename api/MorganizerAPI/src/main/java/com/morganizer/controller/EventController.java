@@ -49,4 +49,9 @@ public class EventController {
     public EventRequest addEvent(@RequestBody EventRequest eventRequest) {
     	return eventService.addEvent(eventRequest);
     }
+    
+    @PostMapping("/update")
+    public EventRequest updateEvent(@RequestBody EventRequest eventRequest) {
+    	return eventService.updateEvent(eventRequest);
+    }
 }

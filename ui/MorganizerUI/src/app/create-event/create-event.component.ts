@@ -20,13 +20,9 @@ export class CreateEventComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //console.log('color');
-    //console.log(this.data.color.primary);
-    //console.log(this.data.startTime);
     this.fetchCalendars();
-    this.editFlag = this.data.color.primary == '' ? false : true;
-    this.color =
-      this.data.color.primary == '' ? '#973000' : this.data.color.primary;
+    this.editFlag = this.data.title == null ? false : true;
+    this.color = this.data.color == null ? '#1e90ff' : this.data.color;
   }
 
   close(): void {
@@ -49,16 +45,28 @@ export class CreateEventComponent implements OnInit {
         }
       },
       (error) => {
-        console.log("Something went wrong");
+        console.log('Something went wrong');
         // window.alert('#TODO: Something went wrong.');
       }
     );
     this.close();
   }
 
-  updateEvent(): void {
-    this.data.color = { primary: this.color, secondary: this.color };
+  editEvent(): void {
+    //this.data.color = { primary: this.color, secondary: this.color };
+    this.data.color = this.color;
     console.log(JSON.stringify(this.data));
+    this.eventService.updateEvent(this.data).subscribe(
+      (response) => {
+        if (response) {
+          console.log('Event Updated');
+        }
+      },
+      (error) => {
+        console.log('Something went wrong');
+        // window.alert('#TODO: Something went wrong.');
+      }
+    );
     this.close();
   }
 
