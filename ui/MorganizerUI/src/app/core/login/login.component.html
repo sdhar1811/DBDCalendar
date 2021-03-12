@@ -1,8 +1,8 @@
 <div class="container">
   <mat-card [@headShake]="loginFailed" class="mat-elevation-z5 login-panel">
     <mat-card-title class="login-title">
-      <div style="margin: 10px">Weclome to Morganized</div>
-      <div style="text-align: center">
+      <div style="margin: 10px;">Weclome to Morganized</div>
+      <div style="text-align: center;">
         <span>
           <mat-icon class="material-icons md-18">lock</mat-icon>
         </span>
@@ -36,7 +36,7 @@
             <strong> Password</strong> is required
           </mat-error>
         </mat-form-field>
-        <div *ngIf="loginFailed" style="color: red; text-align: center">
+        <div *ngIf="loginFailed" style="color: red; text-align: center;">
           {{ this.errorMessage.message }}:{{ this.errorMessage.error[0] }}
         </div>
 
@@ -44,7 +44,7 @@
           mat-raised-button
           class="btn-animation"
           color="primary"
-          style="margin: 0.5em"
+          style="margin: 0.5em;"
           (click)="login()"
           [disabled]="!loginForm.valid"
         >
@@ -54,7 +54,7 @@
           mat-raised-button
           class="btn-animation"
           color="primary"
-          style="margin: 0.5em"
+          style="margin: 0.5em;"
           (click)="goToRegister()"
         >
           Sign Up

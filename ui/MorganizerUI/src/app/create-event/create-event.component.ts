@@ -1,5 +1,9 @@
 import { Component, Inject, OnInit, Input, Output } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { EventEmitter } from '@angular/core';
 import { EventService } from '../services/event.service';
 
@@ -69,7 +73,6 @@ export class CreateEventComponent implements OnInit {
         this.close();
       }
     );
-    
   }
 
   cancelUpdateToEvent(): void {

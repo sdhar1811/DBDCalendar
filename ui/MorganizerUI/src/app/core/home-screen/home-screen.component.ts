@@ -23,7 +23,6 @@ import { CreateEventComponent } from 'src/app/create-event/create-event.componen
 import { EventModel } from 'src/app/services/model/event-model';
 import { map } from 'rxjs/operators';
 
-
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -200,12 +199,34 @@ export class HomeScreenComponent implements OnInit {
 
     //   return iEvent;
     // });
-    let rescheduleEvent : any;
-    rescheduleEvent = event.meta.eventModel;
+    // let rescheduleEvent : any;
+    // rescheduleEvent = event.meta.eventModel;
 
-    rescheduleEvent.startTime = newStart;
-    rescheduleEvent.endTime = newEnd;
-    this.eventService.updateEvent(rescheduleEvent).subscribe(
+    // rescheduleEvent.startTime = newStart;
+    // rescheduleEvent.endTime = newEnd;
+    // this.eventService.updateEvent(rescheduleEvent).subscribe(
+    if (this.events.indexOf(event) === -1) {
+      event['color'] = event['calendar']?.color;
+      event['actions'] = this.actions;
+      this.events.push(event);
+      this.events = [...this.events];
+      this.eventService.triggerEventDropped(event);
+    } else {
+      this.events = this.events.map((iEvent) => {
+        if (iEvent === event) {
+          return {
+            ...event,
+            start: newStart,
+            end: newEnd,
+          };
+        }
+
+        return iEvent;
+      });
+    }
+    event.start = newStart;
+    event.end = newEnd;
+    this.eventService.updateEvent(event).subscribe(
       (response) => {
         if (response) {
           this.fetchAllEvents();
@@ -217,7 +238,7 @@ export class HomeScreenComponent implements OnInit {
         this.fetchAllEvents();
       }
     );
-    
+
     // this.handleEvent('Dropped or resized', event);
   }
 
@@ -293,9 +314,9 @@ export class HomeScreenComponent implements OnInit {
   deleteEvent(eventToDelete: number) {
     // this.asyncEvents$ = this.asyncEvents$.filter((event) => event !== eventToDelete);
     this.eventService.deleteEvent(eventToDelete).subscribe(
-      (response) => {        
-          console.log('Event Deleted');
-          this.fetchAllEvents();        
+      (response) => {
+        console.log('Event Deleted');
+        this.fetchAllEvents();
       },
       (error) => {
         console.log('Something went wrong');

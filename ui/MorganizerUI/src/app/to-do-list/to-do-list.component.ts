@@ -13,6 +13,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TodoListService } from '../services/todo-list.service';
 import { StoreService } from 'src/app/services/store.service';
 import { NewListDialogComponent } from './new-list-dialog/new-list-dialog.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-to-do-list',
@@ -58,8 +60,16 @@ export class ToDoListComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private taskService: TodoListService,
+    private eventService: EventService,
     private storeService: StoreService
-  ) {}
+  ) {
+    this.eventService.eventDropped.subscribe((event) => {
+      const index = this.tasks.indexOf(event);
+      if (this.tasks && index !== -1) {
+        this.tasks.splice(index, 1);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.populateTaskLOV();
@@ -68,7 +78,7 @@ export class ToDoListComponent implements OnInit {
 
   populateTaskLOV() {
     this.taskService
-      .getTask(this.storeService.getProperty('loggedInUser').id)
+      .getTask(this.storeService.loggedInUser?.id)
       .subscribe((response) => {
         if (response) {
           response.forEach((task) => {
@@ -112,9 +122,11 @@ export class ToDoListComponent implements OnInit {
     this.tasks.push({
       title: this.taskTitle,
       description: null,
-      calendar: [],
+      calendar: {},
       duedate: '',
       checked: false,
+      draggable: true,
+      start: new Date(),
     });
     this.sortTaskList();
     this.taskTitle = '';
@@ -124,7 +136,6 @@ export class ToDoListComponent implements OnInit {
   }
   editTask(index) {
     this.taskIndex = index;
-
     this.editMode = true;
   }
   sortTaskList() {
@@ -137,5 +148,8 @@ export class ToDoListComponent implements OnInit {
   }
   close() {
     this.closeTaskPanel.emit(null);
+  }
+  drop(event: CdkDragDrop<any[]>) {
+    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
   }
 }
