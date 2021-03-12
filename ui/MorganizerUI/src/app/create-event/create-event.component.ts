@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, Input, Output } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EventEmitter } from '@angular/core';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-create-event',
@@ -8,12 +9,13 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./create-event.component.scss'],
 })
 export class CreateEventComponent implements OnInit {
-  color: any;
+  color: any = '#1e90ff';
   editFlag: boolean = false;
   calendars = [];
 
   constructor(
     private dialogRef: MatDialogRef<CreateEventComponent>,
+    private eventService: EventService,
     @Inject(MAT_DIALOG_DATA) public data
   ) {}
 
@@ -37,8 +39,20 @@ export class CreateEventComponent implements OnInit {
   // }
 
   createEvent(): void {
-    this.data.color = { primary: this.color, secondary: this.color };
+    this.data.color = this.color;
     console.log(JSON.stringify(this.data));
+
+    this.eventService.addEvent(this.data).subscribe(
+      (response) => {
+        if (response) {
+          console.log('Event Created');
+        }
+      },
+      (error) => {
+        console.log("Something went wrong");
+        // window.alert('#TODO: Something went wrong.');
+      }
+    );
     this.close();
   }
 

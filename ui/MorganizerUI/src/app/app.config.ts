@@ -12,6 +12,7 @@ export interface IAppConfig {
   fetchAllTasks: any;
   event: string;
   fetchAllEvents: any;
+  addEvent: string;
   updateEvent: string;
 }
 export const APPCONFIG: IAppConfig = {
@@ -25,6 +26,7 @@ export const APPCONFIG: IAppConfig = {
   fetchAllTasks: (userId: string) => `/all/${userId}`,
   event: '/event',
   fetchAllEvents: (userId: string) => `/fetchAll/${userId}`,
+  addEvent: '/add',
   updateEvent: '/update',
 };
 export const APP_CONFIG = new InjectionToken<IAppConfig>('app.config');

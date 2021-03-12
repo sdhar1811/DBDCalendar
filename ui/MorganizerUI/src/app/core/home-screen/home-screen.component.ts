@@ -125,7 +125,7 @@ export class HomeScreenComponent implements OnInit {
   //   },
   // ];
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
   constructor(
     private modal: NgbModal,
@@ -135,15 +135,21 @@ export class HomeScreenComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.asyncEvents$ =  this.eventService.getAllEvents('1')
+    this.fetchAllEvents();
+    // console.log(this.asyncEvents$);
+  }
+
+  fetchAllEvents(){
+    this.asyncEvents$ =  this.eventService.getAllEvents('3')
       .pipe(
         map(results  => {
+          console.log(results);
           return results.map((eventModel: EventModel) => {
             return {
               title: eventModel.title,
-              start: new Date(eventModel.startTime),
-              end: new Date(eventModel.endTime),
-              color: eventModel.color,
+              start: new Date(eventModel.startTime+' UTC'),
+              end: new Date(eventModel.endTime+' UTC'),
+              color: {primary: eventModel.color, secondary : eventModel.color},
               actions: this.actions,
               resizable: {
                 beforeStart: true,
@@ -157,7 +163,7 @@ export class HomeScreenComponent implements OnInit {
           });
         })
       );
-    // console.log(this.asyncEvents$);
+      console.log(this.asyncEvents$);
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -194,6 +200,7 @@ export class HomeScreenComponent implements OnInit {
     // });
     event.start = newStart;
     event.end = newEnd;
+
     this.eventService.updateEvent(event).subscribe(
       (response) => {
         if (response) {
@@ -204,6 +211,7 @@ export class HomeScreenComponent implements OnInit {
         // window.alert('#TODO: Something went wrong.');
       }
     );
+    this.fetchAllEvents();
     // this.handleEvent('Dropped or resized', event);
   }
 
@@ -268,31 +276,31 @@ export class HomeScreenComponent implements OnInit {
 
   addEvent(): void {
     let eventModel = new EventModel();
-    eventModel.color = { primary: '', secondary: '' };
+    // eventModel.color = { primary: '', secondary: '' };
     let dialogRef = this.dialog.open(CreateEventComponent, {
       data: eventModel,
       width: '600px',
     });
 
-  //   dialogRef.afterClosed().subscribe((response) => {
-  //     console.log(JSON.stringify(response));
-
-  //     this.asyncEvents$ = [
-  //       ...this.asyncEvents$,
-  //       {
-  //         title: response.title,
-  //         start: response.startTime,
-  //         end: response.endTime,
-  //         color: response.color,
-  //         actions: this.actions,
-  //         draggable: true,
-  //         resizable: {
-  //           beforeStart: true,
-  //           afterEnd: true,
-  //         },
-  //       },
-  //     ];
-  //   });
+    dialogRef.afterClosed().subscribe((response) => {
+      console.log(JSON.stringify(response));
+      this.fetchAllEvents();
+      // this.asyncEvents$ = [
+      //   ...this.asyncEvents$,
+      //   {
+      //     title: response.title,
+      //     start: response.startTime,
+      //     end: response.endTime,
+      //     color: response.color,
+      //     actions: this.actions,
+      //     draggable: true,
+      //     resizable: {
+      //       beforeStart: true,
+      //       afterEnd: true,
+      //     },
+      //   },
+      // ];
+    });
   }
 
   deleteEvent(eventToDelete: CalendarEvent<{eventModel: EventModel}>) {

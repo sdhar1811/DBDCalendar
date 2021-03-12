@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { APP_CONFIG, IAppConfig } from '../app.config';
 import { EventModel } from './model/event-model';
+import { StoreService } from './store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,8 @@ export class EventService {
   eventURL: string;
   constructor(
     @Inject(APP_CONFIG) private appConfig: IAppConfig,
-    private http: HttpClient
+    private http: HttpClient,
+    private storeService: StoreService
   ) {
     this.eventURL = appConfig.morganizerAPIEndpoint + appConfig.event;
   }
@@ -24,9 +26,15 @@ export class EventService {
   }
 
   getAllEvents(userId: string) {
-    console.log("Service call");
     return this.http.get<EventModel[]>(
       this.eventURL + this.appConfig.fetchAllEvents(userId),
+    );
+  }
+
+  addEvent(event: EventModel) {
+    event.userId = 3;// this.storeService.getProperty('loggedInUser').id;
+    return this.http.post(
+      this.eventURL + this.appConfig.addEvent, event
     );
   }
 }

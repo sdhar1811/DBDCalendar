@@ -35,15 +35,16 @@ public class EventDetailsEntity {
 	
 	private Timestamp lastUpdatedOn;
 	
+	private String color;
 	
 	public EventDetailsEntity() {
 		
 	}
 	
 
-	public EventDetailsEntity(UserDetailsEntity user, String eventTitle, String eventDescription, Timestamp startTime,
-			Timestamp endTime, RecurringModeEntity recurringMode, String location, String[] participant,
-			Timestamp lastUpdatedOn) {
+	public EventDetailsEntity(UserDetailsEntity user, String eventTitle, String eventDescription,
+			Timestamp startTime, Timestamp endTime, RecurringModeEntity recurringMode, String location,
+			String[] participant, Timestamp lastUpdatedOn, String color) {
 		super();
 		this.user = user;
 		this.eventTitle = eventTitle;
@@ -54,6 +55,7 @@ public class EventDetailsEntity {
 		this.location = location;
 		this.participant = participant;
 		this.lastUpdatedOn = lastUpdatedOn;
+		this.color = color;
 	}
 
 	public long getId() {
@@ -135,10 +137,15 @@ public class EventDetailsEntity {
 	public void setLastUpdatedOn(Timestamp lastUpdatedOn) {
 		this.lastUpdatedOn = lastUpdatedOn;
 	}
-	
-	
-	
-	
-	
+
+
+	public String getColor() {
+		return color;
+	}
+
+
+	public void setColor(String color) {
+		this.color = color;
+	}
 	
 }
