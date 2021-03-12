@@ -1,24 +1,23 @@
 <div class="createevent-panel">
-    <div class="flex-vertical">
-      <div
-        class="row justify-content-between"
-        style="
-          border-bottom: solid #d1d1d1;
-          border-bottom-width: 2px;
-          margin-bottom: 10px;
-          color: gray;
-        "
-      >
-        <div class="col-md-10" *ngIf="!editFlag">Create Event</div>
-        <div class="col-md-10" *ngIf="editFlag">Edit Event</div>
-        <div class="col-md-2" class="task-panel-close">
-          <mat-icon
-            matTooltip="Close"
-            class="material-icons md-18"
-            (click)= "close()"
-            >close</mat-icon
-          >
-        </div>
+  <div class="flex-vertical">
+    <div
+      class="row justify-content-between"
+      style="
+        border-bottom: solid #d1d1d1;
+        border-bottom-width: 2px;
+        margin-bottom: 10px;
+        color: gray;
+      "
+    >
+      <div class="col-md-10" *ngIf="!editFlag">Create Event</div>
+      <div class="col-md-10" *ngIf="editFlag">Edit Event</div>
+      <div class="col-md-2" class="task-panel-close">
+        <mat-icon
+          matTooltip="Close"
+          class="material-icons md-18"
+          (click)="close()"
+          >close</mat-icon
+        >
       </div>
       <div class="row">
         <div class="col-md-10">
@@ -40,6 +39,7 @@
         </div>
 
       </div>
+    </div>
 
       <mat-form-field appearance="outline">
         <mat-label>Choose Calendar</mat-label>
@@ -60,17 +60,22 @@
         </ngx-mat-datetime-picker>
       </mat-form-field>
 
-      <mat-form-field>
-        <input [(ngModel)]="data.endTime" matInput [ngxMatDatetimePicker]="picker2" placeholder="Choose an end date and time">
-        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #picker2>
-          <!-- Custom icon or text of Apply icon -->
-          <ng-template>
-            <!-- <mat-icon>star</mat-icon> -->
-            <span>OK</span>
-          </ng-template>
-        </ngx-mat-datetime-picker>
-      </mat-form-field>
+    <mat-form-field>
+      <input
+        [(ngModel)]="data.startTime"
+        matInput
+        [ngxMatDatetimePicker]="picker"
+        placeholder="Choose a start date and time"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker>
+        <!-- Custom icon or text of Apply icon -->
+        <ng-template>
+          <!-- <mat-icon>star</mat-icon> -->
+          <span>OK</span>
+        </ng-template>
+      </ngx-mat-datetime-picker>
+    </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Location</mat-label>
@@ -89,23 +94,33 @@
         ></textarea>
       </mat-form-field>
 
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Event Details</mat-label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="0"
+        cdkAutosizeMaxRows="5"
+        placeholder="Add details"
+      ></textarea>
+    </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Reminder</mat-label>
-        <mat-select>
-          <mat-option value="five">5 minutes</mat-option>
-          <mat-option value="ten">10 minutes</mat-option>
-          <mat-option value="fifteen">15 minutes</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Reminder</mat-label>
+      <mat-select>
+        <mat-option value="five">5 minutes</mat-option>
+        <mat-option value="ten">10 minutes</mat-option>
+        <mat-option value="fifteen">15 minutes</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Notification Type</mat-label>
-        <mat-select>
-          <mat-option value="email">Email</mat-option>
-          <mat-option value="text">Text</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Notification Type</mat-label>
+      <mat-select>
+        <mat-option value="email">Email</mat-option>
+        <mat-option value="text">Text</mat-option>
+      </mat-select>
+    </mat-form-field>
 
       <button mat-raised-button color="primary" style="margin: 0.5em" (click)="createEvent()" *ngIf="!editFlag">
         Create Event
@@ -120,3 +135,4 @@
       </div>
 </div>
   </div>
+</div>

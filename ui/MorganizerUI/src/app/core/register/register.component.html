@@ -144,7 +144,7 @@
             </mat-form-field>
             <div
               *ngIf="accountForm.get('password').errors?.pattern"
-              style="color: red"
+              style="color: red;"
             >
               <ul>
                 <li>Atleast 8 characters in length</li>
@@ -184,7 +184,7 @@
         mat-raised-button
         class="btn-animation btn-left-align"
         color="primary"
-        style="margin: 0.5em"
+        style="margin: 0.5em;"
         (click)="decrementIndex()"
         [disabled]="tabIndex === 0"
       >
@@ -195,7 +195,7 @@
         mat-raised-button
         class="btn-animation btn-right-align"
         color="primary"
-        style="margin: 0.5em"
+        style="margin: 0.5em;"
         (click)="incrementIndex()"
         [disabled]="!personalForm.valid"
       >
@@ -206,7 +206,7 @@
         mat-raised-button
         class="btn-animation btn-right-align"
         color="primary"
-        style="margin: 0.5em"
+        style="margin: 0.5em;"
         (click)="registerUser()"
         [disabled]="!accountForm.valid || !personalForm.valid"
       >

@@ -23,7 +23,6 @@ import { CreateEventComponent } from 'src/app/create-event/create-event.componen
 import { EventModel } from 'src/app/services/model/event-model';
 import { map } from 'rxjs/operators';
 
-
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -189,17 +188,25 @@ export class HomeScreenComponent implements OnInit {
     newStart,
     newEnd,
   }: CalendarEventTimesChangedEvent): void {
-    // this.asyncEvents$ = this.asyncEvents$.map((iEvent) => {
-    //   if (iEvent === event) {
-    //     return {
-    //       ...event,
-    //       start: newStart,
-    //       end: newEnd,
-    //     };
-    //   }
+    if (this.events.indexOf(event) === -1) {
+      event['color'] = event['calendar']?.color;
+      event['actions'] = this.actions;
+      this.events.push(event);
+      this.events = [...this.events];
+      this.eventService.triggerEventDropped(event);
+    } else {
+      this.events = this.events.map((iEvent) => {
+        if (iEvent === event) {
+          return {
+            ...event,
+            start: newStart,
+            end: newEnd,
+          };
+        }
 
-    //   return iEvent;
-    // });
+        return iEvent;
+      });
+    }
     event.start = newStart;
     event.end = newEnd;
 
@@ -253,8 +260,6 @@ export class HomeScreenComponent implements OnInit {
         // });
       });
     } else if (action == 'Deleted') {
-
-
       this.deleteEvent(event.meta.eventModel.eventId);
       this.fetchAllEvents();
     }
