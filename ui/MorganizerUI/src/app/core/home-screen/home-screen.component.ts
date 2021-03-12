@@ -200,20 +200,24 @@ export class HomeScreenComponent implements OnInit {
 
     //   return iEvent;
     // });
-    event.start = newStart;
-    event.end = newEnd;
+    let rescheduleEvent : any;
+    rescheduleEvent = event.meta.eventModel;
 
-    this.eventService.updateEvent(event).subscribe(
+    rescheduleEvent.startTime = newStart;
+    rescheduleEvent.endTime = newEnd;
+    this.eventService.updateEvent(rescheduleEvent).subscribe(
       (response) => {
         if (response) {
-          console.log('Event updated');
+          this.fetchAllEvents();
         }
       },
       (error) => {
+        console.log('Something went wrong');
         // window.alert('#TODO: Something went wrong.');
+        this.fetchAllEvents();
       }
     );
-    this.fetchAllEvents();
+    
     // this.handleEvent('Dropped or resized', event);
   }
 
@@ -253,10 +257,7 @@ export class HomeScreenComponent implements OnInit {
         // });
       });
     } else if (action == 'Deleted') {
-
-
       this.deleteEvent(event.meta.eventModel.eventId);
-      this.fetchAllEvents();
     }
   }
 
@@ -292,10 +293,9 @@ export class HomeScreenComponent implements OnInit {
   deleteEvent(eventToDelete: number) {
     // this.asyncEvents$ = this.asyncEvents$.filter((event) => event !== eventToDelete);
     this.eventService.deleteEvent(eventToDelete).subscribe(
-      (response) => {
-        if (response) {
+      (response) => {        
           console.log('Event Deleted');
-        }
+          this.fetchAllEvents();        
       },
       (error) => {
         console.log('Something went wrong');
