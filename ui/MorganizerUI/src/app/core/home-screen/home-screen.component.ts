@@ -22,7 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateEventComponent } from 'src/app/create-event/create-event.component';
 import { EventModel } from 'src/app/services/model/event-model';
 import { map } from 'rxjs/operators';
-
+import { CalendarOpenDayEventsComponent } from 'angular-calendar/modules/month/calendar-open-day-events.component';
 
 const colors: any = {
   red: {
@@ -50,6 +50,7 @@ export class HomeScreenComponent implements OnInit {
   calendarClass = 'col-md-9';
   rightPanelClass = 'col-md-1';
   view: CalendarView = CalendarView.Month;
+  loading = true;
 
   CalendarView = CalendarView;
 
@@ -86,7 +87,8 @@ export class HomeScreenComponent implements OnInit {
     },
   ];
 
-  asyncEvents$: Observable<CalendarEvent<{ eventModel: EventModel }>[]>;
+  // asyncEvents$: Observable<CalendarEvent<{ eventModel: EventModel }>[]>;
+  events: CalendarEvent[] = [];
 
   refresh: Subject<any> = new Subject();
 
@@ -146,29 +148,61 @@ export class HomeScreenComponent implements OnInit {
   }
 
   fetchAllEvents() {
-    this.asyncEvents$ = this.eventService.getAllEvents('3').pipe(
-      map((results) => {
-        console.log(results);
-        return results.map((eventModel: EventModel) => {
-          return {
-            title: eventModel.title,
-            start: new Date(eventModel.startTime + ' UTC'),
-            end: new Date(eventModel.endTime + ' UTC'),
-            color: { primary: eventModel.color, secondary: eventModel.color },
-            actions: this.actions,
-            resizable: {
-              beforeStart: true,
-              afterEnd: true,
-            },
-            draggable: true,
-            meta: {
-              eventModel,
-            },
-          };
-        });
-      })
+    this.loading = true;
+    this.eventService.getAllEvents('3').subscribe(
+      (response) => {
+        this.loading = false;
+        if (response) {
+          this.events = [];
+          response.forEach((eventModel) => {
+            this.events.push({
+              title: eventModel.title,
+              start: new Date(eventModel.startTime + ' UTC'),
+              end: new Date(eventModel.endTime + ' UTC'),
+              color: { primary: eventModel.color, secondary: eventModel.color },
+              actions: this.actions,
+              resizable: {
+                beforeStart: true,
+                afterEnd: true,
+              },
+              draggable: true,
+              meta: {
+                eventModel,
+              },
+            });
+          });
+        }
+      },
+      (error) => {
+        this.loading = false;
+      }
     );
   }
+
+  // fetchAllEvents() {
+  //   this.asyncEvents$ = this.eventService.getAllEvents('3').pipe(
+  //     map((results) => {
+  //       console.log(results);
+  //       return results.map((eventModel: EventModel) => {
+  //         return {
+  //           title: eventModel.title,
+  //           start: new Date(eventModel.startTime + ' UTC'),
+  //           end: new Date(eventModel.endTime + ' UTC'),
+  //           color: { primary: eventModel.color, secondary: eventModel.color },
+  //           actions: this.actions,
+  //           resizable: {
+  //             beforeStart: true,
+  //             afterEnd: true,
+  //           },
+  //           draggable: true,
+  //           meta: {
+  //             eventModel,
+  //           },
+  //         };
+  //       });
+  //     })
+  //   );
+  // }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -189,25 +223,45 @@ export class HomeScreenComponent implements OnInit {
     newStart,
     newEnd,
   }: CalendarEventTimesChangedEvent): void {
-    // this.asyncEvents$ = this.asyncEvents$.map((iEvent) => {
-    //   if (iEvent === event) {
-    //     return {
-    //       ...event,
-    //       start: newStart,
-    //       end: newEnd,
-    //     };
-    //   }
+    let eventModel: any = {};
+    console.log(event);
+    if (event.meta?.eventModel) {
+      eventModel = event.meta.eventModel;
+    } else {
+      this.eventService.triggerEventDropped(event);
+    }
 
-    //   return iEvent;
-    // });
-    let rescheduleEvent : any;
-    rescheduleEvent = event.meta.eventModel;
+    eventModel.title = event.title;
+    eventModel.color = event.color?.primary;
+    eventModel['startTime'] = newStart ? newStart : event.start;
+    eventModel['endTime'] = newEnd ? newEnd : event.end;
 
-    rescheduleEvent.startTime = newStart;
-    rescheduleEvent.endTime = newEnd;
-    this.eventService.updateEvent(rescheduleEvent).subscribe(
+    eventModel['userId'] = 3;
+
+    // if (this.events.indexOf(event) === -1) {
+    //   event['color'] = event['calendar']?.color;
+    //   event['actions'] = this.actions;
+    //   this.eventService.triggerEventDropped(event);
+    // } else {
+    //   this.events = this.events.map((iEvent) => {
+    //     if (iEvent === event) {
+    //       return {
+    //         ...event,
+    //         start: newStart,
+    //         end: newEnd,
+    //       };
+    //     }
+
+    //     return iEvent;
+    //   });
+    //   event.start = newStart;
+    //   event.end = newEnd;
+    // }
+
+    this.eventService.updateEvent(eventModel).subscribe(
       (response) => {
         if (response) {
+          console.log('Event updated');
           this.fetchAllEvents();
         }
       },
@@ -217,7 +271,7 @@ export class HomeScreenComponent implements OnInit {
         this.fetchAllEvents();
       }
     );
-    
+
     // this.handleEvent('Dropped or resized', event);
   }
 
@@ -227,15 +281,15 @@ export class HomeScreenComponent implements OnInit {
   ): void {
     this.modalData = { event, action };
     console.log(action);
-    if (action == 'Edited' || action == 'Clicked') {
+    if (action === 'Edited' || action === 'Clicked') {
       let editEvent = new EventModel();
       editEvent = event.meta.eventModel;
-
       editEvent.startTime = event.start;
       editEvent.endTime = event.end;
       let dialogRef = this.dialog.open(CreateEventComponent, {
         data: editEvent,
         width: '600px',
+        height: '80%',
       });
 
       dialogRef.afterClosed().subscribe((response) => {
@@ -256,7 +310,7 @@ export class HomeScreenComponent implements OnInit {
         //   return iEvent;
         // });
       });
-    } else if (action == 'Deleted') {
+    } else if (action === 'Deleted') {
       this.deleteEvent(event.meta.eventModel.eventId);
     }
   }
@@ -267,6 +321,7 @@ export class HomeScreenComponent implements OnInit {
     let dialogRef = this.dialog.open(CreateEventComponent, {
       data: eventModel,
       width: '600px',
+      height: '80%',
     });
 
     dialogRef.afterClosed().subscribe((response) => {
@@ -293,9 +348,9 @@ export class HomeScreenComponent implements OnInit {
   deleteEvent(eventToDelete: number) {
     // this.asyncEvents$ = this.asyncEvents$.filter((event) => event !== eventToDelete);
     this.eventService.deleteEvent(eventToDelete).subscribe(
-      (response) => {        
-          console.log('Event Deleted');
-          this.fetchAllEvents();        
+      () => {
+        console.log('Event Deleted');
+        this.fetchAllEvents();
       },
       (error) => {
         console.log('Something went wrong');

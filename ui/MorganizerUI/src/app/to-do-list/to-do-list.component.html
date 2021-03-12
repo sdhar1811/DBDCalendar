@@ -58,42 +58,54 @@
       />
     </mat-form-field>
 
-    <mat-card
-      style="margin-bottom: 10px"
-      class="mat-elevation-z5 task-card"
-      *ngFor="let task of tasks; let i = index"
+    <div
+      class="task-list-container"
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
     >
-      <div class="row">
-        <div class="col-md-2" style="align-self: center">
-          <!-- style="float: left; margin: 0 10px" -->
-          <mat-checkbox
-            color="primary"
-            class="custom-frame"
-            matTooltip="{{
-              task.checked ? 'Mark incomplete' : 'Mark complete'
-            }}"
-            [(ngModel)]="task.checked"
-            (change)="sortTaskList()"
-          >
-          </mat-checkbox>
+      <mat-card
+        style="margin-bottom: 10px;"
+        class="mat-elevation-z5 task-card"
+        cdkDrag
+        mwlDraggable
+        *ngFor="let task of tasks; let i = index"
+        [dropData]="{ event: task }"
+        [touchStartLongPress]="{ delay: 300, delta: 30 }"
+        dragActiveClass="drag-active"
+      >
+        <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+        <div class="row">
+          <div class="col-md-2" style="align-self: center;">
+            <!-- style="float: left; margin: 0 10px" -->
+            <mat-checkbox
+              color="primary"
+              class="custom-frame"
+              matTooltip="{{
+                task.checked ? 'Mark incomplete' : 'Mark complete'
+              }}"
+              [(ngModel)]="task.checked"
+              (change)="sortTaskList()"
+            >
+            </mat-checkbox>
+          </div>
+          <div class="col-md-8">
+            <mat-label
+              [ngClass]="task.checked ? 'strike-through' : none"
+              style="overflow-wrap: break-word;"
+              >{{ task.title }}</mat-label
+            >
+          </div>
+          <div class="col-md-2" style="align-self: center;">
+            <mat-icon
+              matTooltip="Edit Task"
+              (click)="editTask(i)"
+              class="material-icons md-18 edit-task-icon"
+              >mode
+            </mat-icon>
+          </div>
         </div>
-        <div class="col-md-8">
-          <mat-label
-            [ngClass]="task.checked ? 'strike-through' : none"
-            style="overflow-wrap: break-word"
-            >{{ task.title }}</mat-label
-          >
-        </div>
-        <div class="col-md-2" style="align-self: center">
-          <mat-icon
-            matTooltip="Edit Task"
-            (click)="editTask(i)"
-            class="material-icons md-18 edit-task-icon"
-            >mode
-          </mat-icon>
-        </div>
-      </div>
-    </mat-card>
+      </mat-card>
+    </div>
   </div>
   <div *ngIf="editMode">
     <app-edit-task
