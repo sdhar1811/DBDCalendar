@@ -188,23 +188,6 @@ export class HomeScreenComponent implements OnInit {
     newStart,
     newEnd,
   }: CalendarEventTimesChangedEvent): void {
-    // this.asyncEvents$ = this.asyncEvents$.map((iEvent) => {
-    //   if (iEvent === event) {
-    //     return {
-    //       ...event,
-    //       start: newStart,
-    //       end: newEnd,
-    //     };
-    //   }
-
-    //   return iEvent;
-    // });
-    // let rescheduleEvent : any;
-    // rescheduleEvent = event.meta.eventModel;
-
-    // rescheduleEvent.startTime = newStart;
-    // rescheduleEvent.endTime = newEnd;
-    // this.eventService.updateEvent(rescheduleEvent).subscribe(
     if (this.events.indexOf(event) === -1) {
       event['color'] = event['calendar']?.color;
       event['actions'] = this.actions;

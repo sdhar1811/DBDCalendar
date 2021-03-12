@@ -19,7 +19,6 @@
           >close</mat-icon
         >
       </div>
-      <<<<<<< HEAD
       <div class="row">
         <div class="col-md-10">
           <mat-form-field appearance="outline">
@@ -42,35 +41,8 @@
               >Color</ngx-colors
             >
           </div>
-          =======
-        </div>
-        <div class="row">
-          <div class="col-md-10">
-            <mat-form-field appearance="outline">
-              <mat-label>Title</mat-label>
-              <input
-                [(ngModel)]="data.title"
-                matInput
-                required
-                placeholder="Enter Event Title"
-              />
-            </mat-form-field>
-          </div>
-          <div class="col-md-2">
-            <div>
-              <ngx-colors
-                ngx-colors-trigger
-                [hideTextInput]="'true'"
-                [hideColorPicker]="'false'"
-                [(ngModel)]="color"
-                >Color</ngx-colors
-              >
-              >>>>>>> Task#78: (feat) drag and drop functionality
-            </div>
-          </div>
         </div>
 
-        <<<<<<< HEAD
         <mat-form-field appearance="outline">
           <mat-label>Choose Calendar</mat-label>
           <mat-select>
@@ -99,7 +71,6 @@
             </ng-template>
           </ngx-mat-datetime-picker>
         </mat-form-field>
-        =======
         <mat-form-field appearance="outline">
           <mat-label>Event Category</mat-label>
           <mat-select>
@@ -108,7 +79,6 @@
             <mat-option value="home">Home</mat-option>
           </mat-select>
         </mat-form-field>
-        >>>>>>> Task#78: (feat) drag and drop functionality
 
         <mat-form-field>
           <input
@@ -130,29 +100,6 @@
           </ngx-mat-datetime-picker>
         </mat-form-field>
 
-        <<<<<<< HEAD
-        <mat-form-field appearance="outline">
-          <mat-label>Location</mat-label>
-          <input
-            [(ngModel)]="data.location"
-            required
-            matInput
-            placeholder="Enter the location"
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" style="width: 100%">
-          <mat-label>Event Details</mat-label>
-          <textarea
-            [(ngModel)]="data.description"
-            matInput
-            cdkTextareaAutosize
-            cdkAutosizeMinRows="0"
-            cdkAutosizeMaxRows="5"
-            placeholder="Add details"
-          ></textarea>
-        </mat-form-field>
-        =======
         <mat-form-field>
           <input
             [(ngModel)]="data.endTime"
@@ -177,7 +124,6 @@
           <mat-label>Location</mat-label>
           <input required matInput placeholder="Enter the location" />
         </mat-form-field>
-        >>>>>>> Task#78: (feat) drag and drop functionality
 
         <mat-form-field appearance="outline" style="width: 100%">
           <mat-label>Event Details</mat-label>

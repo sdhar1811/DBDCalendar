@@ -43,6 +43,8 @@ export class EventService {
     return this.http.delete(
       this.eventURL + this.appConfig.deleteEvent(calendarEvent)
     );
+  triggerEventDropped(event) {
+    this.eventDropped.next(event);
   }
   triggerEventDropped(event) {
     this.eventDropped.next(event);
