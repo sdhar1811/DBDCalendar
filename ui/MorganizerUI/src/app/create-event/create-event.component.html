@@ -42,63 +42,34 @@
             >
           </div>
         </div>
+      </div>
+    </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Choose Calendar</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let calendar of calendars" [value]="calendar">{{
-              calendar.name
-            }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Choose Calendar</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let calendar of calendars" [value]="calendar">{{
+          calendar.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-        <mat-form-field>
-          <input
-            [(ngModel)]="data.startTime"
-            matInput
-            [ngxMatDatetimePicker]="picker"
-            placeholder="Choose a start date and time"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <ngx-mat-datetime-picker #picker>
-            <!-- Custom icon or text of Apply icon -->
-            <ng-template>
-              <!-- <mat-icon>star</mat-icon> -->
-              <span>OK</span>
-            </ng-template>
-          </ngx-mat-datetime-picker>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Event Category</mat-label>
-          <mat-select>
-            <mat-option value="work">Work</mat-option>
-            <mat-option value="school">School</mat-option>
-            <mat-option value="home">Home</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input
-            [(ngModel)]="data.startTime"
-            matInput
-            [ngxMatDatetimePicker]="picker"
-            placeholder="Choose a start date and time"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <ngx-mat-datetime-picker #picker>
-            <!-- Custom icon or text of Apply icon -->
-            <ng-template>
-              <!-- <mat-icon>star</mat-icon> -->
-              <span>OK</span>
-            </ng-template>
-          </ngx-mat-datetime-picker>
-        </mat-form-field>
+    <mat-form-field>
+      <input
+        [(ngModel)]="data.startTime"
+        matInput
+        [ngxMatDatetimePicker]="picker"
+        placeholder="Choose a start date and time"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker>
+        <!-- Custom icon or text of Apply icon -->
+        <ng-template>
+          <!-- <mat-icon>star</mat-icon> -->
+          <span>OK</span>
+        </ng-template>
+      </ngx-mat-datetime-picker>
+    </mat-form-field>
 
         <mat-form-field>
           <input
