@@ -25,9 +25,9 @@ public class EventController {
     @Autowired
     EventService eventService;
 	
-	@DeleteMapping("/deleteEvent")
-    public void deleteEvent(@RequestBody EventRequest eventDetailsRequest) {
-        eventService.deleteEvent(eventDetailsRequest);
+	@DeleteMapping("/remove/{eventId}")
+    public void deleteEvent(@PathVariable Long eventId) {
+		eventService.deleteEvent(eventId);
     }
 	
     @GetMapping("/notification/types")
