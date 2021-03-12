@@ -57,21 +57,29 @@ export class HomeScreenComponent implements OnInit {
 
   modalData: {
     action: string;
-    event: CalendarEvent<{eventModel: EventModel}>;
+    event: CalendarEvent<{ eventModel: EventModel }>;
   };
 
   actions: CalendarEventAction[] = [
     {
       label: '<i class="material-icons md-18">edit</i>',
       a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent<{eventModel: EventModel}> }): void => {
+      onClick: ({
+        event,
+      }: {
+        event: CalendarEvent<{ eventModel: EventModel }>;
+      }): void => {
         this.handleEvent('Edited', event);
       },
     },
     {
       label: '<i class="material-icons md-18">delete</i>',
       a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent<{eventModel: EventModel}> }): void => {
+      onClick: ({
+        event,
+      }: {
+        event: CalendarEvent<{ eventModel: EventModel }>;
+      }): void => {
         // this.asyncEvents$ = this.asyncEvents$.map((iEvent) => iEvent !== event);
         this.handleEvent('Deleted', event);
       },
@@ -95,7 +103,7 @@ export class HomeScreenComponent implements OnInit {
   //       afterEnd: true,
   //     },
   //     draggable: true,
-      
+
   //   },
   //   // {
   //   //   start: startOfDay(new Date()),
@@ -131,39 +139,35 @@ export class HomeScreenComponent implements OnInit {
     private modal: NgbModal,
     private eventService: EventService,
     private dialog: MatDialog
-    ) {}
+  ) {}
 
   ngOnInit(): void {
-    
     this.fetchAllEvents();
-    // console.log(this.asyncEvents$);
   }
 
-  fetchAllEvents(){
-    this.asyncEvents$ =  this.eventService.getAllEvents('3')
-      .pipe(
-        map(results  => {
-          console.log(results);
-          return results.map((eventModel: EventModel) => {
-            return {
-              title: eventModel.title,
-              start: new Date(eventModel.startTime+' UTC'),
-              end: new Date(eventModel.endTime+' UTC'),
-              color: {primary: eventModel.color, secondary : eventModel.color},
-              actions: this.actions,
-              resizable: {
-                beforeStart: true,
-                afterEnd: true,
-              },
-              draggable: true,
-              meta: {
-                eventModel,
-              },
-            };
-          });
-        })
-      );
-      console.log(this.asyncEvents$);
+  fetchAllEvents() {
+    this.asyncEvents$ = this.eventService.getAllEvents('3').pipe(
+      map((results) => {
+        console.log(results);
+        return results.map((eventModel: EventModel) => {
+          return {
+            title: eventModel.title,
+            start: new Date(eventModel.startTime + ' UTC'),
+            end: new Date(eventModel.endTime + ' UTC'),
+            color: { primary: eventModel.color, secondary: eventModel.color },
+            actions: this.actions,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true,
+            },
+            draggable: true,
+            meta: {
+              eventModel,
+            },
+          };
+        });
+      })
+    );
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -179,8 +183,6 @@ export class HomeScreenComponent implements OnInit {
       this.viewDate = date;
     }
   }
-
-
 
   eventTimesChanged({
     event,
@@ -215,24 +217,26 @@ export class HomeScreenComponent implements OnInit {
     // this.handleEvent('Dropped or resized', event);
   }
 
-
-  handleEvent(action: string, event: CalendarEvent<{eventModel: EventModel}>): void {
+  handleEvent(
+    action: string,
+    event: CalendarEvent<{ eventModel: EventModel }>
+  ): void {
     this.modalData = { event, action };
     console.log(action);
-    if (action == 'Edited' || action== 'Clicked') {
-      let eventModel = new EventModel();
-      eventModel.title = event.title;
-      eventModel.startTime = event.start;
-      eventModel.endTime = event.end;
-      eventModel.color = event.color;
+    if (action == 'Edited' || action == 'Clicked') {
+      let editEvent = new EventModel();
+      editEvent = event.meta.eventModel;
+
+      editEvent.startTime = event.start;
+      editEvent.endTime = event.end;
       let dialogRef = this.dialog.open(CreateEventComponent, {
-        data: eventModel,
+        data: editEvent,
         width: '600px',
       });
 
       dialogRef.afterClosed().subscribe((response) => {
         console.log(JSON.stringify(response));
-
+        this.fetchAllEvents();
         // this.asyncEvents$ = this.asyncEvents$.map((iEvent) => {
         //   if (iEvent === event) {
         //     return {
@@ -248,31 +252,13 @@ export class HomeScreenComponent implements OnInit {
         //   return iEvent;
         // });
       });
-    }
+    } else if (action == 'Deleted') {
 
-    /*  action = Delete event ---on edit screen - the delete button is not same as action
-        delete action on calendar works fine
-    */
-    else if (action == 'Deleted') {
-      // this.deleteEvent(event);
-      // let eventModel = new EventModel();
-      // eventModel.title = event.title;
-      // eventModel.startTime = event.start;
-      // eventModel.endTime = event.end;
-      // eventModel.color = event.color;
-      // let dialogRef = this.dialog.open(CreateEventComponent, {
-      //   data: eventModel,
-      //   width: '600px',
-      // });
 
-      // dialogRef.afterClosed().subscribe((response) => {
-      //   this.events = this.events.filter((delete_event) => delete_event !== event);
-      // });
+      this.deleteEvent(event.meta.eventModel.eventId);
+      this.fetchAllEvents();
     }
-    /*delete on edit screen ends here*/
   }
-
-
 
   addEvent(): void {
     let eventModel = new EventModel();
@@ -303,8 +289,19 @@ export class HomeScreenComponent implements OnInit {
     });
   }
 
-  deleteEvent(eventToDelete: CalendarEvent<{eventModel: EventModel}>) {
+  deleteEvent(eventToDelete: number) {
     // this.asyncEvents$ = this.asyncEvents$.filter((event) => event !== eventToDelete);
+    this.eventService.deleteEvent(eventToDelete).subscribe(
+      (response) => {
+        if (response) {
+          console.log('Event Deleted');
+        }
+      },
+      (error) => {
+        console.log('Something went wrong');
+        // window.alert('#TODO: Something went wrong.');
+      }
+    );
   }
 
   setView(view: CalendarView) {

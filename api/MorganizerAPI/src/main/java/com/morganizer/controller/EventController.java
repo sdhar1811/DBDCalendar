@@ -25,9 +25,9 @@ public class EventController {
     @Autowired
     EventService eventService;
 	
-	@DeleteMapping("/deleteEvent")
-    public void deleteEvent(@RequestBody EventRequest eventDetailsRequest) {
-        eventService.deleteEvent(eventDetailsRequest);
+	@DeleteMapping("/remove/{eventId}")
+    public void deleteEvent(@PathVariable Long eventId) {
+		eventService.deleteEvent(eventId);
     }
 	
     @GetMapping("/notification/types")
@@ -48,5 +48,10 @@ public class EventController {
     @PostMapping("/add")
     public EventRequest addEvent(@RequestBody EventRequest eventRequest) {
     	return eventService.addEvent(eventRequest);
+    }
+    
+    @PostMapping("/update")
+    public EventRequest updateEvent(@RequestBody EventRequest eventRequest) {
+    	return eventService.updateEvent(eventRequest);
     }
 }

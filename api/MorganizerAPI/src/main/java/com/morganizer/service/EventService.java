@@ -32,11 +32,12 @@ public class EventService {
 	@Autowired
 	public RecurringModeRepository recurringModeRepository;
 
-	public void deleteEvent(EventRequest eventDetailsReq) {
+	public void deleteEvent(Long eventId) {
 
 		try {
-			eventDetailsRepository.deleteByIdAndUserId(eventDetailsReq.getEventId(), eventDetailsReq.getUserId());
+			eventDetailsRepository.deleteById(eventId);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			// throw custom exception for no such event present to be deleted
 		}
 	}
@@ -73,7 +74,33 @@ public class EventService {
 	    Timestamp endTime = Timestamp.valueOf(eventRequest.getEndTime().replaceAll("[A-Z]", " " ));
 	    Timestamp lastUpdatedOn = new Timestamp(System.currentTimeMillis());
 	    	    
-		EventDetailsEntity event = new EventDetailsEntity(user, eventRequest.getTitle(), eventRequest.getDetails(),
+		EventDetailsEntity event = new EventDetailsEntity(user, eventRequest.getTitle(), eventRequest.getDescription(),
+				startTime, endTime,
+				recurringMode, eventRequest.getLocation(),
+				eventRequest.getParticipant(),  lastUpdatedOn, eventRequest.getColor());
+
+		if (eventRequest.getEventId() != 0) {
+			event.setId(eventRequest.getEventId());
+		}
+		EventDetailsEntity savedEntity = eventDetailsRepository.save(event);
+
+		return new EventRequest(savedEntity.getUser().getId(), savedEntity.getId(), savedEntity.getEventTitle(), null,
+				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
+				savedEntity.getEventDescription(), null, null, savedEntity.getRecurringMode().getId(),
+				savedEntity.getParticipant(), savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor());
+
+	}
+
+	public EventRequest updateEvent(EventRequest eventRequest) {
+		UserDetailsEntity user = userRepo.getOne(eventRequest.getUserId());
+		RecurringModeEntity recurringMode = recurringModeRepository.getOne(eventRequest.getRecurringModeId());
+		
+		  
+		Timestamp startTime = Timestamp.valueOf(eventRequest.getStartTime().replaceAll("[A-Z]", " " )); 
+	    Timestamp endTime = Timestamp.valueOf(eventRequest.getEndTime().replaceAll("[A-Z]", " " ));
+	    Timestamp lastUpdatedOn = new Timestamp(System.currentTimeMillis());
+	    	    
+		EventDetailsEntity event = new EventDetailsEntity(user, eventRequest.getTitle(), eventRequest.getDescription(),
 				startTime, endTime,
 				recurringMode, eventRequest.getLocation(),
 				eventRequest.getParticipant(),  lastUpdatedOn, eventRequest.getColor());
