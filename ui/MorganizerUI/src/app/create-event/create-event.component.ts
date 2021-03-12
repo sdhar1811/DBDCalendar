@@ -60,14 +60,16 @@ export class CreateEventComponent implements OnInit {
       (response) => {
         if (response) {
           console.log('Event Updated');
+          this.close();
         }
       },
       (error) => {
         console.log('Something went wrong');
         // window.alert('#TODO: Something went wrong.');
+        this.close();
       }
     );
-    this.close();
+    
   }
 
   cancelUpdateToEvent(): void {
