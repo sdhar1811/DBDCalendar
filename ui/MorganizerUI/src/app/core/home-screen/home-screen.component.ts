@@ -16,11 +16,12 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateEventComponent } from 'src/app/create-event/create-event.component';
 import { EventModel } from 'src/app/services/model/event-model';
+import { map } from 'rxjs/operators';
 
 
 const colors: any = {
@@ -56,80 +57,114 @@ export class HomeScreenComponent implements OnInit {
 
   modalData: {
     action: string;
-    event: CalendarEvent;
+    event: CalendarEvent<{eventModel: EventModel}>;
   };
 
   actions: CalendarEventAction[] = [
     {
       label: '<i class="material-icons md-18">edit</i>',
       a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
+      onClick: ({ event }: { event: CalendarEvent<{eventModel: EventModel}> }): void => {
         this.handleEvent('Edited', event);
       },
     },
     {
       label: '<i class="material-icons md-18">delete</i>',
       a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
+      onClick: ({ event }: { event: CalendarEvent<{eventModel: EventModel}> }): void => {
+        // this.asyncEvents$ = this.asyncEvents$.map((iEvent) => iEvent !== event);
         this.handleEvent('Deleted', event);
       },
     },
   ];
 
+  asyncEvents$: Observable<CalendarEvent<{ eventModel: EventModel }>[]>;
+
   refresh: Subject<any> = new Subject();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'Sprint-2',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    // {
-    //   start: startOfDay(new Date()),
-    //   title: 'An event with no end date',
-    //   color: colors.yellow,
-    //   actions: this.actions,
-    // },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      actions: this.actions,
-      allDay: true,
-    },
-    {
-      start: addHours(subDays(startOfDay(new Date()), -3), 1),
-      end: addHours(subDays(startOfDay(new Date()), -3), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
+  // events: CalendarEvent[] = [
+  //   {
+  //     start: addDays(startOfDay(new Date()), 48),
+  //     end: addDays(new Date(), 50),
+  //     title: 'Sprint-2',
+  //     color: colors.red,
+  //     actions: this.actions,
+  //     allDay: true,
+  //     resizable: {
+  //       beforeStart: true,
+  //       afterEnd: true,
+  //     },
+  //     draggable: true,
+      
+  //   },
+  //   // {
+  //   //   start: startOfDay(new Date()),
+  //   //   title: 'An event with no end date',
+  //   //   color: colors.yellow,
+  //   //   actions: this.actions,
+  //   // },
+  //   {
+  //     start: subDays(endOfMonth(new Date()), 3),
+  //     end: addDays(endOfMonth(new Date()), 3),
+  //     title: 'A long event that spans 2 months',
+  //     color: colors.blue,
+  //     actions: this.actions,
+  //     allDay: true,
+  //   },
+  //   {
+  //     start: addHours(subDays(startOfDay(new Date()), -3), 1),
+  //     end: addHours(subDays(startOfDay(new Date()), -3), 2),
+  //     title: 'A draggable and resizable event',
+  //     color: colors.yellow,
+  //     actions: this.actions,
+  //     resizable: {
+  //       beforeStart: true,
+  //       afterEnd: true,
+  //     },
+  //     draggable: true,
+  //   },
+  // ];
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
   constructor(
     private modal: NgbModal,
     private eventService: EventService,
     private dialog: MatDialog
-  ) {}
+    ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+    this.fetchAllEvents();
+    // console.log(this.asyncEvents$);
+  }
+
+  fetchAllEvents(){
+    this.asyncEvents$ =  this.eventService.getAllEvents('3')
+      .pipe(
+        map(results  => {
+          console.log(results);
+          return results.map((eventModel: EventModel) => {
+            return {
+              title: eventModel.title,
+              start: new Date(eventModel.startTime+' UTC'),
+              end: new Date(eventModel.endTime+' UTC'),
+              color: {primary: eventModel.color, secondary : eventModel.color},
+              actions: this.actions,
+              resizable: {
+                beforeStart: true,
+                afterEnd: true,
+              },
+              draggable: true,
+              meta: {
+                eventModel,
+              },
+            };
+          });
+        })
+      );
+      console.log(this.asyncEvents$);
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -152,19 +187,20 @@ export class HomeScreenComponent implements OnInit {
     newStart,
     newEnd,
   }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
+    // this.asyncEvents$ = this.asyncEvents$.map((iEvent) => {
+    //   if (iEvent === event) {
+    //     return {
+    //       ...event,
+    //       start: newStart,
+    //       end: newEnd,
+    //     };
+    //   }
 
-      return iEvent;
-    });
+    //   return iEvent;
+    // });
     event.start = newStart;
     event.end = newEnd;
+
     this.eventService.updateEvent(event).subscribe(
       (response) => {
         if (response) {
@@ -175,11 +211,12 @@ export class HomeScreenComponent implements OnInit {
         // window.alert('#TODO: Something went wrong.');
       }
     );
+    this.fetchAllEvents();
     // this.handleEvent('Dropped or resized', event);
   }
 
 
-  handleEvent(action: string, event: CalendarEvent): void {
+  handleEvent(action: string, event: CalendarEvent<{eventModel: EventModel}>): void {
     this.modalData = { event, action };
     console.log(action);
     if (action == 'Edited' || action== 'Clicked') {
@@ -196,19 +233,20 @@ export class HomeScreenComponent implements OnInit {
       dialogRef.afterClosed().subscribe((response) => {
         console.log(JSON.stringify(response));
 
-        this.events = this.events.map((iEvent) => {
-          if (iEvent === event) {
-            return {
-              ...event,
-              title: response.title,
-              start: response.startTime,
-              end: response.endTime,
-              color: response.color,
-            };
-          }
+        // this.asyncEvents$ = this.asyncEvents$.map((iEvent) => {
+        //   if (iEvent === event) {
+        //     return {
+        //       ...event,
+        //       title: response.title,
+        //       start: response.startTime,
+        //       end: response.endTime,
+        //       color: response.color,
+        //       participents: [],
+        //     };
+        //   }
 
-          return iEvent;
-        });
+        //   return iEvent;
+        // });
       });
     }
 
@@ -216,7 +254,7 @@ export class HomeScreenComponent implements OnInit {
         delete action on calendar works fine
     */
     else if (action == 'Deleted') {
-      this.deleteEvent(event);
+      // this.deleteEvent(event);
       // let eventModel = new EventModel();
       // eventModel.title = event.title;
       // eventModel.startTime = event.start;
@@ -238,7 +276,7 @@ export class HomeScreenComponent implements OnInit {
 
   addEvent(): void {
     let eventModel = new EventModel();
-    eventModel.color = { primary: '', secondary: '' };
+    // eventModel.color = { primary: '', secondary: '' };
     let dialogRef = this.dialog.open(CreateEventComponent, {
       data: eventModel,
       width: '600px',
@@ -246,27 +284,27 @@ export class HomeScreenComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((response) => {
       console.log(JSON.stringify(response));
-
-      this.events = [
-        ...this.events,
-        {
-          title: response.title,
-          start: response.startTime,
-          end: response.endTime,
-          color: response.color,
-          actions: this.actions,
-          draggable: true,
-          resizable: {
-            beforeStart: true,
-            afterEnd: true,
-          },
-        },
-      ];
+      this.fetchAllEvents();
+      // this.asyncEvents$ = [
+      //   ...this.asyncEvents$,
+      //   {
+      //     title: response.title,
+      //     start: response.startTime,
+      //     end: response.endTime,
+      //     color: response.color,
+      //     actions: this.actions,
+      //     draggable: true,
+      //     resizable: {
+      //       beforeStart: true,
+      //       afterEnd: true,
+      //     },
+      //   },
+      // ];
     });
   }
 
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
+  deleteEvent(eventToDelete: CalendarEvent<{eventModel: EventModel}>) {
+    // this.asyncEvents$ = this.asyncEvents$.filter((event) => event !== eventToDelete);
   }
 
   setView(view: CalendarView) {

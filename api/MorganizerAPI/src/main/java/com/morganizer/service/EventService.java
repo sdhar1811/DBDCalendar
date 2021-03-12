@@ -1,5 +1,6 @@
 package com.morganizer.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class EventService {
 			response.add(new EventRequest(event.getUser().getId(), event.getId(), event.getEventTitle(), null,
 					event.getStartTime().toString(), event.getEndTime().toString(), event.getLocation(),
 					event.getEventDescription(), null, null, event.getRecurringMode().getId(),
-					event.getParticipant(), event.getLastUpdatedOn().toString()));
+					event.getParticipant(), event.getLastUpdatedOn().toString(), event.getColor()));
 		}
 		
 		return response;
@@ -66,11 +67,16 @@ public class EventService {
 	public EventRequest addEvent(EventRequest eventRequest) {
 		UserDetailsEntity user = userRepo.getOne(eventRequest.getUserId());
 		RecurringModeEntity recurringMode = recurringModeRepository.getOne(eventRequest.getRecurringModeId());
-
+		
+		  
+		Timestamp startTime = Timestamp.valueOf(eventRequest.getStartTime().replaceAll("[A-Z]", " " )); 
+	    Timestamp endTime = Timestamp.valueOf(eventRequest.getEndTime().replaceAll("[A-Z]", " " ));
+	    Timestamp lastUpdatedOn = new Timestamp(System.currentTimeMillis());
+	    	    
 		EventDetailsEntity event = new EventDetailsEntity(user, eventRequest.getTitle(), eventRequest.getDetails(),
-				DateTimeUtil.parseTimestamp(eventRequest.getStartTime()),
-				DateTimeUtil.parseTimestamp(eventRequest.getEndTime()), recurringMode, eventRequest.getLocation(),
-				eventRequest.getParticipant(), DateTimeUtil.parseTimestamp(eventRequest.getLastUpdateOn()));
+				startTime, endTime,
+				recurringMode, eventRequest.getLocation(),
+				eventRequest.getParticipant(),  lastUpdatedOn, eventRequest.getColor());
 
 		if (eventRequest.getEventId() != 0) {
 			event.setId(eventRequest.getEventId());
@@ -80,7 +86,7 @@ public class EventService {
 		return new EventRequest(savedEntity.getUser().getId(), savedEntity.getId(), savedEntity.getEventTitle(), null,
 				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
 				savedEntity.getEventDescription(), null, null, savedEntity.getRecurringMode().getId(),
-				savedEntity.getParticipant(), savedEntity.getLastUpdatedOn().toString());
+				savedEntity.getParticipant(), savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor());
 
 	}
 }

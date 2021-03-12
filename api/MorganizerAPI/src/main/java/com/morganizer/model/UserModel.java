@@ -8,6 +8,7 @@ public class UserModel {
 	String firstName;
 	String lastName;
 	String middelName;
+	Long userId;
 	
 	String birthdate;
 	String phoneNumber;
@@ -68,4 +69,12 @@ public class UserModel {
 	public void setMiddelName(String middelName) {
 		this.middelName = middelName;
 	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	
+	
 }

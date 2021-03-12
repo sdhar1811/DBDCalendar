@@ -74,12 +74,13 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Location</mat-label>
-        <input required matInput placeholder="Enter the location" />
+        <input [(ngModel)]="data.location" required matInput placeholder="Enter the location" />
       </mat-form-field>
 
       <mat-form-field appearance="outline" style="width: 100%">
         <mat-label>Event Details</mat-label>
         <textarea
+          [(ngModel)]="data.descriptions"
           matInput
           cdkTextareaAutosize
           cdkAutosizeMinRows="0"

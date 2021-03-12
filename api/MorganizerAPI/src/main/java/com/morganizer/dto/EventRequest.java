@@ -15,6 +15,7 @@ public class EventRequest {
 	private long recurringModeId;
 	private String[] participant;
 	private String lastUpdateOn;
+	private String color;
 
 	
 	public EventRequest() {
@@ -27,7 +28,7 @@ public class EventRequest {
 
 	public EventRequest(long userId, long eventId, String title, String category, String startTime, String endTime,
 			String location, String details, String reminder, String notificationType, long recurringMode,
-			String[] participant, String lastUpdateOn) {
+			String[] participant, String lastUpdateOn, String color) {
 		super();
 		this.userId = userId;
 		this.eventId = eventId;
@@ -42,10 +43,11 @@ public class EventRequest {
 		this.recurringModeId = recurringMode;
 		this.participant = participant;
 		this.lastUpdateOn = lastUpdateOn;
+		this.color = color;
 	}
 
 	public long getRecurringModeId() {
-		return recurringModeId;
+		return recurringModeId == 0 ? 1 : recurringModeId;
 	}
 
 	public void setRecurringModeId(long recurringModeId) {
@@ -146,6 +148,13 @@ public class EventRequest {
 
 	public void setLastUpdateOn(String lastUpdateOn) {
 		this.lastUpdateOn = lastUpdateOn;
+	}
+	
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
 	}
 	
 	
