@@ -78,6 +78,7 @@ export class EditTaskComponent implements OnInit {
   }
   updateSelectedCalendar() {
     this.data[this.taskIndex].calendar = this.selectedCalendar.value;
+    this.data[this.taskIndex].color = this.selectedCalendar.value.color;
   }
   selectSavedValues(c1: any, c2: any) {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;

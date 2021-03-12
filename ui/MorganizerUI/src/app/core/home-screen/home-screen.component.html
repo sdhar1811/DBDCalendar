@@ -9,13 +9,13 @@
         : 'col-xl-9 col-lg-9 col-md-9 col-sm-9'
     "
   >
-    <div class="row text-center" style="margin: 10px;">
+    <div class="row text-center" style="margin: 10px">
       <div class="col-md-5 col-lg-5 col-sm-5">
         <div class="row">
           <div class="col-md-3 col-lg-3 col-sm-3">
             <button
               mat-raised-button
-              style="margin-left: 1px;"
+              style="margin-left: 1px"
               (click)="addEvent()"
             >
               + Create
@@ -57,25 +57,25 @@
         <h3>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h3>
       </div>
       <div class="col-md-4 col-lg-4 col-sm-4">
-        <mat-button-toggle-group class="btn-group">
+        <mat-button-toggle-group class="btn-group" [value]="view">
           <mat-button-toggle
             mat-raised-button
             (click)="setView(CalendarView.Month)"
-            [class.active]="view === CalendarView.Month"
+            value="{{ CalendarView.Month }}"
           >
             Month
           </mat-button-toggle>
           <mat-button-toggle
             mat-raised-button
             (click)="setView(CalendarView.Week)"
-            [class.active]="view === CalendarView.Week"
+            value="{{ CalendarView.Week }}"
           >
             Week
           </mat-button-toggle>
           <mat-button-toggle
             mat-raised-button
             (click)="setView(CalendarView.Day)"
-            [class.active]="view === CalendarView.Day"
+            value="{{ CalendarView.Day }}"
           >
             Day
           </mat-button-toggle>
@@ -83,13 +83,13 @@
       </div>
     </div>
     <br />
-    <ng-template #loading>
-      <div class="text-center">
-        <i class="fas fa-spin fa-spinner fa-5x"></i> <br />
-        Loading events...
-      </div>
-    </ng-template>
-    <div *ngIf="asyncEvents$ | async; else loading; let events">
+    <!-- <ng-template #loading> -->
+    <div *ngIf="loading" class="text-center">
+      <i class="fas fa-spin fa-spinner fa-5x"></i> <br />
+      Loading events...
+    </div>
+    <!-- </ng-template> -->
+    <div *ngIf="!loading">
       <div [ngSwitch]="view" class="mat-elevation-z5">
         <mwl-calendar-month-view
           *ngSwitchCase="CalendarView.Month"
@@ -129,7 +129,7 @@
         ? 'col-xl-3 col-lg-3 col-md-3 col-sm-3 mat-elevation-z5'
         : 'col-xl-1 col-lg-1 col-md-1 col-sm-1'
     "
-    style="margin-top: 1px; padding-right: 1px;"
+    style="margin-top: 1px; padding-right: 1px"
   >
     <app-right-panel
       [showTaskPanel]="showRightPanel"

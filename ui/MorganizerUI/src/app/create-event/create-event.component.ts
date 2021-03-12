@@ -1,16 +1,11 @@
-<<<<<<< HEAD
 import { Component, Inject, OnInit, Input, Output } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { EventEmitter } from '@angular/core';
-import { EventService } from '../services/event.service';
-=======
-import { Component, Inject, OnInit } from '@angular/core';
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
->>>>>>> Task#78: (feat) drag and drop functionality
+import { EventEmitter } from '@angular/core';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-create-event',

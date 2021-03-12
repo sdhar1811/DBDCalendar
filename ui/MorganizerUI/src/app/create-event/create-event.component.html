@@ -23,7 +23,12 @@
         <div class="col-md-10">
           <mat-form-field appearance="outline">
             <mat-label>Title</mat-label>
-            <input [(ngModel)]="data.title" matInput required placeholder="Enter Event Title" />
+            <input
+              [(ngModel)]="data.title"
+              matInput
+              required
+              placeholder="Enter Event Title"
+            />
           </mat-form-field>
         </div>
         <div class="col-md-2">
@@ -37,28 +42,17 @@
             >
           </div>
         </div>
-
       </div>
     </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Choose Calendar</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let calendar of calendars" [value]="calendar">{{ calendar.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field>
-        <input [(ngModel)]="data.startTime" matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a start date and time">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #picker>
-          <!-- Custom icon or text of Apply icon -->
-          <ng-template>
-            <!-- <mat-icon>star</mat-icon> -->
-            <span>OK</span>
-          </ng-template>
-        </ngx-mat-datetime-picker>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Choose Calendar</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let calendar of calendars" [value]="calendar">{{
+          calendar.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
     <mat-form-field>
       <input
@@ -77,24 +71,46 @@
       </ngx-mat-datetime-picker>
     </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Location</mat-label>
-        <input [(ngModel)]="data.location" required matInput placeholder="Enter the location" />
-      </mat-form-field>
+    <mat-form-field>
+      <input
+        [(ngModel)]="data.startTime"
+        matInput
+        [ngxMatDatetimePicker]="picker"
+        placeholder="Choose a start date and time"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker>
+        <!-- Custom icon or text of Apply icon -->
+        <ng-template>
+          <!-- <mat-icon>star</mat-icon> -->
+          <span>OK</span>
+        </ng-template>
+      </ngx-mat-datetime-picker>
+    </mat-form-field>
 
-      <mat-form-field appearance="outline" style="width: 100%">
-        <mat-label>Event Details</mat-label>
-        <textarea
-          [(ngModel)]="data.description"
-          matInput
-          cdkTextareaAutosize
-          cdkAutosizeMinRows="0"
-          cdkAutosizeMaxRows="5"
-          placeholder="Add details"
-        ></textarea>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Location</mat-label>
+      <input
+        [(ngModel)]="data.location"
+        required
+        matInput
+        placeholder="Enter the location"
+      />
+    </mat-form-field>
 
-    <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Event Details</mat-label>
+      <textarea
+        [(ngModel)]="data.description"
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="0"
+        cdkAutosizeMaxRows="5"
+        placeholder="Add details"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%">
       <mat-label>Event Details</mat-label>
       <textarea
         matInput
@@ -122,17 +138,34 @@
       </mat-select>
     </mat-form-field>
 
-      <button mat-raised-button color="primary" style="margin: 0.5em" (click)="createEvent()" *ngIf="!editFlag">
-        Create Event
+    <button
+      mat-raised-button
+      color="primary"
+      style="margin: 0.5em"
+      (click)="createEvent()"
+      *ngIf="!editFlag"
+    >
+      Create Event
+    </button>
+    <div *ngIf="editFlag">
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin: 0.5em"
+        (click)="cancelUpdateToEvent()"
+        *ngIf="editFlag"
+      >
+        Cancel
       </button>
-      <div *ngIf="editFlag">
-        <button mat-raised-button color="primary" style="margin: 0.5em" (click)="cancelUpdateToEvent()" *ngIf="editFlag">
-          Cancel
-        </button>
-          <button mat-raised-button color="primary" style="margin: 0.5em" (click)="editEvent()" *ngIf="editFlag">
-            Update Event
-          </button>
-      </div>
-</div>
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin: 0.5em"
+        (click)="editEvent()"
+        *ngIf="editFlag"
+      >
+        Update Event
+      </button>
+    </div>
   </div>
 </div>

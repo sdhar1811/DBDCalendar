@@ -123,10 +123,13 @@ export class ToDoListComponent implements OnInit {
       title: this.taskTitle,
       description: null,
       calendar: {},
+      color: undefined,
       duedate: '',
       checked: false,
       draggable: true,
       start: new Date(),
+      end: new Date(),
+      userId: this.storeService.loggedInUser?.id,
     });
     this.sortTaskList();
     this.taskTitle = '';
