@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
+import { Subject } from 'rxjs';
 import { APP_CONFIG, IAppConfig } from '../app.config';
 import { EventModel } from './model/event-model';
 
@@ -9,6 +10,7 @@ import { EventModel } from './model/event-model';
 })
 export class EventService {
   eventURL: string;
+  eventDropped: Subject<any> = new Subject();
   constructor(
     @Inject(APP_CONFIG) private appConfig: IAppConfig,
     private http: HttpClient
@@ -21,5 +23,8 @@ export class EventService {
       this.eventURL + this.appConfig.updateEvent,
       calendarEvent
     );
+  }
+  triggerEventDropped(event) {
+    this.eventDropped.next(event);
   }
 }

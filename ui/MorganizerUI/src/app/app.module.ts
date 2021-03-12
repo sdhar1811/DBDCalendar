@@ -59,6 +59,8 @@ import {
 } from '@angular-material-components/datetime-picker';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DragAndDropModule } from 'angular-draggable-droppable';
 
 @NgModule({
   declarations: [
@@ -119,6 +121,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     UiSwitchModule,
     MatMenuModule,
     MatSidenavModule,
+    DragDropModule,
+    DragAndDropModule,
   ],
   providers: [
     {

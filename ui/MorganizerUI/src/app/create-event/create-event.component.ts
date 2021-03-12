@@ -1,5 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-event',
@@ -16,15 +20,8 @@ export class CreateEventComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('color');
-    console.log(this.data.color.primary);
-    console.log(this.data.startTime);
     this.editFlag = this.data.color.primary == '' ? false : true;
     this.color =
-
-
-
-
       this.data.color.primary == '' ? '#973000' : this.data.color.primary;
   }
 
@@ -39,13 +36,13 @@ export class CreateEventComponent implements OnInit {
 
   createEvent(): void {
     this.data.color = { primary: this.color, secondary: this.color };
-    console.log(JSON.stringify(this.data));
+
     this.close();
   }
 
   updateEvent(): void {
     this.data.color = { primary: this.color, secondary: this.color };
-    console.log(JSON.stringify(this.data));
+
     this.close();
   }
 }

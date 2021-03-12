@@ -147,17 +147,25 @@ export class HomeScreenComponent implements OnInit {
     newStart,
     newEnd,
   }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
+    if (this.events.indexOf(event) === -1) {
+      event['color'] = event['calendar']?.color;
+      event['actions'] = this.actions;
+      this.events.push(event);
+      this.events = [...this.events];
+      this.eventService.triggerEventDropped(event);
+    } else {
+      this.events = this.events.map((iEvent) => {
+        if (iEvent === event) {
+          return {
+            ...event,
+            start: newStart,
+            end: newEnd,
+          };
+        }
 
-      return iEvent;
-    });
+        return iEvent;
+      });
+    }
     event.start = newStart;
     event.end = newEnd;
     this.eventService.updateEvent(event).subscribe(
@@ -176,54 +184,45 @@ export class HomeScreenComponent implements OnInit {
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     //this.modal.open(this.modalContent, { size: 'lg' });
-    console.log(action);
-    if (action=='Clicked'){
-      console.log("Now clicked");
+
+    if (action == 'Clicked') {
       let eventModel = new EventModel();
       eventModel.title = event.title;
       eventModel.startTime = event.start;
       eventModel.endTime = event.end;
       eventModel.color = event.color;
       let dialogRef = this.dialog.open(CreateEventComponent, {
-      data: eventModel,
-      width: '600px',
-    });
-
-    dialogRef.afterClosed().subscribe((response) => {
-      console.log(JSON.stringify(response));
-
-      this.events = this.events.map((iEvent) => {
-        if (iEvent === event) {
-          return {
-            ...event,
-            title: response.title,
-            start: response.startTime,
-            end: response.endTime,
-            color: response.color,
-          };
-        }
-
-        return iEvent;
+        data: eventModel,
+        width: '600px',
       });
-    });
+
+      dialogRef.afterClosed().subscribe((response) => {
+        this.events = this.events.map((iEvent) => {
+          if (iEvent === event) {
+            return {
+              ...event,
+              title: response.title,
+              start: response.startTime,
+              end: response.endTime,
+              color: response.color,
+            };
+          }
+
+          return iEvent;
+        });
+      });
     }
-
-
-
-
   }
 
   addEvent(): void {
     let eventModel = new EventModel();
-    eventModel.color = {primary: '', secondary: ''}
+    eventModel.color = { primary: '', secondary: '' };
     let dialogRef = this.dialog.open(CreateEventComponent, {
       data: eventModel,
       width: '600px',
     });
 
     dialogRef.afterClosed().subscribe((response) => {
-      console.log(JSON.stringify(response));
-
       this.events = [
         ...this.events,
         {

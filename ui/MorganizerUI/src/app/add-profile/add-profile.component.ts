@@ -16,7 +16,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
         animate('1s ease-in'),
       ]),
     ]),
-  ]
+  ],
 })
 export class AddProfileComponent implements OnInit {
   state = { hex: '#f44336' };
