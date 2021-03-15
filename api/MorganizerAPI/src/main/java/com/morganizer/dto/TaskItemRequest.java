@@ -2,45 +2,42 @@ package com.morganizer.dto;
 
 import java.sql.Timestamp;
 
+
+import com.morganizer.entity.TaskEntity;
+
 public class TaskItemRequest {
-	
-	private long categoryId;
-	private int calendarId;
+
+	private long id;
+	private String description;
 	private String title;
-	private String itemDesc;
-	private Timestamp dueDate;
-	private String url;
+	private Timestamp duedate;
 	private String repeatType;
-	private Boolean complete;
-	private int[] assigneeId;
-	private int listId;
+	private boolean complete;
+	private int task_id;
 	
-	public TaskItemRequest(long categoryId, int calendarId, String title, String itemDesc, Timestamp dueDate,
-			String url, String repeatType, Boolean complete, int[] assigneeId, int listId) {
+	public TaskItemRequest(long id, String description, String title, Timestamp duedate, String repeatType,
+			boolean complete, int task_id) {
 		super();
-		this.categoryId = categoryId;
-		this.calendarId = calendarId;
+		this.id = id;
+		this.description = description;
 		this.title = title;
-		this.itemDesc = itemDesc;
-		this.dueDate = dueDate;
-		this.url = url;
+		this.duedate = duedate;
 		this.repeatType = repeatType;
 		this.complete = complete;
-		this.assigneeId = assigneeId;
-		this.listId = listId;
+		this.task_id = task_id;
 	}
 	
-	public long getCategoryId() {
-		return categoryId;
+	public long getId() {
+		return id;
 	}
-	public void setCategoryId(long categoryId) {
-		this.categoryId = categoryId;
+	public void setId(long id) {
+		this.id = id;
 	}
-	public int getCalendarId() {
-		return calendarId;
+	public String getDescription() {
+		return description;
 	}
-	public void setCalendarId(int calendarId) {
-		this.calendarId = calendarId;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public String getTitle() {
 		return title;
@@ -48,23 +45,11 @@ public class TaskItemRequest {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getItemDesc() {
-		return itemDesc;
+	public Timestamp getDuedate() {
+		return duedate;
 	}
-	public void setItemDesc(String itemDesc) {
-		this.itemDesc = itemDesc;
-	}
-	public Timestamp getDueDate() {
-		return dueDate;
-	}
-	public void setDueDate(Timestamp dueDate) {
-		this.dueDate = dueDate;
-	}
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String url) {
-		this.url = url;
+	public void setDuedate(Timestamp duedate) {
+		this.duedate = duedate;
 	}
 	public String getRepeatType() {
 		return repeatType;
@@ -72,22 +57,18 @@ public class TaskItemRequest {
 	public void setRepeatType(String repeatType) {
 		this.repeatType = repeatType;
 	}
-	public Boolean getComplete() {
+	public boolean isComplete() {
 		return complete;
 	}
-	public void setComplete(Boolean complete) {
+	public void setComplete(boolean complete) {
 		this.complete = complete;
 	}
-	public int[] getAssigneeId() {
-		return assigneeId;
+	
+	public int getTask_id() {
+		return task_id;
 	}
-	public void setAssigneeId(int[] assigneeId) {
-		this.assigneeId = assigneeId;
+	public void setTask_id(int task_id) {
+		this.task_id = task_id;
 	}
-	public int getListId() {
-		return listId;
-	}
-	public void setListId(int listId) {
-		this.listId = listId;
-	}	
+	
 }
