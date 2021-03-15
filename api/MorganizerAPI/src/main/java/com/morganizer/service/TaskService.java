@@ -1,5 +1,6 @@
 package com.morganizer.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +10,10 @@ import com.morganizer.dto.TaskItemRequest;
 import com.morganizer.dto.TaskRequest;
 import com.morganizer.dto.TaskResponse;
 import com.morganizer.entity.ItemEntity;
+import com.morganizer.entity.RecurringModeEntity;
 import com.morganizer.entity.TaskEntity;
-import com.morganizer.entity.TaskListItemsEntity;
 import com.morganizer.entity.UserDetailsEntity;
 import com.morganizer.repository.ItemRepository;
-import com.morganizer.repository.TaskListItemsRepository;
 import com.morganizer.repository.TaskRepository;
 import com.morganizer.repository.UserDetailsRepository;
 
@@ -30,7 +30,7 @@ public class TaskService {
 	private UserDetailsRepository userDetailsRepo;
 	
 	@Autowired
-	private TaskListItemsRepository taskListItemsRepo;
+	private ItemRepository itemRepo;
 
 	public List<TaskResponse> fetchAllTasks(long userId) {
 		List<TaskEntity> tasks =taskRepo.findByUserId(userId);
@@ -57,16 +57,17 @@ public class TaskService {
 	}
 	
 	public void addItem(TaskItemRequest item) {
-		// TODO Auto-generated method stub
 		
-//		TaskListItemsEntity itemEntity = taskListItemsRepo.save(new TaskListItemsEntity(item));
+		TaskEntity task = taskRepo.getOne(item.getTask_id());
+		ItemEntity itemEntity = itemRepo.save(new ItemEntity(item.getId(), item.getDescription(), item.getTitle(), item.getDuedate(), item.getRepeatType(), 
+				item.isComplete(), task));
 		
 	}
 	
 	 public void deleteItem(TaskRequest task) {
 
 	        try {
-	        	taskListItemsRepo.deleteById(task.getItemId());
+	        	itemRepo.deleteById(task.getItemId());
 	        } catch (Exception ex) {
 	            // throw custom exception for no such event present to be deleted
 	        }

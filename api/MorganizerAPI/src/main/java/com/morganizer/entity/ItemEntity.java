@@ -25,7 +25,17 @@ public class ItemEntity {
 	@JoinColumn(name = "task_id", referencedColumnName = "id")
 	private TaskEntity task;
 	
-	
+	public ItemEntity(long id, String description, String title, Timestamp duedate, String repeatType, boolean complete,
+			TaskEntity task) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.title = title;
+		this.duedate = duedate;
+		this.repeatType = repeatType;
+		this.complete = complete;
+		this.task = task;
+	}
 	
 	public TaskEntity getTask() {
 		return task;
