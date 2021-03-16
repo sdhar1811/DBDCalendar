@@ -64,5 +64,9 @@ public class TodoListService {
 			taskRepo.save(taskEntity);
 		}
 	}
+	
+	public void deleteTask(Long taskId) {
+		taskRepo.deleteById(taskId);
+	}
 
 }

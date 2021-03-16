@@ -54,43 +54,53 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field>
-      <input
-        [(ngModel)]="data.startTime"
-        matInput
-        [ngxMatDatetimePicker]="picker"
-        placeholder="Choose a start date and time"
-      />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #picker [enableMeridian]="enableMeridian">
-        <!-- Custom icon or text of Apply icon -->
-        <ng-template>
-          <!-- <mat-icon>star</mat-icon> -->
-          <span>OK</span>
-        </ng-template>
-      </ngx-mat-datetime-picker>
-    </mat-form-field>
+    <div class="row">
+      <div class = "col-md-6">
+        <mat-form-field>
+          <input
+            [(ngModel)]="data.startTime"
+            matInput
+            [ngxMatDatetimePicker]="picker"
+            placeholder="Choose a start date and time"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #picker [enableMeridian]="enableMeridian">
+            <!-- Custom icon or text of Apply icon -->
+            <ng-template>
+              <!-- <mat-icon>star</mat-icon> -->
+              <span>OK</span>
+            </ng-template>
+          </ngx-mat-datetime-picker>
+        </mat-form-field>
+      </div>
 
-    <mat-form-field>
-      <input
-        [(ngModel)]="data.endTime"
-        matInput
-        [ngxMatDatetimePicker]="picker2"
-        placeholder="Choose an end date and time"
-      />
-      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #picker2 [enableMeridian]="enableMeridian">
-        <!-- Custom icon or text of Apply icon -->
-        <ng-template>
-          <!-- <mat-icon>star</mat-icon> -->
-          <span>OK</span>
-        </ng-template>
-      </ngx-mat-datetime-picker>
-    </mat-form-field>
+      <div class = "col-md-6">
+        <mat-form-field>
+          <input
+            [(ngModel)]="data.endTime"
+            matInput
+            [ngxMatDatetimePicker]="picker2"
+            placeholder="Choose an end date and time"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #picker2 [enableMeridian]="enableMeridian">
+            <!-- Custom icon or text of Apply icon -->
+            <ng-template>
+              <!-- <mat-icon>star</mat-icon> -->
+              <span>OK</span>
+            </ng-template>
+          </ngx-mat-datetime-picker>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+
+    
 
     <mat-form-field appearance="outline">
       <mat-label>Location</mat-label>
-      <input required matInput placeholder="Enter the location" />
+      <input matInput placeholder="Enter the location" />
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="width: 100%">
@@ -104,22 +114,45 @@
       ></textarea>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Reminder</mat-label>
-      <mat-select>
-        <mat-option value="five">5 minutes</mat-option>
-        <mat-option value="ten">10 minutes</mat-option>
-        <mat-option value="fifteen">15 minutes</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <div class = "row">
+        <div class ="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Reminder</mat-label>
+            <mat-select>
+              <mat-option value="five">5 minutes</mat-option>
+              <mat-option value="ten">10 minutes</mat-option>
+              <mat-option value="fifteen">15 minutes</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class = "col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Notification Type</mat-label>
+            <mat-select>
+              <mat-option value="email">Email</mat-option>
+              <mat-option value="text">Text</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Notification Type</mat-label>
-      <mat-select>
-        <mat-option value="email">Email</mat-option>
-        <mat-option value="text">Text</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <div class = "row">
+        <div class="col-md-7">
+          <mat-form-field appearance="outline">
+            <mat-label>Recurring</mat-label>
+            <mat-select>
+              <mat-option value="none">None</mat-option>
+              <mat-option value="daily">Daily</mat-option>
+              <mat-option value="weekly">Weekly</mat-option>
+              <mat-option value="monthly">Monthly</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-5">
+          <mat-checkbox>All Day Event</mat-checkbox>
+        </div>
+      </div>
+      
 
     <button
       mat-raised-button
