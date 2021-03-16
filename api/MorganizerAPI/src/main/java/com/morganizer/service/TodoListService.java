@@ -3,52 +3,66 @@ package com.morganizer.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.morganizer.entity.ItemEntity;
-import com.morganizer.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morganizer.dto.TaskRequest;
-import com.morganizer.dto.TaskResponse;
+import com.morganizer.dto.TodoListRequest;
+import com.morganizer.dto.TodoListResponse;
 import com.morganizer.entity.TaskEntity;
+import com.morganizer.entity.TodoListEntity;
 import com.morganizer.entity.UserDetailsEntity;
 import com.morganizer.repository.TaskRepository;
+import com.morganizer.repository.TodoListRepository;
 import com.morganizer.repository.UserDetailsRepository;
+import com.morganizer.utils.DateTimeUtil;
 
 @Service
-public class TaskService {
+public class TodoListService {
+	
+	@Autowired
+	private TodoListRepository todoListRepo;
 	
 	@Autowired
 	private TaskRepository taskRepo;
 
-	@Autowired
-	private ItemRepository itemRepository;
 	
 	@Autowired
 	private UserDetailsRepository userDetailsRepo;
 
-	public List<TaskResponse> fetchAllTasks(long userId) {
-		List<TaskEntity> tasks =taskRepo.findByUserId(userId);
-		List<TaskResponse> taskList = new ArrayList<>();
-		for(TaskEntity taskEntity:tasks) {
-			taskList.add(new TaskResponse(taskEntity.getId(), taskEntity.getTitle()));
+	public List<TodoListResponse> fetchAllTasks(long userId) {
+		List<TodoListEntity> todoList =todoListRepo.findByUserId(userId);
+		List<TodoListResponse> todoListResponse = new ArrayList<>();
+		for(TodoListEntity todoListEntity:todoList) {
+			List<TaskEntity> tasks = taskRepo.findByTodoListEntity(todoListEntity);
+			todoListResponse.add(new TodoListResponse(todoListEntity.getId(), todoListEntity.getTitle(),tasks));
 		}
-		return taskList;
+		
+		return todoListResponse;
 	}
 
-	public TaskResponse createTask(TaskRequest task) {
-		// TODO Auto-generated method stub
+	public TodoListResponse createTodoList(TodoListRequest task) {
+		
 		UserDetailsEntity userDetails = userDetailsRepo.getOne(task.getUserId());
-		TaskEntity taskEntity = taskRepo.save(new TaskEntity(task.getTitle(), userDetails));
-		return new TaskResponse(taskEntity.getId(), taskEntity.getTitle());
+		TodoListEntity taskEntity = todoListRepo.save(new TodoListEntity(task.getTitle(), userDetails));
+		return new TodoListResponse(taskEntity.getId(), taskEntity.getTitle());
 		
 	}
 
 	public void updateStatus(Long itemId, boolean itemStatus){
 
-		ItemEntity itemEntity = itemRepository.getOne(itemId);
-		itemRepository.save(itemEntity);
+		TaskEntity itemEntity = taskRepo.getOne(itemId);
+		taskRepo.save(itemEntity);
 
+	}
+
+	public void addTasks(List<TaskRequest> taskRequest) {
+		TodoListEntity todoList=null;
+		for(TaskRequest task: taskRequest) {
+			todoList = todoListRepo.getOne(task.getTodoListId());			
+			TaskEntity taskEntity = new TaskEntity(task.getDescription(),task.getTitle(), DateTimeUtil.parseTimestampWithTimezone(task.getDuedate()), task.getRepeatType(),task.isComplete() , todoList);
+			taskRepo.save(taskEntity);
+		}
 	}
 
 }
