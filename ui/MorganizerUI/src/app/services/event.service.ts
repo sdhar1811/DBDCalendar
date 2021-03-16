@@ -34,7 +34,6 @@ export class EventService {
   }
 
   addEvent(event: EventModel) {
-    event.userId = 3; // this.storeService.getProperty('loggedInUser').id;
     return this.http.post(this.eventURL + this.appConfig.addEvent, event);
   }
 

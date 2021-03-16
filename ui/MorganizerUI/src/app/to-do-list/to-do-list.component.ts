@@ -15,6 +15,7 @@ import { StoreService } from 'src/app/services/store.service';
 import { NewListDialogComponent } from './new-list-dialog/new-list-dialog.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { EventService } from '../services/event.service';
+import { endOfToday } from 'date-fns';
 
 @Component({
   selector: 'app-to-do-list',
@@ -44,14 +45,17 @@ export class ToDoListComponent implements OnInit {
   editMode = false;
   taskIndex = 0;
 
-  todoLists = [
-    { name: 'My List', id: 1 },
-    { name: 'School List', id: 2 },
+  previousTaskList = [];
+  todoLists = [{ name: 'My List', id: '1' }];
+  assigneeList = [
+    { name: 'Sharad', id: 1 },
+    { name: 'Satyen', id: 2 },
+    { name: 'Dhananjay', id: 3 },
   ];
-
   name: string;
   taskTitle: string;
   tasks = [];
+  selectedIndex = 0;
 
   constructor(
     public dialog: MatDialog,
@@ -77,8 +81,13 @@ export class ToDoListComponent implements OnInit {
       .getTask(this.storeService.loggedInUser?.id)
       .subscribe((response) => {
         if (response) {
-          response.forEach((task) => {
-            this.todoLists.push({ name: task.title, id: task.id });
+          response.forEach((todoList) => {
+            this.todoLists.push({ name: todoList.title, id: todoList.id });
+            if (todoList.tasks) {
+              todoList.tasks.forEach((task) => {
+                this.previousTaskList.push(task);
+              });
+            }
             this.selectedTodoList.setValue(this.todoLists[0]);
           });
         }
@@ -93,10 +102,7 @@ export class ToDoListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.name !== '') {
         this.taskService
-          .createTask(
-            result.name,
-            this.storeService.getProperty('loggedInUser').id
-          )
+          .createTask(result.name, this.storeService.loggedInUser.id)
           .subscribe(
             (response) => {
               this.todoLists.push({
@@ -115,17 +121,18 @@ export class ToDoListComponent implements OnInit {
     });
   }
   addNewTask() {
+    console.log(this.selectedTodoList.value);
     this.tasks.push({
       title: this.taskTitle,
       description: null,
       calendar: {},
       color: undefined,
-      duedate: '',
-      checked: false,
+      complete: false,
       draggable: true,
       start: new Date(),
-      end: new Date(),
+      dueDate: endOfToday(),
       userId: this.storeService.loggedInUser?.id,
+      todoListId: this.selectedTodoList.value.id,
     });
     this.sortTaskList();
     this.taskTitle = '';
@@ -139,16 +146,30 @@ export class ToDoListComponent implements OnInit {
   }
   sortTaskList() {
     this.tasks.sort((task1, task2) => {
-      return task1.checked - task2.checked;
+      return task1.complete - task2.complete;
     });
   }
   closeEditMode(event) {
     this.editMode = false;
   }
   close() {
+    this.updateTasks();
     this.closeTaskPanel.emit(null);
   }
   drop(event: CdkDragDrop<any[]>) {
     moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+  }
+  todoListSelectionChanged(event) {
+    console.log(event);
+  }
+  updateTasks() {
+    this.taskService.addTasksInTodoList(this.tasks).subscribe(
+      (response) => {
+        console.log('Tasks updated');
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

@@ -15,6 +15,7 @@ export interface IAppConfig {
   addEvent: string;
   updateEvent: string;
   deleteEvent: any;
+  addTasks: string;
 }
 export const APPCONFIG: IAppConfig = {
   morganizerAPIEndpoint: environment.morgainzedAPIURL,
@@ -22,8 +23,9 @@ export const APPCONFIG: IAppConfig = {
   logout: '/user/logout',
   register: '/user/register',
   resetpassword: 'user/resetpassword',
-  task: '/tasks',
+  task: '/todoList',
   createTask: '/create',
+  addTasks: '/add/tasks',
   fetchAllTasks: (userId: string) => `/all/${userId}`,
   event: '/event',
   fetchAllEvents: (userId: string) => `/fetchAll/${userId}`,

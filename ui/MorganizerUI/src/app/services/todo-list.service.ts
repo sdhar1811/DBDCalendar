@@ -26,4 +26,10 @@ export class TodoListService {
       this.todoListUrl + this.appConfig.fetchAllTasks(userId)
     );
   }
+  addTasksInTodoList(tasks) {
+    return this.http.post<any>(
+      this.todoListUrl + this.appConfig.addTasks,
+      tasks
+    );
+  }
 }
