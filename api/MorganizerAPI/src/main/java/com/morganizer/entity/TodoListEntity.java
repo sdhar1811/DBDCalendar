@@ -1,5 +1,6 @@
 package com.morganizer.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,30 +8,30 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity(name="task")
-public class TaskEntity {
+@Entity(name="todo_list")
+public class TodoListEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
-	private int id;
+	private Long id;
 	private String title;
 	
 	@ManyToOne
 	@JoinColumn(name="userId",referencedColumnName="user_id")
 	private UserDetailsEntity user;
 	
-	public TaskEntity() {
+	public TodoListEntity() {
 		
 	}
-	public TaskEntity(String title, UserDetailsEntity user) {
+	public TodoListEntity(String title, UserDetailsEntity user) {
 		this.title=title;
 		this.user=user;
 	}
 	
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getTitle() {

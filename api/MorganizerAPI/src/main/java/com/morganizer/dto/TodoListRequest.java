@@ -1,11 +1,11 @@
 package com.morganizer.dto;
 
 
-public class TaskRequest {
+public class TodoListRequest {
 	private String title;
-	private Long userId;
+	private Long userId;	 
 
-	public TaskRequest(String title, Long userId) {
+	public TodoListRequest(String title, Long userId) {
 		this.title=title;
 		this.userId=userId;
 	}
