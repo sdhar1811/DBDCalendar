@@ -177,25 +177,26 @@ export class HomeScreenComponent implements OnInit {
     newStart,
     newEnd,
   }: CalendarEventTimesChangedEvent): void {
+    // let rescheduleEvent : any;
+    // rescheduleEvent = event.meta.eventModel;
+    // rescheduleEvent.startTime = newStart;
+    // rescheduleEvent.endTime = newEnd;
+
     let eventModel: any = {};
-    console.log(event);
+    // check if an existing or external event
     if (event.meta?.eventModel) {
       eventModel = event.meta.eventModel;
+      eventModel.endTime = newEnd ? newEnd : event.end;
     } else {
+      eventModel = event;
+      eventModel.endTime = event['dueDate'];
       this.eventService.triggerEventDropped(event);
     }
-
-    eventModel.title = event.title;
-    eventModel.color = event.color?.primary;
-    eventModel['startTime'] = newStart ? newStart : event.start;
-    eventModel['endTime'] = newEnd ? newEnd : event.end;
-
-    eventModel['userId'] = this.storeService.loggedInUser?.id;
+    eventModel.startTime = newStart ? newStart : event.start;
 
     this.eventService.updateEvent(eventModel).subscribe(
       (response) => {
         if (response) {
-          console.log('Event updated');
           this.fetchAllEvents();
         }
       },

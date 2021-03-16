@@ -1,5 +1,7 @@
 package com.morganizer.entity;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,31 +9,42 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity(name="task")
-public class TaskEntity {
+// TO-DO
+@Entity(name="todo_items")
+public class ItemEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	
-	private int id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
+	private String description;
 	private String title;
+	private Timestamp duedate;
+	private String repeatType;
+	private boolean complete;
 	
 	@ManyToOne
-	@JoinColumn(name="userId",referencedColumnName="user_id")
-	private UserDetailsEntity user;
+	@JoinColumn(name = "task_id", referencedColumnName = "id")
+	private TaskEntity task;
 	
-	public TaskEntity() {
-		
+	
+	
+	public TaskEntity getTask() {
+		return task;
 	}
-	public TaskEntity(String title, UserDetailsEntity user) {
-		this.title=title;
-		this.user=user;
+	public void setTask(TaskEntity task) {
+		this.task = task;
 	}
 	
-
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public String getTitle() {
 		return title;
@@ -39,19 +52,27 @@ public class TaskEntity {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-
-	public UserDetailsEntity getUser() {
-		return user;
+	public Timestamp getDuedate() {
+		return duedate;
 	}
-
-
-	public void setUser(UserDetailsEntity user) {
-		this.user = user;
+	public void setDuedate(Timestamp duedate) {
+		this.duedate = duedate;
+	}
+	public String getRepeatType() {
+		return repeatType;
+	}
+	public void setRepeatType(String repeatType) {
+		this.repeatType = repeatType;
+	}
+	public boolean isComplete() {
+		return complete;
+	}
+	public void setComplete(boolean complete) {
+		this.complete = complete;
 	}
 	
 	
 	
 	
-
+	
 }

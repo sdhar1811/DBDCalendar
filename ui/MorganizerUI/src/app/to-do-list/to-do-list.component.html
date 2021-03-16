@@ -22,9 +22,12 @@
     <mat-form-field appearance="outline">
       <mat-label>Task List</mat-label>
       <mat-select [formControl]="selectedTodoList">
-        <mat-option *ngFor="let list of todoLists" [value]="list">{{
-          list.name
-        }}</mat-option>
+        <mat-option
+          *ngFor="let list of todoLists; let i = index"
+          (onSelectionChange)="todoListSelectionChanged($event)"
+          [value]="list"
+          >{{ list.name }}</mat-option
+        >
         <mat-option>
           <div class="add-task-list-btn" (click)="addNewList()">
             Create New List
@@ -56,7 +59,7 @@
       (cdkDropListDropped)="drop($event)"
     >
       <mat-card
-        style="margin-bottom: 10px;"
+        style="margin-bottom: 10px"
         class="mat-elevation-z5 task-card"
         cdkDrag
         mwlDraggable
@@ -67,27 +70,27 @@
       >
         <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
         <div class="row">
-          <div class="col-md-2" style="align-self: center;">
+          <div class="col-md-2" style="align-self: center">
             <!-- style="float: left; margin: 0 10px" -->
             <mat-checkbox
               color="primary"
               class="custom-frame"
               matTooltip="{{
-                task.checked ? 'Mark incomplete' : 'Mark complete'
+                task.complete ? 'Mark incomplete' : 'Mark complete'
               }}"
-              [(ngModel)]="task.checked"
+              [(ngModel)]="task.complete"
               (change)="sortTaskList()"
             >
             </mat-checkbox>
           </div>
           <div class="col-md-8">
             <mat-label
-              [ngClass]="task.checked ? 'strike-through' : none"
-              style="overflow-wrap: break-word;"
+              [ngClass]="task.complete ? 'strike-through' : none"
+              style="overflow-wrap: break-word"
               >{{ task.title }}</mat-label
             >
           </div>
-          <div class="col-md-2" style="align-self: center;">
+          <div class="col-md-2" style="align-self: center">
             <mat-icon
               matTooltip="Edit Task"
               (click)="editTask(i)"
