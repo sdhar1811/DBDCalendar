@@ -13,6 +13,7 @@ import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.NotificationTypesEntity;
 import com.morganizer.entity.RecurringModeEntity;
 import com.morganizer.entity.UserDetailsEntity;
+import com.morganizer.repository.EventCategoriesRepository;
 import com.morganizer.repository.EventDetailsRepository;
 import com.morganizer.repository.NotificationTypeRepository;
 import com.morganizer.repository.RecurringModeRepository;
@@ -38,7 +39,11 @@ public class EventService {
 	@Autowired
     public EventCategoriesRepository eventCategoriesRepository;
 
+<<<<<<< HEAD
 	public void deleteEvent(Long eventId) {
+=======
+	public void deleteEvent(EventRequest eventDetailsReq) {
+>>>>>>> 2816312d776ee329d8c118a9db0a92bcf21fce5e
 
 		try {
 			eventDetailsRepository.deleteById(eventId);

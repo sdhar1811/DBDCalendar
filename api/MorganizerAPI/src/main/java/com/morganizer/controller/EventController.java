@@ -28,8 +28,8 @@ public class EventController {
     public void deleteEvent(@PathVariable Long eventId) {
 		eventService.deleteEvent(eventId);
     }
-	
-    @GetMapping("/notification/types")
+
+    @GetMapping("/fetchAll/{notificationTypeId}")
     public List<NotificationTypesEntity> getNotificationType() {
         return eventService.getNotificationType();
     }
