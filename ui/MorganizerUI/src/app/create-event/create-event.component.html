@@ -62,7 +62,7 @@
         placeholder="Choose a start date and time"
       />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #picker>
+      <ngx-mat-datetime-picker #picker [enableMeridian]="enableMeridian">
         <!-- Custom icon or text of Apply icon -->
         <ng-template>
           <!-- <mat-icon>star</mat-icon> -->
@@ -79,7 +79,7 @@
         placeholder="Choose an end date and time"
       />
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #picker2>
+      <ngx-mat-datetime-picker #picker2 [enableMeridian]="enableMeridian">
         <!-- Custom icon or text of Apply icon -->
         <ng-template>
           <!-- <mat-icon>star</mat-icon> -->
