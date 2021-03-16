@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-register-dialog',
   templateUrl: './register-dialog.component.html',
-  styleUrls: ['./register-dialog.component.scss']
+  styleUrls: ['./register-dialog.component.scss'],
 })
 export class RegisterDialogComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

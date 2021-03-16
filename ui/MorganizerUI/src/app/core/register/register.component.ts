@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterEvent, RouterModule } from '@angular/router';
+import { isThursday } from 'date-fns';
 import { RegisterService } from 'src/app/services/register.service';
 import { UserModel } from '../model/user.model';
+import { MatchPassword } from './password-validator';
 import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
 
 @Component({
@@ -12,32 +15,97 @@ import { RegisterDialogComponent } from './register-dialog/register-dialog.compo
 })
 export class RegisterComponent implements OnInit {
   tabIndex = 0;
+
   userModel: UserModel = new UserModel();
   confirmPassword: string;
   birthdate: string;
+  personalForm: FormGroup;
+  accountForm: FormGroup;
   constructor(
     private registerService: RegisterService,
     public dialog: MatDialog,
-    private router: Router
-  ) {}
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {
+    this.createForm();
+  }
 
   ngOnInit(): void {}
 
+  createForm() {
+    this.createPersonalForm();
+    this.createAccountForm();
+  }
+  createAccountForm() {
+    this.accountForm = this.formBuilder.group(
+      {
+        email: [
+          '',
+          [
+            Validators.required,
+            Validators.maxLength(255),
+            Validators.minLength(3),
+            Validators.email,
+          ],
+        ],
+        phoneNumber: [
+          '',
+          [Validators.required, Validators.pattern('[0-9]{10}')],
+        ],
+        username: ['', [Validators.required]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(
+              '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]).{8,}'
+            ),
+          ],
+        ],
+        confirmPassword: ['', [Validators.required]],
+      },
+      {
+        validator: MatchPassword('password', 'confirmPassword'),
+      }
+    );
+  }
+  createPersonalForm() {
+    this.personalForm = this.formBuilder.group({
+      firstName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100),
+        ],
+      ],
+      middleName: ['', [Validators.minLength(3), Validators.maxLength(100)]],
+      lastName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100),
+        ],
+      ],
+      gender: ['', [Validators.required]],
+      birthdate: ['', [Validators.required]],
+    });
+  }
   registerUser() {
-    if (
-      this.confirmPassword !== undefined &&
-      this.confirmPassword === this.userModel.password
-    ) {
-      console.log(this.userModel);
-      this.userModel.birthdate = this.transformDateToSQL(this.birthdate);
-      this.registerService
-        .registerUser(this.userModel)
-        .subscribe((response) => {
-          this.openSuccessDialog();
-        });
-    } else {
-      window.alert("Passwords doesn't match");
-    }
+    Object.keys(this.personalForm.controls).forEach((key) => {
+      this.userModel[key] = this.personalForm.get(key).value;
+    });
+    Object.keys(this.accountForm.controls).forEach((key) => {
+      this.userModel[key] = this.accountForm.get(key).value;
+    });
+
+    this.userModel.birthdate = this.transformDateToSQL(
+      this.userModel.birthdate
+    );
+    this.registerService.registerUser(this.userModel).subscribe((response) => {
+      this.openSuccessDialog();
+    });
   }
   openSuccessDialog() {
     const dialogRef = this.dialog.open(RegisterDialogComponent);
@@ -56,6 +124,7 @@ export class RegisterComponent implements OnInit {
   incrementIndex() {
     this.tabIndex++;
   }
+
   decrementIndex() {
     this.tabIndex--;
   }

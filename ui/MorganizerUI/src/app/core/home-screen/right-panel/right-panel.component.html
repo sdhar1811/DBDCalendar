@@ -1,0 +1,32 @@
+<div *ngIf="!showTaskPanel" class="icon-drawer">
+  <div class="flex-vertical icons">
+    <mat-icon
+      (click)="
+        showTaskPanel = !showTaskPanel;
+        taskPanel = !taskPanel;
+        toggleTaskPanel()
+      "
+      matTooltip="Create Tasks"
+      class="material-icons md-24 task-icon"
+      >sticky_note_2</mat-icon
+    >
+    <br />
+    <mat-icon
+      (click)="
+        showTaskPanel = !showTaskPanel;
+        profilePanel = !profilePanel;
+        toggleTaskPanel()
+      "
+      matTooltip="Add Profile"
+      class="material-icons md-24 task-icon"
+      >person_add</mat-icon
+    >
+  </div>
+</div>
+<div *ngIf="taskPanel">
+  <app-to-do-list (closeTaskPanel)="closeTaskPanel()"></app-to-do-list>
+</div>
+
+<div *ngIf="profilePanel">
+  <app-add-profile (closeTaskPanel)="closeTaskPanel()"></app-add-profile>
+</div>

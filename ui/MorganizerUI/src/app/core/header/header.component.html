@@ -1,25 +1,28 @@
 <mat-toolbar color="primary">
-  <button
-    mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with menu icon"
-  >
+  <button mat-icon-button aria-label="menu icon">
     <mat-icon>menu</mat-icon>
   </button>
   <span>Morganized</span>
   <span class="toolbar-spacer"></span>
-  <button
+  <div *ngIf="loggedInUser">
+    <span>Hi, {{ loggedInUser.firstName }}</span>
+    <button
+      mat-icon-button
+      aria-label="user profile icon"
+      [matMenuTriggerFor]="menu"
+    >
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Profile</button>
+      <button mat-menu-item (click)="logOut()">Sign Out</button>
+    </mat-menu>
+  </div>
+  <!-- <button
     mat-icon-button
-    class="material-icons md-24"
-    aria-label="user profile icon"
-  >
-    <mat-icon>account_circle</mat-icon>
-  </button>
-  <button
-    mat-icon-button
-    class="material-icons md-24"
     aria-label="Example icon-button with share icon"
+    [routerLink]="['/login']"
   >
     <mat-icon>home</mat-icon>
-  </button>
+  </button> -->
 </mat-toolbar>

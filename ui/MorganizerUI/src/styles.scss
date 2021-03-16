@@ -1,11 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 @import "~bootstrap/dist/css/bootstrap.css";
-html,
-body {
-  height: 100%;
-}
+@import "~ngx-ui-switch/ui-switch.component.scss";
+// html,
+// body {
+//   height: 100%;
+// }
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.btn-animation:hover:not([disabled]) {
+  background-color: rgba(24, 217, 231, 0.96);
+  color: rgba(48, 48, 250, 0.96);
+  transition: 0.5s ease-in-out;
+}
+.material-icons.md-18 {
+  font-size: 18px;
+}
+.material-icons.md-24 {
+  font-size: 24px;
+}
+.material-icons.md-36 {
+  font-size: 36px;
+}
+.material-icons.md-48 {
+  font-size: 48px;
+}
+.cal-month-view .cal-cell .cal-event {
+  width: 100%;
+  border-radius: 0;
+  margin: 0px;
+}
+.cal-month-view .cal-day-badge {
+  background-color: #326277fa;
+}
+.cal-header {
+  background-color: #c0e9fa;
+}
+.cal-month-view .cal-events {
+  margin: 0px;
 }

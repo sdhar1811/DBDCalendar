@@ -1,43 +1,70 @@
 <div class="container">
-  <mat-card class="mat-elevation-z5 login-panel">
-    <div class="flex-vertical">
-      <mat-form-field appearance="outline">
-        <mat-label>Username</mat-label>
-        <input
-          [(ngModel)]="username"
-          matInput
-          placeholder="Enter your username"
-        />
-      </mat-form-field>
+  <mat-card [@headShake]="loginFailed" class="mat-elevation-z5 login-panel">
+    <mat-card-title class="login-title">
+      <div style="margin: 10px;">Weclome to Morganized</div>
+      <div style="text-align: center;">
+        <span>
+          <mat-icon class="material-icons md-18">lock</mat-icon>
+        </span>
+        Sign In
+      </div>
+    </mat-card-title>
+    <form [formGroup]="loginForm">
+      <div class="flex-vertical">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input
+            formControlName="username"
+            matInput
+            required
+            placeholder="Enter your username"
+          />
+          <mat-error *ngIf="loginForm.get('username').errors?.required">
+            <strong> Username</strong> is required
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            formControlName="password"
+            type="password"
+            required
+            matInput
+            placeholder="Enter your password"
+          />
+          <mat-error *ngIf="loginForm.get('password').errors?.required">
+            <strong> Password</strong> is required
+          </mat-error>
+        </mat-form-field>
+        <div *ngIf="loginFailed" style="color: red; text-align: center;">
+          {{ this.errorMessage.message }}:{{ this.errorMessage.error[0] }}
+        </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input
-          [(ngModel)]="password"
-          type="password"
-          matInput
-          placeholder="Enter your password"
-        />
-      </mat-form-field>
-
-      <button
-        mat-raised-button
-        class="btn-animation"
-        color="primary"
-        style="margin: 0.5em"
-        (click)="login()"
-      >
-        Login
-      </button>
-      <button
-        mat-raised-button
-        class="btn-animation"
-        color="primary"
-        style="margin: 0.5em"
-        (click)="goToRegister()"
-      >
-        Sign Up
-      </button>
-    </div>
+        <button
+          mat-raised-button
+          class="btn-animation"
+          color="primary"
+          style="margin: 0.5em;"
+          (click)="login()"
+          [disabled]="!loginForm.valid"
+        >
+          Login
+        </button>
+        <button
+          mat-raised-button
+          class="btn-animation"
+          color="primary"
+          style="margin: 0.5em;"
+          (click)="goToRegister()"
+        >
+          Sign Up
+        </button>
+        <div>
+          <a [routerLink]="['/resetpassword']" class="btn btn-link pr-0"
+            >Forgot Password?</a
+          >
+        </div>
+      </div>
+    </form>
   </mat-card>
 </div>

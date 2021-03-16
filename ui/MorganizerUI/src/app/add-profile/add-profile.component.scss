@@ -1,0 +1,75 @@
+.container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
+}
+.addprofile-panel {
+  width: 95%;
+}
+.btn-animation:hover {
+  background-color: rgba(24, 217, 231, 0.96);
+  color: rgba(48, 48, 250, 0.96);
+  transition: 0.5s ease-in-out;
+}
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+.delete-task-icon {
+  cursor: pointer;
+  color: #a90000;
+}
+.edit-task-icon {
+  cursor: pointer;
+  color: gray;
+}
+.task-card {
+  // to-do
+}
+.task-card:hover {
+  box-shadow: 0 8px 8px 8px rgba(0, 0, 0, 0.2), 0 8px 8px 0 rgba(0, 0, 0, 0.14),
+    0 8px 8px 0 rgba(0, 0, 0, 0.12) !important;
+  transform: translate3d(0, 0, 0);
+  transition: background 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.add-task-list-btn {
+  text-align: center;
+  border-top: solid 2px rgb(192, 192, 192);
+  width: 100%;
+  &:hover {
+    background-color: rgb(252, 252, 252);
+    border-radius: 2em;
+    transition: 0.5s ease-in-out;
+  }
+}
+
+::ng-deep .custom-frame {
+  & .mat-checkbox-background,
+  .mat-checkbox-frame {
+    border-radius: 70% !important;
+  }
+}
+
+// ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+//   .mat-checkbox-indeterminate .mat-checkbox-background {
+//   background-color: #8416b8 !important;
+// }
+
+// ::ng-deep
+//   .mat-checkbox:not(.mat-checkbox-disabled)
+//   .mat-checkbox-ripple
+//   .mat-ripple-element {
+//   background-color: rgb(9, 224, 74) !important;
+// }
+
+.strike-through {
+  text-decoration-line: line-through;
+}
+.task-panel-close {
+  cursor: pointer;
+}

@@ -1,30 +1,57 @@
 import { Component, Injectable, OnInit, Input } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { flipAnimation, headShakeAnimation } from 'angular-animations';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  animations: [headShakeAnimation(), flipAnimation()],
 })
 export class LoginComponent implements OnInit {
   @Input() clickedSignUp: string;
-
-  username: string;
-  password: string;
-  constructor(private loginService: LoginService, private router: Router) {}
-
+  loginFailed = false;
+  viewRendered = false;
+  errorMessage: any;
+  loginForm: FormGroup;
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private storeService: StoreService
+  ) {
+    this.createForm();
+  }
+  createForm() {
+    this.loginForm = this.formBuilder.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
+  }
   ngOnInit(): void {}
+  ngAfterContentInit() {
+    this.viewRendered = true;
+  }
   login() {
+    this.loginFailed = false;
     this.loginService
-      .validateCredentials(this.username, this.password)
+      .validateCredentials(
+        this.loginForm.get('username').value,
+        this.loginForm.get('password').value
+      )
       .subscribe(
         (response) => {
-          console.log('sdasd');
           this.router.navigateByUrl('home');
+          this.storeService.setProperty('loggedInUser', response);
+          this.storeService.setLoggedInUserDetails(response);
         },
         (error) => {
-          window.alert('login Failed');
+          this.loginFailed = true;
+
+          this.errorMessage = error.error;
         }
       );
   }
@@ -32,5 +59,8 @@ export class LoginComponent implements OnInit {
   goToRegister() {
     // this.clickedSignUp = 'true';
     this.router.navigateByUrl('register');
+  }
+  animDone(event) {
+    this.loginFailed = false;
   }
 }

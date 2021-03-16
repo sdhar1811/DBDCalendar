@@ -1,0 +1,110 @@
+<mat-card [@todoInOutAnimation] class="todo-panel">
+  <div #createList class="flex-vertical" *ngIf="!editMode">
+    <div
+      class="row justify-content-between"
+      style="
+        border-bottom: solid #d1d1d1;
+        border-bottom-width: 2px;
+        margin-bottom: 10px;
+        color: gray;
+      "
+    >
+      <div class="col-md-10">Tasks</div>
+      <div class="col-md-2" class="task-panel-close">
+        <mat-icon
+          matTooltip="Close Tasks"
+          (click)="close()"
+          class="material-icons md-18"
+          >close</mat-icon
+        >
+      </div>
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Task List</mat-label>
+      <mat-select [formControl]="selectedTodoList">
+        <mat-option *ngFor="let list of todoLists" [value]="list">{{
+          list.name
+        }}</mat-option>
+        <mat-option>
+          <div class="add-task-list-btn" (click)="addNewList()">
+            Create New List
+          </div>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- <mat-form-field appearance="outline">
+      <mat-label>Calendar</mat-label>
+      <mat-select [formControl]="selectedCalendar">
+        <mat-option *ngFor="let calendar of calendarList" [value]="calendar">{{
+          calendar.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+
+    <mat-form-field appearance="outline">
+      <input
+        [(ngModel)]="taskTitle"
+        matInput
+        (keyup.enter)="addNewTask()"
+        placeholder="Enter tasks here..."
+      />
+    </mat-form-field>
+
+    <div
+      class="task-list-container"
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+    >
+      <mat-card
+        style="margin-bottom: 10px;"
+        class="mat-elevation-z5 task-card"
+        cdkDrag
+        mwlDraggable
+        *ngFor="let task of tasks; let i = index"
+        [dropData]="{ event: task }"
+        [touchStartLongPress]="{ delay: 300, delta: 30 }"
+        dragActiveClass="drag-active"
+      >
+        <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+        <div class="row">
+          <div class="col-md-2" style="align-self: center;">
+            <!-- style="float: left; margin: 0 10px" -->
+            <mat-checkbox
+              color="primary"
+              class="custom-frame"
+              matTooltip="{{
+                task.checked ? 'Mark incomplete' : 'Mark complete'
+              }}"
+              [(ngModel)]="task.checked"
+              (change)="sortTaskList()"
+            >
+            </mat-checkbox>
+          </div>
+          <div class="col-md-8">
+            <mat-label
+              [ngClass]="task.checked ? 'strike-through' : none"
+              style="overflow-wrap: break-word;"
+              >{{ task.title }}</mat-label
+            >
+          </div>
+          <div class="col-md-2" style="align-self: center;">
+            <mat-icon
+              matTooltip="Edit Task"
+              (click)="editTask(i)"
+              class="material-icons md-18 edit-task-icon"
+              >mode
+            </mat-icon>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <div *ngIf="editMode">
+    <app-edit-task
+      (closeEmitter)="closeEditMode($event)"
+      [data]="tasks"
+      [taskIndex]="taskIndex"
+    ></app-edit-task>
+  </div>
+</mat-card>
+<!-- </div> -->
