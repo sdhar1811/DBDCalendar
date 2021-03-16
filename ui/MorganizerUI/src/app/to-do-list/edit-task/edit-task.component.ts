@@ -9,6 +9,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { getTime } from 'date-fns';
 
 @Component({
   selector: 'app-edit-task',
@@ -78,7 +79,7 @@ export class EditTaskComponent implements OnInit {
   }
   updateSelectedCalendar() {
     this.data[this.taskIndex].calendar = this.selectedCalendar.value;
-    this.data[this.taskIndex].color = this.selectedCalendar.value.color;
+    this.data[this.taskIndex].color = this.selectedCalendar.value.color.primary;
   }
   selectSavedValues(c1: any, c2: any) {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
