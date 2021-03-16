@@ -34,6 +34,15 @@ export class EditTaskComponent implements OnInit {
   @Output() closeEmitter = new EventEmitter();
 
   calendarList = [];
+
+  assigneeList = [
+    { name: 'Sharad', id: 1 },
+    { name: 'Satyen', id: 2 },
+    { name: 'Dhananjay', id: 3 },
+    { name: 'Asmi', id: 4 },
+    { name: 'Khushboo', id: 5 }
+  ];
+
   constructor() {}
 
   ngOnInit(): void {

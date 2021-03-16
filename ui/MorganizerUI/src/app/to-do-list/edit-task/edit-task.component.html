@@ -76,5 +76,15 @@
         </ng-template>
       </ngx-mat-datetime-picker>
     </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Assignee</mat-label>
+      <mat-select multiple>
+        <mat-option *ngFor="let person of assigneeList" [value]="person">{{
+          person.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
   </div>
 </div>
