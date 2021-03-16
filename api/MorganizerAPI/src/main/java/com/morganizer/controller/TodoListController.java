@@ -45,14 +45,9 @@ public class TodoListController {
 	public void addTasks(@RequestBody List<TaskRequest> taskRequest) {
 		taskService.addTasks(taskRequest);
 	}
-
-	@PostMapping("/addItem")
-	public void createItem(@RequestBody TaskItemRequest taskItem){
-		taskService.addItem(taskItem);
-	}
 	
-	@DeleteMapping("/deleteItem")
-    public void deleteItem(@RequestBody TaskRequest task) {
-		taskService.deleteItem(task);
+	@DeleteMapping("/delete/task/{taskId}")
+    public void deleteTask(@PathVariable long taskId) {
+		taskService.deleteTask(taskId);
     }
 }
