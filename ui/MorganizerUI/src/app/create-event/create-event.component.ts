@@ -6,16 +6,38 @@ import {
 } from '@angular/material/dialog';
 import { EventEmitter } from '@angular/core';
 import { EventService } from '../services/event.service';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatDateFormats, NGX_MAT_DATE_FORMATS} from '@angular-material-components/datetime-picker';
+import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
+
+
+export const DATETIME_WITHOUT_SECONDS_FORMAT = 'MM-DD-YYYY, hh:mm A';
+export const CUSTOM_DATE_TIME_FORMAT: NgxMatDateFormats = {
+  parse: {
+    dateInput: DATETIME_WITHOUT_SECONDS_FORMAT,
+  },
+  display: {
+    dateInput: DATETIME_WITHOUT_SECONDS_FORMAT,
+    monthYearLabel: 'MM yyyy',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.scss'],
+  providers:[
+    {provide: NGX_MAT_DATE_FORMATS, useValue:CUSTOM_DATE_TIME_FORMAT}
+  ]
 })
+
+
 export class CreateEventComponent implements OnInit {
   color: any = '#1e90ff';
   editFlag: boolean = false;
   calendars = [];
+  public enableMeridian = true;
 
   constructor(
     private dialogRef: MatDialogRef<CreateEventComponent>,

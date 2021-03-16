@@ -62,6 +62,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DragAndDropModule } from 'angular-draggable-droppable';
+import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 
 @NgModule({
   declarations: [
@@ -125,6 +126,7 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
     FontAwesomeModule,
     DragDropModule,
     DragAndDropModule,
+    NgxMatMomentModule,
   ],
   providers: [
     {
