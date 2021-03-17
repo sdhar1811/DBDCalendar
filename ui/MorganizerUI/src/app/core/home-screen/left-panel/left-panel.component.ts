@@ -11,13 +11,11 @@ export interface MyCalendars{
   templateUrl: './left-panel.component.html',
   styleUrls: ['./left-panel.component.scss'],
 })
-
-
-
 export class LeftPanelComponent implements OnInit {
   profiles = [];
   calendars = [];
   calendarTitle: string;
+  color: string = '#EC407A';
   constructor() {
     this.fetchProfiles();
   }
@@ -36,15 +34,14 @@ export class LeftPanelComponent implements OnInit {
     this.calendars.push({ name: 'Market', color: 'red', value: '' });
   }
 
-  ngOnInit(): void{}
+  ngOnInit(): void {}
 
   addNewCalendar() {
     this.calendars.push({
       name: this.calendarTitle,
       color: 'red',
-      value:  '',
+      value: '',
     });
     this.calendarTitle = '';
   }
-
 }

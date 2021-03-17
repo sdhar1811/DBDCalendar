@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-10">
+      <div class="col-md-6">
         <mat-form-field appearance="outline">
           <mat-label>Title</mat-label>
           <input
@@ -32,15 +32,17 @@
           />
         </mat-form-field>
       </div>
-      <div class="col-md-2">
-        <div>
+      <div class="col-md-6">
+        <div style="display: flex;">
           <ngx-colors
+          style = "margin:0.5em;"
             ngx-colors-trigger
             [hideTextInput]="true"
             [hideColorPicker]="false"
             [(ngModel)]="color"
             >Color</ngx-colors
           >
+          <span style="margin-left:10px;line-height: 50px;">Select Color</span>
         </div>
       </div>
     </div>
@@ -96,7 +98,7 @@
 
 
 
-    
+
 
     <mat-form-field appearance="outline">
       <mat-label>Location</mat-label>
@@ -152,7 +154,7 @@
           <mat-checkbox>All Day Event</mat-checkbox>
         </div>
       </div>
-      
+
 
     <button
       mat-raised-button

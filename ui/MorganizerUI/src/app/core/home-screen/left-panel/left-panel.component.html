@@ -43,7 +43,8 @@
             </mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <div mat-menu-item>
+            <div mat-menu-item style="display:flex">
+              <span style="margin-right:10px;line-height: 33px;">Choose a Color</span>
               <ngx-colors ngx-colors-trigger [hideTextInput]="true" [hideColorPicker]="false" [(ngModel)]="color">Color
               </ngx-colors>
             </div>
