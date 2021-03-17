@@ -1,15 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
+import { isSameDay, isSameMonth } from 'date-fns';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -21,8 +12,7 @@ import { EventService } from 'src/app/services/event.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateEventComponent } from 'src/app/create-event/create-event.component';
 import { EventModel } from 'src/app/services/model/event-model';
-import { map } from 'rxjs/operators';
-import { CalendarOpenDayEventsComponent } from 'angular-calendar/modules/month/calendar-open-day-events.component';
+import { StoreService } from 'src/app/services/store.service';
 
 const colors: any = {
   red: {
@@ -92,53 +82,11 @@ export class HomeScreenComponent implements OnInit {
 
   refresh: Subject<any> = new Subject();
 
-  // events: CalendarEvent[] = [
-  //   {
-  //     start: addDays(startOfDay(new Date()), 48),
-  //     end: addDays(new Date(), 50),
-  //     title: 'Sprint-2',
-  //     color: colors.red,
-  //     actions: this.actions,
-  //     allDay: true,
-  //     resizable: {
-  //       beforeStart: true,
-  //       afterEnd: true,
-  //     },
-  //     draggable: true,
-
-  //   },
-  //   // {
-  //   //   start: startOfDay(new Date()),
-  //   //   title: 'An event with no end date',
-  //   //   color: colors.yellow,
-  //   //   actions: this.actions,
-  //   // },
-  //   {
-  //     start: subDays(endOfMonth(new Date()), 3),
-  //     end: addDays(endOfMonth(new Date()), 3),
-  //     title: 'A long event that spans 2 months',
-  //     color: colors.blue,
-  //     actions: this.actions,
-  //     allDay: true,
-  //   },
-  //   {
-  //     start: addHours(subDays(startOfDay(new Date()), -3), 1),
-  //     end: addHours(subDays(startOfDay(new Date()), -3), 2),
-  //     title: 'A draggable and resizable event',
-  //     color: colors.yellow,
-  //     actions: this.actions,
-  //     resizable: {
-  //       beforeStart: true,
-  //       afterEnd: true,
-  //     },
-  //     draggable: true,
-  //   },
-  // ];
-
   activeDayIsOpen: boolean = false;
 
   constructor(
     private modal: NgbModal,
+    private storeService: StoreService,
     private eventService: EventService,
     private dialog: MatDialog
   ) {}
@@ -149,34 +97,40 @@ export class HomeScreenComponent implements OnInit {
 
   fetchAllEvents() {
     this.loading = true;
-    this.eventService.getAllEvents('3').subscribe(
-      (response) => {
-        this.loading = false;
-        if (response) {
-          this.events = [];
-          response.forEach((eventModel) => {
-            this.events.push({
-              title: eventModel.title,
-              start: new Date(eventModel.startTime + ' UTC'),
-              end: new Date(eventModel.endTime + ' UTC'),
-              color: { primary: eventModel.color, secondary: eventModel.color },
-              actions: this.actions,
-              resizable: {
-                beforeStart: true,
-                afterEnd: true,
-              },
-              draggable: true,
-              meta: {
-                eventModel,
-              },
+    this.eventService
+      .getAllEvents(this.storeService.loggedInUser?.id)
+      .subscribe(
+        (response) => {
+          this.loading = false;
+          if (response) {
+            this.events = [];
+            response.forEach((eventModel) => {
+              this.events.push({
+                title: eventModel.title,
+                start: new Date(eventModel.startTime + ' UTC'),
+                end: new Date(eventModel.endTime + ' UTC'),
+                color: {
+                  primary: eventModel.color,
+                  secondary: eventModel.color,
+                },
+                actions: this.actions,
+                resizable: {
+                  beforeStart: true,
+                  afterEnd: true,
+                },
+                draggable: true,
+                meta: {
+                  eventModel,
+                },
+              });
             });
-          });
+          }
+        },
+        (error) => {
+          this.loading = false;
+          //TODO:Handle API error
         }
-      },
-      (error) => {
-        this.loading = false;
-      }
-    );
+      );
   }
 
   // fetchAllEvents() {
@@ -223,45 +177,26 @@ export class HomeScreenComponent implements OnInit {
     newStart,
     newEnd,
   }: CalendarEventTimesChangedEvent): void {
+    // let rescheduleEvent : any;
+    // rescheduleEvent = event.meta.eventModel;
+    // rescheduleEvent.startTime = newStart;
+    // rescheduleEvent.endTime = newEnd;
+
     let eventModel: any = {};
-    console.log(event);
+    // check if an existing or external event
     if (event.meta?.eventModel) {
       eventModel = event.meta.eventModel;
+      eventModel.endTime = newEnd ? newEnd : event.end;
     } else {
+      eventModel = event;
+      eventModel.endTime = event['dueDate'];
       this.eventService.triggerEventDropped(event);
     }
-
-    eventModel.title = event.title;
-    eventModel.color = event.color?.primary;
-    eventModel['startTime'] = newStart ? newStart : event.start;
-    eventModel['endTime'] = newEnd ? newEnd : event.end;
-
-    eventModel['userId'] = 3;
-
-    // if (this.events.indexOf(event) === -1) {
-    //   event['color'] = event['calendar']?.color;
-    //   event['actions'] = this.actions;
-    //   this.eventService.triggerEventDropped(event);
-    // } else {
-    //   this.events = this.events.map((iEvent) => {
-    //     if (iEvent === event) {
-    //       return {
-    //         ...event,
-    //         start: newStart,
-    //         end: newEnd,
-    //       };
-    //     }
-
-    //     return iEvent;
-    //   });
-    //   event.start = newStart;
-    //   event.end = newEnd;
-    // }
+    eventModel.startTime = newStart ? newStart : event.start;
 
     this.eventService.updateEvent(eventModel).subscribe(
       (response) => {
         if (response) {
-          console.log('Event updated');
           this.fetchAllEvents();
         }
       },
@@ -271,8 +206,6 @@ export class HomeScreenComponent implements OnInit {
         this.fetchAllEvents();
       }
     );
-
-    // this.handleEvent('Dropped or resized', event);
   }
 
   handleEvent(
@@ -295,20 +228,6 @@ export class HomeScreenComponent implements OnInit {
       dialogRef.afterClosed().subscribe((response) => {
         console.log(JSON.stringify(response));
         this.fetchAllEvents();
-        // this.asyncEvents$ = this.asyncEvents$.map((iEvent) => {
-        //   if (iEvent === event) {
-        //     return {
-        //       ...event,
-        //       title: response.title,
-        //       start: response.startTime,
-        //       end: response.endTime,
-        //       color: response.color,
-        //       participents: [],
-        //     };
-        //   }
-
-        //   return iEvent;
-        // });
       });
     } else if (action === 'Deleted') {
       this.deleteEvent(event.meta.eventModel.eventId);
@@ -318,6 +237,7 @@ export class HomeScreenComponent implements OnInit {
   addEvent(): void {
     let eventModel = new EventModel();
     // eventModel.color = { primary: '', secondary: '' };
+    eventModel.userId = this.storeService.loggedInUser?.id;
     let dialogRef = this.dialog.open(CreateEventComponent, {
       data: eventModel,
       width: '600px',
@@ -327,21 +247,6 @@ export class HomeScreenComponent implements OnInit {
     dialogRef.afterClosed().subscribe((response) => {
       console.log(JSON.stringify(response));
       this.fetchAllEvents();
-      // this.asyncEvents$ = [
-      //   ...this.asyncEvents$,
-      //   {
-      //     title: response.title,
-      //     start: response.startTime,
-      //     end: response.endTime,
-      //     color: response.color,
-      //     actions: this.actions,
-      //     draggable: true,
-      //     resizable: {
-      //       beforeStart: true,
-      //       afterEnd: true,
-      //     },
-      //   },
-      // ];
     });
   }
 

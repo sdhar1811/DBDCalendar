@@ -8,15 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morganizer.dto.EventRequest;
+import com.morganizer.entity.EventCategoriesEntity;
 import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.NotificationTypesEntity;
 import com.morganizer.entity.RecurringModeEntity;
 import com.morganizer.entity.UserDetailsEntity;
+import com.morganizer.repository.EventCategoriesRepository;
 import com.morganizer.repository.EventDetailsRepository;
 import com.morganizer.repository.NotificationTypeRepository;
 import com.morganizer.repository.RecurringModeRepository;
 import com.morganizer.repository.UserDetailsRepository;
 import com.morganizer.utils.DateTimeUtil;
+import com.morganizer.entity.EventCategoriesEntity;
+import com.morganizer.repository.EventCategoriesRepository;
 
 @Service
 public class EventService {
@@ -32,7 +36,14 @@ public class EventService {
 	@Autowired
 	public RecurringModeRepository recurringModeRepository;
 
+	@Autowired
+    public EventCategoriesRepository eventCategoriesRepository;
+
+<<<<<<< HEAD
 	public void deleteEvent(Long eventId) {
+=======
+	public void deleteEvent(EventRequest eventDetailsReq) {
+>>>>>>> 2816312d776ee329d8c118a9db0a92bcf21fce5e
 
 		try {
 			eventDetailsRepository.deleteById(eventId);
@@ -116,4 +127,8 @@ public class EventService {
 				savedEntity.getParticipant(), savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor());
 
 	}
+
+	public List<EventCategoriesEntity> fetchEventCategories() {
+        return eventCategoriesRepository.findAll();
+    }
 }

@@ -26,5 +26,8 @@ public class DateTimeUtil {
 	        throw new IllegalArgumentException(e);
 	    }
 	}
+	public static Timestamp parseTimestampWithTimezone(String timestamp) {
+		return Timestamp.valueOf(timestamp.replaceAll("[A-Z]", " " ));
+	}
 
 }
