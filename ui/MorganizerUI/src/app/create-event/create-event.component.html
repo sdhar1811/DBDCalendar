@@ -54,14 +54,17 @@
       </mat-select>
     </mat-form-field>
 
-    <div class="row">
-      <div class = "col-md-6">
+    <div class="row justify-content-around">
+      <div class="col-md-2" style="line-height: 60px;">
+        <mat-checkbox>All Day</mat-checkbox>
+      </div>
+      <div class = "col-md-5">
         <mat-form-field>
           <input
             [(ngModel)]="data.startTime"
             matInput
             [ngxMatDatetimePicker]="picker"
-            placeholder="Choose a start date and time"
+            placeholder="Start date and time"
           />
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #picker [enableMeridian]="enableMeridian">
@@ -73,14 +76,14 @@
           </ngx-mat-datetime-picker>
         </mat-form-field>
       </div>
-
-      <div class = "col-md-6">
+      
+      <div class = "col-md-5">
         <mat-form-field>
           <input
             [(ngModel)]="data.endTime"
             matInput
             [ngxMatDatetimePicker]="picker2"
-            placeholder="Choose an end date and time"
+            placeholder="End date and time"
           />
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #picker2 [enableMeridian]="enableMeridian">
@@ -144,10 +147,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-      </div>
-
-      <div class = "row">
-        <div class="col-md-7">
+        <div class="col-md-6">
           <mat-form-field appearance="outline">
             <mat-label>Recurring</mat-label>
             <mat-select>
@@ -157,9 +157,6 @@
               <mat-option value="monthly">Monthly</mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
-        <div class="col-md-5">
-          <mat-checkbox>All Day Event</mat-checkbox>
         </div>
       </div>
       
