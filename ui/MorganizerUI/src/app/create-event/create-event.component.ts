@@ -49,6 +49,7 @@ export class CreateEventComponent implements OnInit {
     this.fetchCalendars();
     this.editFlag = this.data.title == null ? false : true;
     this.color = this.data.color == null ? '#1e90ff' : this.data.color;
+    // this.data.participant = [1];
   }
 
   close(): void {
@@ -60,9 +61,18 @@ export class CreateEventComponent implements OnInit {
   //   this.data.color = this.color;
   // }
 
+  assigneeList = [
+    { name: 'Sharad', id: 1 },
+    { name: 'Satyen', id: 2 },
+    { name: 'Dhananjay', id: 3 },
+    { name: 'Asmi', id: 4 },
+    { name: 'Khushboo', id: 5 }
+  ];
+
   createEvent(): void {
     this.data.color = this.color;
     console.log(JSON.stringify(this.data));
+    console.log(this.data.participant)
 
     this.eventService.addEvent(this.data).subscribe(
       (response) => {
