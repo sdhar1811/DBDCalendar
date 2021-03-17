@@ -31,9 +31,10 @@ public class TaskEntity {
 	}
 	
 	
-	public TaskEntity(String description, String title, Timestamp duedate, String repeatType, boolean complete,
+	public TaskEntity(Long id,String description, String title, Timestamp duedate, String repeatType, boolean complete,
 			TodoListEntity todoListEntity) {
 		super();
+		this.id= id;
 		this.description = description;
 		this.title = title;
 		this.duedate = duedate;
@@ -84,6 +85,28 @@ public class TaskEntity {
 	public void setComplete(boolean complete) {
 		this.complete = complete;
 	}
+
+
+	public int[] getAssigneeId() {
+		return assigneeId;
+	}
+
+
+	public void setAssigneeId(int[] assigneeId) {
+		this.assigneeId = assigneeId;
+	}
+
+
+	public TodoListEntity getTodoListEntity() {
+		return todoListEntity;
+	}
+
+
+	public void setTodoListEntity(TodoListEntity todoListEntity) {
+		this.todoListEntity = todoListEntity;
+	}
+	
+	
 	
 	
 	

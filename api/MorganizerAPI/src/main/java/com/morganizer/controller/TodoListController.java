@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.morganizer.dto.TaskItemRequest;
 import com.morganizer.dto.TaskRequest;
 import com.morganizer.dto.TodoListRequest;
 import com.morganizer.dto.TodoListResponse;
@@ -46,7 +45,7 @@ public class TodoListController {
 		taskService.addTasks(taskRequest);
 	}
 	
-	@DeleteMapping("/delete/task/{taskId}")
+	@DeleteMapping("/task/{taskId}")
     public void deleteTask(@PathVariable long taskId) {
 		taskService.deleteTask(taskId);
     }
