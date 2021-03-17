@@ -19,6 +19,7 @@ public class TaskEntity {
 	private Timestamp duedate;
 	private String repeatType;
 	private boolean complete;
+	private int[] assigneeId;
 	
 	@ManyToOne
 	@JoinColumn(name = "todo_list_id")
