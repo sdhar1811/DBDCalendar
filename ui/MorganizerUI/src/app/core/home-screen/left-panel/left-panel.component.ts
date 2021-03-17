@@ -13,9 +13,10 @@ export interface MyCalendars{
 })
 export class LeftPanelComponent implements OnInit {
   profiles = [];
-  calendars = [];
+  calendarList = [];
   calendarTitle: string;
-  color: string = '#EC407A';
+  //calendarColor: string = '#EC407A';
+  calendarColor: string;
   constructor() {
     this.fetchProfiles();
   }
@@ -26,22 +27,23 @@ export class LeftPanelComponent implements OnInit {
     this.profiles.push({ name: 'Dhananjay', color: 'green', value: '' });
     this.profiles.push({ name: 'Asmi', color: 'black', value: '' });
     this.profiles.push({ name: 'Khushboo', color: 'purple', value: '' });
-    this.calendars.push({ name: 'Work', color: 'red', value: '' });
-    this.calendars.push({ name: 'Personal', color: 'red', value: '' });
-    this.calendars.push({ name: 'Gym', color: 'red', value: '' });
-    this.calendars.push({ name: 'College', color: 'red', value: '' });
-    this.calendars.push({ name: 'Home', color: 'red', value: '' });
-    this.calendars.push({ name: 'Market', color: 'red', value: '' });
+    this.calendarList.push({ name: 'Work', color: '#00ACC1', value: '' });
+    this.calendarList.push({ name: 'Personal', color: '#AB47BC', value: '' });
+    this.calendarList.push({ name: 'School', color: '#455A64', value: '' });
+    this.calendarList.push({ name: 'Medical', color: '#C0CA33', value: '' });
   }
 
   ngOnInit(): void {}
 
   addNewCalendar() {
-    this.calendars.push({
-      name: this.calendarTitle,
-      color: 'red',
-      value: '',
-    });
+    this.calendarList = [
+      ...this.calendarList,
+      {
+        name: this.calendarTitle,
+        color: this.calendarColor     ==     null     ?     '#EC407A'     :     this.calendarColor,
+        value: '',
+      },
+    ];
     this.calendarTitle = '';
   }
 }

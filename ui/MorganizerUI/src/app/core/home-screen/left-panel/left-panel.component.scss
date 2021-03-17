@@ -4,5 +4,6 @@ ul {
 
 ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
 .mat-checkbox-indeterminate .mat-checkbox-background {
-  background-color: rgb(247, 75, 75) !important;
+  background-color:inherit !important;
 }
+
