@@ -15,7 +15,9 @@ import { StoreService } from 'src/app/services/store.service';
 import { NewListDialogComponent } from './new-list-dialog/new-list-dialog.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { EventService } from '../services/event.service';
-import { endOfToday } from 'date-fns';
+import { endOfToday, startOfDay, startOfToday } from 'date-fns';
+import { TaskModel } from '../services/model/task-model';
+import { temporaryAllocator } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-to-do-list',
@@ -46,7 +48,7 @@ export class ToDoListComponent implements OnInit {
   taskIndex = 0;
 
   previousTaskList = [];
-  todoLists = [{ name: 'My List', id: '1' }];
+  todoLists = [];
   assigneeList = [
     { name: 'Sharad', id: 1 },
     { name: 'Satyen', id: 2 },
@@ -84,8 +86,16 @@ export class ToDoListComponent implements OnInit {
           response.forEach((todoList) => {
             this.todoLists.push({ name: todoList.title, id: todoList.id });
             if (todoList.tasks) {
-              todoList.tasks.forEach((task) => {
-                this.previousTaskList.push(task);
+              todoList.tasks.forEach((taskResponse) => {
+                const task: TaskModel = new TaskModel();
+                task.id = taskResponse.id;
+                task.complete = taskResponse.complete;
+                task.description = taskResponse.description;
+                task.dueDate = taskResponse.dueDate;
+                task.title = taskResponse.title;
+                task.todoListId = taskResponse.todoListId;
+                task.userId = this.storeService.loggedInUser.id;
+                this.tasks.push(task);
               });
             }
             this.selectedTodoList.setValue(this.todoLists[0]);
@@ -121,19 +131,24 @@ export class ToDoListComponent implements OnInit {
     });
   }
   addNewTask() {
-    console.log(this.selectedTodoList.value);
-    this.tasks.push({
-      title: this.taskTitle,
-      description: null,
-      calendar: {},
-      color: undefined,
-      complete: false,
-      draggable: true,
-      start: new Date(),
-      dueDate: endOfToday(),
-      userId: this.storeService.loggedInUser?.id,
-      todoListId: this.selectedTodoList.value.id,
-    });
+    const task: TaskModel = new TaskModel();
+    task.title = this.taskTitle;
+    task.start = startOfToday();
+    task.userId = this.storeService.loggedInUser?.id;
+    task.todoListId = this.selectedTodoList.value.id;
+    this.tasks.push(
+      // title: this.taskTitle,
+      // description: null,
+      // calendar: {},
+      // color: undefined,
+      // complete: false,
+      // draggable: true,
+      // start: new Date(),
+      // dueDate: endOfToday(),
+      // userId: this.storeService.loggedInUser?.id,
+      // todoListId: this.selectedTodoList.value.id,
+      task
+    );
     this.sortTaskList();
     this.taskTitle = '';
   }

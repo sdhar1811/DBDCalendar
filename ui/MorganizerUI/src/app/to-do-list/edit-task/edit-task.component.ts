@@ -10,6 +10,7 @@ import { FormControl } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { getTime } from 'date-fns';
+import { TodoListService } from 'src/app/services/todo-list.service';
 
 @Component({
   selector: 'app-edit-task',
@@ -41,10 +42,10 @@ export class EditTaskComponent implements OnInit {
     { name: 'Satyen', id: 2 },
     { name: 'Dhananjay', id: 3 },
     { name: 'Asmi', id: 4 },
-    { name: 'Khushboo', id: 5 }
+    { name: 'Khushboo', id: 5 },
   ];
 
-  constructor() {}
+  constructor(private taskService: TodoListService) {}
 
   ngOnInit(): void {
     this.getCalendarList();
@@ -83,6 +84,12 @@ export class EditTaskComponent implements OnInit {
     }
   }
   removeTask() {
+    this.taskService.deleteTask(this.data[this.taskIndex].id).subscribe(
+      () => {},
+      (error) => {
+        console.log(error);
+      }
+    );
     this.data.splice(this.taskIndex, 1);
     this.closeEmitter.emit(null);
   }
