@@ -39,11 +39,7 @@ public class EventService {
 	@Autowired
     public EventCategoriesRepository eventCategoriesRepository;
 
-<<<<<<< HEAD
 	public void deleteEvent(Long eventId) {
-=======
-	public void deleteEvent(EventRequest eventDetailsReq) {
->>>>>>> 2816312d776ee329d8c118a9db0a92bcf21fce5e
 
 		try {
 			eventDetailsRepository.deleteById(eventId);
