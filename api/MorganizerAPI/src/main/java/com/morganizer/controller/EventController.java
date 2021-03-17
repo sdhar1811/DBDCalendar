@@ -29,7 +29,7 @@ public class EventController {
 		eventService.deleteEvent(eventId);
     }
 
-    @GetMapping("/fetchAll/{notificationTypeId}")
+	@GetMapping("/notification/types")
     public List<NotificationTypesEntity> getNotificationType() {
         return eventService.getNotificationType();
     }
