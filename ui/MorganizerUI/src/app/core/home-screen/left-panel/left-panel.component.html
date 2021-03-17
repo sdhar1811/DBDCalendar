@@ -26,29 +26,33 @@
     <mat-expansion-panel style="box-shadow: none;" [expanded]="'true'">
       <mat-expansion-panel-header>
         <mat-panel-title> <strong>My Calendars</strong> </mat-panel-title>
-        <!-- <mat-panel-description>
-            Type your name and age
-            <mat-icon>account_circle</mat-icon>
-          </mat-panel-description> -->
       </mat-expansion-panel-header>
-      <tr *ngFor="let calendar of calendars">
-        <td>
-          <mat-checkbox>{{ calendar.name }}</mat-checkbox>
-        </td>
-      </tr>
-      <!-- <ul>
-        <li *ngFor="let calendar of calendars">
-          <mat-checkbox>{{ calendar.name }}</mat-checkbox>
-        </li>
-      </ul> -->
+      <mat-form-field appearance="outline" class='example-full-width'>
+        <input [(ngModel)]="calendarTitle" matInput (keyup.enter)="addNewCalendar()" placeholder="Add new calendar..." />
+      </mat-form-field>
+      <div class="row" *ngFor="let calendar of calendars">
+        <div class="col-md-2" style="align-self: center;">
+          <mat-checkbox></mat-checkbox>
+        </div>
+        <div class="col-md-8">
+          <mat-label style="overflow-wrap: break-word;">{{ calendar.name }}</mat-label>
+        </div>
+        <div class="col-md-2" style="align-self: center;">
+          <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon matTooltip="Options for {{calendar.name}}" class="material-icons md-18">more_vert
+            </mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <div mat-menu-item>
+              <ngx-colors ngx-colors-trigger [hideTextInput]="true" [hideColorPicker]="false" [(ngModel)]="color">Color
+              </ngx-colors>
+            </div>
+            <button mat-menu-item>
+              <span>Display this only</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
     </mat-expansion-panel>
   </mat-accordion>
-  <!-- <mat-card-subtitle>Calendar</mat-card-subtitle>
-  <div class="row">
-    <ul>
-      <li *ngFor="let profile of profiles">
-        <mat-checkbox [color]="profile.color">{{ profile.name }}</mat-checkbox>
-      </li>
-    </ul>
-  </div> -->
 </mat-card>

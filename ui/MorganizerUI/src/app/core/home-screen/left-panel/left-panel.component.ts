@@ -1,16 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 
+export interface MyCalendars{
+  name: string;
+  color: string;
+  value: string;
+};
+
 @Component({
   selector: 'app-left-panel',
   templateUrl: './left-panel.component.html',
   styleUrls: ['./left-panel.component.scss'],
 })
+
+
+
 export class LeftPanelComponent implements OnInit {
   profiles = [];
   calendars = [];
+  calendarTitle: string;
   constructor() {
     this.fetchProfiles();
   }
+
   fetchProfiles() {
     this.profiles.push({ name: 'Sharad', color: 'red', value: '' });
     this.profiles.push({ name: 'Satyen', color: 'yellow', value: '' });
@@ -25,5 +36,15 @@ export class LeftPanelComponent implements OnInit {
     this.calendars.push({ name: 'Market', color: 'red', value: '' });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void{}
+
+  addNewCalendar() {
+    this.calendars.push({
+      name: this.calendarTitle,
+      color: 'red',
+      value:  '',
+    });
+    this.calendarTitle = '';
+  }
+
 }
