@@ -67,8 +67,8 @@ export class ToDoListComponent implements OnInit {
     this.eventService.eventDropped.subscribe((event) => {
       if (this.selectedTodoList.value && this.selectedTodoList.value.tasks) {
         const index = this.selectedTodoList.value.tasks.indexOf(event);
-
         this.removeTask(this.selectedTodoList.value.tasks[index]);
+        this.selectedTodoList.value.tasks.splice(index, 1);
       }
     });
   }
