@@ -2,22 +2,21 @@ package com.morganizer.dto;
 
 import java.util.List;
 
-import com.morganizer.entity.TaskEntity;
 
 public class TodoListResponse {
 	private long id;
 	private String title;
-	private List<TaskEntity> task;
+	private List<TaskResponse> tasks;
 	
 	
 	public TodoListResponse(long id, String title) {
 		this.id=id;
 		this.title=title;
 	}
-	public TodoListResponse(long id, String title,List<TaskEntity> task) {
+	public TodoListResponse(long id, String title,List<TaskResponse> tasks) {
 		this.id=id;
 		this.title=title;
-		this.task=task;
+		this.tasks=tasks;
 	}
 	
 	public long getId() {
@@ -32,12 +31,13 @@ public class TodoListResponse {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public List<TaskEntity> getTask() {
-		return task;
+	public List<TaskResponse> getTasks() {
+		return tasks;
 	}
-	public void setTask(List<TaskEntity> task) {
-		this.task = task;
+	public void setTasks(List<TaskResponse> tasks) {
+		this.tasks = tasks;
 	}
+	
 	
 	
 }

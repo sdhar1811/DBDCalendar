@@ -189,7 +189,7 @@ export class HomeScreenComponent implements OnInit {
       eventModel.endTime = newEnd ? newEnd : event.end;
     } else {
       eventModel = event;
-      eventModel.endTime = event['dueDate'];
+      eventModel.endTime = event['dueDate'] ? event['dueDate'] : newStart;
       this.eventService.triggerEventDropped(event);
     }
     eventModel.startTime = newStart ? newStart : event.start;

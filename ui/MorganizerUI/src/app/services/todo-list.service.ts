@@ -32,4 +32,9 @@ export class TodoListService {
       tasks
     );
   }
+  deleteTask(taskId) {
+    return this.http.delete<any>(
+      this.todoListUrl + this.appConfig.deleteTask(taskId)
+    );
+  }
 }

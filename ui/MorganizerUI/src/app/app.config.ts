@@ -15,6 +15,7 @@ export interface IAppConfig {
   addEvent: string;
   updateEvent: string;
   deleteEvent: any;
+  deleteTask: any;
   addTasks: string;
 }
 export const APPCONFIG: IAppConfig = {
@@ -29,6 +30,7 @@ export const APPCONFIG: IAppConfig = {
   fetchAllTasks: (userId: string) => `/all/${userId}`,
   event: '/event',
   fetchAllEvents: (userId: string) => `/fetchAll/${userId}`,
+  deleteTask: (taskId: number) => `/task/${taskId}`,
   addEvent: '/add',
   updateEvent: '/update',
   deleteEvent: (eventId: number) => `/remove/${eventId}`,

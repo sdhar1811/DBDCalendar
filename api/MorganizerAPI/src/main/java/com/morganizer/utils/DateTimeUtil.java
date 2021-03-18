@@ -27,6 +27,9 @@ public class DateTimeUtil {
 	    }
 	}
 	public static Timestamp parseTimestampWithTimezone(String timestamp) {
+		if(timestamp==null||timestamp.isEmpty()) {
+			return null;
+		}
 		return Timestamp.valueOf(timestamp.replaceAll("[A-Z]", " " ));
 	}
 

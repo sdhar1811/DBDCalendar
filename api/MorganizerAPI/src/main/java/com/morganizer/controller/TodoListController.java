@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.morganizer.dto.TaskItemRequest;
 import com.morganizer.dto.TaskRequest;
 import com.morganizer.dto.TodoListRequest;
 import com.morganizer.dto.TodoListResponse;
@@ -41,13 +40,17 @@ public class TodoListController {
 	public void updateStatus(Long itemId, boolean itemStatus){
 		taskService.updateStatus(itemId,itemStatus);
 	}
-	@PostMapping(path="/add/tasks",consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void addTasks(@RequestBody List<TaskRequest> taskRequest) {
+	@PostMapping(path="/add/tasks")//,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void addTasks(@RequestBody TaskRequest taskRequest) {
 		taskService.addTasks(taskRequest);
 	}
 	
-	@DeleteMapping("/delete/task/{taskId}")
+	@DeleteMapping("/task/{taskId}")
     public void deleteTask(@PathVariable long taskId) {
 		taskService.deleteTask(taskId);
     }
+	@DeleteMapping("/list/{listId}")
+	public void deleteTodoList(@PathVariable Long listId) {
+		taskService.deleteTodoList(listId);
+	}
 }

@@ -2,7 +2,6 @@ package com.morganizer.controller;
 
 import java.util.List;
 
-import com.morganizer.entity.EventCategoriesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,10 +43,10 @@ public class EventController {
 	    return eventService.fetchAllEvents(userId);
     }
 
-    @GetMapping("/fetchEventCategories")
-    public List<EventCategoriesEntity> fetchEventCategories() {
-        return eventService.fetchEventCategories();
-    }
+//    @GetMapping("/fetchEventCategories")
+//    public List<EventCategoriesEntity> fetchEventCategories() {
+//        return eventService.fetchEventCategories();
+//    }
 
     @PostMapping("/add")
     public EventRequest addEvent(@RequestBody EventRequest eventRequest) {
