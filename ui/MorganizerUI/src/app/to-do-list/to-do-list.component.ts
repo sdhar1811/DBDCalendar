@@ -66,9 +66,10 @@ export class ToDoListComponent implements OnInit {
     private storeService: StoreService
   ) {
     this.eventService.eventDropped.subscribe((event) => {
-      const index = this.tasks.indexOf(event);
-      if (this.tasks && index !== -1) {
-        this.tasks.splice(index, 1);
+      if (this.selectedTodoList.value && this.selectedTodoList.value.tasks) {
+        const index = this.selectedTodoList.value.tasks.indexOf(event);
+
+        this.removeTask(index);
       }
     });
   }
@@ -84,7 +85,7 @@ export class ToDoListComponent implements OnInit {
       .subscribe((response) => {
         if (response) {
           response.forEach((todoList) => {
-            this.todoLists.push({ name: todoList.title, id: todoList.id });
+            let taskList: TaskModel[] = [];
             if (todoList.tasks) {
               todoList.tasks.forEach((taskResponse) => {
                 const task: TaskModel = new TaskModel();
@@ -95,11 +96,16 @@ export class ToDoListComponent implements OnInit {
                 task.title = taskResponse.title;
                 task.todoListId = taskResponse.todoListId;
                 task.userId = this.storeService.loggedInUser.id;
-                this.tasks.push(task);
+                taskList.push(task);
               });
             }
-            this.selectedTodoList.setValue(this.todoLists[0]);
+            this.todoLists.push({
+              name: todoList.title,
+              id: todoList.id,
+              tasks: taskList,
+            });
           });
+          this.selectedTodoList.setValue(this.todoLists[0]);
         }
       });
   }
@@ -136,52 +142,65 @@ export class ToDoListComponent implements OnInit {
     task.start = startOfToday();
     task.userId = this.storeService.loggedInUser?.id;
     task.todoListId = this.selectedTodoList.value.id;
-    this.tasks.push(
-      // title: this.taskTitle,
-      // description: null,
-      // calendar: {},
-      // color: undefined,
-      // complete: false,
-      // draggable: true,
-      // start: new Date(),
-      // dueDate: endOfToday(),
-      // userId: this.storeService.loggedInUser?.id,
-      // todoListId: this.selectedTodoList.value.id,
-      task
-    );
-    this.sortTaskList();
+    this.selectedTodoList.value.tasks.push(task);
+    // this.tasks.push(
+    //   // title: this.taskTitle,
+    //   // description: null,
+    //   // calendar: {},
+    //   // color: undefined,
+    //   // complete: false,
+    //   // draggable: true,
+    //   // start: new Date(),
+    //   // dueDate: endOfToday(),
+    //   // userId: this.storeService.loggedInUser?.id,
+    //   // todoListId: this.selectedTodoList.value.id,
+    //   task
+    // );
+    this.updateTask(task);
     this.taskTitle = '';
   }
   removeTask(index) {
-    this.tasks.splice(index, 1);
+    this.taskService
+      .deleteTask(this.selectedTodoList.value.tasks[index].id)
+      .subscribe(
+        () => {
+          this.selectedTodoList.value.tasks.splice(index, 1);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
   editTask(index) {
     this.taskIndex = index;
     this.editMode = true;
   }
   sortTaskList() {
-    this.tasks.sort((task1, task2) => {
+    this.selectedTodoList.value?.tasks?.sort((task1, task2) => {
       return task1.complete - task2.complete;
     });
+    // this.tasks.sort((task1, task2) => {
+    //   return task1.complete - task2.complete;
+    // });
   }
   closeEditMode(event) {
+    this.updateTask(this.selectedTodoList.value.tasks[this.taskIndex]);
     this.editMode = false;
   }
   close() {
-    this.updateTasks();
+    //this.updateTasks();
     this.closeTaskPanel.emit(null);
   }
   drop(event: CdkDragDrop<any[]>) {
     moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
   }
   todoListSelectionChanged(event) {
-    console.log(event);
+    this.sortTaskList();
   }
-  updateTasks() {
-    this.taskService.addTasksInTodoList(this.tasks).subscribe(
-      (response) => {
-        console.log('Tasks updated');
-      },
+  updateTask(task) {
+    this.sortTaskList();
+    this.taskService.addTasksInTodoList(task).subscribe(
+      (response) => {},
       (error) => {
         console.log(error);
       }

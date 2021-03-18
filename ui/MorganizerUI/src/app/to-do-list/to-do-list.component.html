@@ -54,6 +54,7 @@
     </mat-form-field>
 
     <div
+      *ngIf="selectedTodoList.value"
       class="task-list-container"
       cdkDropList
       (cdkDropListDropped)="drop($event)"
@@ -63,7 +64,7 @@
         class="mat-elevation-z5 task-card"
         cdkDrag
         mwlDraggable
-        *ngFor="let task of tasks; let i = index"
+        *ngFor="let task of selectedTodoList.value.tasks; let i = index"
         [dropData]="{ event: task }"
         [touchStartLongPress]="{ delay: 300, delta: 30 }"
         dragActiveClass="drag-active"
@@ -79,7 +80,7 @@
                 task.complete ? 'Mark incomplete' : 'Mark complete'
               }}"
               [(ngModel)]="task.complete"
-              (change)="sortTaskList()"
+              (change)="updateTask(task)"
             >
             </mat-checkbox>
           </div>
@@ -105,7 +106,7 @@
   <div *ngIf="editMode">
     <app-edit-task
       (closeEmitter)="closeEditMode($event)"
-      [data]="tasks"
+      [data]="selectedTodoList.value.tasks"
       [taskIndex]="taskIndex"
     ></app-edit-task>
   </div>
