@@ -9,6 +9,7 @@
   flex-direction: column;
 }
 .todo-panel {
+  margin-top: 7px;
   width: 95%;
 }
 .btn-animation:hover {
@@ -102,18 +103,17 @@
   min-height: 60px;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-.completed-task-container{
+.completed-task-container {
   position: absolute;
-    bottom: 0;
-    width: 95%;
-    margin-bottom:2px;
-    border: solid 0.1em lightgray;
+  bottom: 0;
+  width: 95%;
+  margin-bottom: 2px;
+  border: solid 0.1em lightgray;
 }
-.completed-task-list{
+.completed-task-list {
   margin-bottom: 10px;
   border-bottom: solid 0.1em lightgray;
 }
-.completed-task-list:last-child{
-  border:none
+.completed-task-list:last-child {
+  border: none;
 }
-

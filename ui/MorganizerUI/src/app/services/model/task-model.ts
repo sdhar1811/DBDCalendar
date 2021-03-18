@@ -12,4 +12,5 @@ export class TaskModel {
   dueDate: Date = undefined;
   userId: number;
   todoListId: number;
+  assigneeList: number[] = [];
 }

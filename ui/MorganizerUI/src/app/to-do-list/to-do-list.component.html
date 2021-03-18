@@ -1,4 +1,4 @@
-<mat-card [@todoInOutAnimation] class="todo-panel">
+<div [@todoInOutAnimation] class="todo-panel">
   <div #createList class="flex-vertical" *ngIf="!editMode">
     <div
       class="row justify-content-between"
@@ -114,7 +114,7 @@
       [taskIndex]="taskIndex"
     ></app-edit-task>
   </div>
-</mat-card>
+</div>
 <div class="completed-task-container">
   <mat-accordion class="example-headers-align" multi>
     <mat-expansion-panel
