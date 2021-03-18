@@ -6,7 +6,7 @@ export class EventModel {
   startTime: Date;
   endTime: Date;
   location: string;
-  participant: string[];
+  assigneeList: number[];
   lastUpdatedOn: string;
   color: any;
 }

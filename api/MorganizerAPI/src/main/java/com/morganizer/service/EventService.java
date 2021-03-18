@@ -11,11 +11,13 @@ import com.morganizer.dto.EventRequest;
 //import com.morganizer.entity.EventCategoriesEntity;
 import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.NotificationTypesEntity;
+import com.morganizer.entity.ProfileEntity;
 import com.morganizer.entity.RecurringModeEntity;
 import com.morganizer.entity.UserDetailsEntity;
 //import com.morganizer.repository.EventCategoriesRepository;
 import com.morganizer.repository.EventDetailsRepository;
 import com.morganizer.repository.NotificationTypeRepository;
+import com.morganizer.repository.ProfileRepository;
 import com.morganizer.repository.RecurringModeRepository;
 import com.morganizer.repository.UserDetailsRepository;
 //import com.morganizer.entity.EventCategoriesEntity;
@@ -34,6 +36,9 @@ public class EventService {
 
 	@Autowired
 	public RecurringModeRepository recurringModeRepository;
+	
+	@Autowired
+	public ProfileRepository profileRepository;
 
 //	@Autowired
 //    public EventCategoriesRepository eventCategoriesRepository;
@@ -62,10 +67,14 @@ public class EventService {
 		List<EventRequest> response =  new ArrayList<>();
 		
 		for(EventDetailsEntity event:eventList) {
+			List<Long> idList = new ArrayList<>();
+			for (ProfileEntity assignee: event.getAssigneeList()) {
+				idList.add(assignee.getProfileId());
+			}
 			response.add(new EventRequest(event.getUser().getId(), event.getId(), event.getEventTitle(), null,
 					event.getStartTime().toString(), event.getEndTime().toString(), event.getLocation(),
 					event.getEventDescription(), null, null, event.getRecurringMode().getId(),
-					event.getParticipant(), event.getLastUpdatedOn().toString(), event.getColor()));
+					idList, event.getLastUpdatedOn().toString(), event.getColor()));
 		}
 		
 		return response;
@@ -74,6 +83,10 @@ public class EventService {
 	public EventRequest addEvent(EventRequest eventRequest) {
 		UserDetailsEntity user = userRepo.getOne(eventRequest.getUserId());
 		RecurringModeEntity recurringMode = recurringModeRepository.getOne(eventRequest.getRecurringModeId());
+		List<ProfileEntity> assigneeList = new ArrayList<>();
+		for (Long assignee: eventRequest.getAssigneeList()) {
+			assigneeList.add(profileRepository.getOne(assignee));
+		}
 		
 		  
 		Timestamp startTime = Timestamp.valueOf(eventRequest.getStartTime().replaceAll("[A-Z]", " " )); 
@@ -83,24 +96,30 @@ public class EventService {
 		EventDetailsEntity event = new EventDetailsEntity(user, eventRequest.getTitle(), eventRequest.getDescription(),
 				startTime, endTime,
 				recurringMode, eventRequest.getLocation(),
-				eventRequest.getParticipant(),  lastUpdatedOn, eventRequest.getColor());
+				assigneeList,  lastUpdatedOn, eventRequest.getColor());
 
 		if (eventRequest.getEventId() != 0) {
 			event.setId(eventRequest.getEventId());
 		}
 		EventDetailsEntity savedEntity = eventDetailsRepository.save(event);
-
+		List<Long> idList = new ArrayList<>();
+		for (ProfileEntity assignee: savedEntity.getAssigneeList()) {
+			idList.add(assignee.getProfileId());
+		}
 		return new EventRequest(savedEntity.getUser().getId(), savedEntity.getId(), savedEntity.getEventTitle(), null,
 				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
 				savedEntity.getEventDescription(), null, null, savedEntity.getRecurringMode().getId(),
-				savedEntity.getParticipant(), savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor());
+				idList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor());
 
 	}
 
 	public EventRequest updateEvent(EventRequest eventRequest) {
 		UserDetailsEntity user = userRepo.getOne(eventRequest.getUserId());
 		RecurringModeEntity recurringMode = recurringModeRepository.getOne(eventRequest.getRecurringModeId());
-		
+		List<ProfileEntity> assigneeList = new ArrayList<>();
+		for (Long assignee: eventRequest.getAssigneeList()) {
+			assigneeList.add(profileRepository.getOne(assignee));
+		}
 		  
 		Timestamp startTime = Timestamp.valueOf(eventRequest.getStartTime().replaceAll("[A-Z]", " " )); 
 	    Timestamp endTime = Timestamp.valueOf(eventRequest.getEndTime().replaceAll("[A-Z]", " " ));
@@ -109,17 +128,21 @@ public class EventService {
 		EventDetailsEntity event = new EventDetailsEntity(user, eventRequest.getTitle(), eventRequest.getDescription(),
 				startTime, endTime,
 				recurringMode, eventRequest.getLocation(),
-				eventRequest.getParticipant(),  lastUpdatedOn, eventRequest.getColor());
+				assigneeList,  lastUpdatedOn, eventRequest.getColor());
 
 		if (eventRequest.getEventId() != 0) {
 			event.setId(eventRequest.getEventId());
 		}
 		EventDetailsEntity savedEntity = eventDetailsRepository.save(event);
-
+		List<Long> idList = new ArrayList<>();
+		for (ProfileEntity assignee: savedEntity.getAssigneeList()) {
+			idList.add(assignee.getProfileId());
+		}
+		
 		return new EventRequest(savedEntity.getUser().getId(), savedEntity.getId(), savedEntity.getEventTitle(), null,
 				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
 				savedEntity.getEventDescription(), null, null, savedEntity.getRecurringMode().getId(),
-				savedEntity.getParticipant(), savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor());
+				idList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor());
 
 	}
 
