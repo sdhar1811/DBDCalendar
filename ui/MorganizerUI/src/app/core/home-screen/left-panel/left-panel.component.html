@@ -27,6 +27,15 @@
       <mat-expansion-panel-header>
         <mat-panel-title> <strong>My Calendars</strong></mat-panel-title>
 
+        <button
+          mat-raised-button
+          style="margin-left: 2px;"
+          (click)="addEvents()"
+        >
+          + Create calendar
+        </button>
+
+
         <!-- <mat-panel-description>
             Type your name and age
             <mat-icon>account_circle</mat-icon>
