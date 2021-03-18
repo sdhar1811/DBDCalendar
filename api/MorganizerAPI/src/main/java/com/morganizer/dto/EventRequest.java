@@ -1,5 +1,7 @@
 package com.morganizer.dto;
 
+import java.util.List;
+
 public class EventRequest {
 
 	private long userId;
@@ -13,7 +15,7 @@ public class EventRequest {
 	private String reminder;
 	private String notificationType;
 	private long recurringModeId;
-	private String[] participant;
+	private List<Long> assigneeList;
 	private String lastUpdateOn;
 	private String color;
 
@@ -27,8 +29,8 @@ public class EventRequest {
 	}
 
 	public EventRequest(long userId, long eventId, String title, String category, String startTime, String endTime,
-			String location, String description, String reminder, String notificationType, long recurringMode,
-			String[] participant, String lastUpdateOn, String color) {
+			String location, String description, String reminder, String notificationType, long recurringModeId,
+			List<Long> assigneeList, String lastUpdateOn, String color) {
 		super();
 		this.userId = userId;
 		this.eventId = eventId;
@@ -40,8 +42,8 @@ public class EventRequest {
 		this.description = description;
 		this.reminder = reminder;
 		this.notificationType = notificationType;
-		this.recurringModeId = recurringMode;
-		this.participant = participant;
+		this.recurringModeId = recurringModeId;
+		this.assigneeList = assigneeList;
 		this.lastUpdateOn = lastUpdateOn;
 		this.color = color;
 	}
@@ -134,12 +136,12 @@ public class EventRequest {
 		this.eventId = eventId;
 	}
 
-	public String[] getParticipant() {
-		return participant;
+	
+	public List<Long> getAssigneeList() {
+		return assigneeList;
 	}
-
-	public void setParticipant(String[] participant) {
-		this.participant = participant;
+	public void setAssigneeList(List<Long> assigneeList) {
+		this.assigneeList = assigneeList;
 	}
 
 	public String getLastUpdateOn() {

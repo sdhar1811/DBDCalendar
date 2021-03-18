@@ -61,7 +61,7 @@ export class CreateEventComponent implements OnInit {
   //   this.data.color = this.color;
   // }
 
-  assigneeList = [
+  assigneeLst = [
     { name: 'Sharad', id: 1 },
     { name: 'Satyen', id: 2 },
     { name: 'Dhananjay', id: 3 },
@@ -72,7 +72,7 @@ export class CreateEventComponent implements OnInit {
   createEvent(): void {
     // this.data.color = this.color;
     console.log(JSON.stringify(this.data));
-    console.log(this.data.participant);
+    console.log(this.data.assigneeList);
     console.log(this.data.color);
     
 

@@ -123,8 +123,8 @@
 
     <mat-form-field appearance="outline" style="width: 100%;">
       <mat-label>Assignee</mat-label>
-      <mat-select multiple [(ngModel)]="data.participant">
-        <mat-option *ngFor="let person of assigneeList" [value]="person.id">{{
+      <mat-select multiple [(ngModel)]="data.assigneeList">
+        <mat-option *ngFor="let person of assigneeLst" [value]="person.id">{{
           person.name
         }}</mat-option>
       </mat-select>
