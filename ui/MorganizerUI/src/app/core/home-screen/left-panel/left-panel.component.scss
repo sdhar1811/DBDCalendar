@@ -2,8 +2,12 @@ ul {
   list-style-type: none;
 }
 
-::ng-deep .mat-checkbox-checked .mat-checkbox-background,
-.mat-checkbox-indeterminate .mat-checkbox-background {
-  background-color:inherit !important;
-}
 
+// ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+// .mat-checkbox-indeterminate .mat-checkbox-background {
+//   background-color:inherit!important;
+// }
+
+::ng-deep .switch.checked {
+  background: #efefef!important;
+}

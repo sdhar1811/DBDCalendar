@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-export interface MyCalendars{
+export interface MyCalendars {
   name: string;
   color: string;
   value: string;
@@ -22,11 +22,11 @@ export class LeftPanelComponent implements OnInit {
   }
 
   fetchProfiles() {
-    this.profiles.push({ name: 'Sharad', color: 'red', value: '' });
-    this.profiles.push({ name: 'Satyen', color: 'yellow', value: '' });
-    this.profiles.push({ name: 'Dhananjay', color: 'green', value: '' });
-    this.profiles.push({ name: 'Asmi', color: 'black', value: '' });
-    this.profiles.push({ name: 'Khushboo', color: 'purple', value: '' });
+    this.profiles.push({ name: 'Sharad', color: '#42A5F5', value: '' });
+    this.profiles.push({ name: 'Satyen', color: '#cddc39', value: '' });
+    this.profiles.push({ name: 'Dhananjay', color: '#ff8a65', value: '' });
+    this.profiles.push({ name: 'Asmi', color: '#26a69a', value: '' });
+    this.profiles.push({ name: 'Khushboo', color: '#c2185b', value: '' });
     this.calendarList.push({ name: 'Work', color: '#00ACC1', value: '' });
     this.calendarList.push({ name: 'Personal', color: '#AB47BC', value: '' });
     this.calendarList.push({ name: 'School', color: '#455A64', value: '' });
@@ -40,7 +40,7 @@ export class LeftPanelComponent implements OnInit {
       ...this.calendarList,
       {
         name: this.calendarTitle,
-        color: this.calendarColor     ==     null     ?     '#EC407A'     :     this.calendarColor,
+        color: this.calendarColor == null ? '#EC407A' : this.calendarColor,
         value: '',
       },
     ];
