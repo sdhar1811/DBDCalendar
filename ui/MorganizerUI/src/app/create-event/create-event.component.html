@@ -32,7 +32,7 @@
           />
         </mat-form-field>
       </div>
-      <div class="col-md-6">
+      <!-- <div class="col-md-6">
         <div style="display: flex;">
           <ngx-colors
           style = "margin:0.5em;"
@@ -44,13 +44,13 @@
           >
           <span style="margin-left:10px;line-height: 50px;">Select Color</span>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <mat-form-field appearance="outline">
       <mat-label>Choose Calendar</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let calendar of calendars" [value]="calendar">{{
+      <mat-select [(ngModel)]="data.color" required>
+        <mat-option *ngFor="let calendar of calendarList" [value]="calendar.color">{{
           calendar.name
         }}</mat-option>
       </mat-select>
@@ -105,7 +105,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Location</mat-label>
-      <input matInput placeholder="Enter the location" />
+      <input matInput [(ngModel)]="data.location" placeholder="Enter the location" />
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="width: 100%">
@@ -116,6 +116,7 @@
         cdkAutosizeMinRows="0"
         cdkAutosizeMaxRows="5"
         placeholder="Add details"
+        [(ngModel)]="data.description"
       ></textarea>
     </mat-form-field>
 
