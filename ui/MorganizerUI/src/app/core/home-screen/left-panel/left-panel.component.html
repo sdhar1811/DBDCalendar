@@ -14,7 +14,7 @@
             <ui-switch
               size="small"
               [(ngModel)]="profile.value"
-              color="{{ profile.color }}"
+              switchColor="{{ profile.color }}"
             ></ui-switch>
           </td>
           <td style="vertical-align: bottom;">
@@ -25,31 +25,64 @@
     </mat-expansion-panel>
     <mat-expansion-panel style="box-shadow: none;" [expanded]="'true'">
       <mat-expansion-panel-header>
-        <mat-panel-title> <strong>My Calendars</strong></mat-panel-title>
-
-        <!-- <mat-panel-description>
-            Type your name and age
-            <mat-icon>account_circle</mat-icon>
-          </mat-panel-description> -->
+        <mat-panel-title> <strong>My Calendars</strong> </mat-panel-title>
       </mat-expansion-panel-header>
-      <tr *ngFor="let calendar of calendars">
-        <td>
-          <mat-checkbox>{{ calendar.name }}</mat-checkbox>
-        </td>
-      </tr>
-      <!-- <ul>
-        <li *ngFor="let calendar of calendars">
-          <mat-checkbox>{{ calendar.name }}</mat-checkbox>
-        </li>
-      </ul> -->
+      <mat-form-field appearance="outline" class='example-full-width'>
+        <input [(ngModel)]="calendarTitle" matInput (keyup.enter)="addNewCalendar()" placeholder="Add new calendar..." />
+      </mat-form-field>
+<table>
+  <tr *ngFor="let calendar of calendarList">
+    <td>
+      <ui-switch size="small" [(ngModel)]="calendar.value" switchColor="{{ calendar.color }}">
+      </ui-switch>
+    </td>
+    <td style="vertical-align: center;">
+      {{ calendar.name }}
+    </td>
+    <td>
+      <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon matTooltip="Options for {{calendar.name}}" class="material-icons md-18">more_vert
+        </mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <div mat-menu-item style="display:flex">
+          <span style="margin-right:10px;line-height: 33px;">Pick a Color</span>
+          <ngx-colors ngx-colors-trigger [hideTextInput]="true" [hideColorPicker]="false" [(ngModel)]="calendar.color">
+            Color
+          </ngx-colors>
+        </div>
+        <button mat-menu-item>
+          <span>Display this only</span>
+        </button>
+      </mat-menu>
+    </td>
+  </tr>
+</table>
+<!-- <div class="row" *ngFor="let calendar of calendarList">
+      <div class="col-md-3">
+      <ui-switch size="small" [(ngModel)]="calendar.value" color="{{ calendar.color }}"></ui-switch>
+        <mat-checkbox [ngStyle]="{'border-color' : calendar.color}"></mat-checkbox>
+        </div>
+        <div class="col-md-7">
+          <mat-label style="overflow-wrap: break-word;">{{ calendar.name }}</mat-label>
+        </div>
+        <div class="col-md-3" style="align-self: center;">
+          <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon matTooltip="Options for {{calendar.name}}" class="material-icons md-18">more_vert
+            </mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <div mat-menu-item style="display:flex">
+              <span style="margin-right:10px;line-height: 33px;">Pick a Color</span>
+              <ngx-colors ngx-colors-trigger [hideTextInput]="true" [hideColorPicker]="false" [(ngModel)]="calendar.color">Color
+              </ngx-colors>
+            </div>
+            <button mat-menu-item>
+              <span>Display this only</span>
+            </button>
+          </mat-menu>
+        </div>
+        </div> -->
     </mat-expansion-panel>
   </mat-accordion>
-  <!-- <mat-card-subtitle>Calendar</mat-card-subtitle>
-  <div class="row">
-    <ul>
-      <li *ngFor="let profile of profiles">
-        <mat-checkbox [color]="profile.color">{{ profile.name }}</mat-checkbox>
-      </li>
-    </ul>
-  </div> -->
 </mat-card>
