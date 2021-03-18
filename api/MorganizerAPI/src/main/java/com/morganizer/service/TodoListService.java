@@ -43,11 +43,12 @@ public class TodoListService {
 	}
 
 	public List<TaskResponse> convertTaskEntityToResponse(List<TaskEntity> taskEntityList) {
-		List<TaskResponse> taskResponseList = new ArrayList<>();		
+		List<TaskResponse> taskResponseList = new ArrayList<>();
 		for (TaskEntity taskEntity : taskEntityList) {
-			taskResponseList.add(new TaskResponse(taskEntity.getId(),taskEntity.getTitle(), taskEntity.getDescription(),
-					taskEntity.isComplete(), taskEntity.getDuedate().toString(),
-					taskEntity.getTodoListEntity().getId()));
+			String endDate = taskEntity.getDuedate() == null ? null : taskEntity.getDuedate().toString();
+			taskResponseList
+					.add(new TaskResponse(taskEntity.getId(), taskEntity.getTitle(), taskEntity.getDescription(),
+							taskEntity.isComplete(), endDate, taskEntity.getTodoListEntity().getId()));
 		}
 		return taskResponseList;
 
@@ -68,19 +69,22 @@ public class TodoListService {
 
 	}
 
-	public void addTasks(List<TaskRequest> taskRequest) {
+	public void addTasks(TaskRequest task) {
 		TodoListEntity todoList = null;
-		for (TaskRequest task : taskRequest) {
-			todoList = todoListRepo.getOne(task.getTodoListId());
-			TaskEntity taskEntity = new TaskEntity(task.getId(),task.getDescription(), task.getTitle(),
-					DateTimeUtil.parseTimestampWithTimezone(task.getDuedate()), task.getRepeatType(), task.isComplete(),
-					todoList);
-			taskRepo.save(taskEntity);
-		}
+		todoList = todoListRepo.getOne(task.getTodoListId());
+		TaskEntity taskEntity = new TaskEntity(task.getId(), task.getDescription(), task.getTitle(),
+				DateTimeUtil.parseTimestampWithTimezone(task.getDuedate()), task.getRepeatType(), task.isComplete(),
+				todoList);
+		taskRepo.save(taskEntity);
+
 	}
 
 	public void deleteTask(Long taskId) {
 		taskRepo.deleteById(taskId);
+	}
+
+	public void deleteTodoList(Long listId) {
+		todoListRepo.deleteById(listId);
 	}
 
 }

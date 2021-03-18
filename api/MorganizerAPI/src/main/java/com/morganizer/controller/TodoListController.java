@@ -40,8 +40,8 @@ public class TodoListController {
 	public void updateStatus(Long itemId, boolean itemStatus){
 		taskService.updateStatus(itemId,itemStatus);
 	}
-	@PostMapping(path="/add/tasks",consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void addTasks(@RequestBody List<TaskRequest> taskRequest) {
+	@PostMapping(path="/add/tasks")//,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void addTasks(@RequestBody TaskRequest taskRequest) {
 		taskService.addTasks(taskRequest);
 	}
 	
@@ -49,4 +49,8 @@ public class TodoListController {
     public void deleteTask(@PathVariable long taskId) {
 		taskService.deleteTask(taskId);
     }
+	@DeleteMapping("/list/{listId}")
+	public void deleteTodoList(@PathVariable Long listId) {
+		taskService.deleteTodoList(listId);
+	}
 }
