@@ -34,9 +34,9 @@ export const CUSTOM_DATE_TIME_FORMAT: NgxMatDateFormats = {
 
 
 export class CreateEventComponent implements OnInit {
-  color: any = '#1e90ff';
+  color: any;
   editFlag: boolean = false;
-  calendars = [];
+  calendarList = [];
   public enableMeridian = true;
 
   constructor(
@@ -48,7 +48,7 @@ export class CreateEventComponent implements OnInit {
   ngOnInit(): void {
     this.fetchCalendars();
     this.editFlag = this.data.title == null ? false : true;
-    this.color = this.data.color == null ? '#1e90ff' : this.data.color;
+    // this.color = this.data.color == null ? '#1e90ff' : this.data.color;
     // this.data.participant = [1];
   }
 
@@ -70,9 +70,11 @@ export class CreateEventComponent implements OnInit {
   ];
 
   createEvent(): void {
-    this.data.color = this.color;
+    // this.data.color = this.color;
     console.log(JSON.stringify(this.data));
-    console.log(this.data.participant)
+    console.log(this.data.participant);
+    console.log(this.data.color);
+    
 
     this.eventService.addEvent(this.data).subscribe(
       (response) => {
@@ -90,7 +92,7 @@ export class CreateEventComponent implements OnInit {
 
   editEvent(): void {
     //this.data.color = { primary: this.color, secondary: this.color };
-    this.data.color = this.color;
+    // this.data.color = this.color;
     console.log(JSON.stringify(this.data));
     this.eventService.updateEvent(this.data).subscribe(
       (response) => {
@@ -112,11 +114,9 @@ export class CreateEventComponent implements OnInit {
   }
 
   fetchCalendars() {
-    this.calendars.push({ name: 'Work', color: 'red', value: '' });
-    this.calendars.push({ name: 'Personal', color: 'red', value: '' });
-    this.calendars.push({ name: 'Gym', color: 'red', value: '' });
-    this.calendars.push({ name: 'College', color: 'red', value: '' });
-    this.calendars.push({ name: 'Home', color: 'red', value: '' });
-    this.calendars.push({ name: 'Market', color: 'red', value: '' });
+    this.calendarList.push({ name: 'Work', color: '#00ACC1', value: '' });
+    this.calendarList.push({ name: 'Personal', color: '#AB47BC', value: '' });
+    this.calendarList.push({ name: 'School', color: '#455A64', value: '' });
+    this.calendarList.push({ name: 'Medical', color: '#C0CA33', value: '' });
   }
 }
