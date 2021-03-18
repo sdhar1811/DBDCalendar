@@ -48,7 +48,7 @@ public class TodoListService {
 			String endDate = taskEntity.getDuedate() == null ? null : taskEntity.getDuedate().toString();
 			taskResponseList
 					.add(new TaskResponse(taskEntity.getId(), taskEntity.getTitle(), taskEntity.getDescription(),
-							taskEntity.isComplete(), endDate, taskEntity.getTodoListEntity().getId()));
+							taskEntity.isComplete(), endDate, taskEntity.getTodoListEntity().getId(), taskEntity.isAllDay(), taskEntity.getRecurringOption()));
 		}
 		return taskResponseList;
 
@@ -73,11 +73,12 @@ public class TodoListService {
 		TodoListEntity todoList = null;
 		todoList = todoListRepo.getOne(task.getTodoListId());
 		TaskEntity taskEntity = new TaskEntity(task.getId(), task.getDescription(), task.getTitle(),
-				DateTimeUtil.parseTimestampWithTimezone(task.getDuedate()), task.getRepeatType(), task.isComplete(),
+				DateTimeUtil.parseTimestampWithTimezone(task.getDuedate()), task.getRepeatType(), task.isComplete(), task.isAllDay(), task.getRecurringOption(),
 				todoList);
 		taskRepo.save(taskEntity);
 		String dueDate = taskEntity.getDuedate()==null?null:taskEntity.getDuedate().toString();
-		return new TaskResponse(taskEntity.getId(), taskEntity.getTitle(), taskEntity.getDescription(), taskEntity.isComplete(), dueDate, taskEntity.getTodoListEntity().getId());
+		return new TaskResponse(taskEntity.getId(), taskEntity.getTitle(), taskEntity.getDescription(), taskEntity.isComplete(), dueDate, taskEntity.getTodoListEntity().getId(), 
+				taskEntity.isAllDay(), taskEntity.getRecurringOption());
 
 	}
 

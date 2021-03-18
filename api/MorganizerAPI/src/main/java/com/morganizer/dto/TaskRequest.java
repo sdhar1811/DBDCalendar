@@ -8,13 +8,12 @@ public class TaskRequest {
 	private String dueDate;
 	private String repeatType;
 	private boolean complete;
-	private long todoListId;	
+	private long todoListId;
+	private boolean allDay;
+	private String recurringOption;
 	
-	
-	
-	
-	public TaskRequest(Long id, String description, String title, String dueDate, String repeatType,
-			boolean complete, long todoListId) {
+	public TaskRequest(Long id, String description, String title, String dueDate, String repeatType, boolean complete,
+			long todoListId, boolean allDay, String recurringOption) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -23,7 +22,47 @@ public class TaskRequest {
 		this.repeatType = repeatType;
 		this.complete = complete;
 		this.todoListId = todoListId;
+		this.allDay = allDay;
+		this.recurringOption = recurringOption;
 	}
+
+
+
+	public String getDueDate() {
+		return dueDate;
+	}
+
+
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
+	}
+
+
+	public boolean isAllDay() {
+		return allDay;
+	}
+
+
+	public void setAllDay(boolean allDay) {
+		this.allDay = allDay;
+	}
+
+
+	public String getRecurringOption() {
+		return recurringOption;
+	}
+
+
+	public void setRecurringOption(String recurringOption) {
+		this.recurringOption = recurringOption;
+	}
+
+
+	public void setTodoListId(long todoListId) {
+		this.todoListId = todoListId;
+	}
+
+
 	public Long getId() {
 		return id;
 	}

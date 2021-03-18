@@ -20,6 +20,8 @@ public class TaskEntity {
 	private String repeatType;
 	private boolean complete;
 	private int[] assigneeId;
+	private boolean allDay;
+	private String recurringOption;
 	
 	@ManyToOne
 	@JoinColumn(name = "todo_list_id")
@@ -31,17 +33,41 @@ public class TaskEntity {
 	}
 	
 	
-	public TaskEntity(Long id,String description, String title, Timestamp duedate, String repeatType, boolean complete,
-			TodoListEntity todoListEntity) {
+	public boolean isAllDay() {
+		return allDay;
+	}
+
+
+	public void setAllDay(boolean allDay) {
+		this.allDay = allDay;
+	}
+
+
+	public String getRecurringOption() {
+		return recurringOption;
+	}
+
+
+	public void setRecurringOption(String recurringOption) {
+		this.recurringOption = recurringOption;
+	}
+
+	
+	public TaskEntity(Long id, String description, String title, Timestamp duedate, String repeatType, boolean complete,
+			boolean allDay, String recurringOption, TodoListEntity todoListEntity) {
 		super();
-		this.id= id;
+		this.id = id;
 		this.description = description;
 		this.title = title;
 		this.duedate = duedate;
 		this.repeatType = repeatType;
 		this.complete = complete;
+		this.allDay = allDay;
+		this.recurringOption = recurringOption;
 		this.todoListEntity = todoListEntity;
 	}
+
+
 	public TodoListEntity getTask() {
 		return todoListEntity;
 	}

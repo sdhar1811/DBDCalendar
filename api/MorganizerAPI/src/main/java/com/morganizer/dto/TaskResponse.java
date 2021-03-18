@@ -8,24 +8,46 @@ public class TaskResponse {
 	private boolean complete;	
 	private String dueDate;	
 	private long todoListId;
+	private boolean allDay;
+	private String recurringOption;
 	
 	
+
 	
-	
-	
-	public TaskResponse(Long id,String title, String description, boolean complete,
-			String dueDate, long todoListId) {
+	public TaskResponse(Long id, String title, String description, boolean complete, String dueDate, long todoListId,
+			boolean allDay, String recurringOption) {
 		super();
-		this.id=id;
+		this.id = id;
 		this.title = title;
-		this.description = description;	
-		
+		this.description = description;
 		this.complete = complete;
-		
 		this.dueDate = dueDate;
-		
 		this.todoListId = todoListId;
+		this.allDay = allDay;
+		this.recurringOption = recurringOption;
 	}
+
+
+	public boolean isAllDay() {
+		return allDay;
+	}
+
+
+	public void setAllDay(boolean allDay) {
+		this.allDay = allDay;
+	}
+
+
+	public String getRecurringOption() {
+		return recurringOption;
+	}
+
+
+	public void setRecurringOption(String recurringOption) {
+		this.recurringOption = recurringOption;
+	}
+
+
 	public String getTitle() {
 		return title;
 	}
