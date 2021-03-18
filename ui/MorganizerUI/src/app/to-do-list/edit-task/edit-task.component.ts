@@ -91,7 +91,7 @@ export class EditTaskComponent implements OnInit {
       }
     );
     this.data.splice(this.taskIndex, 1);
-    this.closeEmitter.emit(null);
+    this.closeEmitter.emit('remove');
   }
   updateSelectedCalendar() {
     this.data[this.taskIndex].calendar = this.selectedCalendar.value;

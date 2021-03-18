@@ -17,7 +17,6 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { EventService } from '../services/event.service';
 import { endOfToday, startOfDay, startOfToday } from 'date-fns';
 import { TaskModel } from '../services/model/task-model';
-import { temporaryAllocator } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-to-do-list',
@@ -46,8 +45,8 @@ export class ToDoListComponent implements OnInit {
 
   editMode = false;
   taskIndex = 0;
-
   previousTaskList = [];
+  completedTaskList = [];
   todoLists = [];
   assigneeList = [
     { name: 'Sharad', id: 1 },
@@ -69,7 +68,7 @@ export class ToDoListComponent implements OnInit {
       if (this.selectedTodoList.value && this.selectedTodoList.value.tasks) {
         const index = this.selectedTodoList.value.tasks.indexOf(event);
 
-        this.removeTask(index);
+        this.removeTask(this.selectedTodoList.value.tasks[index]);
       }
     });
   }
@@ -84,8 +83,10 @@ export class ToDoListComponent implements OnInit {
       .getTask(this.storeService.loggedInUser?.id)
       .subscribe((response) => {
         if (response) {
+          this.completedTaskList = [];
           response.forEach((todoList) => {
             let taskList: TaskModel[] = [];
+
             if (todoList.tasks) {
               todoList.tasks.forEach((taskResponse) => {
                 const task: TaskModel = new TaskModel();
@@ -96,7 +97,11 @@ export class ToDoListComponent implements OnInit {
                 task.title = taskResponse.title;
                 task.todoListId = taskResponse.todoListId;
                 task.userId = this.storeService.loggedInUser.id;
-                taskList.push(task);
+                if (task.complete) {
+                  this.completedTaskList.push(task);
+                } else {
+                  taskList.push(task);
+                }
               });
             }
             this.todoLists.push({
@@ -159,17 +164,13 @@ export class ToDoListComponent implements OnInit {
     this.updateTask(task);
     this.taskTitle = '';
   }
-  removeTask(index) {
-    this.taskService
-      .deleteTask(this.selectedTodoList.value.tasks[index].id)
-      .subscribe(
-        () => {
-          this.selectedTodoList.value.tasks.splice(index, 1);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+  removeTask(task) {
+    this.taskService.deleteTask(task.id).subscribe(
+      () => {},
+      (error) => {
+        console.log(error);
+      }
+    );
   }
   editTask(index) {
     this.taskIndex = index;
@@ -184,7 +185,10 @@ export class ToDoListComponent implements OnInit {
     // });
   }
   closeEditMode(event) {
-    this.updateTask(this.selectedTodoList.value.tasks[this.taskIndex]);
+    console.log(event);
+    if (this.selectedTodoList.value.tasks[this.taskIndex]) {
+      this.updateTask(this.selectedTodoList.value.tasks[this.taskIndex]);
+    }
     this.editMode = false;
   }
   close() {
@@ -198,9 +202,11 @@ export class ToDoListComponent implements OnInit {
     this.sortTaskList();
   }
   updateTask(task) {
-    this.sortTaskList();
+    //this.sortTaskList();
     this.taskService.addTasksInTodoList(task).subscribe(
-      (response) => {},
+      (response) => {
+        task.id = response.id;
+      },
       (error) => {
         console.log(error);
       }

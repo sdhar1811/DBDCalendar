@@ -127,6 +127,7 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
     DragDropModule,
     DragAndDropModule,
     NgxMatMomentModule,
+    MatIconModule,
   ],
   providers: [
     {

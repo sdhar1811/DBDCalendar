@@ -4,7 +4,6 @@ package com.morganizer.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.morganizer.dto.TaskRequest;
+import com.morganizer.dto.TaskResponse;
 import com.morganizer.dto.TodoListRequest;
 import com.morganizer.dto.TodoListResponse;
 import com.morganizer.service.TodoListService;
@@ -41,8 +42,8 @@ public class TodoListController {
 		taskService.updateStatus(itemId,itemStatus);
 	}
 	@PostMapping(path="/add/tasks")//,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void addTasks(@RequestBody TaskRequest taskRequest) {
-		taskService.addTasks(taskRequest);
+	public TaskResponse addTasks(@RequestBody TaskRequest taskRequest) {
+		return taskService.addTasks(taskRequest);
 	}
 	
 	@DeleteMapping("/task/{taskId}")

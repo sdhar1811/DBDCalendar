@@ -69,13 +69,15 @@ public class TodoListService {
 
 	}
 
-	public void addTasks(TaskRequest task) {
+	public TaskResponse addTasks(TaskRequest task) {
 		TodoListEntity todoList = null;
 		todoList = todoListRepo.getOne(task.getTodoListId());
 		TaskEntity taskEntity = new TaskEntity(task.getId(), task.getDescription(), task.getTitle(),
 				DateTimeUtil.parseTimestampWithTimezone(task.getDuedate()), task.getRepeatType(), task.isComplete(),
 				todoList);
 		taskRepo.save(taskEntity);
+		String dueDate = taskEntity.getDuedate()==null?null:taskEntity.getDuedate().toString();
+		return new TaskResponse(taskEntity.getId(), taskEntity.getTitle(), taskEntity.getDescription(), taskEntity.isComplete(), dueDate, taskEntity.getTodoListEntity().getId());
 
 	}
 

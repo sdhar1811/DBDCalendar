@@ -80,7 +80,11 @@
                 task.complete ? 'Mark incomplete' : 'Mark complete'
               }}"
               [(ngModel)]="task.complete"
-              (change)="updateTask(task)"
+              (change)="
+                selectedTodoList.value.tasks.splice(i, 1);
+                completedTaskList.push(task);
+                updateTask(task)
+              "
             >
             </mat-checkbox>
           </div>
@@ -111,4 +115,68 @@
     ></app-edit-task>
   </div>
 </mat-card>
+<div class="completed-task-container">
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel
+      #panel
+      hideToggle="true"
+      style="box-shadow: none"
+      [expanded]="'false'"
+    >
+      <mat-expansion-panel-header>
+        <mat-icon>{{
+          panel.expanded ? "keyboard_arrow_down" : "keyboard_arrow_up"
+        }}</mat-icon>
+        <mat-panel-title>
+          Completed Tasks
+          <div *ngIf="completedTaskList.length > 0">
+            ({{ completedTaskList.length }})
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <!-- <mat-panel-description> -->
+      <div
+        class="completed-task-list"
+        *ngFor="let task of completedTaskList; let i = index"
+      >
+        <div class="row">
+          <div class="col-md-2" style="align-self: center">
+            <!-- style="float: left; margin: 0 10px" -->
+            <mat-checkbox
+              color="primary"
+              class="custom-frame"
+              matTooltip="{{
+                task.complete ? 'Mark incomplete' : 'Mark complete'
+              }}"
+              [(ngModel)]="task.complete"
+              (change)="
+                completedTaskList.splice(i, 1);
+                selectedTodoList.value.tasks.push(task);
+                updateTask(task)
+              "
+            >
+            </mat-checkbox>
+          </div>
+          <div class="col-md-8">
+            <mat-label
+              [ngClass]="task.complete ? 'strike-through' : none"
+              style="overflow-wrap: break-word"
+              >{{ task.title }}</mat-label
+            >
+          </div>
+          <div class="col-md-2" style="align-self: center">
+            <mat-icon
+              matTooltip="Delete"
+              (click)="completedTaskList.splice(i, 1); removeTask(task)"
+              class="material-icons md-18 edit-task-icon"
+              >delete
+            </mat-icon>
+          </div>
+        </div>
+      </div>
+      <!-- </mat-panel-description> -->
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
 <!-- </div> -->
