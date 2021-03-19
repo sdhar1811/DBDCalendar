@@ -44,9 +44,10 @@ export class LoginComponent implements OnInit {
       )
       .subscribe(
         (response) => {
-          this.router.navigateByUrl('home');
+          sessionStorage.setItem('user', JSON.stringify(response));
           this.storeService.setProperty('loggedInUser', response);
           this.storeService.setLoggedInUserDetails(response);
+          this.router.navigateByUrl('home');
         },
         (error) => {
           this.loginFailed = true;

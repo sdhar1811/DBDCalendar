@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
   logOut() {
     // this.storeService.loggedInUserChange.unsubscribe();
     this.loggedInUser = undefined;
+    sessionStorage.removeItem('user');
     this.router.navigate(['login']);
   }
 }
