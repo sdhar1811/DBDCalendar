@@ -17,6 +17,8 @@ export interface IAppConfig {
   deleteEvent: any;
   deleteTask: any;
   addTasks: string;
+  profile: string;
+  fetchAllProfiles: any;
 }
 export const APPCONFIG: IAppConfig = {
   morganizerAPIEndpoint: environment.morgainzedAPIURL,
@@ -34,5 +36,7 @@ export const APPCONFIG: IAppConfig = {
   addEvent: '/add',
   updateEvent: '/update',
   deleteEvent: (eventId: number) => `/remove/${eventId}`,
+  profile: '/profile',
+  fetchAllProfiles: (userId: string) => `/fetchAll/${userId}`,
 };
 export const APP_CONFIG = new InjectionToken<IAppConfig>('app.config');
