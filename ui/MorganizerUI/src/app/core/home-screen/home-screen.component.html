@@ -98,7 +98,13 @@
           }}</span>
         </div>
         <div *ngFor="let event of day.events">
-          <div style="margin: 5px">
+          <div
+            style="margin: 5px"
+            mwlDraggable
+            mwlDroppable
+            [dropData]="{ event: event }"
+            dragActiveClass="drag-active"
+          >
             <div class="cal-cell-content">
               <span
                 class="cell-profile-dot"
