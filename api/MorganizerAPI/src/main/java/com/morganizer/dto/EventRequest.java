@@ -12,12 +12,12 @@ public class EventRequest {
 	private String endTime;
 	private String location;
 	private String description;
-	private String reminder;
 	private String notificationType;
 	private long recurringModeId;
 	private List<Long> assigneeList;
 	private String lastUpdateOn;
 	private String color;
+	private List<Long> reminderList;
 
 	
 	public EventRequest() {
@@ -28,9 +28,10 @@ public class EventRequest {
 		this.eventId = eventId;
 	}
 
+	
 	public EventRequest(long userId, long eventId, String title, String category, String startTime, String endTime,
-			String location, String description, String reminder, String notificationType, long recurringModeId,
-			List<Long> assigneeList, String lastUpdateOn, String color) {
+			String location, String description, String notificationType, long recurringModeId, List<Long> assigneeList,
+			String lastUpdateOn, String color, List<Long> reminderList) {
 		super();
 		this.userId = userId;
 		this.eventId = eventId;
@@ -40,14 +41,14 @@ public class EventRequest {
 		this.endTime = endTime;
 		this.location = location;
 		this.description = description;
-		this.reminder = reminder;
 		this.notificationType = notificationType;
 		this.recurringModeId = recurringModeId;
 		this.assigneeList = assigneeList;
 		this.lastUpdateOn = lastUpdateOn;
 		this.color = color;
+		this.reminderList = reminderList;
 	}
-
+	
 	public long getRecurringModeId() {
 		return recurringModeId == 0 ? 1 : recurringModeId;
 	}
@@ -104,14 +105,14 @@ public class EventRequest {
 		this.description = description;
 	}
 
-	public String getReminder() {
-		return reminder;
+	public List<Long> getReminderList() {
+		return reminderList;
 	}
-
-	public void setReminder(String reminder) {
-		this.reminder = reminder;
+	
+	public void setReminderList(List<Long> reminderList) {
+		this.reminderList = reminderList;
 	}
-
+	
 	public String getNotificationType() {
 		return notificationType;
 	}

@@ -43,14 +43,18 @@ public class EventDetailsEntity {
 	
 	private String color;
 	
+	@ManyToMany
+	@JoinColumn(name = "reminder", referencedColumnName = "reminder_id")
+	private List<EventReminderEntity> reminderList = new ArrayList<>();
+	
 	public EventDetailsEntity() {
 		
 	}
 	
 
-	public EventDetailsEntity(UserDetailsEntity user, String eventTitle, String eventDescription,
-			Timestamp startTime, Timestamp endTime, RecurringModeEntity recurringMode, String location,
-			List<ProfileEntity> assigneeList, Timestamp lastUpdatedOn, String color) {
+	public EventDetailsEntity(UserDetailsEntity user, String eventTitle, String eventDescription, Timestamp startTime,
+			Timestamp endTime, RecurringModeEntity recurringMode, String location, List<ProfileEntity> assigneeList,
+			Timestamp lastUpdatedOn, String color, List<EventReminderEntity> reminderList) {
 		super();
 		this.user = user;
 		this.eventTitle = eventTitle;
@@ -62,6 +66,7 @@ public class EventDetailsEntity {
 		this.assigneeList = assigneeList;
 		this.lastUpdatedOn = lastUpdatedOn;
 		this.color = color;
+		this.reminderList = reminderList;
 	}
 
 	public long getId() {
@@ -156,4 +161,13 @@ public class EventDetailsEntity {
 	public void setAssigneeList(List<ProfileEntity> assigneeList) {
 		this.assigneeList = assigneeList;
 	}
+
+	public List<EventReminderEntity> getReminderList() {
+		return reminderList;
+	}
+
+	public void setReminderList(List<EventReminderEntity> reminderList) {
+		this.reminderList = reminderList;
+	}
+	
 }

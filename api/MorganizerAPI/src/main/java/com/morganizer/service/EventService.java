@@ -10,12 +10,14 @@ import org.springframework.stereotype.Service;
 import com.morganizer.dto.EventRequest;
 //import com.morganizer.entity.EventCategoriesEntity;
 import com.morganizer.entity.EventDetailsEntity;
+import com.morganizer.entity.EventReminderEntity;
 import com.morganizer.entity.NotificationTypesEntity;
 import com.morganizer.entity.ProfileEntity;
 import com.morganizer.entity.RecurringModeEntity;
 import com.morganizer.entity.UserDetailsEntity;
 //import com.morganizer.repository.EventCategoriesRepository;
 import com.morganizer.repository.EventDetailsRepository;
+import com.morganizer.repository.EventReminderRepository;
 import com.morganizer.repository.NotificationTypeRepository;
 import com.morganizer.repository.ProfileRepository;
 import com.morganizer.repository.RecurringModeRepository;
@@ -39,6 +41,9 @@ public class EventService {
 	
 	@Autowired
 	public ProfileRepository profileRepository;
+	
+	@Autowired
+	public EventReminderRepository eventReminderRepository;
 
 //	@Autowired
 //    public EventCategoriesRepository eventCategoriesRepository;
@@ -68,13 +73,17 @@ public class EventService {
 		
 		for(EventDetailsEntity event:eventList) {
 			List<Long> idList = new ArrayList<>();
+			List<Long> reminderLst = new ArrayList<>();
 			for (ProfileEntity assignee: event.getAssigneeList()) {
 				idList.add(assignee.getProfileId());
 			}
+			for (EventReminderEntity reminder: event.getReminderList()) {
+				reminderLst.add(reminder.getReminderId());
+			}
 			response.add(new EventRequest(event.getUser().getId(), event.getId(), event.getEventTitle(), null,
 					event.getStartTime().toString(), event.getEndTime().toString(), event.getLocation(),
-					event.getEventDescription(), null, null, event.getRecurringMode().getId(),
-					idList, event.getLastUpdatedOn().toString(), event.getColor()));
+					event.getEventDescription(), null, event.getRecurringMode().getId(),
+					idList, event.getLastUpdatedOn().toString(), event.getColor(), reminderLst));
 		}
 		
 		return response;
@@ -87,7 +96,10 @@ public class EventService {
 		for (Long assignee: eventRequest.getAssigneeList()) {
 			assigneeList.add(profileRepository.getOne(assignee));
 		}
-		
+		List<EventReminderEntity> reminderList = new ArrayList<>();
+		for (Long reminder: eventRequest.getReminderList()) {
+			reminderList.add(eventReminderRepository.getOne(reminder));
+		}
 		  
 		Timestamp startTime = Timestamp.valueOf(eventRequest.getStartTime().replaceAll("[A-Z]", " " )); 
 	    Timestamp endTime = Timestamp.valueOf(eventRequest.getEndTime().replaceAll("[A-Z]", " " ));
@@ -96,7 +108,7 @@ public class EventService {
 		EventDetailsEntity event = new EventDetailsEntity(user, eventRequest.getTitle(), eventRequest.getDescription(),
 				startTime, endTime,
 				recurringMode, eventRequest.getLocation(),
-				assigneeList,  lastUpdatedOn, eventRequest.getColor());
+				assigneeList,  lastUpdatedOn, eventRequest.getColor(),reminderList);
 
 		if (eventRequest.getEventId() != 0) {
 			event.setId(eventRequest.getEventId());
@@ -106,10 +118,14 @@ public class EventService {
 		for (ProfileEntity assignee: savedEntity.getAssigneeList()) {
 			idList.add(assignee.getProfileId());
 		}
+		List<Long> reminders = new ArrayList<>();
+		for (EventReminderEntity reminder: savedEntity.getReminderList()) {
+			reminders.add(reminder.getReminderId());
+		}
 		return new EventRequest(savedEntity.getUser().getId(), savedEntity.getId(), savedEntity.getEventTitle(), null,
 				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
-				savedEntity.getEventDescription(), null, null, savedEntity.getRecurringMode().getId(),
-				idList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor());
+				savedEntity.getEventDescription(), null, savedEntity.getRecurringMode().getId(),
+				idList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor(), reminders);
 
 	}
 
@@ -120,7 +136,11 @@ public class EventService {
 		for (Long assignee: eventRequest.getAssigneeList()) {
 			assigneeList.add(profileRepository.getOne(assignee));
 		}
-		  
+		List<EventReminderEntity> reminderList = new ArrayList<>();
+		for (Long reminder: eventRequest.getReminderList()) {
+			reminderList.add(eventReminderRepository.getOne(reminder));
+		}
+		
 		Timestamp startTime = Timestamp.valueOf(eventRequest.getStartTime().replaceAll("[A-Z]", " " )); 
 	    Timestamp endTime = Timestamp.valueOf(eventRequest.getEndTime().replaceAll("[A-Z]", " " ));
 	    Timestamp lastUpdatedOn = new Timestamp(System.currentTimeMillis());
@@ -128,7 +148,7 @@ public class EventService {
 		EventDetailsEntity event = new EventDetailsEntity(user, eventRequest.getTitle(), eventRequest.getDescription(),
 				startTime, endTime,
 				recurringMode, eventRequest.getLocation(),
-				assigneeList,  lastUpdatedOn, eventRequest.getColor());
+				assigneeList,  lastUpdatedOn, eventRequest.getColor(), reminderList);
 
 		if (eventRequest.getEventId() != 0) {
 			event.setId(eventRequest.getEventId());
@@ -138,11 +158,15 @@ public class EventService {
 		for (ProfileEntity assignee: savedEntity.getAssigneeList()) {
 			idList.add(assignee.getProfileId());
 		}
+		List<Long> reminders = new ArrayList<>();
+		for (EventReminderEntity reminder: savedEntity.getReminderList()) {
+			reminders.add(reminder.getReminderId());
+		}
 		
 		return new EventRequest(savedEntity.getUser().getId(), savedEntity.getId(), savedEntity.getEventTitle(), null,
 				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
-				savedEntity.getEventDescription(), null, null, savedEntity.getRecurringMode().getId(),
-				idList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor());
+				savedEntity.getEventDescription(), null, savedEntity.getRecurringMode().getId(),
+				idList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor(), reminders);
 
 	}
 
