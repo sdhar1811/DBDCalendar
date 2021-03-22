@@ -72,9 +72,8 @@ export class CreateEventComponent implements OnInit {
   createEvent(): void {
     // this.data.color = this.color;
     console.log(JSON.stringify(this.data));
-    console.log(this.data.assigneeList);
+    console.log(this.data.reminderList);
     console.log(this.data.color);
-    
 
     this.eventService.addEvent(this.data).subscribe(
       (response) => {
