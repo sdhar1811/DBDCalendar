@@ -27,12 +27,10 @@ export const CUSTOM_DATE_TIME_FORMAT: NgxMatDateFormats = {
   selector: 'app-create-event',
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.scss'],
-  providers:[
-    {provide: NGX_MAT_DATE_FORMATS, useValue:CUSTOM_DATE_TIME_FORMAT}
-  ]
+  providers: [
+    { provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_TIME_FORMAT },
+  ],
 })
-
-
 export class CreateEventComponent implements OnInit {
   color: any;
   editFlag: boolean = false;
@@ -66,15 +64,23 @@ export class CreateEventComponent implements OnInit {
     { name: 'Satyen', id: 2 },
     { name: 'Dhananjay', id: 3 },
     { name: 'Asmi', id: 4 },
-    { name: 'Khushboo', id: 5 }
+    { name: 'Khushboo', id: 5 },
+  ];
+
+  reminderLst = [
+    { title: '5 minutes', value: '5', id:   1 },
+    { title: '10 minutes', value: '10', id:   2   },
+    { title: '15 minutes', value: '15', id:   3   },
+    { title: '30 minutes', value: '30', id:   4 },
+    { title: '1 hour', value: '60', id:   5 },
+    { title: '2 hours', value: '120', id:   6 },
   ];
 
   createEvent(): void {
     // this.data.color = this.color;
     console.log(JSON.stringify(this.data));
-    console.log(this.data.assigneeList);
+    console.log(this.data.reminderList);
     console.log(this.data.color);
-    
 
     this.eventService.addEvent(this.data).subscribe(
       (response) => {

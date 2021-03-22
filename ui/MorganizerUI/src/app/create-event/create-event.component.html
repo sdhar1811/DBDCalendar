@@ -78,7 +78,7 @@
           </ngx-mat-datetime-picker>
         </mat-form-field>
       </div>
-      
+
       <div class = "col-md-5">
         <mat-form-field>
           <input
@@ -130,17 +130,14 @@
       </mat-select>
     </mat-form-field>
 
-      <div class = "row">
-        <div class ="col-md-6">
-          <mat-form-field appearance="outline">
-            <mat-label>Reminder</mat-label>
-            <mat-select>
-              <mat-option value="five">5 minutes</mat-option>
-              <mat-option value="ten">10 minutes</mat-option>
-              <mat-option value="fifteen">15 minutes</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Reminder</mat-label>
+      <mat-select multiple [(ngModel)]="data.reminderList">
+        <mat-option *ngFor="let reminder of reminderLst" [value]="reminder.id">{{reminder.title}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="row">
         <div class = "col-md-6">
           <mat-form-field appearance="outline">
             <mat-label>Notification Type</mat-label>
