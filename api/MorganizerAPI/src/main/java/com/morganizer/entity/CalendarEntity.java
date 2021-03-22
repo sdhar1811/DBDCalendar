@@ -28,9 +28,8 @@ public class CalendarEntity {
     	
     }
 
-	public CalendarEntity(long calendarId, String name, String color, UserDetailsEntity user) {
+	public CalendarEntity(String name, String color, UserDetailsEntity user) {
 		super();
-		this.calendarId = calendarId;
 		this.name = name;
 		this.color = color;
 		this.user = user;

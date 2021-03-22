@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.morganizer.dto.CalendarRequest;
 import com.morganizer.dto.CalendarResponse;
 import com.morganizer.service.CalendarService;
 
@@ -23,5 +26,10 @@ public class CalendarController {
     @GetMapping("/fetchAll/{userId}")
     public List<CalendarResponse> fetchAll(@PathVariable Long userId) {
         return calendarService.fetchAll(userId);
+    }
+    
+    @PostMapping("/add")
+    public List<CalendarResponse> addCalendar(@RequestBody CalendarRequest calendarRequest) {
+    	return calendarService.saveCalendar(calendarRequest);
     }
 }
