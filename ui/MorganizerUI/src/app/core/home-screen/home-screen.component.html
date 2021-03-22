@@ -9,13 +9,13 @@
         : 'col-xl-9 col-lg-9 col-md-9 col-sm-9'
     "
   >
-    <div class="row text-center" style="margin: 10px;">
+    <div class="row text-center" style="margin: 10px">
       <div class="col-md-5 col-lg-5 col-sm-5">
         <div class="row">
           <div class="col-md-3 col-lg-3 col-sm-3">
             <button
               mat-raised-button
-              style="margin-left: 1px;"
+              style="margin-left: 1px"
               (click)="addEvent()"
             >
               + Create
@@ -90,12 +90,44 @@
     </div>
     <!-- </ng-template> -->
     <div *ngIf="!loading">
+      <!-- custom cell template to display profile, title and time on the calendar in month view-->
+      <ng-template #customCellTemplate let-day="day" let-locale="locale">
+        <div class="cal-cell-top">
+          <span class="cal-day-number">{{
+            day.date | calendarDate: "monthViewDayNumber":locale
+          }}</span>
+        </div>
+        <div *ngFor="let event of day.events">
+          <div style="margin: 5px">
+            <div class="cal-cell-content">
+              <span
+                class="cell-profile-dot"
+                [style.background]="event.color.primary"
+              ></span>
+              <span
+                class="cell-title-bar"
+                [style.background]="event.color.primary"
+              >
+                <span>
+                  <small style="font-weight: 500"
+                    >{{ event.start | date: "hh:mm aa" }} -
+                  </small>
+                </span>
+                <small class="title" style="margin-left: 3px">{{
+                  event.title
+                }}</small>
+              </span>
+            </div>
+          </div>
+        </div>
+      </ng-template>
       <div [ngSwitch]="view" class="mat-elevation-z5">
         <mwl-calendar-month-view
           *ngSwitchCase="CalendarView.Month"
           [viewDate]="viewDate"
           [events]="events"
           [refresh]="refresh"
+          [cellTemplate]="customCellTemplate"
           [activeDayIsOpen]="activeDayIsOpen"
           (dayClicked)="dayClicked($event.day)"
           (eventClicked)="handleEvent('Clicked', $event.event)"
@@ -129,7 +161,7 @@
         ? 'col-xl-3 col-lg-3 col-md-3 col-sm-3 mat-elevation-z5'
         : 'col-xl-1 col-lg-1 col-md-1 col-sm-1'
     "
-    style="margin-top: 1px; padding-right: 1px;"
+    style="margin-top: 1px; padding-right: 1px"
   >
     <app-right-panel
       [showTaskPanel]="showRightPanel"
