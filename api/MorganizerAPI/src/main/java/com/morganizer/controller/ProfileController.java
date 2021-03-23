@@ -24,9 +24,9 @@ public class ProfileController {
     @Autowired
     ProfileService profileService;
 
-    @DeleteMapping("/deleteProfile")
-    public void deleteProfile(@RequestBody ProfileRequest profileReq) {
-        profileService.deleteProfile(profileReq);
+    @DeleteMapping("/remove/{id}")
+    public void deleteProfile(@PathVariable Long id) {
+        profileService.deleteProfile(id);
     }
     
     @GetMapping("/fetchAll/{userId}")

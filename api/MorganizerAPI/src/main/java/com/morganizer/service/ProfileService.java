@@ -22,12 +22,12 @@ public class ProfileService {
 	@Autowired
 	private UserDetailsRepository userRepo;
 
-	public void deleteProfile(ProfileRequest profileReq) {
+	public void deleteProfile(Long profileId) {
 
 		try {
-			profileRepository.deleteByProfileIdAndUserId(profileReq.getProfileId(), profileReq.getUserId());
+			profileRepository.deleteById(profileId);
 		} catch (Exception ex) {
-			// code to handle if user does not own the profile.
+			ex.printStackTrace();
 		}
 
 	}
@@ -45,12 +45,13 @@ public class ProfileService {
 
 	public ProfileResponse addProfile(ProfileRequest profileRequest) {
 		UserDetailsEntity user = userRepo.getOne(profileRequest.getUserId());
-		ProfileEntity profile = new ProfileEntity(profileRequest.getName(), profileRequest.getEmail(), profileRequest.getPhoneNumber(),
+		ProfileEntity profile = new ProfileEntity(profileRequest.getProfileId(),profileRequest.getName(), profileRequest.getEmail(), profileRequest.getPhoneNumber(),
 				profileRequest.getGender(), profileRequest.getBirthdate(), profileRequest.getColor(), user);
 		
-		if(profileRequest.getProfileId()!=0) {
-			profile.setProfileId(profileRequest.getProfileId());
-		}
+//		if(profileRequest.getProfileId()!=null) {
+//			profile.setProfileId(profileRequest.getProfileId());
+//		}
+		
 		ProfileEntity profileEntity = profileRepository.save(profile);
 		return new ProfileResponse(profileEntity.getName(),profileEntity.getGender(),profileEntity.getPhoneNumber(), profileEntity.getBirthdate(), profileEntity.getEmail(), profileEntity.getProfileId(), profileEntity.getUser().getId(), profileEntity.getColor());
 

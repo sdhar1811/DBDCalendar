@@ -1,12 +1,12 @@
 package com.morganizer.dto;
 
-public class ProfileResponse {
+public class ProfileResponse {	
 	private String name;
 	private String gender;
 	private String phoneNumber;
 	private String birthdate;
 	private String email;
-	private long profileId;
+	private Long profileId;
 	private long userId;
 	private String color;
 	
@@ -15,10 +15,13 @@ public class ProfileResponse {
 	
 	
 	
+	public ProfileResponse() {
+		
+	}
 	
 	
 	public ProfileResponse(String name, String gender, String phoneNumber, String birthdate, String email,
-			long profileId, long userId, String color) {
+			Long profileId, long userId, String color) {
 		super();
 		this.name = name;
 		this.gender = gender;
@@ -59,10 +62,10 @@ public class ProfileResponse {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public long getProfileId() {
+	public Long getProfileId() {
 		return profileId;
 	}
-	public void setProfileId(long profileId) {
+	public void setProfileId(Long profileId) {
 		this.profileId = profileId;
 	}
 	public long getUserId() {
