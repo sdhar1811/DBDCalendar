@@ -41,6 +41,30 @@ export class HomeScreenComponent implements OnInit {
   rightPanelClass = 'col-md-1';
   view: CalendarView = CalendarView.Month;
   loading = true;
+  //TO-D0: replace with API call profile-details
+  assigneeList = [
+    {
+      id: '1',
+      name: 'Sharad',
+      color: {
+        primary: 'red',
+      },
+    },
+    {
+      id: '1',
+      name: 'Sharad',
+      color: {
+        primary: 'green',
+      },
+    },
+    {
+      id: '1',
+      name: 'Sharad',
+      color: {
+        primary: 'black',
+      },
+    },
+  ];
 
   CalendarView = CalendarView;
 
