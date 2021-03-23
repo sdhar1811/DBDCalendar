@@ -113,11 +113,13 @@
               >
                 <div
                   style="border-bottom: solid 1px white; white-space: normal"
+                  *ngIf="event.assigneeList && event.assigneeList.length > 0"
                 >
                   <span
-                    *ngFor="let assignee of assigneeList"
+                    *ngFor="let assignee of event.assigneeList"
                     class="cell-profile-dot mat-elevation-z9"
-                    [style.background]="assignee.color.primary"
+                    [style.background]="assignee.color"
+                    matTooltip="{{ assignee.name }}"
                   ></span>
                 </div>
                 <span>

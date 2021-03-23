@@ -52,30 +52,6 @@ export class HomeScreenComponent implements OnInit {
 
   selectedProfiles = [];
   selectedCalendars = [];
-  //TO-D0: replace with API call profile-details
-  assigneeList = [
-    {
-      id: '1',
-      name: 'Sharad',
-      color: {
-        primary: 'red',
-      },
-    },
-    {
-      id: '1',
-      name: 'Sharad',
-      color: {
-        primary: 'green',
-      },
-    },
-    {
-      id: '1',
-      name: 'Sharad',
-      color: {
-        primary: 'black',
-      },
-    },
-  ];
 
   CalendarView = CalendarView;
 
@@ -141,7 +117,7 @@ export class HomeScreenComponent implements OnInit {
           if (response) {
             this.events = [];
             response.forEach((eventModel) => {
-              this.events.push({
+              let temp = {
                 title: eventModel.title,
                 allDay: eventModel.allDayEvent,
                 start: new Date(eventModel.startTime + ' UTC'),
@@ -159,7 +135,9 @@ export class HomeScreenComponent implements OnInit {
                 meta: {
                   eventModel,
                 },
-              });
+              };
+              temp['assigneeList'] = eventModel.assigneeList;
+              this.events.push(temp);
             });
           }
           this.updateEventsToDisplay();
@@ -348,5 +326,3 @@ export class HomeScreenComponent implements OnInit {
     console.log(this.eventsToDisplay);
   }
 }
-
-
