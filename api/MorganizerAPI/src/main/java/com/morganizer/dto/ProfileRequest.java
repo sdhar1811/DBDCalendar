@@ -3,7 +3,7 @@ package com.morganizer.dto;
 public class ProfileRequest {
 
     private long userId;
-    private long profileId;
+    private Long profileId;
     private String name;
     private String email;
     private String gender;
@@ -20,7 +20,7 @@ public class ProfileRequest {
         this.profileId = profileId;
     }
     
-    public ProfileRequest(long userId, long profileId, String name, String email, String gender, String phoneNumber,
+    public ProfileRequest(long userId, Long profileId, String name, String email, String gender, String phoneNumber,
 			String birthdate, String color) {
 		super();
 		this.userId = userId;
@@ -42,7 +42,7 @@ public class ProfileRequest {
         return userId;
     }
 
-    public long getProfileId() {
+    public Long getProfileId() {
         return profileId;
     }
 
@@ -50,7 +50,7 @@ public class ProfileRequest {
         this.userId = userId;
     }
 
-    public void setProfileId(long profileId) {
+    public void setProfileId(Long profileId) {
         this.profileId = profileId;
     }
 
