@@ -45,4 +45,15 @@ public class CalendarService {
 
 	}
 
+	public void deleteCalendar(Long calendarId) {
+		try {
+			calendarRepository.deleteById(calendarId);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			// throw custom exception for no such event present to be deleted
+		}
+
+		
+	}
+
 }
