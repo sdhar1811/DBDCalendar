@@ -106,14 +106,19 @@
             dragActiveClass="drag-active"
           >
             <div class="cal-cell-content">
-              <span
-                class="cell-profile-dot"
-                [style.background]="event.color.primary"
-              ></span>
-              <span
+              <div
                 class="cell-title-bar"
                 [style.background]="event.color.primary"
               >
+                <div
+                  style="border-bottom: solid 1px white; white-space: normal"
+                >
+                  <span
+                    *ngFor="let assignee of assigneeList"
+                    class="cell-profile-dot mat-elevation-z9"
+                    [style.background]="assignee.color.primary"
+                  ></span>
+                </div>
                 <span>
                   <small style="font-weight: 500"
                     >{{ event.start | date: "hh:mm aa" }} -
@@ -122,7 +127,7 @@
                 <small class="title" style="margin-left: 3px">{{
                   event.title
                 }}</small>
-              </span>
+              </div>
             </div>
           </div>
         </div>
