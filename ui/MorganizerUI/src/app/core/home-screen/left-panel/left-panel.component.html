@@ -31,7 +31,7 @@
         <input [(ngModel)]="calendarTitle" matInput (keyup.enter)="addNewCalendar()" placeholder="Add new calendar..." />
       </mat-form-field>
 <table>
-  <tr *ngFor="let calendar of calendarList">
+  <tr *ngFor="let calendar of mycalendars">
     <td>
       <ui-switch size="small" [(ngModel)]="calendar.value" switchColor="{{ calendar.color }}">
       </ui-switch>
