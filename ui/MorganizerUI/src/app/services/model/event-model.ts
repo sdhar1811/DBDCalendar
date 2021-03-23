@@ -10,5 +10,5 @@ export class EventModel {
   lastUpdatedOn: string;
   color: any;
   calendarId: number;
-  reminderList: number[];
+  reminderList: number[] = [];
 }
