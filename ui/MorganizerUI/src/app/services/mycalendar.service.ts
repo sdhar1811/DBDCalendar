@@ -7,18 +7,25 @@ import { MyCalendarModel } from './model/mycalendar-model';
   providedIn: 'root',
 })
 export class MyCalendarService {
-  eventURL: string;
+  calendarURL: string;
 
   constructor(
     @Inject(APP_CONFIG) private appConfig: IAppConfig,
     private http: HttpClient
   ) {
-    this.eventURL = appConfig.morganizerAPIEndpoint + appConfig.mycalendar;
+    this.calendarURL = appConfig.morganizerAPIEndpoint + appConfig.mycalendar;
   }
 
   getAllCalendars(userId: String) {
     return this.http.get<MyCalendarModel[]>(
-      this.eventURL + this.appConfig.fetchAllCalendars(userId)
+      this.calendarURL + this.appConfig.fetchAllCalendars(userId)
+    );
+  }
+
+  deleteCalendarFromList(calendarId: number) {
+    console.log(calendarId);
+    return this.http.delete(
+      this.calendarURL + this.appConfig.deleteCalendar(calendarId)
     );
   }
 }

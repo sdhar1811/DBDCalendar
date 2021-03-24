@@ -11,3 +11,15 @@ ul {
 ::ng-deep .switch.checked {
   background: #efefef!important;
 }
+
+.delete-icon{
+  margin-top: 5px;
+  cursor: pointer;
+  color: gray;
+}
+
+.more-options-icon{
+  margin-top: 5px;
+  cursor: pointer;
+  color: gray;
+}

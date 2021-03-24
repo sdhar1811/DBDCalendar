@@ -23,41 +23,46 @@ export class LeftPanelComponent implements OnInit {
   calendarTitle: string;
   //calendarColor: string = '#EC407A';
   calendarColor: string;
-  constructor(private profileService: ProfileService,
-    private storeService: StoreService, private calendarService: MyCalendarService) {}
+  constructor(
+    private profileService: ProfileService,
+    private storeService: StoreService,
+    private calendarService: MyCalendarService
+  ) {}
 
   fetchProfiles() {
-    this.profileService.getAllProfile(this.storeService.loggedInUser?.id)
-    .subscribe(
-      (response) => {
-        // this.loading = false;
-        if (response) {
-          console.log(response);
-          this.profiles =response;
+    this.profileService
+      .getAllProfile(this.storeService.loggedInUser?.id)
+      .subscribe(
+        (response) => {
+          // this.loading = false;
+          if (response) {
+            console.log(response);
+            this.profiles = response;
+          }
+        },
+        (error) => {
+          // this.loading = false;
+          //TODO:Handle API error
         }
-      },
-      (error) => {
-        // this.loading = false;
-        //TODO:Handle API error
-      }
-    );
- }
+      );
+  }
 
-  fetchCalendars(){
-    this.calendarService.getAllCalendars(this.storeService.loggedInUser?.id)
-    .subscribe(
-      (response) => {
-        if (response) {
-          console.log(response);
-          this.mycalendars =response;
+  fetchCalendars() {
+    this.calendarService
+      .getAllCalendars(this.storeService.loggedInUser?.id)
+      .subscribe(
+        (response) => {
+          if (response) {
+            console.log(response);
+            this.mycalendars = response;
+          }
+        },
+        (error) => {
+          // this.loading = false;
+          //TODO:Handle API error
         }
-      },
-      (error) => {
-        // this.loading = false;
-        //TODO:Handle API error
-      }
-    );
-  };
+      );
+  }
 
   ngOnInit(): void {
     this.fetchProfiles();
@@ -74,5 +79,19 @@ export class LeftPanelComponent implements OnInit {
       },
     ];
     this.calendarTitle = '';
+  }
+
+  deleteCalendar(calendarToDelete: number) {
+    this.calendarService.deleteCalendarFromList(calendarToDelete).subscribe(
+      () => {
+        console.log('Calendar Deleted');
+        this.fetchCalendars();
+      },
+      (error) => {
+        console.log('Something went wrong');
+        // window.alert('#TODO: Something went wrong.');
+      }
+    );
+
   }
 }

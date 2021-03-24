@@ -21,6 +21,7 @@ export interface IAppConfig {
   fetchAllProfiles: any;
   mycalendar: string;
   fetchAllCalendars: any;
+  deleteCalendar: any;
 }
 export const APPCONFIG: IAppConfig = {
   morganizerAPIEndpoint: environment.morgainzedAPIURL,
@@ -42,5 +43,6 @@ export const APPCONFIG: IAppConfig = {
   fetchAllProfiles: (userId: string) => `/fetchAll/${userId}`,
   mycalendar: '/calendar',
   fetchAllCalendars: (userId: string) => `/fetchAll/${userId}`,
+  deleteCalendar: (calendarId: number) => `/remove/${calendarId}`,
 };
 export const APP_CONFIG = new InjectionToken<IAppConfig>('app.config');
