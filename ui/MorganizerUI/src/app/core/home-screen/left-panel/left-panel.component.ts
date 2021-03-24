@@ -18,13 +18,13 @@ export interface MyCalendars {
 })
 export class LeftPanelComponent implements OnInit {
 
-  @Output() updateFilterValues = new EventEmitter();
+  @Output() emitSelectedProfiles = new EventEmitter();
+  @Output() emitSelectedCalendars = new EventEmitter();
 
   profiles: ProfileModel[] = [];
   mycalendars: MyCalendarModel[] = [];
   calendarTitle: string;
-  //calendarColor: string = '#EC407A';
-  calendarColor: string;
+
   constructor(
     private profileService: ProfileService,
     private storeService: StoreService,
@@ -109,11 +109,17 @@ export class LeftPanelComponent implements OnInit {
     );
   }
 
-  changeProfileFilter(){
+  sendSelectedProfiles(){
     let selectedProfiles = [];
-    console.log("Inside ");
-    console.log(this.profiles);
     selectedProfiles = this.profiles.filter((profile) => profile.selected).map((profile) => profile.profileId);
-    this.updateFilterValues.emit(selectedProfiles);
+    this.emitSelectedProfiles.emit(selectedProfiles);
+  }
+
+  sendSelectedCalendars(){
+    let selectedCalendars = [];
+    console.log("Inside ");
+    console.log(this.mycalendars);
+    selectedCalendars = this.mycalendars.filter((calendar) => calendar.selected).map((calendar) => calendar.calendarId);
+    this.emitSelectedCalendars.emit(selectedCalendars);
   }
 }

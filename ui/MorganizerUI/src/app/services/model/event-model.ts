@@ -9,5 +9,6 @@ export class EventModel {
   assigneeList: number[] = [];
   lastUpdatedOn: string;
   color: any;
+  calendarId: number;
   reminderList: number[];
 }

@@ -41,6 +41,9 @@ export class HomeScreenComponent implements OnInit {
   rightPanelClass = 'col-md-1';
   view: CalendarView = CalendarView.Month;
   loading = true;
+
+  selectedProfiles = [];
+  selectedCalendars = [];
   //TO-D0: replace with API call profile-details
   assigneeList = [
     {
@@ -301,23 +304,35 @@ export class HomeScreenComponent implements OnInit {
     this.showRightPanel = value;
   }
 
-  updateProfileFilter(selectedProfile){
-    console.log("Inside Home");
-    console.log(selectedProfile);
-    console.log(this.events);
-    function isAssignee(event, index, array) { 
+  receiveSelectedProfiles(data){
+    console.log(data);
+    this.selectedProfiles = data;
+    this.updateEventsToDisplay();
+    
+  }
+
+  receiveSelectedCalendars(data){
+    console.log(data);
+    this.selectedCalendars = data;
+    this.updateEventsToDisplay();
+  }
+
+  updateEventsToDisplay() {
+    console.log("Inside updateEventsToDisplay");
+
+    function eventFilter(event, index, array) { 
       let flag = false;
-      event.meta.eventModel.assigneeList.forEach(element => {
-        console.log(selectedProfile.includes(element))
-        if (selectedProfile.includes(element)){
-          console.log("here");
-          flag =  true;
-        }
-          
-      });
+      if (this.selectedCalendars.includes(event.meta.eventModel.calendarId)){
+        event.meta.eventModel.assigneeList.forEach(element => {
+          if (this.selectedProfiles.includes(element)){
+            flag =  true;
+          }            
+        });
+      }      
       return flag;
     } 
-    this.eventsToDisplay = this.events.filter(isAssignee);
-    console.log(this.eventsToDisplay);
+    this.eventsToDisplay = this.events.filter(eventFilter);    
   }
 }
+
+
