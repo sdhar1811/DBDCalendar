@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { StoreService } from 'src/app/services/store.service';
 import { ProfileModel } from 'src/app/services/model/profile-model';
+import { MyCalendarModel } from 'src/app/services/model/mycalendar-model';
+import { MyCalendarService } from 'src/app/services/mycalendar.service';
 
 export interface MyCalendars {
   name: string;
@@ -19,48 +21,92 @@ export class LeftPanelComponent implements OnInit {
   @Output() updateFilterValues = new EventEmitter();
 
   profiles: ProfileModel[] = [];
-  calendarList = [];
+  mycalendars: MyCalendarModel[] = [];
   calendarTitle: string;
   //calendarColor: string = '#EC407A';
   calendarColor: string;
-  constructor(private profileService: ProfileService,
-    private storeService: StoreService) {}
+  constructor(
+    private profileService: ProfileService,
+    private storeService: StoreService,
+    private calendarService: MyCalendarService
+  ) {}
 
   fetchProfiles() {
-    this.profileService.getAllProfile(this.storeService.loggedInUser?.id)
-    .subscribe(
-      (response) => {
-        // this.loading = false;
-        if (response) {
-          console.log(response);
-          this.profiles =response;
+    this.profileService
+      .getAllProfile(this.storeService.loggedInUser?.id)
+      .subscribe(
+        (response) => {
+          // this.loading = false;
+          if (response) {
+            console.log(response);
+            this.profiles = response;
+          }
+        },
+        (error) => {
+          // this.loading = false;
+          //TODO:Handle API error
         }
-      },
-      (error) => {
-        // this.loading = false;
-        //TODO:Handle API error
-      }
-    );
-    this.calendarList.push({ name: 'Work', color: '#00ACC1', value: '' });
-    this.calendarList.push({ name: 'Personal', color: '#AB47BC', value: '' });
-    this.calendarList.push({ name: 'School', color: '#455A64', value: '' });
-    this.calendarList.push({ name: 'Medical', color: '#C0CA33', value: '' });
+      );
+  }
+
+  fetchCalendars() {
+    this.calendarService
+      .getAllCalendars(this.storeService.loggedInUser?.id)
+      .subscribe(
+        (response) => {
+          if (response) {
+            console.log(response);
+            this.mycalendars = response;
+          }
+        },
+        (error) => {
+          // this.loading = false;
+          //TODO:Handle API error
+        }
+      );
   }
 
   ngOnInit(): void {
     this.fetchProfiles();
+    this.fetchCalendars();
   }
 
   addNewCalendar() {
-    this.calendarList = [
-      ...this.calendarList,
-      {
-        name: this.calendarTitle,
-        color: this.calendarColor == null ? '#EC407A' : this.calendarColor,
-        value: '',
+    let letters = '0123456789ABCDEF';
+    let randomcolor = '#';
+    for (var i = 0; i < 6; i++) {
+      randomcolor += letters[Math.floor(Math.random() * 16)];
+    }
+    let newcalendar = new MyCalendarModel();
+    newcalendar.userId = this.storeService.loggedInUser?.id;
+    newcalendar.color = randomcolor;
+    newcalendar.name = this.calendarTitle;
+    this.calendarService.addCalendar(newcalendar).subscribe(
+      (response) => {
+        if (response) {
+          console.log('New Calendar Created');
+          this.fetchCalendars();
+        }
       },
-    ];
-    this.calendarTitle = '';
+      (error) => {
+        console.log('Something went wrong');
+        // window.alert('#TODO: Something went wrong.');
+      }
+    );
+    this.calendarTitle  =  '';
+  }
+
+  deleteCalendar(calendarToDelete: number) {
+    this.calendarService.deleteCalendarFromList(calendarToDelete).subscribe(
+      () => {
+        console.log('Calendar Deleted');
+        this.fetchCalendars();
+      },
+      (error) => {
+        console.log('Something went wrong');
+        // window.alert('#TODO: Something went wrong.');
+      }
+    );
   }
 
   changeProfileFilter(){

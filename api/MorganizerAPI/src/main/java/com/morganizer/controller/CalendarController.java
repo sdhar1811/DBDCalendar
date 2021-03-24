@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,5 +32,10 @@ public class CalendarController {
     @PostMapping("/add")
     public List<CalendarResponse> addCalendar(@RequestBody CalendarRequest calendarRequest) {
     	return calendarService.saveCalendar(calendarRequest);
+    }
+    
+    @DeleteMapping("/remove/{calendarId}")
+    public void deleteEvent(@PathVariable Long calendarId) {
+    	calendarService.deleteCalendar(calendarId);
     }
 }
