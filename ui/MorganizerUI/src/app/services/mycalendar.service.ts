@@ -28,4 +28,11 @@ export class MyCalendarService {
       this.calendarURL + this.appConfig.deleteCalendar(calendarId)
     );
   }
+
+  addCalendar(newCalendar: MyCalendarModel) {
+    return this.http.post(
+      this.calendarURL + this.appConfig.addCalendar,
+      newCalendar
+    );
+  }
 }

@@ -19,7 +19,6 @@ export interface MyCalendars {
 export class LeftPanelComponent implements OnInit {
   profiles: ProfileModel[] = [];
   mycalendars: MyCalendarModel[] = [];
-  calendarList = [];
   calendarTitle: string;
   //calendarColor: string = '#EC407A';
   calendarColor: string;
@@ -70,15 +69,28 @@ export class LeftPanelComponent implements OnInit {
   }
 
   addNewCalendar() {
-    this.calendarList = [
-      ...this.calendarList,
-      {
-        name: this.calendarTitle,
-        color: this.calendarColor == null ? '#EC407A' : this.calendarColor,
-        value: '',
+    let letters = '0123456789ABCDEF';
+    let randomcolor = '#';
+    for (var i = 0; i < 6; i++) {
+      randomcolor += letters[Math.floor(Math.random() * 16)];
+    }
+    let newcalendar = new MyCalendarModel();
+    newcalendar.userId = this.storeService.loggedInUser?.id;
+    newcalendar.color = randomcolor;
+    newcalendar.name = this.calendarTitle;
+    this.calendarService.addCalendar(newcalendar).subscribe(
+      (response) => {
+        if (response) {
+          console.log('New Calendar Created');
+          this.fetchCalendars();
+        }
       },
-    ];
-    this.calendarTitle = '';
+      (error) => {
+        console.log('Something went wrong');
+        // window.alert('#TODO: Something went wrong.');
+      }
+    );
+    this.calendarTitle  =  '';
   }
 
   deleteCalendar(calendarToDelete: number) {
@@ -92,6 +104,5 @@ export class LeftPanelComponent implements OnInit {
         // window.alert('#TODO: Something went wrong.');
       }
     );
-
   }
 }
