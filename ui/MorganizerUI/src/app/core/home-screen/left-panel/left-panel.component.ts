@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { StoreService } from 'src/app/services/store.service';
 import { ProfileModel } from 'src/app/services/model/profile-model';
@@ -15,6 +15,9 @@ export interface MyCalendars {
   styleUrls: ['./left-panel.component.scss'],
 })
 export class LeftPanelComponent implements OnInit {
+
+  @Output() updateFilterValues = new EventEmitter();
+
   profiles: ProfileModel[] = [];
   calendarList = [];
   calendarTitle: string;
@@ -58,5 +61,13 @@ export class LeftPanelComponent implements OnInit {
       },
     ];
     this.calendarTitle = '';
+  }
+
+  changeProfileFilter(){
+    let selectedProfiles = [];
+    console.log("Inside ");
+    console.log(this.profiles);
+    selectedProfiles = this.profiles.filter((profile) => profile.selected).map((profile) => profile.profileId);
+    this.updateFilterValues.emit(selectedProfiles);
   }
 }

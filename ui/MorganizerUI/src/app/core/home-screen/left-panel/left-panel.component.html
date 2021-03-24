@@ -13,7 +13,8 @@
           <td>
             <ui-switch
               size="small"
-              [(ngModel)]="profile.value"
+              [(ngModel)]="profile.selected"
+              (ngModelChange) = "changeProfileFilter()"
               switchColor="{{ profile.color }}"
             ></ui-switch>
           </td>
