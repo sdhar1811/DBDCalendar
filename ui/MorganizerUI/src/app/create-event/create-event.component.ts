@@ -6,12 +6,16 @@ import {
 } from '@angular/material/dialog';
 import { EventEmitter } from '@angular/core';
 import { EventService } from '../services/event.service';
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatDateFormats, NGX_MAT_DATE_FORMATS} from '@angular-material-components/datetime-picker';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatTimepickerModule,
+  NgxMatDateFormats,
+  NGX_MAT_DATE_FORMATS,
+} from '@angular-material-components/datetime-picker';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { ProfileService } from '../services/profile.service';
 import { StoreService } from '../services/store.service';
 import { MyCalendarService } from '../services/mycalendar.service';
-
 
 export const DATETIME_WITHOUT_SECONDS_FORMAT = 'MM-DD-YYYY, hh:mm A';
 export const CUSTOM_DATE_TIME_FORMAT: NgxMatDateFormats = {
@@ -85,11 +89,18 @@ export class CreateEventComponent implements OnInit {
   ];
 
   createEvent(): void {
-    // this.data.color = this.color;
-    console.log(JSON.stringify(this.data));
-    console.log(this.data.reminderList);
-    this.data.color = this.calendarList.filter(calendar => calendar.calendarId == this.data.calendarId).map(calendar => calendar.color)[0];
-    console.log(this.data.color);
+    this.data.color = this.calendarList
+      .filter((calendar) => calendar.calendarId == this.data.calendarId)
+      .map((calendar) => calendar.color)[0];
+    if (this.data.assigneeList.length > 0) {
+      let temp = [];
+      this.data.assigneeList.forEach((assignee) => {
+        temp.push({ profileId: assignee });
+      });
+      this.data.assigneeList = temp;
+    }
+
+    console.log('data:' + JSON.stringify(this.data));
 
     this.eventService.addEvent(this.data).subscribe(
       (response) => {
@@ -108,7 +119,9 @@ export class CreateEventComponent implements OnInit {
   editEvent(): void {
     //this.data.color = { primary: this.color, secondary: this.color };
     // this.data.color = this.color;
-    this.data.color = this.calendarList.filter(calendar => calendar.calendarId == this.data.calendarId).map(calendar => calendar.color)[0];
+    this.data.color = this.calendarList
+      .filter((calendar) => calendar.calendarId == this.data.calendarId)
+      .map((calendar) => calendar.color)[0];
     console.log(JSON.stringify(this.data));
     this.eventService.updateEvent(this.data).subscribe(
       (response) => {
@@ -166,5 +179,4 @@ export class CreateEventComponent implements OnInit {
         }
       );
   }
-
 }
