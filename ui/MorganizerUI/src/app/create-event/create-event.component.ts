@@ -1,4 +1,12 @@
-import { Component, Inject, OnInit, Input, Output, Injector, Directive } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  Input,
+  Output,
+  Injector,
+  Directive,
+} from '@angular/core';
 import {
   MatDialog,
   MatDialogRef,
@@ -6,12 +14,16 @@ import {
 } from '@angular/material/dialog';
 import { EventEmitter } from '@angular/core';
 import { EventService } from '../services/event.service';
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatDateFormats, NGX_MAT_DATE_FORMATS} from '@angular-material-components/datetime-picker';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatTimepickerModule,
+  NgxMatDateFormats,
+  NGX_MAT_DATE_FORMATS,
+} from '@angular-material-components/datetime-picker';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { ProfileService } from '../services/profile.service';
 import { StoreService } from '../services/store.service';
 import { MyCalendarService } from '../services/mycalendar.service';
-
 
 @Component({
   selector: 'app-create-event',
@@ -30,7 +42,6 @@ export class CreateEventComponent implements OnInit {
   public enableMeridian = true;
   public defaultTime = [new Date().getHours, 0];
   allDayFlag: boolean = false;
-
 
   constructor(
     private dialogRef: MatDialogRef<CreateEventComponent>,
@@ -76,16 +87,19 @@ export class CreateEventComponent implements OnInit {
   ];
 
   createEvent(): void {
-    // this.data.color = this.color;
-    if(this.data.allDayEvent == true){
+    if (this.data.allDayEvent == true) {
       this.data.endTime = this.data.startTime;
     }
-    console.log(JSON.stringify(this.data));
-    console.log(this.data.reminderList);
     this.data.color = this.calendarList
       .filter((calendar) => calendar.calendarId == this.data.calendarId)
       .map((calendar) => calendar.color)[0];
-    console.log(this.data.color);
+    if (this.data.assigneeList.length > 0) {
+      let temp = [];
+      this.data.assigneeList.forEach((assignee) => {
+        temp.push({ profileId: assignee });
+      });
+      this.data.assigneeList = temp;
+    }
 
     this.eventService.addEvent(this.data).subscribe(
       (response) => {
@@ -105,7 +119,7 @@ export class CreateEventComponent implements OnInit {
   editEvent(): void {
     //this.data.color = { primary: this.color, secondary: this.color };
     // this.data.color = this.color;
-    if(this.data.allDayEvent == true){
+    if (this.data.allDayEvent == true) {
       this.data.endTime = this.data.startTime;
     }
     this.data.color = this.calendarList
@@ -146,7 +160,7 @@ export class CreateEventComponent implements OnInit {
           //TODO:Handle API error
         }
       );
-    }
+  }
 
   fetchAssigneeList() {
     this.profileService
@@ -164,9 +178,7 @@ export class CreateEventComponent implements OnInit {
         }
       );
   }
-
 }
-
 
 export const DATETIME_WITHOUT_SECONDS_FORMAT = 'MM-DD-YYYY, hh:mm A';
 export const CUSTOM_DATE_TIME_FORMAT: NgxMatDateFormats = {
@@ -182,7 +194,7 @@ export const CUSTOM_DATE_TIME_FORMAT: NgxMatDateFormats = {
 };
 
 export const DATE_WITHOUT_TIME_FORMAT = 'MM-DD-YYYY';
-export const CUSTOM_DATE_ONLY_FORMAT:NgxMatDateFormats = {
+export const CUSTOM_DATE_ONLY_FORMAT: NgxMatDateFormats = {
   parse: {
     dateInput: DATE_WITHOUT_TIME_FORMAT,
   },
@@ -197,18 +209,15 @@ export const CUSTOM_DATE_ONLY_FORMAT:NgxMatDateFormats = {
 @Directive({
   selector: '[dateFormat1]',
   providers: [
-    {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_ONLY_FORMAT},
+    { provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_ONLY_FORMAT },
   ],
 })
-export class CustomDateFormat1 {
-}
+export class CustomDateFormat1 {}
 
 @Directive({
   selector: '[dateFormat2]',
   providers: [
-    {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_TIME_FORMAT},
+    { provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_TIME_FORMAT },
   ],
 })
-export class CustomDateFormat2 {
-}
-
+export class CustomDateFormat2 {}
