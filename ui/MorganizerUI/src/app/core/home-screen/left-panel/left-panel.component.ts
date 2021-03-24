@@ -69,6 +69,8 @@ export class LeftPanelComponent implements OnInit {
   ngOnInit(): void {
     this.fetchProfiles();
     this.fetchCalendars();
+    this.sendSelectedCalendars();
+    this.sendSelectedProfiles();
   }
 
   addNewCalendar() {

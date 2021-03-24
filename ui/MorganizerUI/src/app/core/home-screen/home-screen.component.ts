@@ -153,6 +153,7 @@ export class HomeScreenComponent implements OnInit {
               });
             });
           }
+          this.updateEventsToDisplay();
         },
         (error) => {
           this.loading = false;
@@ -320,18 +321,21 @@ export class HomeScreenComponent implements OnInit {
   updateEventsToDisplay() {
     console.log("Inside updateEventsToDisplay");
 
-    function eventFilter(event, index, array) { 
-      let flag = false;
-      if (this.selectedCalendars.includes(event.meta.eventModel.calendarId)){
-        event.meta.eventModel.assigneeList.forEach(element => {
-          if (this.selectedProfiles.includes(element)){
-            flag =  true;
-          }            
-        });
-      }      
-      return flag;
-    } 
-    this.eventsToDisplay = this.events.filter(eventFilter);    
+    function eventFilter(selectedCalendars, selectedProfiles){
+      return function(event, index, array) { 
+        let flag = false;
+        if (selectedCalendars.includes(event.meta.eventModel.calendarId)){
+          event.meta.eventModel.assigneeList.forEach(element => {
+            if (selectedProfiles.includes(element)){
+              flag =  true;
+            }            
+          });
+        }      
+        return flag;
+      } 
+    }
+    this.eventsToDisplay = this.events.filter(eventFilter(this.selectedCalendars, this.selectedProfiles));  
+    console.log(this.eventsToDisplay)  
   }
 }
 
