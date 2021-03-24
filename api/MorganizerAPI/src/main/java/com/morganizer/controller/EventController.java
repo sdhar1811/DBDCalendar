@@ -50,12 +50,12 @@ public class EventController {
 
     @PostMapping("/add")
     public EventRequest addEvent(@RequestBody EventRequest eventRequest) {
-    	return eventService.addEvent(eventRequest);
+    	return eventService.saveEvent(eventRequest);
     }
     
     @PostMapping("/update")
     public EventRequest updateEvent(@RequestBody EventRequest eventRequest) {
-    	return eventService.updateEvent(eventRequest);
+    	return eventService.saveEvent(eventRequest);
     }
     
 }

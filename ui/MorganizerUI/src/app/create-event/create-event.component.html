@@ -49,8 +49,8 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Choose Calendar</mat-label>
-      <mat-select [(ngModel)]="data.color" required>
-        <mat-option *ngFor="let calendar of calendarList" [value]="calendar.color">{{
+      <mat-select [(ngModel)]="data.calendarId" required>
+        <mat-option *ngFor="let calendar of calendarList" [value]="calendar.calendarId">{{
           calendar.name
         }}</mat-option>
       </mat-select>
@@ -124,7 +124,7 @@
     <mat-form-field appearance="outline" style="width: 100%;">
       <mat-label>Assignee</mat-label>
       <mat-select multiple [(ngModel)]="data.assigneeList">
-        <mat-option *ngFor="let person of assigneeList" [value]="person.id">{{
+        <mat-option *ngFor="let person of assigneeList" [value]="person.profileId">{{
           person.name
         }}</mat-option>
       </mat-select>

@@ -88,6 +88,7 @@ export class CreateEventComponent implements OnInit {
     // this.data.color = this.color;
     console.log(JSON.stringify(this.data));
     console.log(this.data.reminderList);
+    this.data.color = this.calendarList.filter(calendar => calendar.calendarId == this.data.calendarId).map(calendar => calendar.color)[0];
     console.log(this.data.color);
 
     this.eventService.addEvent(this.data).subscribe(
@@ -107,6 +108,7 @@ export class CreateEventComponent implements OnInit {
   editEvent(): void {
     //this.data.color = { primary: this.color, secondary: this.color };
     // this.data.color = this.color;
+    this.data.color = this.calendarList.filter(calendar => calendar.calendarId == this.data.calendarId).map(calendar => calendar.color)[0];
     console.log(JSON.stringify(this.data));
     this.eventService.updateEvent(this.data).subscribe(
       (response) => {

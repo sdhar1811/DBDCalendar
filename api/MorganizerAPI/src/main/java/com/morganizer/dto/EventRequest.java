@@ -18,6 +18,7 @@ public class EventRequest {
 	private String lastUpdateOn;
 	private String color;
 	private List<Long> reminderList;
+	private long calendarId;
 
 	
 	public EventRequest() {
@@ -27,11 +28,9 @@ public class EventRequest {
 		this.userId = userId;
 		this.eventId = eventId;
 	}
-
-	
 	public EventRequest(long userId, long eventId, String title, String category, String startTime, String endTime,
 			String location, String description, String notificationType, long recurringModeId, List<Long> assigneeList,
-			String lastUpdateOn, String color, List<Long> reminderList) {
+			String lastUpdateOn, String color, List<Long> reminderList, long calendarId) {
 		super();
 		this.userId = userId;
 		this.eventId = eventId;
@@ -47,6 +46,7 @@ public class EventRequest {
 		this.lastUpdateOn = lastUpdateOn;
 		this.color = color;
 		this.reminderList = reminderList;
+		this.calendarId = calendarId;
 	}
 	
 	public long getRecurringModeId() {
@@ -160,6 +160,11 @@ public class EventRequest {
 		this.color = color;
 	}
 	
+	public long getCalendarId() {
+		return calendarId;
+	}
+	public void setCalendarId(long calendarId) {
+		this.calendarId = calendarId;
+	}
 	
-
 }
