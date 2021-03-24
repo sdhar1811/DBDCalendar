@@ -3,4 +3,5 @@ export class MyCalendarModel {
   name: string;
   color: string;
   userId: number;
+  selected: boolean;
 }

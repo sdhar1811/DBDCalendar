@@ -47,6 +47,10 @@ public class EventDetailsEntity {
 	@JoinColumn(name = "reminder", referencedColumnName = "reminder_id")
 	private List<EventReminderEntity> reminderList = new ArrayList<>();
 	
+	@ManyToOne
+	@JoinColumn(name = "calendar_id")
+	private CalendarEntity calendar;
+	
 	public EventDetailsEntity() {
 		
 	}
@@ -54,7 +58,7 @@ public class EventDetailsEntity {
 
 	public EventDetailsEntity(UserDetailsEntity user, String eventTitle, String eventDescription, Timestamp startTime,
 			Timestamp endTime, RecurringModeEntity recurringMode, String location, List<ProfileEntity> assigneeList,
-			Timestamp lastUpdatedOn, String color, List<EventReminderEntity> reminderList) {
+			Timestamp lastUpdatedOn, String color, List<EventReminderEntity> reminderList, CalendarEntity calendar) {
 		super();
 		this.user = user;
 		this.eventTitle = eventTitle;
@@ -67,6 +71,7 @@ public class EventDetailsEntity {
 		this.lastUpdatedOn = lastUpdatedOn;
 		this.color = color;
 		this.reminderList = reminderList;
+		this.calendar = calendar;
 	}
 
 	public long getId() {
@@ -157,7 +162,6 @@ public class EventDetailsEntity {
 		return assigneeList;
 	}
 
-
 	public void setAssigneeList(List<ProfileEntity> assigneeList) {
 		this.assigneeList = assigneeList;
 	}
@@ -169,5 +173,13 @@ public class EventDetailsEntity {
 	public void setReminderList(List<EventReminderEntity> reminderList) {
 		this.reminderList = reminderList;
 	}
+
+	public CalendarEntity getCalendar() {
+		return calendar;
+	}
+
+	public void setCalendar(CalendarEntity calendar) {
+		this.calendar = calendar;
+	}	
 	
 }

@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
-    <app-left-panel></app-left-panel>
+    <app-left-panel (emitSelectedProfiles)="receiveSelectedProfiles($event)"
+      (emitSelectedCalendars)="receiveSelectedCalendars($event)"></app-left-panel>
   </div>
   <div
     [ngClass]="
@@ -136,7 +137,7 @@
         <mwl-calendar-month-view
           *ngSwitchCase="CalendarView.Month"
           [viewDate]="viewDate"
-          [events]="events"
+          [events]="eventsToDisplay"
           [refresh]="refresh"
           [cellTemplate]="customCellTemplate"
           [activeDayIsOpen]="activeDayIsOpen"
@@ -148,7 +149,7 @@
         <mwl-calendar-week-view
           *ngSwitchCase="CalendarView.Week"
           [viewDate]="viewDate"
-          [events]="events"
+          [events]="eventsToDisplay"
           [refresh]="refresh"
           (eventClicked)="handleEvent('Clicked', $event.event)"
           (eventTimesChanged)="eventTimesChanged($event)"
@@ -157,7 +158,7 @@
         <mwl-calendar-day-view
           *ngSwitchCase="CalendarView.Day"
           [viewDate]="viewDate"
-          [events]="events"
+          [events]="eventsToDisplay"
           [refresh]="refresh"
           (eventClicked)="handleEvent('Clicked', $event.event)"
           (eventTimesChanged)="eventTimesChanged($event)"

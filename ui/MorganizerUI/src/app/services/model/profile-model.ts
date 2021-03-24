@@ -7,5 +7,6 @@ export class ProfileModel {
     gender: string;
     birthDate: string;
     color: string;
+    selected: boolean;
   }
   

@@ -9,7 +9,8 @@
           <td>
             <ui-switch
               size="small"
-              [(ngModel)]="profile.value"
+              [(ngModel)]="profile.selected"
+              (ngModelChange) = "sendSelectedProfiles()"
               switchColor="{{ profile.color }}"
             ></ui-switch>
           </td>
@@ -29,7 +30,7 @@
       <table style="width: 100%;">
         <tr *ngFor="let calendar of mycalendars">
           <td style="width: 15%;">
-            <ui-switch size="small" [(ngModel)]="calendar.value" switchColor="{{ calendar.color }}">
+            <ui-switch size="small" [(ngModel)]="calendar.selected" (ngModelChange) = "sendSelectedCalendars()" switchColor="{{ calendar.color }}">
             </ui-switch>
           </td>
           <td style="width: 55%;">

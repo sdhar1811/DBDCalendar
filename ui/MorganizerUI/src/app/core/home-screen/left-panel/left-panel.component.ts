@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { StoreService } from 'src/app/services/store.service';
 import { ProfileModel } from 'src/app/services/model/profile-model';
@@ -17,11 +17,14 @@ export interface MyCalendars {
   styleUrls: ['./left-panel.component.scss'],
 })
 export class LeftPanelComponent implements OnInit {
+
+  @Output() emitSelectedProfiles = new EventEmitter();
+  @Output() emitSelectedCalendars = new EventEmitter();
+
   profiles: ProfileModel[] = [];
   mycalendars: MyCalendarModel[] = [];
   calendarTitle: string;
-  //calendarColor: string = '#EC407A';
-  calendarColor: string;
+
   constructor(
     private profileService: ProfileService,
     private storeService: StoreService,
@@ -66,6 +69,8 @@ export class LeftPanelComponent implements OnInit {
   ngOnInit(): void {
     this.fetchProfiles();
     this.fetchCalendars();
+    this.sendSelectedCalendars();
+    this.sendSelectedProfiles();
   }
 
   addNewCalendar() {
@@ -104,5 +109,19 @@ export class LeftPanelComponent implements OnInit {
         // window.alert('#TODO: Something went wrong.');
       }
     );
+  }
+
+  sendSelectedProfiles(){
+    let selectedProfiles = [];
+    selectedProfiles = this.profiles.filter((profile) => profile.selected).map((profile) => profile.profileId);
+    this.emitSelectedProfiles.emit(selectedProfiles);
+  }
+
+  sendSelectedCalendars(){
+    let selectedCalendars = [];
+    console.log("Inside ");
+    console.log(this.mycalendars);
+    selectedCalendars = this.mycalendars.filter((calendar) => calendar.selected).map((calendar) => calendar.calendarId);
+    this.emitSelectedCalendars.emit(selectedCalendars);
   }
 }
