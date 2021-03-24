@@ -301,15 +301,15 @@ export class HomeScreenComponent implements OnInit {
     this.showRightPanel = value;
   }
 
-  updateProfileFilter(filteredProfile){
+  updateProfileFilter(selectedProfile){
     console.log("Inside Home");
-    console.log(filteredProfile);
+    console.log(selectedProfile);
     console.log(this.events);
     function isAssignee(event, index, array) { 
       let flag = false;
       event.meta.eventModel.assigneeList.forEach(element => {
-        console.log(filteredProfile.includes(element))
-        if (filteredProfile.includes(element)){
+        console.log(selectedProfile.includes(element))
+        if (selectedProfile.includes(element)){
           console.log("here");
           flag =  true;
         }
