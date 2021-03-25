@@ -1,5 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ProfileModel } from '../services/model/profile-model';
+import { ProfileService } from '../services/profile.service';
+import { LeftPanelComponent } from '../core/home-screen/left-panel/left-panel.component';
+import { StoreService } from '../services/store.service';
 
 @Component({
   selector: 'app-add-profile',
@@ -21,6 +25,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 export class AddProfileComponent implements OnInit {
   state = { hex: '#f44336' };
   color: any = '#673ab7';
+  profileModel: ProfileModel;
   colorPalette: Array<string> = [
     '#f44336',
     '#e91e63',
@@ -43,7 +48,15 @@ export class AddProfileComponent implements OnInit {
   ];
   @Output() closeTaskPanel = new EventEmitter();
 
-  constructor() {}
+  constructor(
+    private profileService: ProfileService,
+    private storeService: StoreService,
+    ) 
+  {
+    this.profileModel = new ProfileModel();
+    this.profileModel.color = this.color;
+
+  }
 
   ngOnInit(): void {}
 
@@ -52,5 +65,22 @@ export class AddProfileComponent implements OnInit {
   }
   close() {
     this.closeTaskPanel.emit(null);
+  }
+
+  addProfile(){
+    this.profileModel.userId = this.storeService.loggedInUser?.id;
+    this.profileService.addProfile(this.profileModel).subscribe((response:ProfileModel)=>{
+      //set all fields of profileModel to '' or undefined or null
+      this.profileService.addProfileEvent.next(response);
+      this.profileModel.name = undefined;
+      this.profileModel.birthDate = undefined;
+      this.profileModel.color = this.color;
+      this.profileModel.email = undefined;
+      this.profileModel.gender = undefined;
+      this.profileModel.userId = undefined;
+      this.profileModel.profileId = undefined;
+      this.profileModel.selected = undefined;
+      this.profileModel.phoneNumber = undefined;
+    })
   }
 }
