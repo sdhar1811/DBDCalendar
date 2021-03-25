@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Input, Output } from '@angular/core';
+import { Component, Inject, OnInit, Input, Output, Injector, Directive } from '@angular/core';
 import {
   MatDialog,
   MatDialogRef,
@@ -13,26 +13,14 @@ import { StoreService } from '../services/store.service';
 import { MyCalendarService } from '../services/mycalendar.service';
 
 
-export const DATETIME_WITHOUT_SECONDS_FORMAT = 'MM-DD-YYYY, hh:mm A';
-export const CUSTOM_DATE_TIME_FORMAT: NgxMatDateFormats = {
-  parse: {
-    dateInput: DATETIME_WITHOUT_SECONDS_FORMAT,
-  },
-  display: {
-    dateInput: DATETIME_WITHOUT_SECONDS_FORMAT,
-    monthYearLabel: 'MM yyyy',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
-
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.scss'],
-  providers: [
-    { provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_TIME_FORMAT },
-  ],
+  // providers: [
+  //   { provide: NGX_MAT_DATE_FORMATS, multi:true, useValue: CUSTOM_DATE_ONLY_FORMAT },
+  //   { provide: NGX_MAT_DATE_FORMATS, multi:true, useValue: CUSTOM_DATE_TIME_FORMAT },
+  // ],
 })
 export class CreateEventComponent implements OnInit {
   color: any;
@@ -41,6 +29,8 @@ export class CreateEventComponent implements OnInit {
   assigneeList = [];
   public enableMeridian = true;
   public defaultTime = [new Date().getHours, 0];
+  allDayFlag: boolean = false;
+
 
   constructor(
     private dialogRef: MatDialogRef<CreateEventComponent>,
@@ -87,6 +77,9 @@ export class CreateEventComponent implements OnInit {
 
   createEvent(): void {
     // this.data.color = this.color;
+    if(this.data.allDayEvent == true){
+      this.data.endTime = this.data.startTime;
+    }
     console.log(JSON.stringify(this.data));
     console.log(this.data.reminderList);
     this.data.color = this.calendarList
@@ -98,19 +91,23 @@ export class CreateEventComponent implements OnInit {
       (response) => {
         if (response) {
           console.log('Event Created');
+          this.close();
         }
       },
       (error) => {
         console.log('Something went wrong');
+        this.close();
         // window.alert('#TODO: Something went wrong.');
       }
     );
-    this.close();
   }
 
   editEvent(): void {
     //this.data.color = { primary: this.color, secondary: this.color };
     // this.data.color = this.color;
+    if(this.data.allDayEvent == true){
+      this.data.endTime = this.data.startTime;
+    }
     this.data.color = this.calendarList
       .filter((calendar) => calendar.calendarId == this.data.calendarId)
       .map((calendar) => calendar.color)[0];
@@ -149,11 +146,7 @@ export class CreateEventComponent implements OnInit {
           //TODO:Handle API error
         }
       );
-    // this.this.calendarList.push({ name: 'Work', color: '#00ACC1', value: '' });
-    // this.calendarList.push({ name: 'Personal', color: '#AB47BC', value: '' });
-    // this.calendarList.push({ name: 'School', color: '#455A64', value: '' });
-    // this.calendarList.push({ name: 'Medical', color: '#C0CA33', value: '' });
-  }
+    }
 
   fetchAssigneeList() {
     this.profileService
@@ -171,4 +164,51 @@ export class CreateEventComponent implements OnInit {
         }
       );
   }
+
 }
+
+
+export const DATETIME_WITHOUT_SECONDS_FORMAT = 'MM-DD-YYYY, hh:mm A';
+export const CUSTOM_DATE_TIME_FORMAT: NgxMatDateFormats = {
+  parse: {
+    dateInput: DATETIME_WITHOUT_SECONDS_FORMAT,
+  },
+  display: {
+    dateInput: DATETIME_WITHOUT_SECONDS_FORMAT,
+    monthYearLabel: 'MM yyyy',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
+export const DATE_WITHOUT_TIME_FORMAT = 'MM-DD-YYYY';
+export const CUSTOM_DATE_ONLY_FORMAT:NgxMatDateFormats = {
+  parse: {
+    dateInput: DATE_WITHOUT_TIME_FORMAT,
+  },
+  display: {
+    dateInput: DATE_WITHOUT_TIME_FORMAT,
+    monthYearLabel: 'MM yyyy',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
+@Directive({
+  selector: '[dateFormat1]',
+  providers: [
+    {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_ONLY_FORMAT},
+  ],
+})
+export class CustomDateFormat1 {
+}
+
+@Directive({
+  selector: '[dateFormat2]',
+  providers: [
+    {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_TIME_FORMAT},
+  ],
+})
+export class CustomDateFormat2 {
+}
+

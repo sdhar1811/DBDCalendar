@@ -50,7 +50,11 @@ import {
 } from '@angular-material-components/color-picker';
 import { ColorCircleModule } from 'ngx-color/circle';
 import { NgxColorsModule } from 'ngx-colors';
-import { CreateEventComponent } from './create-event/create-event.component';
+import {
+  CreateEventComponent,
+  CustomDateFormat1,
+  CustomDateFormat2,
+} from './create-event/create-event.component';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import {
   NgxMatDatetimePickerModule,
@@ -83,6 +87,8 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
     EditTaskComponent,
     AddProfileComponent,
     CreateEventComponent,
+    CustomDateFormat1,
+    CustomDateFormat2,
   ],
   imports: [
     BrowserModule,
