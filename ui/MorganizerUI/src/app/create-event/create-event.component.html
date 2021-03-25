@@ -58,7 +58,7 @@
 
     <div class="row justify-content-around">
       <div class="col-md-2" style="line-height: 60px;">
-        <mat-checkbox>All Day</mat-checkbox>
+        <mat-checkbox [checked]="allDayFlag">All Day</mat-checkbox>
       </div>
       <div class = "col-md-5">
         <mat-form-field>
@@ -67,9 +67,10 @@
             matInput
             [ngxMatDatetimePicker]="picker"
             placeholder="Start date and time"
+            (click) = "picker.open()"
           />
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <ngx-mat-datetime-picker #picker [enableMeridian]="enableMeridian">
+          <ngx-mat-datetime-picker #picker [enableMeridian]="enableMeridian" [stepMinute]="15" [defaultTime]="defaultTime">
             <!-- Custom icon or text of Apply icon -->
             <ng-template>
               <!-- <mat-icon>star</mat-icon> -->
@@ -86,9 +87,10 @@
             matInput
             [ngxMatDatetimePicker]="picker2"
             placeholder="End date and time"
+            (click)="picker2.open()"
           />
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <ngx-mat-datetime-picker #picker2 [enableMeridian]="enableMeridian">
+          <ngx-mat-datetime-picker #picker2 [enableMeridian]="enableMeridian" [stepMinute]="15" [defaultTime]="defaultTime">
             <!-- Custom icon or text of Apply icon -->
             <ng-template>
               <!-- <mat-icon>star</mat-icon> -->
