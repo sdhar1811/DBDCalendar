@@ -4,6 +4,7 @@ import { StoreService } from 'src/app/services/store.service';
 import { ProfileModel } from 'src/app/services/model/profile-model';
 import { MyCalendarModel } from 'src/app/services/model/mycalendar-model';
 import { MyCalendarService } from 'src/app/services/mycalendar.service';
+import { Subject } from 'rxjs';
 
 export interface MyCalendars {
   name: string;
@@ -28,8 +29,13 @@ export class LeftPanelComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private storeService: StoreService,
-    private calendarService: MyCalendarService
-  ) {}
+    private calendarService: MyCalendarService,
+  ) {
+    this.profileService.addProfileEvent.subscribe((profile)=>{
+      this.profiles.push(profile);
+      console.log('profile://-->'+profile)
+    })
+  }
 
   fetchProfiles() {
     this.profileService
