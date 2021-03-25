@@ -11,4 +11,5 @@ export class EventModel {
   color: any;
   calendarId: number;
   reminderList: number[];
+  allDayEvent: boolean;
 }

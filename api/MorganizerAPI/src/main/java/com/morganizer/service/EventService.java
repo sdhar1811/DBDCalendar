@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.morganizer.dto.EventRequest;
 import com.morganizer.entity.CalendarEntity;
-//import com.morganizer.entity.EventCategoriesEntity;
 import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.EventReminderEntity;
 import com.morganizer.entity.NotificationTypesEntity;
@@ -17,15 +16,12 @@ import com.morganizer.entity.ProfileEntity;
 import com.morganizer.entity.RecurringModeEntity;
 import com.morganizer.entity.UserDetailsEntity;
 import com.morganizer.repository.CalendarRepository;
-//import com.morganizer.repository.EventCategoriesRepository;
 import com.morganizer.repository.EventDetailsRepository;
 import com.morganizer.repository.EventReminderRepository;
 import com.morganizer.repository.NotificationTypeRepository;
 import com.morganizer.repository.ProfileRepository;
 import com.morganizer.repository.RecurringModeRepository;
 import com.morganizer.repository.UserDetailsRepository;
-//import com.morganizer.entity.EventCategoriesEntity;
-//import com.morganizer.repository.EventCategoriesRepository;
 
 @Service
 public class EventService {
@@ -50,8 +46,6 @@ public class EventService {
 	@Autowired
 	public CalendarRepository calendarRepository;
 
-//	@Autowired
-//    public EventCategoriesRepository eventCategoriesRepository;
 
 	public void deleteEvent(Long eventId) {
 
@@ -88,7 +82,7 @@ public class EventService {
 			response.add(new EventRequest(event.getUser().getId(), event.getId(), event.getEventTitle(), null,
 					event.getStartTime().toString(), event.getEndTime().toString(), event.getLocation(),
 					event.getEventDescription(), null, event.getRecurringMode().getId(),
-					idList, event.getLastUpdatedOn().toString(), event.getColor(), reminderLst, event.getCalendar().getCalendarId()));
+					idList, event.getLastUpdatedOn().toString(), event.getColor(), reminderLst, event.getCalendar().getCalendarId(),event.isAllDayEvent()));
 		}
 		
 		return response;
@@ -114,7 +108,7 @@ public class EventService {
 		EventDetailsEntity event = new EventDetailsEntity(user, eventRequest.getTitle(), eventRequest.getDescription(),
 				startTime, endTime,
 				recurringMode, eventRequest.getLocation(),
-				assigneeList,  lastUpdatedOn, eventRequest.getColor(),reminderList, calendar);
+				assigneeList,  lastUpdatedOn, eventRequest.getColor(),reminderList, calendar, eventRequest.isAllDayEvent());
 
 		if (eventRequest.getEventId() != 0) {
 			event.setId(eventRequest.getEventId());
@@ -131,7 +125,7 @@ public class EventService {
 		return new EventRequest(savedEntity.getUser().getId(), savedEntity.getId(), savedEntity.getEventTitle(), null,
 				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
 				savedEntity.getEventDescription(), null, savedEntity.getRecurringMode().getId(),
-				idList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor(), reminders, event.getCalendar().getCalendarId());
+				idList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor(), reminders, event.getCalendar().getCalendarId(), event.isAllDayEvent());
 	}
 
 }

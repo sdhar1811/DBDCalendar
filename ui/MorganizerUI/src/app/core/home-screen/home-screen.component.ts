@@ -5,6 +5,7 @@ import {
   CalendarEvent,
   CalendarEventAction,
   CalendarEventTimesChangedEvent,
+  CalendarEventTitleFormatter,
   CalendarView,
 } from 'angular-calendar';
 import { Observable, Subject } from 'rxjs';
@@ -13,26 +14,33 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateEventComponent } from 'src/app/create-event/create-event.component';
 import { EventModel } from 'src/app/services/model/event-model';
 import { StoreService } from 'src/app/services/store.service';
+import { CustomEventTitleFormatter } from './custom-event-title-formatter.provider';
 
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
-  },
-};
+// const colors: any = {
+//   red: {
+//     primary: '#ad2121',
+//     secondary: '#FAE3E3',
+//   },
+//   blue: {
+//     primary: '#1e90ff',
+//     secondary: '#D1E8FF',
+//   },
+//   yellow: {
+//     primary: '#e3bc08',
+//     secondary: '#FDF1BA',
+//   },
+// };
 
 @Component({
   selector: 'app-home-screen',
   templateUrl: './home-screen.component.html',
   styleUrls: ['./home-screen.component.scss'],
+  providers: [
+    {
+      provide: CalendarEventTitleFormatter,
+      useClass: CustomEventTitleFormatter,
+    },
+  ],
 })
 export class HomeScreenComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
@@ -135,6 +143,7 @@ export class HomeScreenComponent implements OnInit {
             response.forEach((eventModel) => {
               this.events.push({
                 title: eventModel.title,
+                allDay: eventModel.allDayEvent,
                 start: new Date(eventModel.startTime + ' UTC'),
                 end: new Date(eventModel.endTime + ' UTC'),
                 color: {
@@ -305,37 +314,38 @@ export class HomeScreenComponent implements OnInit {
     this.showRightPanel = value;
   }
 
-  receiveSelectedProfiles(data){
+  receiveSelectedProfiles(data) {
     console.log(data);
     this.selectedProfiles = data;
     this.updateEventsToDisplay();
-    
   }
 
-  receiveSelectedCalendars(data){
+  receiveSelectedCalendars(data) {
     console.log(data);
     this.selectedCalendars = data;
     this.updateEventsToDisplay();
   }
 
   updateEventsToDisplay() {
-    console.log("Inside updateEventsToDisplay");
+    console.log('Inside updateEventsToDisplay');
 
-    function eventFilter(selectedCalendars, selectedProfiles){
-      return function(event, index, array) { 
+    function eventFilter(selectedCalendars, selectedProfiles) {
+      return function (event, index, array) {
         let flag = false;
-        if (selectedCalendars.includes(event.meta.eventModel.calendarId)){
-          event.meta.eventModel.assigneeList.forEach(element => {
-            if (selectedProfiles.includes(element)){
-              flag =  true;
-            }            
+        if (selectedCalendars.includes(event.meta.eventModel.calendarId)) {
+          event.meta.eventModel.assigneeList.forEach((element) => {
+            if (selectedProfiles.includes(element)) {
+              flag = true;
+            }
           });
-        }      
+        }
         return flag;
-      } 
+      };
     }
-    this.eventsToDisplay = this.events.filter(eventFilter(this.selectedCalendars, this.selectedProfiles));  
-    console.log(this.eventsToDisplay)  
+    this.eventsToDisplay = this.events.filter(
+      eventFilter(this.selectedCalendars, this.selectedProfiles)
+    );
+    console.log(this.eventsToDisplay);
   }
 }
 
