@@ -121,7 +121,7 @@
                   ></span>
                 </div>
                 <span>
-                  <small style="font-weight: 500"
+                  <small style="font-weight: 500" *ngIf="!event.allDay"
                     >{{ event.start | date: "hh:mm aa" }} -
                   </small>
                 </span>

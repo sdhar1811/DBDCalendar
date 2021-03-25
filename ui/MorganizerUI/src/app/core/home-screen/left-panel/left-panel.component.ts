@@ -113,7 +113,9 @@ export class LeftPanelComponent implements OnInit {
 
   sendSelectedProfiles(){
     let selectedProfiles = [];
-    selectedProfiles = this.profiles.filter((profile) => profile.selected).map((profile) => profile.profileId);
+    selectedProfiles = this.profiles
+      .filter((profile) => profile.selected)
+      .map((profile) => profile.profileId);
     this.emitSelectedProfiles.emit(selectedProfiles);
   }
 
