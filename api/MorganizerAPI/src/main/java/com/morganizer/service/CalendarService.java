@@ -28,14 +28,14 @@ public class CalendarService {
 		List<CalendarResponse> result = new ArrayList<>();
 		for (CalendarEntity calendar : calendarList) {
 			result.add(new CalendarResponse(calendar.getCalendarId(), calendar.getName(), calendar.getColor(),
-					calendar.getUser().getId()));
+					calendar.getUser().getId(), calendar.isSelected()));
 		}
 		return result;
 	}
 
 	public List<CalendarResponse> saveCalendar(CalendarRequest calendarRequest) {
 		UserDetailsEntity user = userRepo.getOne(calendarRequest.getUserId());
-		CalendarEntity calendar = new CalendarEntity(calendarRequest.getName(), calendarRequest.getColor(), user);
+		CalendarEntity calendar = new CalendarEntity(calendarRequest.getName(), calendarRequest.getColor(), calendarRequest.isSelected(), user);
 
 		if (calendarRequest.getCalendarId() != 0) {
 			calendar.setCalendarId(calendarRequest.getCalendarId());

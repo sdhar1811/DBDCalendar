@@ -5,15 +5,17 @@ public class CalendarResponse {
     private String name;
     private String color;  
     private long userId;
+    private boolean selected;
     
-    public CalendarResponse(long calendarId, String name, String color, long userId) {
+    public CalendarResponse(long calendarId, String name, String color, long userId, boolean selected) {
 		super();
 		this.calendarId = calendarId;
 		this.name = name;
 		this.color = color;
 		this.userId = userId;
+		this.selected = selected;
 	}
-    
+
 	public long getCalendarId() {
 		return calendarId;
 	}
@@ -37,6 +39,12 @@ public class CalendarResponse {
 	}
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+	public boolean isSelected() {
+		return selected;
+	}
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
     
     

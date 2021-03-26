@@ -9,7 +9,7 @@ public class ProfileResponse {
 	private Long profileId;
 	private long userId;
 	private String color;
-	
+	private boolean selected;
 	
 	
 	
@@ -21,7 +21,7 @@ public class ProfileResponse {
 	
 	
 	public ProfileResponse(String name, String gender, String phoneNumber, String birthdate, String email,
-			Long profileId, long userId, String color) {
+			Long profileId, long userId, String color, boolean selected) {
 		super();
 		this.name = name;
 		this.gender = gender;
@@ -31,7 +31,10 @@ public class ProfileResponse {
 		this.profileId = profileId;
 		this.userId = userId;
 		this.color = color;
+		this.selected = selected;
 	}
+
+
 	public String getName() {
 		return name;
 	}
@@ -79,6 +82,12 @@ public class ProfileResponse {
 	}
 	public void setColor(String color) {
 		this.color = color;
+	}
+	public boolean isSelected() {
+		return selected;
+	}
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 	
 	

@@ -17,6 +17,7 @@ public class CalendarEntity {
 
     private String name;
     private String color;  
+    private boolean selected;
     
 
     @ManyToOne
@@ -28,15 +29,13 @@ public class CalendarEntity {
     	
     }
 
-	public CalendarEntity(String name, String color, UserDetailsEntity user) {
+	public CalendarEntity(String name, String color, boolean selected, UserDetailsEntity user) {
 		super();
 		this.name = name;
 		this.color = color;
+		this.selected = selected;
 		this.user = user;
 	}
-
-
-
 
 	public long getCalendarId() {
 		return calendarId;
@@ -75,6 +74,14 @@ public class CalendarEntity {
 
 	public void setUser(UserDetailsEntity user) {
 		this.user = user;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
      
     
