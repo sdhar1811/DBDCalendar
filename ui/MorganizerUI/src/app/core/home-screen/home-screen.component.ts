@@ -1,6 +1,11 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { isSameDay, isSameMonth } from 'date-fns';
+import {
+  differenceInCalendarDays,
+  getDate,
+  isSameDay,
+  isSameMonth,
+} from 'date-fns';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -15,6 +20,7 @@ import { CreateEventComponent } from 'src/app/create-event/create-event.componen
 import { EventModel } from 'src/app/services/model/event-model';
 import { StoreService } from 'src/app/services/store.service';
 import { CustomEventTitleFormatter } from './custom-event-title-formatter.provider';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 // const colors: any = {
 //   red: {
@@ -52,35 +58,11 @@ export class HomeScreenComponent implements OnInit {
 
   selectedProfiles = [];
   selectedCalendars = [];
-  //TO-D0: replace with API call profile-details
-  assigneeList = [
-    {
-      id: '1',
-      name: 'Sharad',
-      color: {
-        primary: 'red',
-      },
-    },
-    {
-      id: '1',
-      name: 'Sharad',
-      color: {
-        primary: 'green',
-      },
-    },
-    {
-      id: '1',
-      name: 'Sharad',
-      color: {
-        primary: 'black',
-      },
-    },
-  ];
 
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
-
+  isLongEvent = false;
   modalData: {
     action: string;
     event: CalendarEvent<{ eventModel: EventModel }>;
@@ -141,7 +123,7 @@ export class HomeScreenComponent implements OnInit {
           if (response) {
             this.events = [];
             response.forEach((eventModel) => {
-              this.events.push({
+              let temp = {
                 title: eventModel.title,
                 allDay: eventModel.allDayEvent,
                 start: new Date(eventModel.startTime + ' UTC'),
@@ -159,7 +141,9 @@ export class HomeScreenComponent implements OnInit {
                 meta: {
                   eventModel,
                 },
-              });
+              };
+              temp['assigneeList'] = eventModel.assigneeList;
+              this.events.push(temp);
             });
           }
           this.updateEventsToDisplay();
@@ -220,6 +204,9 @@ export class HomeScreenComponent implements OnInit {
     // rescheduleEvent.startTime = newStart;
     // rescheduleEvent.endTime = newEnd;
 
+    if (event['displayed']) {
+      event['displayed'] = false;
+    }
     let eventModel: any = {};
     // check if an existing or external event
     if (event.meta?.eventModel) {
@@ -251,7 +238,7 @@ export class HomeScreenComponent implements OnInit {
     event: CalendarEvent<{ eventModel: EventModel }>
   ): void {
     this.modalData = { event, action };
-    console.log(action);
+
     if (action === 'Edited' || action === 'Clicked') {
       let editEvent = new EventModel();
       editEvent = event.meta.eventModel;
@@ -264,7 +251,6 @@ export class HomeScreenComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((response) => {
-        console.log(JSON.stringify(response));
         this.fetchAllEvents();
       });
     } else if (action === 'Deleted') {
@@ -283,7 +269,6 @@ export class HomeScreenComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((response) => {
-      console.log(JSON.stringify(response));
       this.fetchAllEvents();
     });
   }
@@ -292,7 +277,6 @@ export class HomeScreenComponent implements OnInit {
     // this.asyncEvents$ = this.asyncEvents$.filter((event) => event !== eventToDelete);
     this.eventService.deleteEvent(eventToDelete).subscribe(
       () => {
-        console.log('Event Deleted');
         this.fetchAllEvents();
       },
       (error) => {
@@ -315,26 +299,22 @@ export class HomeScreenComponent implements OnInit {
   }
 
   receiveSelectedProfiles(data) {
-    console.log(data);
     this.selectedProfiles = data;
     this.updateEventsToDisplay();
   }
 
   receiveSelectedCalendars(data) {
-    console.log(data);
     this.selectedCalendars = data;
     this.updateEventsToDisplay();
   }
 
   updateEventsToDisplay() {
-    console.log('Inside updateEventsToDisplay');
-
     function eventFilter(selectedCalendars, selectedProfiles) {
       return function (event, index, array) {
         let flag = false;
         if (selectedCalendars.includes(event.meta.eventModel.calendarId)) {
           event.meta.eventModel.assigneeList.forEach((element) => {
-            if (selectedProfiles.includes(element)) {
+            if (selectedProfiles.includes(element.profileId)) {
               flag = true;
             }
           });
@@ -345,8 +325,20 @@ export class HomeScreenComponent implements OnInit {
     this.eventsToDisplay = this.events.filter(
       eventFilter(this.selectedCalendars, this.selectedProfiles)
     );
-    console.log(this.eventsToDisplay);
+  }
+  checkLongEvent(event) {
+    if (differenceInCalendarDays(event.end, event.start) > 0) {
+      this.isLongEvent = true;
+      return true;
+    }
+    this.isLongEvent = false;
+    return false;
+  }
+  checkIfStartDateCell(day, event) {
+    if (differenceInCalendarDays(day.date, event.start) == 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
-
-

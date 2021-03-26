@@ -14,7 +14,7 @@ public class EventRequest {
 	private String description;
 	private String notificationType;
 	private long recurringModeId;
-	private List<Long> assigneeList;
+	private List<ProfileResponse> assigneeList;
 	private String lastUpdateOn;
 	private String color;
 	private List<Long> reminderList;
@@ -30,8 +30,8 @@ public class EventRequest {
 	}
 	
 	public EventRequest(long userId, long eventId, String title, String category, String startTime, String endTime,
-			String location, String description, String notificationType, long recurringModeId, List<Long> assigneeList,
-			String lastUpdateOn, String color, List<Long> reminderList, long calendarId, boolean allDayEvent) {
+			String location, String description, String notificationType, long recurringModeId, List<ProfileResponse> assigneeList,
+			String lastUpdateOn, String color, List<Long> reminderList,long calendarId, boolean allDayEvent) {
 		super();
 		this.userId = userId;
 		this.eventId = eventId;
@@ -140,10 +140,10 @@ public class EventRequest {
 	}
 
 	
-	public List<Long> getAssigneeList() {
+	public List<ProfileResponse> getAssigneeList() {
 		return assigneeList;
 	}
-	public void setAssigneeList(List<Long> assigneeList) {
+	public void setAssigneeList(List<ProfileResponse> assigneeList) {
 		this.assigneeList = assigneeList;
 	}
 

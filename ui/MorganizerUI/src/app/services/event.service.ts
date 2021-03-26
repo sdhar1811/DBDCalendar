@@ -38,7 +38,6 @@ export class EventService {
   }
 
   deleteEvent(calendarEvent: number) {
-    console.log(calendarEvent);
     return this.http.delete(
       this.eventURL + this.appConfig.deleteEvent(calendarEvent)
     );

@@ -13,7 +13,7 @@ public class ProfileEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private long profileId;
+    private Long profileId;
 
     private String name;
     private String email;
@@ -37,9 +37,10 @@ public class ProfileEntity {
     }
     
     
-	public ProfileEntity( String name, String email, String phoneNumber, String gender, String birthdate,
+	public ProfileEntity( Long profileId, String name, String email, String phoneNumber, String gender, String birthdate,
 			String color, UserDetailsEntity user) {
 		super();		
+		this.profileId=profileId;
 		this.name = name;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
@@ -49,7 +50,7 @@ public class ProfileEntity {
 		this.user = user;
 	}
 
-	public long getProfileId() {
+	public Long getProfileId() {
 		return profileId;
 	}
 

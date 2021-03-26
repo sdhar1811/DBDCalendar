@@ -10,7 +10,7 @@ export interface MyCalendars {
   name: string;
   color: string;
   value: string;
-};
+}
 
 @Component({
   selector: 'app-left-panel',
@@ -18,7 +18,6 @@ export interface MyCalendars {
   styleUrls: ['./left-panel.component.scss'],
 })
 export class LeftPanelComponent implements OnInit {
-
   @Output() emitSelectedProfiles = new EventEmitter();
   @Output() emitSelectedCalendars = new EventEmitter();
 
@@ -44,7 +43,6 @@ export class LeftPanelComponent implements OnInit {
         (response) => {
           // this.loading = false;
           if (response) {
-            console.log(response);
             this.profiles = response;
           }
         },
@@ -61,7 +59,6 @@ export class LeftPanelComponent implements OnInit {
       .subscribe(
         (response) => {
           if (response) {
-            console.log(response);
             this.mycalendars = response;
           }
         },
@@ -92,7 +89,6 @@ export class LeftPanelComponent implements OnInit {
     this.calendarService.addCalendar(newcalendar).subscribe(
       (response) => {
         if (response) {
-          console.log('New Calendar Created');
           this.fetchCalendars();
         }
       },
@@ -101,13 +97,12 @@ export class LeftPanelComponent implements OnInit {
         // window.alert('#TODO: Something went wrong.');
       }
     );
-    this.calendarTitle  =  '';
+    this.calendarTitle = '';
   }
 
   deleteCalendar(calendarToDelete: number) {
     this.calendarService.deleteCalendarFromList(calendarToDelete).subscribe(
       () => {
-        console.log('Calendar Deleted');
         this.fetchCalendars();
       },
       (error) => {
@@ -117,7 +112,7 @@ export class LeftPanelComponent implements OnInit {
     );
   }
 
-  sendSelectedProfiles(){
+  sendSelectedProfiles() {
     let selectedProfiles = [];
     selectedProfiles = this.profiles
       .filter((profile) => profile.selected)
@@ -125,11 +120,12 @@ export class LeftPanelComponent implements OnInit {
     this.emitSelectedProfiles.emit(selectedProfiles);
   }
 
-  sendSelectedCalendars(){
+  sendSelectedCalendars() {
     let selectedCalendars = [];
-    console.log("Inside ");
-    console.log(this.mycalendars);
-    selectedCalendars = this.mycalendars.filter((calendar) => calendar.selected).map((calendar) => calendar.calendarId);
+
+    selectedCalendars = this.mycalendars
+      .filter((calendar) => calendar.selected)
+      .map((calendar) => calendar.calendarId);
     this.emitSelectedCalendars.emit(selectedCalendars);
   }
 }
