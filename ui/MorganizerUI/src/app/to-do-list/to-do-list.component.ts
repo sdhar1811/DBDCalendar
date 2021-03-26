@@ -185,7 +185,6 @@ export class ToDoListComponent implements OnInit {
     // });
   }
   closeEditMode(event) {
-    console.log(event);
     if (this.selectedTodoList.value.tasks[this.taskIndex]) {
       this.updateTask(this.selectedTodoList.value.tasks[this.taskIndex]);
     }
