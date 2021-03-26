@@ -28,12 +28,11 @@ export class LeftPanelComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private storeService: StoreService,
-    private calendarService: MyCalendarService,
+    private calendarService: MyCalendarService
   ) {
-    this.profileService.addProfileEvent.subscribe((profile)=>{
+    this.profileService.addProfileEvent.subscribe((profile) => {
       this.profiles.push(profile);
-      console.log('profile://-->'+profile)
-    })
+    });
   }
 
   fetchProfiles() {
@@ -44,7 +43,7 @@ export class LeftPanelComponent implements OnInit {
           // this.loading = false;
           if (response) {
             this.profiles = response;
-            this.profiles.sort((a, b)=>(a.name > b.name)?1 : -1);
+            this.profiles.sort((a, b) => (a.name > b.name ? 1 : -1));
           }
         },
         (error) => {
@@ -61,7 +60,7 @@ export class LeftPanelComponent implements OnInit {
         (response) => {
           if (response) {
             this.mycalendars = response;
-            this.mycalendars.sort((a, b)=>(a.name > b.name)?1 : -1);
+            this.mycalendars.sort((a, b) => (a.name > b.name ? 1 : -1));
           }
         },
         (error) => {
@@ -114,7 +113,7 @@ export class LeftPanelComponent implements OnInit {
     );
   }
 
-  updateProfile(profile){
+  updateProfile(profile) {
     this.profileService.addProfile(profile).subscribe(
       (response) => {
         console.log(response);
@@ -127,14 +126,14 @@ export class LeftPanelComponent implements OnInit {
   }
 
   sendSelectedProfiles() {
-    let selectedProfiles = [];    
+    let selectedProfiles = [];
     selectedProfiles = this.profiles
       .filter((profile) => profile.selected)
       .map((profile) => profile.profileId);
     this.emitSelectedProfiles.emit(selectedProfiles);
   }
 
-  updateCalendar(calendar){
+  updateCalendar(calendar) {
     this.calendarService.addCalendar(calendar).subscribe(
       (response) => {
         console.log(response);

@@ -93,13 +93,6 @@ export class CreateEventComponent implements OnInit {
     this.data.color = this.calendarList
       .filter((calendar) => calendar.calendarId == this.data.calendarId)
       .map((calendar) => calendar.color)[0];
-    if (this.data.assigneeList.length > 0) {
-      let temp = [];
-      this.data.assigneeList.forEach((assignee) => {
-        temp.push({ profileId: assignee });
-      });
-      this.data.assigneeList = temp;
-    }
 
     this.eventService.addEvent(this.data).subscribe(
       (response) => {
@@ -172,6 +165,9 @@ export class CreateEventComponent implements OnInit {
           //TODO:Handle API error
         }
       );
+  }
+  compareAssigneeObjects(obj1, obj2) {
+    return obj1 && obj2 ? obj1.profileId === obj2.profileId : obj1 === obj2;
   }
 }
 
