@@ -44,6 +44,7 @@ export class LeftPanelComponent implements OnInit {
           // this.loading = false;
           if (response) {
             this.profiles = response;
+            this.profiles.sort((a, b)=>(a.name > b.name)?1 : -1);
           }
         },
         (error) => {
@@ -60,6 +61,7 @@ export class LeftPanelComponent implements OnInit {
         (response) => {
           if (response) {
             this.mycalendars = response;
+            this.mycalendars.sort((a, b)=>(a.name > b.name)?1 : -1);
           }
         },
         (error) => {
@@ -112,17 +114,40 @@ export class LeftPanelComponent implements OnInit {
     );
   }
 
+  updateProfile(profile){
+    this.profileService.addProfile(profile).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        //TODO:Handle API error
+      }
+    );
+    this.sendSelectedProfiles();
+  }
+
   sendSelectedProfiles() {
-    let selectedProfiles = [];
+    let selectedProfiles = [];    
     selectedProfiles = this.profiles
       .filter((profile) => profile.selected)
       .map((profile) => profile.profileId);
     this.emitSelectedProfiles.emit(selectedProfiles);
   }
 
+  updateCalendar(calendar){
+    this.calendarService.addCalendar(calendar).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        //TODO:Handle API error
+      }
+    );
+    this.sendSelectedCalendars();
+  }
+
   sendSelectedCalendars() {
     let selectedCalendars = [];
-
     selectedCalendars = this.mycalendars
       .filter((calendar) => calendar.selected)
       .map((calendar) => calendar.calendarId);

@@ -5,6 +5,7 @@ public class CalendarRequest {
     private String name;
     private String color;  
     private long userId;
+    private boolean selected;
     
     public CalendarRequest() {}
     
@@ -13,12 +14,14 @@ public class CalendarRequest {
         this.calendarId = calendarId;
     }
     
-    public CalendarRequest(String name, String color, long userId) {
+    public CalendarRequest(String name, String color, long userId, boolean selected) {
+		super();
 		this.name = name;
 		this.color = color;
 		this.userId = userId;
+		this.selected = selected;
 	}
-    
+
 	public long getCalendarId() {
 		return calendarId;
 	}
@@ -42,6 +45,12 @@ public class CalendarRequest {
 	}
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+	public boolean isSelected() {
+		return selected;
+	}
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
     
     
