@@ -23,7 +23,6 @@ export class MyCalendarService {
   }
 
   deleteCalendarFromList(calendarId: number) {
-    console.log(calendarId);
     return this.http.delete(
       this.calendarURL + this.appConfig.deleteCalendar(calendarId)
     );

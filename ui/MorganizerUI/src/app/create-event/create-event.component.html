@@ -50,17 +50,19 @@
     <mat-form-field appearance="outline">
       <mat-label>Choose Calendar</mat-label>
       <mat-select [(ngModel)]="data.calendarId" required>
-        <mat-option *ngFor="let calendar of calendarList" [value]="calendar.calendarId">{{
-          calendar.name
-        }}</mat-option>
+        <mat-option
+          *ngFor="let calendar of calendarList"
+          [value]="calendar.calendarId"
+          >{{ calendar.name }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
 
     <div class="row justify-content-around">
-      <div class="col-md-2" style="line-height: 60px;">
+      <div class="col-md-2" style="line-height: 60px">
         <mat-checkbox>All Day</mat-checkbox>
       </div>
-      <div class = "col-md-5">
+      <div class="col-md-5">
         <mat-form-field>
           <input
             [(ngModel)]="data.startTime"
@@ -68,7 +70,10 @@
             [ngxMatDatetimePicker]="picker"
             placeholder="Start date and time"
           />
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #picker [enableMeridian]="enableMeridian">
             <!-- Custom icon or text of Apply icon -->
             <ng-template>
@@ -79,7 +84,7 @@
         </mat-form-field>
       </div>
 
-      <div class = "col-md-5">
+      <div class="col-md-5">
         <mat-form-field>
           <input
             [(ngModel)]="data.endTime"
@@ -87,7 +92,10 @@
             [ngxMatDatetimePicker]="picker2"
             placeholder="End date and time"
           />
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #picker2 [enableMeridian]="enableMeridian">
             <!-- Custom icon or text of Apply icon -->
             <ng-template>
@@ -99,13 +107,13 @@
       </div>
     </div>
 
-
-
-
-
     <mat-form-field appearance="outline">
       <mat-label>Location</mat-label>
-      <input matInput [(ngModel)]="data.location" placeholder="Enter the location" />
+      <input
+        matInput
+        [(ngModel)]="data.location"
+        placeholder="Enter the location"
+      />
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="width: 100%">
@@ -120,46 +128,50 @@
       ></textarea>
     </mat-form-field>
 
-
-    <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-form-field appearance="outline" style="width: 100%">
       <mat-label>Assignee</mat-label>
       <mat-select multiple [(ngModel)]="data.assigneeList">
-        <mat-option *ngFor="let person of assigneeList" [value]="person.profileId">{{
-          person.name
-        }}</mat-option>
+        <mat-option
+          *ngFor="let person of assigneeList"
+          [value]="person.profileId"
+          >{{ person.name }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-form-field appearance="outline" style="width: 100%">
       <mat-label>Reminder</mat-label>
       <mat-select multiple [(ngModel)]="data.reminderList">
-        <mat-option *ngFor="let reminder of reminderLst" [value]="reminder.id">{{reminder.title}}</mat-option>
+        <mat-option
+          *ngFor="let reminder of reminderLst"
+          [value]="reminder.id"
+          >{{ reminder.title }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
 
     <div class="row">
-        <div class = "col-md-6">
-          <mat-form-field appearance="outline">
-            <mat-label>Notification Type</mat-label>
-            <mat-select>
-              <mat-option value="email">Email</mat-option>
-              <mat-option value="text">Text</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-md-6">
-          <mat-form-field appearance="outline">
-            <mat-label>Recurring</mat-label>
-            <mat-select>
-              <mat-option value="none">None</mat-option>
-              <mat-option value="daily">Daily</mat-option>
-              <mat-option value="weekly">Weekly</mat-option>
-              <mat-option value="monthly">Monthly</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Notification Type</mat-label>
+          <mat-select>
+            <mat-option value="email">Email</mat-option>
+            <mat-option value="text">Text</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Recurring</mat-label>
+          <mat-select>
+            <mat-option value="none">None</mat-option>
+            <mat-option value="daily">Daily</mat-option>
+            <mat-option value="weekly">Weekly</mat-option>
+            <mat-option value="monthly">Monthly</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
 
     <button
       mat-raised-button
@@ -184,7 +196,7 @@
         mat-raised-button
         color="primary"
         style="margin: 0.5em"
-        (click)="editEvent()"
+        (click)="createEvent()"
         *ngIf="editFlag"
       >
         Update Event

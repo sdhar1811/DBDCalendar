@@ -100,8 +100,6 @@ export class CreateEventComponent implements OnInit {
       this.data.assigneeList = temp;
     }
 
-    console.log('data:' + JSON.stringify(this.data));
-
     this.eventService.addEvent(this.data).subscribe(
       (response) => {
         if (response) {
@@ -116,27 +114,27 @@ export class CreateEventComponent implements OnInit {
     this.close();
   }
 
-  editEvent(): void {
-    //this.data.color = { primary: this.color, secondary: this.color };
-    // this.data.color = this.color;
-    this.data.color = this.calendarList
-      .filter((calendar) => calendar.calendarId == this.data.calendarId)
-      .map((calendar) => calendar.color)[0];
-    console.log(JSON.stringify(this.data));
-    this.eventService.updateEvent(this.data).subscribe(
-      (response) => {
-        if (response) {
-          console.log('Event Updated');
-          this.close();
-        }
-      },
-      (error) => {
-        console.log('Something went wrong');
-        // window.alert('#TODO: Something went wrong.');
-        this.close();
-      }
-    );
-  }
+  // editEvent(): void {
+  //   //this.data.color = { primary: this.color, secondary: this.color };
+  //   // this.data.color = this.color;
+  //   this.data.color = this.calendarList
+  //     .filter((calendar) => calendar.calendarId == this.data.calendarId)
+  //     .map((calendar) => calendar.color)[0];
+
+  //   this.eventService.updateEvent(this.data).subscribe(
+  //     (response) => {
+  //       if (response) {
+  //         console.log('Event Updated');
+  //         this.close();
+  //       }
+  //     },
+  //     (error) => {
+  //       console.log('Something went wrong');
+  //       // window.alert('#TODO: Something went wrong.');
+  //       this.close();
+  //     }
+  //   );
+  // }
 
   cancelUpdateToEvent(): void {
     this.close();
@@ -148,7 +146,6 @@ export class CreateEventComponent implements OnInit {
       .subscribe(
         (response) => {
           if (response) {
-            console.log(response);
             this.calendarList = response;
           }
         },
@@ -169,7 +166,6 @@ export class CreateEventComponent implements OnInit {
       .subscribe(
         (response) => {
           if (response) {
-            console.log(response);
             this.assigneeList = response;
           }
         },
