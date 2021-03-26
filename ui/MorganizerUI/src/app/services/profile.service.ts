@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { APP_CONFIG, IAppConfig } from '../app.config';
 import { ProfileModel } from './model/profile-model';
 
@@ -7,18 +8,23 @@ import { ProfileModel } from './model/profile-model';
   providedIn: 'root'
 })
 export class ProfileService {
-  eventURL: string;  
+  profileURL: string;  
+  addProfileEvent: Subject<any> = new Subject();
 
   constructor(
     @Inject(APP_CONFIG) private appConfig: IAppConfig,
     private http: HttpClient
   ) { 
-    this.eventURL = appConfig.morganizerAPIEndpoint + appConfig.profile;
+    this.profileURL = appConfig.morganizerAPIEndpoint + appConfig.profile;
   }
 
   getAllProfile(userId: String) {
     return this.http.get<ProfileModel[]>(
-      this.eventURL + this.appConfig.fetchAllProfiles(userId)
+      this.profileURL + this.appConfig.fetchAllProfiles(userId)
     );
+  }
+
+  addProfile(profile: ProfileModel){
+    return this.http.post(this.profileURL + this.appConfig.addProfile, profile);
   }
 }

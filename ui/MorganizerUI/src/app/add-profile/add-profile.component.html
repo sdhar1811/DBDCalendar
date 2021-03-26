@@ -23,14 +23,14 @@
       <div class="col-md-10">
         <mat-form-field appearance="outline">
           <mat-label>Name</mat-label>
-          <input matInput required placeholder="Enter name" />
+          <input matInput placeholder="Enter name" [(ngModel)]="profileModel.name" />
         </mat-form-field>
       </div>
       <div class="col-md-2">
         <div>
           <ngx-colors
             ngx-colors-trigger
-            [(ngModel)]="color"
+            [(ngModel)]="profileModel.color"
             [palette]="colorPalette"
             [hideTextInput]="'true'"
             [hideColorPicker]="'false'"
@@ -42,7 +42,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Gender</mat-label>
-      <mat-select>
+      <mat-select [(ngModel)]="profileModel.gender">
         <mat-option value="male">Male</mat-option>
         <mat-option value="female">Female</mat-option>
         <mat-option value="other">Other</mat-option>
@@ -51,17 +51,17 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Email ID</mat-label>
-      <input matInput required placeholder="Enter your email ID" />
+      <input matInput placeholder="Enter your email ID" [(ngModel)]="profileModel.email"/>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Phone Number</mat-label>
-      <input required matInput placeholder="Enter your phone number" />
+      <input matInput placeholder="Enter your phone number" [(ngModel)]="profileModel.phoneNumber"/>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Date of Birth</mat-label>
-      <input matInput required [matDatepicker]="datepicker" />
+      <input matInput [matDatepicker]="datepicker" [(ngModel)]="profileModel.birthDate" />
       <mat-datepicker-toggle
         matSuffix
         [for]="datepicker"
@@ -76,7 +76,7 @@
       </mat-datepicker>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" style="margin: 0.5em;">
+    <button mat-raised-button color="primary" style="margin: 0.5em;" (click)="addProfile()">
       Add Profile
     </button>
   </div>
