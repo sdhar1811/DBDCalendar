@@ -161,12 +161,14 @@
 
     <mat-form-field appearance="outline" style="width: 100%">
       <mat-label>Assignee</mat-label>
-      <mat-select multiple [(ngModel)]="data.assigneeList">
-        <mat-option
-          *ngFor="let person of assigneeList"
-          [value]="person.profileId"
-          >{{ person.name }}</mat-option
-        >
+      <mat-select
+        multiple
+        [(ngModel)]="data.assigneeList"
+        [compareWith]="compareAssigneeObjects"
+      >
+        <mat-option *ngFor="let person of assigneeList" [value]="person">{{
+          person.name
+        }}</mat-option>
       </mat-select>
     </mat-form-field>
 
