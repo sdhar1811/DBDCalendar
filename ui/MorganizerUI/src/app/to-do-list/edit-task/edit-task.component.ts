@@ -30,6 +30,10 @@ import { TodoListService } from 'src/app/services/todo-list.service';
   ],
 })
 export class EditTaskComponent implements OnInit {
+
+  public enableMeridian = true;
+  public defaultTime = [new Date().getHours, 0];
+  
   selectedCalendar = new FormControl();
   @Input() data;
   @Input() taskIndex;

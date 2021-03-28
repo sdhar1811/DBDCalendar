@@ -68,7 +68,11 @@
         placeholder="Due date and time"
       />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #picker>
+      <ngx-mat-datetime-picker 
+        #picker
+        [enableMeridian]="enableMeridian"
+        [stepMinute]="15"
+        [defaultTime]="defaultTime">
         <!-- Custom icon or text of Apply icon -->
         <ng-template>
           <!-- <mat-icon>star</mat-icon> -->
