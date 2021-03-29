@@ -18,7 +18,7 @@ public class EventRequest {
 	private String lastUpdateOn;
 	private String color;
 	private List<Long> reminderList;
-	private long calendarId;
+	private Long calendarId;
 	private boolean allDayEvent;
 	
 	public EventRequest() {
@@ -165,7 +165,7 @@ public class EventRequest {
 	public long getCalendarId() {
 		return calendarId;
 	}
-	public void setCalendarId(long calendarId) {
+	public void setCalendarId(Long calendarId) {
 		this.calendarId = calendarId;
 	}
 	public boolean isAllDayEvent() {
