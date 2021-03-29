@@ -52,12 +52,7 @@ public class EventDetailsEntity {
 	private CalendarEntity calendar;
 	
 	@Column(name="all_day_event")
-	private boolean allDayEvent;
-	
-	public EventDetailsEntity() {
-		
-	}
-	
+	private boolean allDay=false;
 	
 	public EventDetailsEntity(UserDetailsEntity user, String eventTitle, String eventDescription, Timestamp startTime,
 			Timestamp endTime, RecurringModeEntity recurringMode, String location, List<ProfileEntity> assigneeList,
@@ -76,7 +71,7 @@ public class EventDetailsEntity {
 		this.color = color;
 		this.reminderList = reminderList;
 		this.calendar = calendar;
-		this.allDayEvent = allDayEvent;
+		this.allDay = allDayEvent;
 	}
 
 	public long getId() {
@@ -188,11 +183,11 @@ public class EventDetailsEntity {
 	}
 
 	public boolean isAllDayEvent() {
-		return allDayEvent;
+		return allDay;
 	}
 
 	public void setAllDayEvent(boolean allDayEvent) {
-		this.allDayEvent = allDayEvent;
+		this.allDay = allDayEvent;
 	}	
 	
 }
