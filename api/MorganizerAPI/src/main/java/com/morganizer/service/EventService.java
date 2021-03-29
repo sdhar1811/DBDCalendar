@@ -84,7 +84,9 @@ public class EventService {
 			response.add(new EventRequest(event.getUser().getId(), event.getId(), event.getEventTitle(), null,
 					event.getStartTime().toString(), event.getEndTime().toString(), event.getLocation(),
 					event.getEventDescription(), null, event.getRecurringMode().getId(),
-					profileList, event.getLastUpdatedOn().toString(), event.getColor(), reminderLst,event.getCalendar().getCalendarId(),event.isAllDayEvent()));
+					profileList, event.getLastUpdatedOn().toString(), event.getColor(), reminderLst,
+					event.getCalendar().getCalendarId(),
+					event.isAllDayEvent()));
 		}
 		
 		return response;

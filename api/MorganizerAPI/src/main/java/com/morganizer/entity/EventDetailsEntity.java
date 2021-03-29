@@ -55,10 +55,6 @@ public class EventDetailsEntity {
 	@Column(name="all_day_event")
 	private boolean allDayEvent;
 	
-	public EventDetailsEntity() {
-		
-	}
-	
 	
 	public EventDetailsEntity(UserDetailsEntity user, String eventTitle, String eventDescription, Timestamp startTime,
 			Timestamp endTime, RecurringModeEntity recurringMode, String location, List<ProfileEntity> assigneeList,
