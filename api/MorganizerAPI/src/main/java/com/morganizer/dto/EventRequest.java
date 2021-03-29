@@ -168,12 +168,7 @@ public class EventRequest {
 	public void setCalendarId(long calendarId) {
 		this.calendarId = calendarId;
 	}
-	public boolean isAllDayEvent() {
-		return allDayEvent;
-	}
-	public void setAllDayEvent(boolean allDayEvent) {
-		this.allDayEvent = allDayEvent;
-	}
+
 	
 	
 }
