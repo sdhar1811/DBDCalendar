@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity(name = "events")
 public class EventDetailsEntity {
@@ -53,6 +54,10 @@ public class EventDetailsEntity {
 	
 	@Column(name="all_day_event")
 	private boolean allDayEvent;
+
+	@OneToOne
+	@JoinColumn(name="calendar_id",referencedColumnName = "calendar_id")
+	private CalendarEntity calendarEntity;
 	
 	public EventDetailsEntity() {
 		
