@@ -129,4 +129,30 @@ public class EventService {
 				profileList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor(), reminders,event.getCalendar().getCalendarId(),event.isAllDayEvent());
 	}
 
+	public EventRequest addEvent(EventRequest eventRequest){
+		UserDetailsEntity user = userRepo.getOne(eventRequest.getUserId());
+		RecurringModeEntity recurringMode = recurringModeRepository.getOne(eventRequest.getRecurringModeId());
+		List<ProfileEntity> assigneeList = new ArrayList<>();
+		CalendarEntity calendar = calendarRepository.getOne(eventRequest.getCalendarId());
+		Timestamp startTime = Timestamp.valueOf(eventRequest.getStartTime().replaceAll("[A-Z]", " " ));
+		Timestamp endTime = Timestamp.valueOf(eventRequest.getEndTime().replaceAll("[A-Z]", " " ));
+		Timestamp lastUpdatedOn = new Timestamp(System.currentTimeMillis());
+		List<EventReminderEntity> reminderList = new ArrayList<>();
+		List<ProfileResponse> profileList =null;
+		List<Long> reminders = new ArrayList<>();
+
+		EventDetailsEntity event = new EventDetailsEntity(user, eventRequest.getTitle(), eventRequest.getDescription(),
+				startTime, endTime,
+				recurringMode, eventRequest.getLocation(),
+				assigneeList,  lastUpdatedOn, eventRequest.getColor(),reminderList, calendar, eventRequest.isAllDayEvent());
+
+		EventDetailsEntity savedEntity = eventDetailsRepository.save(event);
+
+		return new EventRequest(savedEntity.getUser().getId(), savedEntity.getId(), savedEntity.getEventTitle(), null,
+				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
+				savedEntity.getEventDescription(), null, savedEntity.getRecurringMode().getId(),
+				profileList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor(), reminders,event.getCalendar().getCalendarId(),event.isAllDayEvent());
+
+	}
+
 }
