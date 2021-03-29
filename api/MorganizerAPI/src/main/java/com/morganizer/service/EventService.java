@@ -110,7 +110,8 @@ public class EventService {
 		EventDetailsEntity event = new EventDetailsEntity(user, eventRequest.getTitle(), eventRequest.getDescription(),
 				startTime, endTime,
 				recurringMode, eventRequest.getLocation(),
-				assigneeList,  lastUpdatedOn, eventRequest.getColor(),reminderList, calendar, eventRequest.isAllDayEvent());
+				assigneeList,  lastUpdatedOn, eventRequest.getColor(),reminderList, calendar,
+				eventRequest.isAllDayEvent());
 
 		if (eventRequest.getEventId() != 0) {
 			event.setId(eventRequest.getEventId());
@@ -124,7 +125,9 @@ public class EventService {
 		return new EventRequest(savedEntity.getUser().getId(), savedEntity.getId(), savedEntity.getEventTitle(), null,
 				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
 				savedEntity.getEventDescription(), null, savedEntity.getRecurringMode().getId(),
-				profileList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor(), reminders,event.getCalendar().getCalendarId(),event.isAllDayEvent());
+				profileList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor(), reminders,
+				event.getCalendar().getCalendarId(),
+				event.isAllDayEvent());
 	}
 
 }
