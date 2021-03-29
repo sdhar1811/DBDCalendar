@@ -48,16 +48,12 @@ public class EventDetailsEntity {
 	@JoinColumn(name = "reminder", referencedColumnName = "reminder_id")
 	private List<EventReminderEntity> reminderList = new ArrayList<>();
 	
-	@ManyToOne
-	@JoinColumn(name = "calendar_id")
+	@OneToOne
+	@JoinColumn(name = "calendar_id",referencedColumnName = "calendar_id")
 	private CalendarEntity calendar;
 	
 	@Column(name="all_day_event")
 	private boolean allDayEvent;
-
-	@OneToOne
-	@JoinColumn(name="calendar_id",referencedColumnName = "calendar_id")
-	private CalendarEntity calendarEntity;
 	
 	public EventDetailsEntity() {
 		
