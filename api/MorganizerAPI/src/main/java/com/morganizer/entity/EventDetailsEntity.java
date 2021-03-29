@@ -50,7 +50,7 @@ public class EventDetailsEntity {
 	
 	@OneToOne
 	@JoinColumn(name = "calendar_id",referencedColumnName = "calendar_id")
-	private CalendarEntity calendar;
+	private CalendarEntity calendarEntity;
 	
 	@Column(name="all_day_event")
 	private boolean allDayEvent;
@@ -72,7 +72,7 @@ public class EventDetailsEntity {
 		this.lastUpdatedOn = lastUpdatedOn;
 		this.color = color;
 		this.reminderList = reminderList;
-		this.calendar = calendar;
+		this.calendarEntity = calendar;
 		this.allDayEvent = allDayEvent;
 	}
 
@@ -177,11 +177,11 @@ public class EventDetailsEntity {
 	}
 
 	public CalendarEntity getCalendar() {
-		return calendar;
+		return calendarEntity;
 	}
 
 	public void setCalendar(CalendarEntity calendar) {
-		this.calendar = calendar;
+		this.calendarEntity = calendar;
 	}
 
 	public boolean isAllDayEvent() {
