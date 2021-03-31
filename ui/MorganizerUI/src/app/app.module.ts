@@ -67,6 +67,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DragAndDropModule } from 'angular-draggable-droppable';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
+import { CalendarControlComponent } from './core/calendar-control/calendar-control.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
     CreateEventComponent,
     CustomDateFormat1,
     CustomDateFormat2,
+    CalendarControlComponent,
   ],
   imports: [
     BrowserModule,
