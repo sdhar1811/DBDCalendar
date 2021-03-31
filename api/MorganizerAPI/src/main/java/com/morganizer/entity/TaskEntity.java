@@ -24,9 +24,12 @@ public class TaskEntity {
 	@ManyToOne
 	@JoinColumn(name = "todo_list_id")
 	private TodoListEntity todoListEntity;
+
+	@ManyToOne
+	@JoinColumn(name = "calendar_id")
+	private CalendarEntity calendarEntity;
 	
-	
-	public TaskEntity() {
+	public TaskEntity(){
 		
 	}
 	
