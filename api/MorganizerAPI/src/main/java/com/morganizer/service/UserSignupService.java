@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.morganizer.dto.CalendarRequest;
+import com.morganizer.dto.TodoListRequest;
 import com.morganizer.entity.UserCredentials;
 import com.morganizer.entity.UserDetailsEntity;
 import com.morganizer.entity.UserRolesEntity;
@@ -31,6 +33,12 @@ public class UserSignupService {
 
 	@Autowired
 	UserRolesRepository userRolesRepo;
+	
+	@Autowired
+    CalendarService calendarService;
+	
+	@Autowired
+	TodoListService taskService;
 
 
 	public void registerUser(UserModel userInfo) throws Exception {
@@ -43,11 +51,32 @@ public class UserSignupService {
 					, userInfo.getUsername(), userInfo.getEmail(), userInfo.getBirthdate(), userInfo.getPhoneNumber(),
 					userInfo.getGender());
 			userDetailsRepo.save(user);
+
+			Long calendarId = addDefaultCalendar(user.getId());
+			addDefaultToDoList(user.getId());
+			
+			user.setDefaultCalendarId(calendarId);	
+			
 			encryptPassword(userInfo);
 		}
-
 	}
 
+	
+	public Long addDefaultCalendar(Long userId) {
+		CalendarRequest calendarRequest = new CalendarRequest("Home", "#394697", userId, true);
+		calendarService.saveCalendar(calendarRequest);
+		
+		return calendarRequest.getCalendarId();
+	}
+	
+	public void addDefaultToDoList(Long userId) {
+		
+		TodoListRequest task = new TodoListRequest("My List", userId);
+		taskService.createTodoList(task);
+	}
+	
+	
+	
 	public void encryptPassword(UserModel userDetails) throws Exception {
 		byte[] salt = PasswordUtil.getSalt(20);
 		String hashedPassword = securePassword.generateSecurePassword(userDetails.getPassword(), salt);

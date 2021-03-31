@@ -41,6 +41,7 @@ public class CalendarService {
 			calendar.setCalendarId(calendarRequest.getCalendarId());
 		}
 		calendarRepository.save(calendar);
+		calendarRequest.setCalendarId(calendar.getCalendarId());
 		return fetchAll(calendarRequest.getUserId());
 
 	}
