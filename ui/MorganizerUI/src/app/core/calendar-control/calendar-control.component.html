@@ -1,0 +1,66 @@
+<div class="row text-center" style="margin: 10px">
+  <div class="col-md-4 col-lg-4 col-sm-4" style="text-align: start">
+    <button
+      mat-raised-button
+      color="basic"
+      mwlCalendarToday
+      [(viewDate)]="viewDate"
+      (click)="updateCalendarView()"
+      matTooltip="{{ today | date }}"
+    >
+      Today
+    </button>
+  </div>
+  <div class="col-md-4 col-lg-4 col-sm-4">
+    <div class="view-date">
+      {{ viewDate | calendarDate: view + "ViewTitle":"en" }}
+    </div>
+  </div>
+  <div class="col-md-4 col-lg-4 col-sm-4">
+    <mat-button-toggle-group class="btn-group view-control" [value]="view">
+      <button
+        mat-raised-button
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (click)="updateCalendarView()"
+        (viewDateChange)="closeOpenMonthViewDay()"
+        style="border-radius: 0px"
+      >
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <mat-button-toggle
+        mat-raised-button
+        (click)="setView(CalendarView.Month)"
+        value="{{ CalendarView.Month }}"
+      >
+        Month
+      </mat-button-toggle>
+      <mat-button-toggle
+        mat-raised-button
+        (click)="setView(CalendarView.Week)"
+        value="{{ CalendarView.Week }}"
+      >
+        Week
+      </mat-button-toggle>
+      <mat-button-toggle
+        mat-raised-button
+        (click)="setView(CalendarView.Day)"
+        value="{{ CalendarView.Day }}"
+      >
+        Day
+      </mat-button-toggle>
+      <button
+        mat-raised-button
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()"
+        style="border-radius: 0px"
+        (click)="updateCalendarView()"
+      >
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+    </mat-button-toggle-group>
+  </div>
+</div>

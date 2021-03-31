@@ -107,7 +107,12 @@ export class HomeScreenComponent implements OnInit {
     private storeService: StoreService,
     private eventService: EventService,
     private dialog: MatDialog
-  ) {}
+  ) {
+    this.storeService.calendarViewChange.subscribe((calendarView) => {
+      this.viewDate = calendarView.viewDate;
+      this.view = calendarView.view;
+    });
+  }
 
   ngOnInit(): void {
     this.fetchAllEvents();
@@ -191,6 +196,7 @@ export class HomeScreenComponent implements OnInit {
         this.activeDayIsOpen = true;
       }
       this.viewDate = date;
+      this.storeService.calendarDayClicked.next(this.viewDate);
     }
   }
 
