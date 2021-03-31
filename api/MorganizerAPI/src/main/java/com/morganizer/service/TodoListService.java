@@ -3,6 +3,7 @@ package com.morganizer.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.morganizer.entity.CalendarEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,9 +73,12 @@ public class TodoListService {
 	public TaskResponse addTasks(TaskRequest task) {
 		TodoListEntity todoList = null;
 		todoList = todoListRepo.getOne(task.getTodoListId());
+		CalendarEntity calendarEntity = null;
 		TaskEntity taskEntity = new TaskEntity(task.getId(), task.getDescription(), task.getTitle(),
-				DateTimeUtil.parseTimestampWithTimezone(task.getDuedate()), task.getRepeatType(), task.isComplete(),
-				todoList);
+				DateTimeUtil.parseTimestampWithTimezone(task.getDuedate()),
+				task.getRepeatType(),
+				task.isComplete(),
+				todoList,calendarEntity);
 		taskRepo.save(taskEntity);
 		String dueDate = taskEntity.getDuedate()==null?null:taskEntity.getDuedate().toString();
 		return new TaskResponse(taskEntity.getId(), taskEntity.getTitle(), taskEntity.getDescription(), taskEntity.isComplete(), dueDate, taskEntity.getTodoListEntity().getId());

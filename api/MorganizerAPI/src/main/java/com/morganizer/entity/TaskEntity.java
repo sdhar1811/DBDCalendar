@@ -25,6 +25,8 @@ public class TaskEntity {
 	@JoinColumn(name = "todo_list_id")
 	private TodoListEntity todoListEntity;
 
+
+
 	@ManyToOne
 	@JoinColumn(name = "calendar_id")
 	private CalendarEntity calendarEntity;
@@ -35,7 +37,7 @@ public class TaskEntity {
 	
 	
 	public TaskEntity(Long id,String description, String title, Timestamp duedate, String repeatType, boolean complete,
-			TodoListEntity todoListEntity) {
+			TodoListEntity todoListEntity,CalendarEntity calendarEntity) {
 		super();
 		this.id= id;
 		this.description = description;
@@ -44,6 +46,7 @@ public class TaskEntity {
 		this.repeatType = repeatType;
 		this.complete = complete;
 		this.todoListEntity = todoListEntity;
+		this.calendarEntity= calendarEntity;
 	}
 	public TodoListEntity getTask() {
 		return todoListEntity;
@@ -108,7 +111,14 @@ public class TaskEntity {
 	public void setTodoListEntity(TodoListEntity todoListEntity) {
 		this.todoListEntity = todoListEntity;
 	}
-	
+
+	public CalendarEntity getCalendarEntity() {
+		return calendarEntity;
+	}
+
+	public void setCalendarEntity(CalendarEntity calendarEntity) {
+		this.calendarEntity = calendarEntity;
+	}
 	
 	
 	
