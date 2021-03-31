@@ -115,9 +115,7 @@ export class LeftPanelComponent implements OnInit {
 
   updateProfile(profile) {
     this.profileService.addProfile(profile).subscribe(
-      (response) => {
-        console.log(response);
-      },
+      (response) => {},
       (error) => {
         //TODO:Handle API error
       }
@@ -135,9 +133,7 @@ export class LeftPanelComponent implements OnInit {
 
   updateCalendar(calendar) {
     this.calendarService.addCalendar(calendar).subscribe(
-      (response) => {
-        console.log(response);
-      },
+      (response) => {},
       (error) => {
         //TODO:Handle API error
       }

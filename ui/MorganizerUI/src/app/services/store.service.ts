@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { SubjectSubscriber } from 'rxjs/internal/Subject';
 
 @Injectable({
   providedIn: 'root',
@@ -7,6 +8,8 @@ import { Subject } from 'rxjs';
 export class StoreService {
   loggedInUser: any;
   loggedInUserChange: Subject<any> = new Subject();
+  calendarViewChange: Subject<any> = new Subject();
+  calendarDayClicked: Subject<any> = new Subject();
 
   data = {};
   constructor() {
