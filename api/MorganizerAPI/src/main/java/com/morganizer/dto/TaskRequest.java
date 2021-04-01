@@ -8,11 +8,12 @@ public class TaskRequest {
 	private String dueDate;
 	private String repeatType;
 	private boolean complete;
-	private long todoListId;	
-	
-	
-	
-	
+	private long todoListId;
+	private long calendarId;
+
+
+
+
 	public TaskRequest(Long id, String description, String title, String dueDate, String repeatType,
 			boolean complete, long todoListId) {
 		super();
