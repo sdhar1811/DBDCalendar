@@ -9,6 +9,9 @@ public class TaskRequest {
 	private String repeatType;
 	private boolean complete;
 	private long todoListId;
+
+
+
 	private long calendarId;
 
 
@@ -66,6 +69,14 @@ public class TaskRequest {
 	}
 	public void setTodoListId(Long todoListId) {
 		this.todoListId = todoListId;
+	}
+
+	public long getCalendarId() {
+		return calendarId;
+	}
+
+	public void setCalendarId(long calendarId) {
+		this.calendarId = calendarId;
 	}
 	@Override
 	public String toString() {
