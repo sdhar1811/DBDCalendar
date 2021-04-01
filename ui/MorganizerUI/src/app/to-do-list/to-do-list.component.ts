@@ -93,6 +93,7 @@ export class ToDoListComponent implements OnInit {
                 task.title = taskResponse.title;
                 task.todoListId = taskResponse.todoListId;
                 task.userId = this.storeService.loggedInUser.id;
+                task.calendarId = taskResponse.calendarId;
                 if (task.complete) {
                   this.completedTaskList.push(task);
                 } else {
