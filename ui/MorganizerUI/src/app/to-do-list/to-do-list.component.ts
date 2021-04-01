@@ -48,11 +48,7 @@ export class ToDoListComponent implements OnInit {
   previousTaskList = [];
   completedTaskList = [];
   todoLists = [];
-  assigneeList = [
-    { name: 'Sharad', id: 1 },
-    { name: 'Satyen', id: 2 },
-    { name: 'Dhananjay', id: 3 },
-  ];
+  assigneeList = [];
   name: string;
   taskTitle: string;
   tasks = [];
