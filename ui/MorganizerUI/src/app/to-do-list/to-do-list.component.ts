@@ -148,6 +148,12 @@ export class ToDoListComponent implements OnInit {
     task.userId = this.storeService.loggedInUser?.id;
     task.todoListId = this.selectedTodoList.value.id;
     this.selectedTodoList.value.tasks.push(task);
+
+    //task.calendarId = default calendar ID
+    //task.calendar = {calendarId = "", name = "", color = ""}
+    //task.calendar = this.storeService.defaultCalendar;
+    //TODO:set default calendar here
+
     // this.tasks.push(
     //   // title: this.taskTitle,
     //   // description: null,

@@ -1,17 +1,19 @@
 package com.morganizer.service;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morganizer.dto.EventRequest;
-import com.morganizer.entity.CalendarEntity;
-import com.morganizer.dto.EventResponse;
-import com.morganizer.dto.ProfileRequest;
 import com.morganizer.dto.ProfileResponse;
+import com.morganizer.entity.CalendarEntity;
 //import com.morganizer.entity.EventCategoriesEntity;
 import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.EventReminderEntity;
@@ -26,6 +28,7 @@ import com.morganizer.repository.NotificationTypeRepository;
 import com.morganizer.repository.ProfileRepository;
 import com.morganizer.repository.RecurringModeRepository;
 import com.morganizer.repository.UserDetailsRepository;
+import com.morganizer.utils.EmailSenderUtil;
 import com.morganizer.utils.ModelMapperUtil;
 
 @Service
@@ -90,7 +93,7 @@ public class EventService {
 		return response;
 	}
 
-	public EventRequest saveEvent(EventRequest eventRequest) {
+	public EventRequest saveEvent(EventRequest eventRequest) throws AddressException, MessagingException, IOException {
 		UserDetailsEntity user = userRepo.getOne(eventRequest.getUserId());
 		RecurringModeEntity recurringMode = recurringModeRepository.getOne(eventRequest.getRecurringModeId());
 		List<ProfileEntity> assigneeList = new ArrayList<>();
@@ -112,7 +115,9 @@ public class EventService {
 				recurringMode, eventRequest.getLocation(),
 				assigneeList,  lastUpdatedOn, eventRequest.getColor(),reminderList, calendar, eventRequest.isAllDayEvent());
 
+		String alertType = "Create Event";
 		if (eventRequest.getEventId() != 0) {
+			alertType = "Update Event";
 			event.setId(eventRequest.getEventId());
 		}
 		EventDetailsEntity savedEntity = eventDetailsRepository.save(event);
@@ -121,6 +126,9 @@ public class EventService {
 		for (EventReminderEntity reminder: savedEntity.getReminderList()) {
 			reminders.add(reminder.getReminderId());
 		}
+		
+		EmailSenderUtil.sendmail(event, alertType);
+		
 		return new EventRequest(savedEntity.getUser().getId(), savedEntity.getId(), savedEntity.getEventTitle(), null,
 				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
 				savedEntity.getEventDescription(), null, savedEntity.getRecurringMode().getId(),

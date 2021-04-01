@@ -68,6 +68,8 @@ export class LeftPanelComponent implements OnInit {
           //TODO:Handle API error
         }
       );
+
+      //TODO:find and store default calendar in store service
   }
 
   ngOnInit(): void {

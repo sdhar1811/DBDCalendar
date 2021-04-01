@@ -1,6 +1,10 @@
 package com.morganizer.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -49,12 +53,12 @@ public class EventController {
 //    }
 
     @PostMapping("/add")
-    public EventRequest addEvent(@RequestBody EventRequest eventRequest) {
+    public EventRequest addEvent(@RequestBody EventRequest eventRequest) throws AddressException, MessagingException, IOException {
     	return eventService.saveEvent(eventRequest);
     }
     
     @PostMapping("/update")
-    public EventRequest updateEvent(@RequestBody EventRequest eventRequest) {
+    public EventRequest updateEvent(@RequestBody EventRequest eventRequest) throws AddressException, MessagingException, IOException {
     	return eventService.saveEvent(eventRequest);
     }
     
