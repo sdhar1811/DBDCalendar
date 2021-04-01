@@ -9,16 +9,10 @@ public class TaskRequest {
 	private String repeatType;
 	private boolean complete;
 	private long todoListId;
-
-
-
 	private long calendarId;
 
-
-
-
 	public TaskRequest(Long id, String description, String title, String dueDate, String repeatType,
-			boolean complete, long todoListId) {
+			boolean complete, long todoListId,long calendarId) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -27,6 +21,7 @@ public class TaskRequest {
 		this.repeatType = repeatType;
 		this.complete = complete;
 		this.todoListId = todoListId;
+		this.calendarId=calendarId;
 	}
 	public Long getId() {
 		return id;
@@ -83,9 +78,4 @@ public class TaskRequest {
 		return "TaskRequest [id=" + id + ", description=" + description + ", title=" + title + ", duedate=" + dueDate
 				+ ", repeatType=" + repeatType + ", complete=" + complete + ", todoListId=" + todoListId + "]";
 	}
-	
-	
-	
-	
-
 }
