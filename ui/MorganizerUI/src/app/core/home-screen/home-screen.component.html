@@ -12,7 +12,7 @@
         : 'col-xl-9 col-lg-9 col-md-9 col-sm-9'
     "
   >
-    <div class="row text-center" style="margin: 10px">
+    <!-- <div class="row text-center" style="margin: 10px">
       <div class="col-md-5 col-lg-5 col-sm-5">
         <div class="row">
           <div class="col-md-3 col-lg-3 col-sm-3">
@@ -25,6 +25,7 @@
             </button>
           </div>
           <div class="col-md-8 col-lg-8 col-sm-8">
+            {{ viewDate | date }}
             <div class="btn-group">
               <button
                 mat-raised-button
@@ -85,14 +86,14 @@
         </mat-button-toggle-group>
       </div>
     </div>
-    <br />
+    <br /> -->
     <!-- <ng-template #loading> -->
     <div *ngIf="loading" class="text-center">
       <i class="fas fa-spin fa-spinner fa-5x"></i> <br />
       Loading events...
     </div>
     <!-- </ng-template> -->
-    <div *ngIf="!loading">
+    <div *ngIf="!loading" style="margin-top: 3px">
       <!-- custom cell template to display profile, title and time on the calendar in month view-->
       <ng-template #customCellTemplate let-day="day" let-locale="locale">
         <div class="cal-cell-top">
@@ -125,7 +126,7 @@
                   >
                     <span
                       *ngFor="let assignee of event.assigneeList"
-                      class="cell-profile-dot mat-elevation-z5"
+                      class="cell-profile-dot mat-elevation-z2"
                       [style.background]="assignee.color"
                       matTooltip="{{ assignee.name }}"
                     ></span>
@@ -154,7 +155,7 @@
                   >
                     <span
                       *ngFor="let assignee of event.assigneeList"
-                      class="cell-profile-dot mat-elevation-z9"
+                      class="cell-profile-dot mat-elevation-z2"
                       style="visibility: hidden"
                       matTooltip="{{ assignee.name }}"
                     ></span>
@@ -189,7 +190,7 @@
                 >
                   <span
                     *ngFor="let assignee of event.assigneeList"
-                    class="cell-profile-dot mat-elevation-z9"
+                    class="cell-profile-dot mat-elevation-z2"
                     [style.background]="assignee.color"
                     matTooltip="{{ assignee.name }}"
                   ></span>
@@ -221,7 +222,7 @@
           </div>
         </div>
       </ng-template>
-      <div [ngSwitch]="view" class="mat-elevation-z5">
+      <div [ngSwitch]="view">
         <mwl-calendar-month-view
           *ngSwitchCase="CalendarView.Month"
           [viewDate]="viewDate"
