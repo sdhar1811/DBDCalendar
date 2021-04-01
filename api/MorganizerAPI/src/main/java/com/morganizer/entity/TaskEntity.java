@@ -112,13 +112,7 @@ public class TaskEntity {
 		this.todoListEntity = todoListEntity;
 	}
 
-	public CalendarEntity getCalendarEntity() {
-		return calendarEntity;
-	}
 
-	public void setCalendarEntity(CalendarEntity calendarEntity) {
-		this.calendarEntity = calendarEntity;
-	}
 	
 	
 	
