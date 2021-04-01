@@ -8,7 +8,8 @@ ul {
 // }
 
 ::ng-deep .switch.checked {
-  background: #efefef !important;
+  // background: #efefef !important;
+  background: rgba(black, 0.2);
 }
 
 .delete-icon {
@@ -25,4 +26,12 @@ ul {
 
 .create-event-btn {
   border-radius: 25px;
+}
+.expanded-profile-panel {
+  height: 36%;
+  overflow: auto;
+}
+.expanded-calendar-panel {
+  height: 60%;
+  overflow: auto;
 }

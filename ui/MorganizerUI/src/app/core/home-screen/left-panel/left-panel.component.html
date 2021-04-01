@@ -10,7 +10,12 @@
 </div>
 <div style="height: 100%">
   <mat-accordion class="example-headers-align" multi>
-    <mat-expansion-panel style="box-shadow: none" [expanded]="'true'">
+    <mat-expansion-panel
+      style="box-shadow: none"
+      [expanded]="'true'"
+      #profilePanel
+      [ngClass]="profilePanel.expanded ? 'expanded-profile-panel ' : null"
+    >
       <mat-expansion-panel-header>
         <mat-panel-title> <strong>My Profiles</strong> </mat-panel-title>
       </mat-expansion-panel-header>
@@ -22,6 +27,7 @@
               [(ngModel)]="profile.selected"
               (ngModelChange)="updateProfile(profile)"
               switchColor="{{ profile.color }}"
+              style="--color:{{ profile.color }}"
             ></ui-switch>
           </td>
           <td style="vertical-align: bottom">
@@ -30,7 +36,12 @@
         </tr>
       </table>
     </mat-expansion-panel>
-    <mat-expansion-panel style="box-shadow: none" [expanded]="'true'">
+    <mat-expansion-panel
+      #calnedarPanel
+      style="box-shadow: none"
+      [expanded]="'true'"
+      [ngClass]="calnedarPanel.expanded ? 'expanded-calendar-panel ' : null"
+    >
       <mat-expansion-panel-header>
         <mat-panel-title> <strong>My Calendars</strong> </mat-panel-title>
       </mat-expansion-panel-header>
