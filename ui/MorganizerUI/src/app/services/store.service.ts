@@ -10,6 +10,7 @@ export class StoreService {
   loggedInUserChange: Subject<any> = new Subject();
   calendarViewChange: Subject<any> = new Subject();
   calendarDayClicked: Subject<any> = new Subject();
+  createEventEmitter: Subject<any> = new Subject();
 
   data = {};
   constructor() {
