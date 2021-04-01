@@ -148,4 +148,7 @@ export class LeftPanelComponent implements OnInit {
       .map((calendar) => calendar.calendarId);
     this.emitSelectedCalendars.emit(selectedCalendars);
   }
+  addEvent() {
+    this.storeService.createEventEmitter.next(true);
+  }
 }

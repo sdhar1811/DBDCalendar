@@ -1,3 +1,13 @@
+<div style="margin: 10px 10px 10px 20px">
+  <button
+    matTooltip="Create New Event"
+    mat-raised-button
+    (click)="addEvent()"
+    class="create-event-btn"
+  >
+    <span style="font-size: 23px">+ </span><span>Create</span>
+  </button>
+</div>
 <div style="height: 100%">
   <mat-accordion class="example-headers-align" multi>
     <mat-expansion-panel style="box-shadow: none" [expanded]="'true'">

@@ -2,24 +2,27 @@ ul {
   list-style-type: none;
 }
 
-
 // ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
 // .mat-checkbox-indeterminate .mat-checkbox-background {
 //   background-color:inherit!important;
 // }
 
 ::ng-deep .switch.checked {
-  background: #efefef!important;
+  background: #efefef !important;
 }
 
-.delete-icon{
+.delete-icon {
   margin-top: 5px;
   cursor: pointer;
   color: gray;
 }
 
-.more-options-icon{
+.more-options-icon {
   margin-top: 5px;
   cursor: pointer;
   color: gray;
+}
+
+.create-event-btn {
+  border-radius: 25px;
 }

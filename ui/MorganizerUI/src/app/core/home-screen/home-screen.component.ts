@@ -112,6 +112,11 @@ export class HomeScreenComponent implements OnInit {
       this.viewDate = calendarView.viewDate;
       this.view = calendarView.view;
     });
+    this.storeService.createEventEmitter.subscribe((isClicked) => {
+      if (isClicked) {
+        this.addEvent();
+      }
+    });
   }
 
   ngOnInit(): void {
