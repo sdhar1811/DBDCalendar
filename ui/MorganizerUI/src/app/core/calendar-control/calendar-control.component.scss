@@ -4,7 +4,15 @@
 .view-control {
   font-size: smaller;
   border-radius: 32px;
+  border-color: white;
 }
 .view-date {
-  font-size: x-large !important;
+  font-size: larger !important;
+}
+::ng-deep .mat-button-toggle {
+  background: none;
+  color: white !important;
+}
+.mat-button-toggle-checked {
+  background: linear-gradient(49deg, black, transparent);
 }
