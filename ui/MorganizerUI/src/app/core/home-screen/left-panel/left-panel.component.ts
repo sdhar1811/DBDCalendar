@@ -44,6 +44,7 @@ export class LeftPanelComponent implements OnInit {
           if (response) {
             this.profiles = response;
             this.profiles.sort((a, b) => (a.name > b.name ? 1 : -1));
+            this.sendSelectedProfiles();
           }
         },
         (error) => {
@@ -61,6 +62,7 @@ export class LeftPanelComponent implements OnInit {
           if (response) {
             this.mycalendars = response;
             this.mycalendars.sort((a, b) => (a.name > b.name ? 1 : -1));
+            this.sendSelectedCalendars();
           }
         },
         (error) => {
@@ -69,14 +71,12 @@ export class LeftPanelComponent implements OnInit {
         }
       );
 
-      //TODO:find and store default calendar in store service
+    //TODO:find and store default calendar in store service
   }
 
   ngOnInit(): void {
     this.fetchProfiles();
     this.fetchCalendars();
-    this.sendSelectedCalendars();
-    this.sendSelectedProfiles();
   }
 
   addNewCalendar() {
@@ -129,12 +129,13 @@ export class LeftPanelComponent implements OnInit {
 
   updateProfile(profile) {
     this.profileService.addProfile(profile).subscribe(
-      (response) => {},
+      (response) => {
+        this.sendSelectedProfiles();
+      },
       (error) => {
         //TODO:Handle API error
       }
     );
-    this.sendSelectedProfiles();
   }
 
   sendSelectedProfiles() {
@@ -147,12 +148,13 @@ export class LeftPanelComponent implements OnInit {
 
   updateCalendar(calendar) {
     this.calendarService.addCalendar(calendar).subscribe(
-      (response) => {},
+      (response) => {
+        this.sendSelectedCalendars();
+      },
       (error) => {
         //TODO:Handle API error
       }
     );
-    this.sendSelectedCalendars();
   }
 
   sendSelectedCalendars() {

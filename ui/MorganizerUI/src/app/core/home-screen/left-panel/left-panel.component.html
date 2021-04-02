@@ -25,7 +25,7 @@
             <ui-switch
               size="small"
               [(ngModel)]="profile.selected"
-              (ngModelChange)="updateProfile(profile)"
+              (click)="updateProfile(profile)"
               switchColor="{{ profile.color }}"
               style="--color:{{ profile.color }}"
             ></ui-switch>
@@ -67,7 +67,7 @@
             <ui-switch
               size="small"
               [(ngModel)]="calendar.selected"
-              (ngModelChange)="updateCalendar(calendar)"
+              (click)="updateCalendar(calendar)"
               switchColor="{{ calendar.color }}"
             >
             </ui-switch>
@@ -104,6 +104,7 @@
                   [hideTextInput]="true"
                   [hideColorPicker]="false"
                   [(ngModel)]="calendar.color"
+                  (input)="updateCalendar(calendar)"
                 >
                   Color
                 </ngx-colors>
