@@ -115,6 +115,18 @@ export class LeftPanelComponent implements OnInit {
     );
   }
 
+  deleteProfile(profileToDelete: number) {
+    this.profileService.deleteProfile(profileToDelete).subscribe(
+      () => {
+        this.fetchProfiles();
+      },
+      (error) => {
+        console.log('Could not delete profile:: '+error);
+        //TODO: window.alert
+      }
+    )
+  }
+
   updateProfile(profile) {
     this.profileService.addProfile(profile).subscribe(
       (response) => {},
