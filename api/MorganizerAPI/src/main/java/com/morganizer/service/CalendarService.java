@@ -21,6 +21,9 @@ public class CalendarService {
 
 	@Autowired
 	public UserDetailsRepository userRepo;
+	
+	@Autowired 
+	public EventService eventService;
 
 	public List<CalendarResponse> fetchAll(Long userId) {
 		List<CalendarEntity> calendarList = calendarRepository.findByUserId(userId);
@@ -46,8 +49,13 @@ public class CalendarService {
 
 	}
 
+	/**
+	 * This method will first delete all the associated events and then the given calendar
+	 * @param calendarId - id of the calendar to be deleted
+	 */
 	public void deleteCalendar(Long calendarId) {
 		try {
+			this.eventService.deleteEventByCalendarId(calendarId);
 			calendarRepository.deleteById(calendarId);
 		} catch (Exception ex) {
 			ex.printStackTrace();

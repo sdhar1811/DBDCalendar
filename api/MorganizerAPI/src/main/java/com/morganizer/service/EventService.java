@@ -10,6 +10,7 @@ import javax.mail.internet.AddressException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.morganizer.dto.EventRequest;
 import com.morganizer.dto.ProfileResponse;
@@ -133,6 +134,11 @@ public class EventService {
 				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
 				savedEntity.getEventDescription(), null, savedEntity.getRecurringMode().getId(),
 				profileList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor(), reminders,event.getCalendar().getCalendarId(),event.isAllDayEvent());
+	}
+	
+	@Transactional
+	public void deleteEventByCalendarId(long calendarId) {
+		this.eventDetailsRepository.deleteByCalendar_calendarId(calendarId);
 	}
 
 }
