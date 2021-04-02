@@ -33,6 +33,14 @@
           <td style="vertical-align: bottom">
             {{ profile.name }}
           </td>
+          <td style="width: 20%">
+            <mat-icon
+              style="float: right; vertical-align: bottom"
+              class="material-icons md-18 delete-icon"
+              (click)="deleteProfile(profile.profileId)"
+              >close</mat-icon
+            >
+          </td>
         </tr>
       </table>
     </mat-expansion-panel>

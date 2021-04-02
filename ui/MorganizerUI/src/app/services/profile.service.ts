@@ -27,4 +27,11 @@ export class ProfileService {
   addProfile(profile: ProfileModel){
     return this.http.post(this.profileURL + this.appConfig.addProfile, profile);
   }
+
+  deleteProfile(profileId: number) {
+    return this.http.delete(
+      this.profileURL + this.appConfig.deleteProfile(profileId)
+    );
+  }
+
 }
