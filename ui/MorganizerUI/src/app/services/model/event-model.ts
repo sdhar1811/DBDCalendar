@@ -1,3 +1,5 @@
+import { MyCalendarModel } from './mycalendar-model';
+
 export class EventModel {
   eventId: number;
   userId: number;
@@ -12,4 +14,5 @@ export class EventModel {
   calendarId: number;
   reminderList: number[] = [];
   allDayEvent: boolean;
+  calendar: MyCalendarModel;
 }

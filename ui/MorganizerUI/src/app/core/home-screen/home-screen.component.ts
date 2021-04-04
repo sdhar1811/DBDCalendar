@@ -139,8 +139,8 @@ export class HomeScreenComponent implements OnInit {
                 start: new Date(eventModel.startTime + ' UTC'),
                 end: new Date(eventModel.endTime + ' UTC'),
                 color: {
-                  primary: eventModel.color,
-                  secondary: eventModel.color,
+                  primary: eventModel.calendar.color,
+                  secondary: eventModel.calendar.color,
                 },
                 actions: this.actions,
                 resizable: {
@@ -323,7 +323,9 @@ export class HomeScreenComponent implements OnInit {
     function eventFilter(selectedCalendars, selectedProfiles) {
       return function (event, index, array) {
         let flag = false;
-        if (selectedCalendars.includes(event.meta.eventModel.calendarId)) {
+        if (
+          selectedCalendars.includes(event.meta.eventModel.calendar.calendarId)
+        ) {
           event.meta.eventModel.assigneeList.forEach((element) => {
             if (selectedProfiles.includes(element.profileId)) {
               flag = true;

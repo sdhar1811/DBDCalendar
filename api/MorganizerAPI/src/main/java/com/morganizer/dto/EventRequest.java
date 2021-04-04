@@ -16,10 +16,11 @@ public class EventRequest {
 	private long recurringModeId;
 	private List<ProfileResponse> assigneeList;
 	private String lastUpdateOn;
-	private String color;
+//	private String color;
 	private List<Long> reminderList;
 	private long calendarId;
 	private boolean allDayEvent;
+	private CalendarResponse calendar;
 	
 	public EventRequest() {
 		
@@ -31,7 +32,7 @@ public class EventRequest {
 	
 	public EventRequest(long userId, long eventId, String title, String category, String startTime, String endTime,
 			String location, String description, String notificationType, long recurringModeId, List<ProfileResponse> assigneeList,
-			String lastUpdateOn, String color, List<Long> reminderList,long calendarId, boolean allDayEvent) {
+			String lastUpdateOn, List<Long> reminderList,long calendarId, boolean allDayEvent,CalendarResponse calendar) {
 		super();
 		this.userId = userId;
 		this.eventId = eventId;
@@ -45,10 +46,11 @@ public class EventRequest {
 		this.recurringModeId = recurringModeId;
 		this.assigneeList = assigneeList;
 		this.lastUpdateOn = lastUpdateOn;
-		this.color = color;
+//		this.color = color;
 		this.reminderList = reminderList;
 		this.calendarId = calendarId;
 		this.allDayEvent = allDayEvent;
+		this.calendar=calendar;
 	}
 		
 	public long getRecurringModeId() {
@@ -155,12 +157,12 @@ public class EventRequest {
 		this.lastUpdateOn = lastUpdateOn;
 	}
 	
-	public String getColor() {
-		return color;
-	}
-	public void setColor(String color) {
-		this.color = color;
-	}
+//	public String getColor() {
+//		return color;
+//	}
+//	public void setColor(String color) {
+//		this.color = color;
+//	}
 	
 	public long getCalendarId() {
 		return calendarId;
@@ -174,6 +176,14 @@ public class EventRequest {
 	public void setAllDayEvent(boolean allDayEvent) {
 		this.allDayEvent = allDayEvent;
 	}
+	public CalendarResponse getCalendar() {
+		return calendar;
+	}
+	public void setCalendar(CalendarResponse calendar) {
+		this.calendar = calendar;
+	}
+	
+	
 	
 	
 }

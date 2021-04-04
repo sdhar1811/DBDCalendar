@@ -90,9 +90,9 @@ export class CreateEventComponent implements OnInit {
     if (this.data.allDayEvent == true) {
       this.data.endTime = this.data.startTime;
     }
-    this.data.color = this.calendarList
-      .filter((calendar) => calendar.calendarId == this.data.calendarId)
-      .map((calendar) => calendar.color)[0];
+    // this.data.color = this.calendarList
+    //   .filter((calendar) => calendar.calendarId == this.data.calendarId)
+    //   .map((calendar) => calendar.color)[0];
 
     this.eventService.addEvent(this.data).subscribe(
       (response) => {

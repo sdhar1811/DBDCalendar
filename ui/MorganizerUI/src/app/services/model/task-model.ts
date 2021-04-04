@@ -8,5 +8,4 @@ export class TaskModel extends EventModel {
   start: Date = startOfToday();
   dueDate: Date = undefined;
   todoListId: number;
-  calendar = {};
 }
