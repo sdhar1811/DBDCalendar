@@ -39,9 +39,8 @@ public class EventDetailsEntity {
 	@JoinColumn(name = "assignee", referencedColumnName = "profile_id")
 	private List<ProfileEntity> assigneeList = new ArrayList<>();
 	
-	private Timestamp lastUpdatedOn;
+	private Timestamp lastUpdatedOn;	
 	
-	private String color;
 	
 	@ManyToMany
 	@JoinColumn(name = "reminder", referencedColumnName = "reminder_id")
@@ -61,7 +60,7 @@ public class EventDetailsEntity {
 	
 	public EventDetailsEntity(UserDetailsEntity user, String eventTitle, String eventDescription, Timestamp startTime,
 			Timestamp endTime, RecurringModeEntity recurringMode, String location, List<ProfileEntity> assigneeList,
-			Timestamp lastUpdatedOn, String color, List<EventReminderEntity> reminderList, CalendarEntity calendar,
+			Timestamp lastUpdatedOn, List<EventReminderEntity> reminderList, CalendarEntity calendar,
 			boolean allDayEvent) {
 		super();
 		this.user = user;
@@ -72,8 +71,7 @@ public class EventDetailsEntity {
 		this.recurringMode = recurringMode;
 		this.location = location;
 		this.assigneeList = assigneeList;
-		this.lastUpdatedOn = lastUpdatedOn;
-		this.color = color;
+		this.lastUpdatedOn = lastUpdatedOn;		
 		this.reminderList = reminderList;
 		this.calendar = calendar;
 		this.allDayEvent = allDayEvent;
@@ -151,17 +149,6 @@ public class EventDetailsEntity {
 	public void setLastUpdatedOn(Timestamp lastUpdatedOn) {
 		this.lastUpdatedOn = lastUpdatedOn;
 	}
-
-
-	public String getColor() {
-		return color;
-	}
-
-
-	public void setColor(String color) {
-		this.color = color;
-	}
-
 
 	public List<ProfileEntity> getAssigneeList() {
 		return assigneeList;

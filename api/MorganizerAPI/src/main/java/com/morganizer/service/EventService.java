@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.morganizer.dto.CalendarResponse;
 import com.morganizer.dto.EventRequest;
 import com.morganizer.dto.ProfileResponse;
 import com.morganizer.entity.CalendarEntity;
@@ -85,10 +86,11 @@ public class EventService {
 			for (EventReminderEntity reminder: event.getReminderList()) {
 				reminderLst.add(reminder.getReminderId());
 			}
+			CalendarResponse calendar = new CalendarResponse(event.getCalendar().getCalendarId(), event.getCalendar().getName(),event.getCalendar().getColor(),0, event.getCalendar().isSelected());	
 			response.add(new EventRequest(event.getUser().getId(), event.getId(), event.getEventTitle(), null,
 					event.getStartTime().toString(), event.getEndTime().toString(), event.getLocation(),
 					event.getEventDescription(), null, event.getRecurringMode().getId(),
-					profileList, event.getLastUpdatedOn().toString(), event.getColor(), reminderLst,event.getCalendar().getCalendarId(),event.isAllDayEvent()));
+					profileList, event.getLastUpdatedOn().toString(), reminderLst,event.getCalendar().getCalendarId(),event.isAllDayEvent(),calendar));
 		}
 		
 		return response;
@@ -114,7 +116,7 @@ public class EventService {
 		EventDetailsEntity event = new EventDetailsEntity(user, eventRequest.getTitle(), eventRequest.getDescription(),
 				startTime, endTime,
 				recurringMode, eventRequest.getLocation(),
-				assigneeList,  lastUpdatedOn, eventRequest.getColor(),reminderList, calendar, eventRequest.isAllDayEvent());
+				assigneeList,  lastUpdatedOn,reminderList, calendar, eventRequest.isAllDayEvent());
 
 		String alertType = "Create Event";
 		if (eventRequest.getEventId() != 0) {
@@ -133,7 +135,7 @@ public class EventService {
 		return new EventRequest(savedEntity.getUser().getId(), savedEntity.getId(), savedEntity.getEventTitle(), null,
 				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
 				savedEntity.getEventDescription(), null, savedEntity.getRecurringMode().getId(),
-				profileList, savedEntity.getLastUpdatedOn().toString(), savedEntity.getColor(), reminders,event.getCalendar().getCalendarId(),event.isAllDayEvent());
+				profileList, savedEntity.getLastUpdatedOn().toString(), reminders,event.getCalendar().getCalendarId(),event.isAllDayEvent(),null);
 	}
 	
 	@Transactional
