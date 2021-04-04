@@ -26,8 +26,8 @@ phases:
       - echo $PWD
       - ls      
       - ng build --prod
-artifacts:
-  files:
-    - "**/*"
-  discard-paths: no
-  base-directory: ui/MorganizerUI/dist/MorganizerUI
+  post_build:
+    commands:
+      - echo moving files to s3 
+      - echo $PWD
+      - aws s3 sync ./dist/MorganizerUI s3://morganized-ui --acl 'public-read' --delete exit
