@@ -1,4 +1,4 @@
-version: 0.1
+version: 0.2
 
 phases:
   # install:
@@ -14,7 +14,9 @@ phases:
     commands:
       - echo installing dependencies...
       - echo $PWD
+      - ls
       - cd ui/MorganizerUI
+      - echo $PWD
       - npm i -g @angular/cli
       - npm install
   build:
@@ -22,7 +24,9 @@ phases:
       # - echo testing...
       - echo building...
       - echo $PWD
+      - ls
       - cd ui/MorganizerUI
+      - echo $PWD
       - ng build --prod
 artifacts:
   files:
