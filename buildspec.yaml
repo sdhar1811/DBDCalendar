@@ -24,12 +24,10 @@ phases:
       # - echo testing...
       - echo building...
       - echo $PWD
-      - ls
-      - cd ui/MorganizerUI
-      - echo $PWD
+      - ls      
       - ng build --prod
 artifacts:
   files:
     - "**/*"
   discard-paths: no
-  base-directory: ui/MorganizerUI/dist/MorganizerUI
+  base-directory: dist/MorganizerUI
