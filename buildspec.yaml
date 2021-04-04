@@ -30,4 +30,4 @@ phases:
     commands:
       - echo moving files to s3 
       - echo $PWD
-      - aws s3 sync ./dist/MorganizerUI s3://morganized-ui --acl 'public-read' --delete exit
+      - aws s3 sync ./dist/MorganizerUI s3://morganized-ui --acl 'public-read' --delete
