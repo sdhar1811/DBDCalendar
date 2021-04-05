@@ -120,6 +120,7 @@ export class LeftPanelComponent implements OnInit {
     this.profileService.deleteProfile(profileToDelete).subscribe(
       () => {
         this.fetchProfiles();
+        this.emitCalendarColorChange.emit(null);
       },
       (error) => {
         console.log('Could not delete profile:: ' + error);

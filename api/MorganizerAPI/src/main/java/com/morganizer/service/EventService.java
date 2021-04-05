@@ -142,5 +142,16 @@ public class EventService {
 	public void deleteEventByCalendarId(long calendarId) {
 		this.eventDetailsRepository.deleteByCalendar_calendarId(calendarId);
 	}
+	
+	
+	public void deleteAssignee(ProfileEntity profile) {
+		List<EventDetailsEntity> events = this.eventDetailsRepository.findByAssigneeList_profileId(profile.getProfileId());
+		
+		for(EventDetailsEntity event: events) {
+			event.getAssigneeList().remove(profile);
+			eventDetailsRepository.save(event);
+		}
+		
+	}
 
 }
