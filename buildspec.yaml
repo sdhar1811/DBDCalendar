@@ -30,13 +30,13 @@ phases:
       - echo moving files to s3 
       - echo $PWD       
       - aws s3 sync ./ui/MorganizerUI/dist/MorganizerUI s3://morganized-ui --acl 'public-read' --delete
-      - mkdir target
+      # - mkdir target
       - ls ./api/MorganizerAPI/target
-      - mv ./api/MorganizerAPI/target/morganizerAPI-0.0.1-SNAPSHOT.jar application.jar
+      - mv ./api/MorganizerAPI/target ./
       # - aws s3 sync ./api/MorganizerAPI/target s3://elasticbeanstalk-us-east-2-094219252891
 artifacts:
   files: 
-    - application.jar
+    - target/**/*
 
 
 
