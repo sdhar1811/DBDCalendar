@@ -25,10 +25,16 @@ phases:
       - cd api/MorganizerAPI
       - mvn clean install            
       - cd ../..
+      - mv ./api/MorganizerAPI/target/morganizerAPI-0.0.1-SNAPSHOT.jar ./target/morganizerAPI-0.0.1-SNAPSHOT.jar
   post_build:
     commands:
       - echo moving files to s3 
       - echo $PWD 
       - ls ./api/MorganizerAPI
       - aws s3 sync ./ui/MorganizerUI/dist/MorganizerUI s3://morganized-ui --acl 'public-read' --delete
-      - aws s3 sync ./api/MorganizerAPI/target s3://elasticbeanstalk-us-east-2-094219252891
+      # - aws s3 sync ./api/MorganizerAPI/target s3://elasticbeanstalk-us-east-2-094219252891
+artifacts:
+  files: target/morganizerAPI-0.0.1-SNAPSHOT.jar
+  
+
+
