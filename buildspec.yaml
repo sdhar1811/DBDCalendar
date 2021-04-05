@@ -29,6 +29,6 @@ phases:
     commands:
       - echo moving files to s3 
       - echo $PWD 
-      - ls ./api
+      - ls ./api/MorganizerAPI
       - aws s3 sync ./ui/MorganizerUI/dist/MorganizerUI s3://morganized-ui --acl 'public-read' --delete
       - aws s3 sync ./api/MorganizerAPI/target s3://elasticbeanstalk-us-east-2-094219252891
