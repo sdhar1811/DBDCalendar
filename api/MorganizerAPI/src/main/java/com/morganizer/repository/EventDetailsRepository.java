@@ -12,4 +12,8 @@ public interface EventDetailsRepository extends JpaRepository<EventDetailsEntity
     
 	List<EventDetailsEntity> findByUserId(Long userId);
 	void deleteByCalendar_calendarId(Long calendarId);
+	
+	List<EventDetailsEntity> findByAssigneeList_profileId(Long assigneeId);
+	
+	
 }

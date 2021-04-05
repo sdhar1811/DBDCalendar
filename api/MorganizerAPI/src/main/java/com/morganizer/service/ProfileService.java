@@ -21,11 +21,17 @@ public class ProfileService {
 
 	@Autowired
 	private UserDetailsRepository userRepo;
+	
+	@Autowired
+	private EventService eventService;
 
 	public void deleteProfile(Long profileId) {
 
 		try {
-			profileRepository.deleteById(profileId);
+			ProfileEntity profile = this.profileRepository.getOne(profileId);
+			this.eventService.deleteAssignee(profile);
+			
+			this.profileRepository.deleteById(profileId);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
