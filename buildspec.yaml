@@ -28,6 +28,7 @@ phases:
   post_build:
     commands:
       - echo moving files to s3 
-      - echo $PWD
+      - echo $PWD 
+      - ls ./api
       - aws s3 sync ./ui/MorganizerUI/dist/MorganizerUI s3://morganized-ui --acl 'public-read' --delete
-      - aws s3 sync ./api/MorganizerAPI/target/morganizerAPI-0.0.1-SNAPSHOT.jar s3://elasticbeanstalk-us-east-2-094219252891/morganizerAPI-0.0.1-SNAPSHOT.jar
+      - aws s3 sync ./api/MorganizerAPI/target s3://elasticbeanstalk-us-east-2-094219252891
