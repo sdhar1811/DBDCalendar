@@ -17,6 +17,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { EventService } from '../services/event.service';
 import { endOfToday, startOfDay, startOfToday } from 'date-fns';
 import { TaskModel } from '../services/model/task-model';
+import { MyCalendarModel } from '../services/model/mycalendar-model';
 
 @Component({
   selector: 'app-to-do-list',
@@ -57,6 +58,7 @@ export class ToDoListComponent implements OnInit {
   taskTitle: string;
   tasks = [];
   selectedIndex = 0;
+  myCal: any;
 
   constructor(
     public dialog: MatDialog,
@@ -150,7 +152,9 @@ export class ToDoListComponent implements OnInit {
     this.selectedTodoList.value.tasks.push(task);
 
     //task.calendarId = default calendar ID
-    //task.calendar = {calendarId = "", name = "", color = ""}
+    let defaultCal =new MyCalendarModel();
+    defaultCal.calendarId = this.storeService.loggedInUser?.defaultCalendarId;
+    task.calendar = defaultCal;
     //task.calendar = this.storeService.defaultCalendar;
     //TODO:set default calendar here
 

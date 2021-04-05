@@ -169,6 +169,10 @@ export class CreateEventComponent implements OnInit {
   compareAssigneeObjects(obj1, obj2) {
     return obj1 && obj2 ? obj1.profileId === obj2.profileId : obj1 === obj2;
   }
+
+  compareCalendarObjects(obj1, obj2) {
+    return obj1 && obj2 ? obj1.calendarId === obj2.calendarId : obj1 === obj2;
+  }
 }
 
 export const DATETIME_WITHOUT_SECONDS_FORMAT = 'MM-DD-YYYY, hh:mm A';
