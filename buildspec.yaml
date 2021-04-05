@@ -36,7 +36,7 @@ phases:
       # - aws s3 sync ./api/MorganizerAPI/target s3://elasticbeanstalk-us-east-2-094219252891
 artifacts:
   files: 
-    - target/**/*
+    - target/morganizerAPI-0.0.1-SNAPSHOT.jar
 
 
 
