@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" style="font-size: large">
   <div class="row" style="width: 100%">
-    <div class="col-md-2 col-lg-2 col-xl-2 align-self-center">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 align-self-center">
       <button mat-icon-button aria-label="menu icon">
         <mat-icon>menu</mat-icon>
       </button>
@@ -8,12 +8,12 @@
     </div>
     <div
       *ngIf="loggedInUser"
-      class="col-md-9 col-lg-9 col-xl-9 align-self-center"
+      class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 align-self-center"
     >
       <app-calendar-control></app-calendar-control>
     </div>
     <div
-      class="col-md-1 col-lg-1 col-xl-1 align-self-center"
+      class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 align-self-center"
       style="text-align: end"
     >
       <div *ngIf="loggedInUser">
