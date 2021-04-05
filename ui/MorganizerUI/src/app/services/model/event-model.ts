@@ -11,7 +11,7 @@ export class EventModel {
   assigneeList = [];
   lastUpdatedOn: string;
   color: any;
-  calendarId: number;
+  // calendarId: number;
   reminderList: number[] = [];
   allDayEvent: boolean;
   calendar: MyCalendarModel;

@@ -20,7 +20,7 @@ export interface MyCalendars {
 export class LeftPanelComponent implements OnInit {
   @Output() emitSelectedProfiles = new EventEmitter();
   @Output() emitSelectedCalendars = new EventEmitter();
-  @Output() emitCalendarColorChange = new EventEmitter();
+  @Output() triggerCalendarUpdate = new EventEmitter();
 
   profiles: ProfileModel[] = [];
   mycalendars: MyCalendarModel[] = [];
@@ -120,7 +120,7 @@ export class LeftPanelComponent implements OnInit {
     this.profileService.deleteProfile(profileToDelete).subscribe(
       () => {
         this.fetchProfiles();
-        this.emitCalendarColorChange.emit(null);
+        this.triggerCalendarUpdate.emit(null);
       },
       (error) => {
         console.log('Could not delete profile:: ' + error);
@@ -171,6 +171,11 @@ export class LeftPanelComponent implements OnInit {
   }
   updateCalendarColor(calendar) {
     this.updateCalendar(calendar);
-    this.emitCalendarColorChange.emit(null);
+    this.triggerCalendarUpdate.emit(null);
+  }
+
+  updateProfileColor(profile) {
+    this.updateProfile(profile);
+    this.triggerCalendarUpdate.emit(null);
   }
 }

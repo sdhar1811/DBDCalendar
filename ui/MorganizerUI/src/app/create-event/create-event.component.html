@@ -49,10 +49,10 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Choose Calendar</mat-label>
-      <mat-select [(ngModel)]="data.calendarId" required>
+      <mat-select [compareWith]="compareCalendarObjects" [(ngModel)]="data.calendar" required>
         <mat-option
           *ngFor="let calendar of calendarList"
-          [value]="calendar.calendarId"
+          [value]="calendar"
           >{{ calendar.name }}</mat-option
         >
       </mat-select>

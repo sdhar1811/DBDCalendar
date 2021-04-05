@@ -1,4 +1,4 @@
-<mat-card [@addprofileInOutAnimation] class="addprofile-panel">
+<div [@addprofileInOutAnimation] class="addprofile-panel">
   <div class="flex-vertical">
     <div
       class="row justify-content-between"
@@ -26,7 +26,7 @@
           <input matInput placeholder="Enter name" [(ngModel)]="profileModel.name" />
         </mat-form-field>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2" >
         <div>
           <ngx-colors
             ngx-colors-trigger
@@ -80,4 +80,4 @@
       Add Profile
     </button>
   </div>
-</mat-card>
+</div>

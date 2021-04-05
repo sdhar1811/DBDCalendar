@@ -3,7 +3,7 @@
     <app-left-panel
       (emitSelectedProfiles)="receiveSelectedProfiles($event)"
       (emitSelectedCalendars)="receiveSelectedCalendars($event)"
-      (emitCalendarColorChange)="fetchAllEvents()"
+      (triggerCalendarUpdate)="fetchAllEvents()"
     ></app-left-panel>
   </div>
   <div

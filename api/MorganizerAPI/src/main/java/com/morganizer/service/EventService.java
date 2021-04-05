@@ -100,7 +100,7 @@ public class EventService {
 		UserDetailsEntity user = userRepo.getOne(eventRequest.getUserId());
 		RecurringModeEntity recurringMode = recurringModeRepository.getOne(eventRequest.getRecurringModeId());
 		List<ProfileEntity> assigneeList = new ArrayList<>();
-		CalendarEntity calendar = calendarRepository.getOne(eventRequest.getCalendarId());
+		CalendarEntity calendar = calendarRepository.getOne(eventRequest.getCalendar().getCalendarId());
 		for (ProfileResponse assignee: eventRequest.getAssigneeList()) {
 			assigneeList.add(profileRepository.getOne(assignee.getProfileId()));
 		}
