@@ -1,18 +1,12 @@
 version: 0.2
 
 phases:
-  # install:
-  #   commands:
-  #     - echo installing nodejs...
-  #     - curl -sL https://deb.nodesource.com/setup_12.x | bash -
-  #     - apt-get install -y nodejs
-  #     - echo installing yarn...
-  #     - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-  #     - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-  #     - apt install --no-install-recommends yarn
+  install:
+    runtime-versions:
+      java: corretto8    
   pre_build:
     commands:
-      - echo installing dependencies...
+      - echo installing angular dependencies...
       - echo $PWD
       - ls
       - cd ui/MorganizerUI
@@ -22,12 +16,22 @@ phases:
   build:
     commands:
       # - echo testing...
-      - echo building...
+      - echo building angular application...
       - echo $PWD
       - ls      
       - ng build --prod
+      - echo building maven project      
+      - cd ../..
+      - cd api/MorganizerAPI
+      - mvn clean install      
+      - mv ./target ../..
+      - cd ../..
   post_build:
     commands:
       - echo moving files to s3 
       - echo $PWD
-      - aws s3 sync ./dist/MorganizerUI s3://morganized-ui --acl 'public-read' --delete
+      - aws s3 sync ./ui/MorganizerUI/dist/MorganizerUI s3://morganized-ui --acl 'public-read' --delete
+artifacts:
+  files:
+    - target/*.jar
+  discard-paths: yes
