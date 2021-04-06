@@ -102,7 +102,16 @@
             day.date | calendarDate: "monthViewDayNumber":locale
           }}</span>
         </div>
-        <div *ngFor="let event of day.events">
+        <div
+          *ngFor="
+            let event of day.events
+              | slice
+                : 0
+                : ((showMoreDate | date) === (day.date | date) && showMore
+                    ? undefined
+                    : 2)
+          "
+        >
           <div
             mwlDraggable
             mwlDroppable
@@ -222,6 +231,19 @@
             </div>
           </div>
         </div>
+        <span
+          class="cell-show-more-text"
+          *ngIf="day.events.length > 2"
+          (click)="showMoreEvents(day)"
+          ><strong>
+            {{ day.events.length - 2 }}
+            {{
+              (showMoreDate | date) === (day.date | date) && showMore
+                ? "less"
+                : "more"
+            }}
+          </strong>
+        </span>
       </ng-template>
       <div [ngSwitch]="view">
         <mwl-calendar-month-view

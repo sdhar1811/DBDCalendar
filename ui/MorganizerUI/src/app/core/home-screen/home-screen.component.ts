@@ -101,6 +101,8 @@ export class HomeScreenComponent implements OnInit {
   refresh: Subject<any> = new Subject();
 
   activeDayIsOpen: boolean = false;
+  showMore: boolean = false;
+  showMoreDate: Date;
 
   constructor(
     private modal: NgbModal,
@@ -353,5 +355,9 @@ export class HomeScreenComponent implements OnInit {
     } else {
       return false;
     }
+  }
+  showMoreEvents(day) {
+    this.showMoreDate = day.date;
+    this.showMore = !this.showMore;
   }
 }
