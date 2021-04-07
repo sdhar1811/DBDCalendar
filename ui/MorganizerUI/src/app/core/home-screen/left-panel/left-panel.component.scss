@@ -11,7 +11,19 @@ ul {
   // background: #efefef !important;
   background: rgba(black, 0.2);
 }
-
+::ng-deep .switch.switch-small {
+  height: 14px;
+  min-width: 24px;
+}
+::ng-deep .switch.switch-small small {
+  width: 13px;
+  height: 13px;
+  right: calc(100% - 13px);
+}
+::ng-deep .switch.checked small {
+  right: 0;
+  left: auto;
+}
 .delete-icon {
   margin-top: 5px;
   cursor: pointer;

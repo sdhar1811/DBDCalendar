@@ -1,5 +1,8 @@
 <div class="row">
-  <div class="d-none d-sm-block col-xl-2 col-lg-2 col-md-2 col-sm-2">
+  <div
+    class="d-none d-sm-block col-xl-2 col-lg-2 col-md-2 col-sm-2"
+    style="overflow: auto"
+  >
     <app-left-panel
       (emitSelectedProfiles)="receiveSelectedProfiles($event)"
       (emitSelectedCalendars)="receiveSelectedCalendars($event)"
@@ -97,41 +100,112 @@
     <div *ngIf="!loading" style="margin-top: 3px">
       <!-- custom cell template to display profile, title and time on the calendar in month view-->
       <ng-template #customCellTemplate let-day="day" let-locale="locale">
-        <div class="cal-cell-top">
-          <span class="cal-day-number">{{
-            day.date | calendarDate: "monthViewDayNumber":locale
-          }}</span>
-        </div>
-        <div
-          *ngFor="
-            let event of day.events
-              | slice
-                : 0
-                : ((showMoreDate | date) === (day.date | date) && showMore
-                    ? undefined
-                    : 2)
-          "
-        >
+        <div style="margin-bottom: 2px">
+          <div class="cal-cell-top">
+            <span class="cal-day-number">{{
+              day.date | calendarDate: "monthViewDayNumber":locale
+            }}</span>
+          </div>
           <div
-            mwlDraggable
-            mwlDroppable
-            [dropData]="{ event: event }"
-            dragActiveClass="drag-active"
-            *ngIf="checkLongEvent(event)"
+            *ngFor="
+              let event of getSortedEvents(day.events)
+                | slice
+                  : 0
+                  : ((showMoreDate | date) === (day.date | date) && showMore
+                      ? undefined
+                      : 2)
+            "
           >
-            <div class="cal-cell-content">
-              <div
-                class="cell-long-event"
-                style="--color: {{ event.color.primary }}"
-                [style.border-left]="
-                  checkIfStartDateCell(day, event) ? 'solid 5px' : 'none'
-                "
-              >
-                <!-- to display first cell of multi-day event-->
-                <span *ngIf="checkIfStartDateCell(day, event); else restcells">
+            <div
+              mwlDraggable
+              mwlDroppable
+              [dropData]="{ event: event }"
+              dragActiveClass="drag-active"
+              *ngIf="checkLongEvent(event)"
+            >
+              <div class="cal-cell-content">
+                <div
+                  class="cell-long-event"
+                  style="--color: {{ event.color.primary }}"
+                  [style.border-left]="
+                    checkIfStartDateCell(day, event) ? 'solid 3px' : 'none'
+                  "
+                >
+                  <!-- to display first cell of multi-day event-->
+                  <span
+                    *ngIf="checkIfStartDateCell(day, event); else restcells"
+                  >
+                    <div
+                      class="cell-profile-dot-container"
+                      style="margin-right: 0px"
+                      *ngIf="
+                        event.assigneeList && event.assigneeList.length > 0
+                      "
+                    >
+                      <span
+                        *ngFor="let assignee of event.assigneeList"
+                        class="cell-profile-dot mat-elevation-z2"
+                        [style.background]="assignee.color"
+                        matTooltip="{{ assignee.name }}"
+                      ></span>
+                    </div>
+                    <span>
+                      <span>
+                        <small
+                          *ngIf="!event.allDay"
+                          style="font-weight: 800; padding-left: 6px"
+                          >{{ event.start | date: "hh:mm aa" }} -
+                        </small>
+                      </span>
+                      <small
+                        class="title"
+                        style="margin-left: 3px; font-weight: 500"
+                        >{{ event.title }}</small
+                      >
+                    </span>
+                  </span>
+                  <!-- to display rest of the cells of multi day event-->
+                  <ng-template #restcells>
+                    <div
+                      class="cell-profile-dot-container"
+                      style="margin: 0px"
+                      *ngIf="
+                        event.assigneeList && event.assigneeList.length > 0
+                      "
+                    >
+                      <span
+                        *ngFor="let assignee of event.assigneeList"
+                        class="cell-profile-dot mat-elevation-z2"
+                        style="visibility: hidden"
+                        matTooltip="{{ assignee.name }}"
+                      ></span>
+                    </div>
+                    <span>
+                      <span>
+                        <small style="font-weight: 500; padding-left: 6px">
+                        </small>
+                      </span>
+                      <small class="title" style="margin-left: 3px"></small>
+                    </span>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+            <div
+              style="margin-left: 1px"
+              mwlDraggable
+              mwlDroppable
+              [dropData]="{ event: event }"
+              dragActiveClass="drag-active"
+              *ngIf="!isLongEvent"
+            >
+              <div class="cal-cell-content">
+                <div
+                  class="cell-title-bar"
+                  style="--color: {{ event.color.primary }}"
+                >
                   <div
                     class="cell-profile-dot-container"
-                    style="margin-right: 0px"
                     *ngIf="event.assigneeList && event.assigneeList.length > 0"
                   >
                     <span
@@ -141,6 +215,14 @@
                       matTooltip="{{ assignee.name }}"
                     ></span>
                   </div>
+                  <!-- <span>
+                  <small style="font-weight: 500; padding-left: 6px"
+                    >{{ event.start | date: "hh:mm aa" }} -
+                  </small>
+                </span>
+                <small class="title" style="margin-left: 3px">{{
+                  event.title
+                }}</small> -->
                   <span>
                     <span>
                       <small
@@ -155,95 +237,23 @@
                       >{{ event.title }}</small
                     >
                   </span>
-                </span>
-                <!-- to display rest of the cells of multi day event-->
-                <ng-template #restcells>
-                  <div
-                    class="cell-profile-dot-container"
-                    style="margin: 0px"
-                    *ngIf="event.assigneeList && event.assigneeList.length > 0"
-                  >
-                    <span
-                      *ngFor="let assignee of event.assigneeList"
-                      class="cell-profile-dot mat-elevation-z2"
-                      style="visibility: hidden"
-                      matTooltip="{{ assignee.name }}"
-                    ></span>
-                  </div>
-                  <span>
-                    <span>
-                      <small style="font-weight: 500; padding-left: 6px">
-                      </small>
-                    </span>
-                    <small class="title" style="margin-left: 3px"></small>
-                  </span>
-                </ng-template>
-              </div>
-            </div>
-          </div>
-          <div
-            style="margin: 5px"
-            mwlDraggable
-            mwlDroppable
-            [dropData]="{ event: event }"
-            dragActiveClass="drag-active"
-            *ngIf="!isLongEvent"
-          >
-            <div class="cal-cell-content">
-              <div
-                class="cell-title-bar"
-                style="--color: {{ event.color.primary }}"
-              >
-                <div
-                  class="cell-profile-dot-container"
-                  *ngIf="event.assigneeList && event.assigneeList.length > 0"
-                >
-                  <span
-                    *ngFor="let assignee of event.assigneeList"
-                    class="cell-profile-dot mat-elevation-z2"
-                    [style.background]="assignee.color"
-                    matTooltip="{{ assignee.name }}"
-                  ></span>
                 </div>
-                <!-- <span>
-                  <small style="font-weight: 500; padding-left: 6px"
-                    >{{ event.start | date: "hh:mm aa" }} -
-                  </small>
-                </span>
-                <small class="title" style="margin-left: 3px">{{
-                  event.title
-                }}</small> -->
-                <span>
-                  <span>
-                    <small
-                      *ngIf="!event.allDay"
-                      style="font-weight: 800; padding-left: 6px"
-                      >{{ event.start | date: "hh:mm aa" }} -
-                    </small>
-                  </span>
-                  <small
-                    class="title"
-                    style="margin-left: 3px; font-weight: 500"
-                    >{{ event.title }}</small
-                  >
-                </span>
               </div>
             </div>
           </div>
         </div>
-        <span
-          class="cell-show-more-text"
-          *ngIf="day.events.length > 2"
-          (click)="showMoreEvents(day)"
-          ><strong>
-            {{ day.events.length - 2 }}
-            {{
-              (showMoreDate | date) === (day.date | date) && showMore
-                ? "less"
-                : "more"
-            }}
-          </strong>
-        </span>
+        <div class="cell-show-more-text">
+          <span *ngIf="day.events.length > 2" (click)="showMoreEvents(day)"
+            ><strong>
+              {{ day.events.length - 2 }}
+              {{
+                (showMoreDate | date) === (day.date | date) && showMore
+                  ? "less"
+                  : "more"
+              }}
+            </strong>
+          </span>
+        </div>
       </ng-template>
       <div [ngSwitch]="view">
         <mwl-calendar-month-view
