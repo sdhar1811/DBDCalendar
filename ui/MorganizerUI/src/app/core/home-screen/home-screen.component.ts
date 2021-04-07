@@ -101,6 +101,8 @@ export class HomeScreenComponent implements OnInit {
   refresh: Subject<any> = new Subject();
 
   activeDayIsOpen: boolean = false;
+  showMore: boolean = false;
+  showMoreDate: Date;
 
   constructor(
     private modal: NgbModal,
@@ -353,5 +355,22 @@ export class HomeScreenComponent implements OnInit {
     } else {
       return false;
     }
+  }
+  showMoreEvents(day) {
+    this.showMoreDate = day.date;
+    this.showMore = !this.showMore;
+  }
+  /**
+   * Below method is used to display the long spanning events first
+   */
+  getSortedEvents(events: CalendarEvent[]) {
+    events.sort((a, b) =>
+      new Date(a.start).getTime() - new Date(a.end).getTime() >
+      new Date(b.start).getTime() - new Date(b.end).getTime()
+        ? 1
+        : -1
+    );
+
+    return events;
   }
 }
