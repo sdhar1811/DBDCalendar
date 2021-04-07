@@ -3,6 +3,8 @@ package com.morganizer.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.morganizer.dto.ResetRequest;
+import com.morganizer.entity.UserCredentials;
 import com.morganizer.entity.UserDetailsEntity;
 import com.morganizer.model.UserModel;
 import com.morganizer.service.LoginService;
@@ -36,6 +38,11 @@ public class UserController {
 	@GetMapping("/role")
 	public void fetchRoles(@RequestParam String username) throws Exception {
 		userSignupService.fetchUserRole(username);
+	}
+	
+	@GetMapping("/reset/qna/{username}")
+	public ResetRequest fetchResetUserDetails(@PathVariable String username)throws Exception {
+		return loginService.getResetUserDetails(username);
 	}
 
 }

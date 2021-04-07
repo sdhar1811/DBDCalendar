@@ -5,6 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 
 @Entity(name = "login_cred")
 public class UserCredentials {
@@ -19,7 +24,11 @@ public class UserCredentials {
 	
 	private String email;
 	
+	@ManyToOne
+	@JoinColumn(name = "questionid", referencedColumnName = "questionid")
+	private ResetQuestionsEntity questionid;
 	
+	private String answer;
 
 	public UserCredentials() {
 		
@@ -30,6 +39,19 @@ public class UserCredentials {
 		this.hash = hash;
 		this.salt = salt;
 		this.email = email;
+	}
+	
+	
+
+	public UserCredentials(String username, String hash, String salt, String email, ResetQuestionsEntity questionid,
+			String answer) {
+		super();
+		this.username = username;
+		this.hash = hash;
+		this.salt = salt;
+		this.email = email;
+		this.questionid = questionid;
+		this.answer = answer;
 	}
 
 	public String getUsername() {
@@ -63,4 +85,22 @@ public class UserCredentials {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public ResetQuestionsEntity getQuestionid() {
+		return questionid;
+	}
+
+	public void setQuestionid(ResetQuestionsEntity questionid) {
+		this.questionid = questionid;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+	
+	
 }

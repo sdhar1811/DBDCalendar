@@ -6,7 +6,8 @@ export interface IAppConfig {
   login: string;
   logout: string;
   register: string;
-  resetpassword: string;
+  resetPassUsername: any;
+  resetPassword: string;
   task;
   createTask: string;
   fetchAllTasks: any;
@@ -30,7 +31,8 @@ export const APPCONFIG: IAppConfig = {
   login: '/user/login',
   logout: '/user/logout',
   register: '/user/register',
-  resetpassword: 'user/resetpassword',
+  resetPassword: '/user/reset',
+  resetPassUsername: (userName: string) => `/qna/${userName}`,
   task: '/todoList',
   createTask: '/create',
   addTasks: '/add/tasks',
