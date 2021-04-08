@@ -21,6 +21,7 @@ import { EventModel } from 'src/app/services/model/event-model';
 import { StoreService } from 'src/app/services/store.service';
 import { CustomEventTitleFormatter } from './custom-event-title-formatter.provider';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { EventDetailsDialogComponent } from './event-details-dialog/event-details-dialog.component';
 
 // const colors: any = {
 //   red: {
@@ -200,7 +201,7 @@ export class HomeScreenComponent implements OnInit {
       ) {
         this.activeDayIsOpen = false;
       } else {
-        this.activeDayIsOpen = true;
+        // this.activeDayIsOpen = true;
       }
       this.viewDate = date;
       this.storeService.calendarDayClicked.next(this.viewDate);
@@ -372,5 +373,16 @@ export class HomeScreenComponent implements OnInit {
     );
 
     return events;
+  }
+  showEventDetails(event) {
+    const dialog = this.dialog.open(EventDetailsDialogComponent, {
+      data: event,
+      width: '500px',
+    });
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.handleEvent(data, event);
+      }
+    });
   }
 }
