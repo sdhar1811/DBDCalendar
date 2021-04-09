@@ -26,6 +26,9 @@
   font-size: x-large;
 }
 .event-duration {
-  font-size: large;
+  font-size: medium;
   color: gray;
+}
+::ng-deep .mat-dialog-container {
+  padding-top: 6px;
 }

@@ -2,7 +2,7 @@
   <div class="d-flex flex-row-reverse">
     <div class="p-2">
       <mat-icon
-        class="material-icons.md-18"
+        class="material-icons md-18"
         style="cursor: pointer"
         matTooltip="Close"
         (click)="closeDialog()"
@@ -11,7 +11,7 @@
     </div>
     <div class="p-2">
       <mat-icon
-        class="material-icons.md-18"
+        class="material-icons md-18"
         style="cursor: pointer"
         matTooltip="Delete Event"
         (click)="editEvent('Deleted')"
@@ -20,7 +20,7 @@
     </div>
     <div class="p-2">
       <mat-icon
-        class="material-icons.md-18"
+        class="material-icons md-18"
         style="cursor: pointer"
         matTooltip="Edit Event"
         (click)="editEvent('Edited')"
@@ -38,7 +38,8 @@
     <div class="col-md-2"></div>
     <div class="col-md-10">
       <span class="event-duration"
-        >{{ event.start | date }} - {{ event.end | date }}</span
+        >{{ event.start | date }},{{ event.start | date: "hh:mm aa" }} -
+        {{ event.end | date }},{{ event.end | date: "hh:mm aa" }}</span
       >
     </div>
   </div>
@@ -61,9 +62,17 @@
       ></span>
     </div>
   </div>
+  <div class="row" *ngIf="event.meta.eventModel.location">
+    <div class="col-md-2">
+      <mat-icon class="material-icons md-18"> place </mat-icon>
+    </div>
+    <div class="col-md-10">
+      <div>{{ event.meta.eventModel.location }}</div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-2">
-      <mat-icon class="material-icons"> event </mat-icon>
+      <mat-icon class="material-icons md-18"> event </mat-icon>
     </div>
     <div class="col-md-10">
       <div>{{ event.meta.eventModel.calendar.name }}</div>
@@ -71,7 +80,7 @@
   </div>
   <div class="row" *ngIf="event.meta.eventModel.description">
     <div class="col-md-2">
-      <mat-icon class="material-icons"> notes </mat-icon>
+      <mat-icon class="material-icons md-18"> notes </mat-icon>
     </div>
     <div class="col-md-10">
       <div>{{ event.meta.eventModel.description }}</div>

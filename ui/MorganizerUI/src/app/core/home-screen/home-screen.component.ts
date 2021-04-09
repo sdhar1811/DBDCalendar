@@ -378,6 +378,7 @@ export class HomeScreenComponent implements OnInit {
     const dialog = this.dialog.open(EventDetailsDialogComponent, {
       data: event,
       width: '500px',
+      panelClass: ['animate__animated', 'animate__slideInUp'],
     });
     dialog.afterClosed().subscribe((data) => {
       if (data) {
