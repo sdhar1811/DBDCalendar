@@ -4,7 +4,9 @@ import { StoreService } from 'src/app/services/store.service';
 import { ProfileModel } from 'src/app/services/model/profile-model';
 import { MyCalendarModel } from 'src/app/services/model/mycalendar-model';
 import { MyCalendarService } from 'src/app/services/mycalendar.service';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
+import { AddProfileComponent } from 'src/app/add-profile/add-profile.component';
 
 export interface MyCalendars {
   name: string;
@@ -29,10 +31,12 @@ export class LeftPanelComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private storeService: StoreService,
-    private calendarService: MyCalendarService
+    private calendarService: MyCalendarService,
+    private dialog: MatDialog
   ) {
     this.profileService.addProfileEvent.subscribe((profile) => {
       this.profiles.push(profile);
+      this.profiles.sort((a, b) => (a.name > b.name ? 1 : -1));
     });
   }
 
@@ -177,5 +181,18 @@ export class LeftPanelComponent implements OnInit {
   updateProfileColor(profile) {
     this.updateProfile(profile);
     this.triggerCalendarUpdate.emit(null);
+  }
+
+  addProfile(){
+    console.log("Inside add profile");
+    // this.storeService.createProfileEmitter.next(true);
+    let profileModel = new ProfileModel();
+    // eventModel.color = { primary: '', secondary: '' };
+    profileModel.userId = this.storeService.loggedInUser?.id;
+    let dialogRef = this.dialog.open(AddProfileComponent, {
+      data: profileModel,
+      width: '600px',
+      height: '80%',
+    });
   }
 }

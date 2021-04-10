@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ProfileModel } from '../services/model/profile-model';
 import { ProfileService } from '../services/profile.service';
 import { LeftPanelComponent } from '../core/home-screen/left-panel/left-panel.component';
 import { StoreService } from '../services/store.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-profile',
@@ -46,25 +47,27 @@ export class AddProfileComponent implements OnInit {
     '#795548',
     '#607d8b',
   ];
-  @Output() closeTaskPanel = new EventEmitter();
 
   constructor(
+    private dialogRef: MatDialogRef<AddProfileComponent>,
     private profileService: ProfileService,
     private storeService: StoreService,
+    @Inject(MAT_DIALOG_DATA) public data
     ) 
   {
-    this.profileModel = new ProfileModel();
-    this.profileModel.color = this.color;
+    this.profileModel = data;
+    let letters = '0123456789ABCDEF';
+    let randomcolor = '#';
+    for (var i = 0; i < 6; i++) {
+      randomcolor += letters[Math.floor(Math.random() * 16)];
+    }
+    this.profileModel.color = randomcolor;
 
   }
 
   ngOnInit(): void {}
-
-  changeComplete(event) {
-    // this.state.hex = event.color.hex;
-  }
   close() {
-    this.closeTaskPanel.emit(null);
+    this.dialogRef.close(this.profileModel);
   }
 
   addProfile(){
@@ -72,15 +75,7 @@ export class AddProfileComponent implements OnInit {
     this.profileService.addProfile(this.profileModel).subscribe((response:ProfileModel)=>{
       //set all fields of profileModel to '' or undefined or null
       this.profileService.addProfileEvent.next(response);
-      this.profileModel.name = undefined;
-      this.profileModel.birthDate = undefined;
-      this.profileModel.color = this.color;
-      this.profileModel.email = undefined;
-      this.profileModel.gender = undefined;
-      this.profileModel.userId = undefined;
-      this.profileModel.profileId = undefined;
-      this.profileModel.selected = undefined;
-      this.profileModel.phoneNumber = undefined;
+      this.close();
     })
   }
 }
