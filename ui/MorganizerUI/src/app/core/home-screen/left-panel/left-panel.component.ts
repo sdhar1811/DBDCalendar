@@ -35,7 +35,8 @@ export class LeftPanelComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.profileService.addProfileEvent.subscribe((profile) => {
-      this.profiles.push(profile);
+      this.profiles = this.profiles.filter((profileModel)=>profileModel.profileId != profile.profileId);
+      this.profiles.push(profile);      
       this.profiles.sort((a, b) => (a.name > b.name ? 1 : -1));
     });
   }
@@ -192,7 +193,19 @@ export class LeftPanelComponent implements OnInit {
     let dialogRef = this.dialog.open(AddProfileComponent, {
       data: profileModel,
       width: '600px',
-      height: '80%',
+      height: '60%',
+    });
+  }
+
+  editProfile(profile){
+    let profileModel = new ProfileModel();
+    profileModel = {...profile};
+    console.log("Inside edit profile");    
+    profileModel.userId = this.storeService.loggedInUser?.id;
+    let dialogRef = this.dialog.open(AddProfileComponent, {
+      data: profileModel,
+      width: '600px',
+      height: '60%',
     });
   }
 }

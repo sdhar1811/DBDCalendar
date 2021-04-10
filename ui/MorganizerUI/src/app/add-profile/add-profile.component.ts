@@ -24,9 +24,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   ],
 })
 export class AddProfileComponent implements OnInit {
-  state = { hex: '#f44336' };
+  editFlag: boolean = false;
   color: any = '#673ab7';
-  profileModel: ProfileModel;
   colorPalette: Array<string> = [
     '#f44336',
     '#e91e63',
@@ -52,22 +51,26 @@ export class AddProfileComponent implements OnInit {
     private dialogRef: MatDialogRef<AddProfileComponent>,
     private profileService: ProfileService,
     private storeService: StoreService,
-    @Inject(MAT_DIALOG_DATA) public data
-    ) 
-  {
-    this.profileModel = data;
+    @Inject(MAT_DIALOG_DATA) public profileModel
+    ) {}
+
+  ngOnInit(): void {
+    console.log(this.profileModel.name);
+    console.log(this.profileModel.name == null);
+    this.editFlag = (this.profileModel.name == undefined ? false : true);
+    console.log(this.editFlag);
     let letters = '0123456789ABCDEF';
     let randomcolor = '#';
     for (var i = 0; i < 6; i++) {
       randomcolor += letters[Math.floor(Math.random() * 16)];
     }
-    this.profileModel.color = randomcolor;
-
+    if (!this.editFlag){
+      this.profileModel.color = randomcolor;
+    }
+    
   }
-
-  ngOnInit(): void {}
   close() {
-    this.dialogRef.close(this.profileModel);
+    this.dialogRef.close();
   }
 
   addProfile(){
