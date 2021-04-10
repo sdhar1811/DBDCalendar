@@ -5,7 +5,7 @@ export class ProfileModel {
     email: string;
     phoneNumber: string;
     gender: string;
-    birthDate: string;
+    birthdate: string;
     color: string;
     selected: boolean;
   }

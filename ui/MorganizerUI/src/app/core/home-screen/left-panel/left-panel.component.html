@@ -16,8 +16,16 @@
       #profilePanel
       [ngClass]="profilePanel.expanded ? 'expanded-profile-panel ' : null"
     >
+    
       <mat-expansion-panel-header>
-        <mat-panel-title> <strong>My Profiles</strong> </mat-panel-title>
+        <mat-panel-title> <strong>My Profiles</strong></mat-panel-title>
+        <mat-icon
+          (click)="$event.stopPropagation();addProfile()"
+          matTooltip="Add Profile"
+          class="material-icons md-24 task-icon"
+          style="margin-right: 16px;"
+          >person_add</mat-icon
+        >
       </mat-expansion-panel-header>
       <table style="width: 100%">
         <tr *ngFor="let profile of profiles">
@@ -65,7 +73,7 @@
                   Color
                 </ngx-colors>
               </div>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="editProfile(profile)">
                 <span>Edit Profile</span>
               </button>
             </mat-menu>

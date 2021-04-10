@@ -9,7 +9,8 @@
         color: gray;
       "
     >
-      <div class="col-md-10">Add Profile</div>
+      <div class="col-md-10" *ngIf="!editFlag">Add Profile</div>
+      <div class="col-md-10" *ngIf="editFlag">Edit Profile</div>
       <div class="col-md-2" class="task-panel-close">
         <mat-icon
           (click)="close()"
@@ -61,7 +62,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Date of Birth</mat-label>
-      <input matInput [matDatepicker]="datepicker" [(ngModel)]="profileModel.birthDate" />
+      <input matInput [matDatepicker]="datepicker" [(ngModel)]="profileModel.birthdate" />
       <mat-datepicker-toggle
         matSuffix
         [for]="datepicker"
@@ -76,8 +77,25 @@
       </mat-datepicker>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" style="margin: 0.5em;" (click)="addProfile()">
-      Add Profile
-    </button>
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin: 0.5em"
+        (click)="close()"
+      >
+        Cancel
+      </button>
+      
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin: 0.5em"
+        (click)="addProfile()"
+      >
+        <span *ngIf="!editFlag">Create Profile</span>
+        <span *ngIf="editFlag">Update Profile</span>
+      </button>
+    </div>
   </div>
 </div>
