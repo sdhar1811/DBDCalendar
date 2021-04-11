@@ -92,9 +92,8 @@
     </div>
     <br /> -->
     <!-- <ng-template #loading> -->
-    <div *ngIf="loading" class="text-center">
-      <i class="fas fa-spin fa-spinner fa-5x"></i> <br />
-      Loading events...
+    <div *ngIf="loading" class="text-center" style="margin-left:40%; margin-top:20%">
+      <mat-spinner aria-label="Loading..."></mat-spinner>
     </div>
     <!-- </ng-template> -->
     <div *ngIf="!loading" style="margin-top: 3px">
