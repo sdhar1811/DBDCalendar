@@ -16,7 +16,6 @@
       #profilePanel
       [ngClass]="profilePanel.expanded ? 'expanded-profile-panel ' : null"
     >
-    
       <mat-expansion-panel-header>
         <mat-panel-title> <strong>My Profiles</strong></mat-panel-title>
         <mat-icon
@@ -32,6 +31,7 @@
           <td style="width: 15%; vertical-align: top">
             <ui-switch
               size="small"
+              defaultBgColor="#F5F5F5"
               [(ngModel)]="profile.selected"
               (click)="updateProfile(profile)"
               switchColor="{{ profile.color }}"
@@ -103,6 +103,7 @@
           <td style="width: 15%; vertical-align: top">
             <ui-switch
               size="small"
+              defaultBgColor="#F5F5F5"
               [(ngModel)]="calendar.selected"
               (click)="updateCalendar(calendar)"
               switchColor="{{ calendar.color }}"
@@ -110,7 +111,8 @@
             </ui-switch>
           </td>
           <td style="width: 55%; vertical-align: middle">
-            {{ calendar.name }}
+            <span (keyup)="changeValue('name', $event)" (blur)="renameCalendar(calendar,'name', $event)"
+              contenteditable="true">{{calendar.name}}</span>
           </td>
           <td style="width: 20%">
             <mat-icon
@@ -144,8 +146,8 @@
                   Color
                 </ngx-colors>
               </div>
-              <button mat-menu-item>
-                <span>Display this only</span>
+              <button mat-menu-item (click)="renameCalendar(calendar)">
+                <span>Rename Calendar</span>
               </button>
               <button mat-menu-item>
                 <span>Export this Calendar</span>

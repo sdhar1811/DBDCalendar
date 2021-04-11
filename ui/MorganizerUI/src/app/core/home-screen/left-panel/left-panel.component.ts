@@ -27,6 +27,7 @@ export class LeftPanelComponent implements OnInit {
   profiles: ProfileModel[] = [];
   mycalendars: MyCalendarModel[] = [];
   calendarTitle: string;
+  editField: string;
 
   constructor(
     private profileService: ProfileService,
@@ -36,7 +37,7 @@ export class LeftPanelComponent implements OnInit {
   ) {
     this.profileService.addProfileEvent.subscribe((profile) => {
       this.profiles = this.profiles.filter((profileModel)=>profileModel.profileId != profile.profileId);
-      this.profiles.push(profile);      
+      this.profiles.push(profile);
       this.profiles.sort((a, b) => (a.name > b.name ? 1 : -1));
     });
   }
@@ -200,12 +201,36 @@ export class LeftPanelComponent implements OnInit {
   editProfile(profile){
     let profileModel = new ProfileModel();
     profileModel = {...profile};
-    console.log("Inside edit profile");    
+    console.log("Inside edit profile");
     profileModel.userId = this.storeService.loggedInUser?.id;
     let dialogRef = this.dialog.open(AddProfileComponent, {
       data: profileModel,
       width: '600px',
       height: '60%',
     });
+  }
+
+
+  renameCalendar(calendar:MyCalendarModel, property: string, event: any) {
+    let newCalendar = new MyCalendarModel();
+    const editField = event.target.textContent;
+    newCalendar = {...calendar};
+    newCalendar.name = editField;
+    newCalendar.userId = this.storeService.loggedInUser?.id;
+    this.calendarService.addCalendar(newCalendar).subscribe(
+      (response) => {
+        if (response) {
+          this.fetchCalendars();
+        }
+      },
+      (error) => {
+        console.log('Something went wrong');
+      }
+    );
+
+  }
+
+  changeValue(property: string, event: any) {
+    this.editField = event.target.textContent;
   }
 }
