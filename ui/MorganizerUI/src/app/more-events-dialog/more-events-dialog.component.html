@@ -1,0 +1,63 @@
+<div>
+  <div class="row">
+    <div class="col-md-8 event-day">
+      <span>{{ data.date | date: "E" }}</span>
+    </div>
+    <div class="col-md-4" style="text-align: end">
+      <mat-icon
+        class="material-icons md-18"
+        style="cursor: pointer"
+        matTooltip="Close"
+        (click)="close()"
+        >close</mat-icon
+      >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col" style="text-align: center; font-size: x-large">
+      <span>{{ data.date | date: "d" }}</span>
+    </div>
+  </div>
+  <div
+    mwlDraggable
+    [dropData]="{ event: event }"
+    (dragEnd)="dragEnd($event)"
+    class="cal-cell-content"
+    *ngFor="let event of data.events"
+    (click)="emitEventClicked(event)"
+  >
+    <div class="cell-title-bar" style="--color: {{ event.color.primary }}">
+      <div
+        class="cell-profile-dot-container"
+        *ngIf="event.assigneeList && event.assigneeList.length > 0"
+      >
+        <span
+          *ngFor="let assignee of event.assigneeList"
+          class="cell-profile-dot mat-elevation-z2"
+          [style.background]="assignee.color"
+          matTooltip="{{ assignee.name }}"
+        ></span>
+      </div>
+      <!-- <span>
+    <small style="font-weight: 500; padding-left: 6px"
+      >{{ event.start | date: "hh:mm aa" }} -
+    </small>
+  </span>
+  <small class="title" style="margin-left: 3px">{{
+    event.title
+  }}</small> -->
+      <span>
+        <span>
+          <small
+            *ngIf="!event.allDay"
+            style="font-weight: 800; padding-left: 6px"
+            >{{ event.start | date: "hh:mm aa" }} -
+          </small>
+        </span>
+        <small class="title" style="margin-left: 3px; font-weight: 500">{{
+          event.title
+        }}</small>
+      </span>
+    </div>
+  </div>
+</div>
