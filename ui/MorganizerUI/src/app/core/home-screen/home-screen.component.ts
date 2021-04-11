@@ -1,4 +1,10 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   differenceInCalendarDays,
@@ -23,6 +29,8 @@ import { CustomEventTitleFormatter } from './custom-event-title-formatter.provid
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { EventDetailsDialogComponent } from './event-details-dialog/event-details-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DatePipe } from '@angular/common';
+import { MoreEventsDialogComponent } from 'src/app/more-events-dialog/more-events-dialog.component';
 
 // const colors: any = {
 //   red: {
@@ -119,6 +127,11 @@ export class HomeScreenComponent implements OnInit {
     this.storeService.createEventEmitter.subscribe((isClicked) => {
       if (isClicked) {
         this.addEvent();
+      }
+    });
+    this.storeService.showEventDetailsEmitter.subscribe((event) => {
+      if (event) {
+        this.showEventDetails(event);
       }
     });
   }
@@ -359,8 +372,16 @@ export class HomeScreenComponent implements OnInit {
     }
   }
   showMoreEvents(day) {
-    this.showMoreDate = day.date;
-    this.showMore = !this.showMore;
+    const pipe = new DatePipe('en-us');
+    const target = new ElementRef(
+      document.getElementById('cell_' + pipe.transform(day.date, 'shortDate'))
+    );
+
+    this.dialog.open(MoreEventsDialogComponent, {
+      data: { events: day.events, refElement: target, date: day.date },
+    });
+    // this.showMoreDate = day.date;
+    // this.showMore = !this.showMore;
   }
   /**
    * Below method is used to display the long spanning events first

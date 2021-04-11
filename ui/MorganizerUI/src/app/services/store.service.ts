@@ -11,6 +11,7 @@ export class StoreService {
   calendarViewChange: Subject<any> = new Subject();
   calendarDayClicked: Subject<any> = new Subject();
   createEventEmitter: Subject<any> = new Subject();
+  showEventDetailsEmitter: Subject<any> = new Subject();
 
   data = {};
   constructor() {
