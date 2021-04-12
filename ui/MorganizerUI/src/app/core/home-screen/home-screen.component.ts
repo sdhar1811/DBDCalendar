@@ -22,6 +22,7 @@ import { StoreService } from 'src/app/services/store.service';
 import { CustomEventTitleFormatter } from './custom-event-title-formatter.provider';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { EventDetailsDialogComponent } from './event-details-dialog/event-details-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // const colors: any = {
 //   red: {
@@ -217,7 +218,7 @@ export class HomeScreenComponent implements OnInit {
     // rescheduleEvent = event.meta.eventModel;
     // rescheduleEvent.startTime = newStart;
     // rescheduleEvent.endTime = newEnd;
-
+    this.loading = true;
     if (event['displayed']) {
       event['displayed'] = false;
     }

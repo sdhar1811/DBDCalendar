@@ -61,6 +61,7 @@ import {
   NgxMatNativeDateModule,
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -138,6 +139,7 @@ import { EventDetailsDialogComponent } from './core/home-screen/event-details-di
     DragAndDropModule,
     NgxMatMomentModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {
