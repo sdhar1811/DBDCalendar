@@ -215,6 +215,10 @@
                       matTooltip="{{ assignee.name }}"
                     ></span>
                   </div>
+                  <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
+                    <span matTooltip="No Assignee ">X</span>
+                  </div>
+                  
                   <!-- <span>
                   <small style="font-weight: 500; padding-left: 6px"
                     >{{ event.start | date: "hh:mm aa" }} -
