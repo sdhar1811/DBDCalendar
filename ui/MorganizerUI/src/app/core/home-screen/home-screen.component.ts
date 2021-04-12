@@ -104,6 +104,8 @@ export class HomeScreenComponent implements OnInit {
   activeDayIsOpen: boolean = false;
   showMore: boolean = false;
   showMoreDate: Date;
+  defaultProfileId: number;
+  defaultCalendarId: number;
 
   constructor(
     private modal: NgbModal,
@@ -124,6 +126,8 @@ export class HomeScreenComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchAllEvents();
+    this.defaultProfileId = this.storeService.loggedInUser?.defaultProfileId;
+    this.defaultCalendarId = this.storeService.loggedInUser?.defaultCalendarId;
   }
 
   fetchAllEvents() {
@@ -323,23 +327,27 @@ export class HomeScreenComponent implements OnInit {
   }
 
   updateEventsToDisplay() {
-    function eventFilter(selectedCalendars, selectedProfiles) {
+    function eventFilter(selectedCalendars, selectedProfiles, defaultProfileId) {
       return function (event, index, array) {
         let flag = false;
         if (
           selectedCalendars.includes(event.meta.eventModel.calendar.calendarId)
         ) {
-          event.meta.eventModel.assigneeList.forEach((element) => {
-            if (selectedProfiles.includes(element.profileId)) {
-              flag = true;
-            }
-          });
+          if (selectedProfiles.includes(defaultProfileId) && event.meta.eventModel.assigneeList.length == 0){
+            flag = true;            
+          }else{
+            event.meta.eventModel.assigneeList.forEach((element) => {
+              if (selectedProfiles.includes(element.profileId)) {
+                flag = true;
+              }
+            });
+          }
         }
         return flag;
       };
     }
     this.eventsToDisplay = this.events.filter(
-      eventFilter(this.selectedCalendars, this.selectedProfiles)
+      eventFilter(this.selectedCalendars, this.selectedProfiles, this.defaultProfileId)
     );
   }
   checkLongEvent(event) {
