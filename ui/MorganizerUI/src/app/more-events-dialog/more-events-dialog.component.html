@@ -1,9 +1,9 @@
 <div>
   <div class="row">
-    <div class="col-md-8 event-day">
-      <span>{{ data.date | date: "E" }}</span>
+    <div class="col event-day" style="text-align: center">
+      <span style="position: absolute">{{ data.date | date: "E" }}</span>
     </div>
-    <div class="col-md-4" style="text-align: end">
+    <span>
       <mat-icon
         class="material-icons md-18"
         style="cursor: pointer"
@@ -11,7 +11,7 @@
         (click)="close()"
         >close</mat-icon
       >
-    </div>
+    </span>
   </div>
   <div class="row">
     <div class="col" style="text-align: center; font-size: x-large">
@@ -26,7 +26,11 @@
     *ngFor="let event of data.events"
     (click)="emitEventClicked(event)"
   >
-    <div class="cell-title-bar" style="--color: {{ event.color.primary }}">
+    <div
+      *ngIf="!isLongEvent(event)"
+      class="cell-title-bar"
+      style="--color: {{ event.color.primary }}"
+    >
       <div
         class="cell-profile-dot-container"
         *ngIf="event.assigneeList && event.assigneeList.length > 0"
@@ -38,14 +42,6 @@
           matTooltip="{{ assignee.name }}"
         ></span>
       </div>
-      <!-- <span>
-    <small style="font-weight: 500; padding-left: 6px"
-      >{{ event.start | date: "hh:mm aa" }} -
-    </small>
-  </span>
-  <small class="title" style="margin-left: 3px">{{
-    event.title
-  }}</small> -->
       <span>
         <span>
           <small
@@ -58,6 +54,63 @@
           event.title
         }}</small>
       </span>
+    </div>
+    <div *ngIf="isLongEvent(event)">
+      <div class="float-container" style="width: 100%">
+        <div
+          *ngIf="
+            checkIfMiddleCell(event, data.date) ||
+            checkIfLastCell(event, data.date)
+          "
+          class="arrow-left"
+          style="width: 10%"
+          style="--color: {{ event.color.primary }}"
+        ></div>
+        <div
+          [style.width.%]="checkIfMiddleCell(event, data.date) ? 80 : 90"
+          style="padding-left: 0px; padding-right: 0px"
+        >
+          <div
+            class="cell-long-event"
+            style="--color: {{ event.color.primary }}"
+            [style.border-left]="
+              checkIfFirstCell(event, data.date) ? 'solid 3px' : 'none'
+            "
+          >
+            <div
+              class="cell-profile-dot-container"
+              *ngIf="event.assigneeList && event.assigneeList.length > 0"
+            >
+              <span
+                *ngFor="let assignee of event.assigneeList"
+                class="cell-profile-dot mat-elevation-z2"
+                [style.background]="assignee.color"
+                matTooltip="{{ assignee.name }}"
+              ></span>
+            </div>
+            <span>
+              <span>
+                <small
+                  *ngIf="!event.allDay"
+                  style="font-weight: 800; padding-left: 6px"
+                  >{{ event.start | date: "hh:mm aa" }} -
+                </small>
+              </span>
+              <small class="title" style="margin-left: 3px; font-weight: 500">{{
+                event.title
+              }}</small>
+            </span>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            checkIfMiddleCell(event, data.date) ||
+            checkIfFirstCell(event, data.date)
+          "
+          class="arrow-right"
+          style="--color: {{ event.color.primary }};padding-right:0px;width:10%"
+        ></div>
+      </div>
     </div>
   </div>
 </div>
