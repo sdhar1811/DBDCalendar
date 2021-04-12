@@ -70,6 +70,7 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { CalendarControlComponent } from './core/calendar-control/calendar-control.component';
 import { EventDetailsDialogComponent } from './core/home-screen/event-details-dialog/event-details-dialog.component';
+import { MoreEventsDialogComponent } from './more-events-dialog/more-events-dialog.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { EventDetailsDialogComponent } from './core/home-screen/event-details-di
     CustomDateFormat2,
     CalendarControlComponent,
     EventDetailsDialogComponent,
+    MoreEventsDialogComponent,
   ],
   imports: [
     BrowserModule,

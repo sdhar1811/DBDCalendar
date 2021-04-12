@@ -20,14 +20,18 @@
         >
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-10">
-        <mat-form-field appearance="outline">
+    <div style="width: 100%; display: flex">
+      <div style="width: 90%">
+        <mat-form-field appearance="outline" style="width: 95%">
           <mat-label>Name</mat-label>
-          <input matInput placeholder="Enter name" [(ngModel)]="profileModel.name" />
+          <input
+            matInput
+            placeholder="Enter name"
+            [(ngModel)]="profileModel.name"
+          />
         </mat-form-field>
       </div>
-      <div class="col-md-2" >
+      <div style="width: 10%; text-align: center; position: relative; top: 8px">
         <div>
           <ngx-colors
             ngx-colors-trigger
@@ -52,17 +56,29 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Email ID</mat-label>
-      <input matInput placeholder="Enter your email ID" [(ngModel)]="profileModel.email"/>
+      <input
+        matInput
+        placeholder="Enter your email ID"
+        [(ngModel)]="profileModel.email"
+      />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Phone Number</mat-label>
-      <input matInput placeholder="Enter your phone number" [(ngModel)]="profileModel.phoneNumber"/>
+      <input
+        matInput
+        placeholder="Enter your phone number"
+        [(ngModel)]="profileModel.phoneNumber"
+      />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Date of Birth</mat-label>
-      <input matInput [matDatepicker]="datepicker" [(ngModel)]="profileModel.birthdate" />
+      <input
+        matInput
+        [matDatepicker]="datepicker"
+        [(ngModel)]="profileModel.birthdate"
+      />
       <mat-datepicker-toggle
         matSuffix
         [for]="datepicker"
@@ -86,7 +102,7 @@
       >
         Cancel
       </button>
-      
+
       <button
         mat-raised-button
         color="primary"
