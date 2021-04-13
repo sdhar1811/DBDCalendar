@@ -61,6 +61,7 @@ import {
   NgxMatNativeDateModule,
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -71,6 +72,7 @@ import { CalendarControlComponent } from './core/calendar-control/calendar-contr
 import { EventDetailsDialogComponent } from './core/home-screen/event-details-dialog/event-details-dialog.component';
 import { ViewModeDirective } from './core/home-screen/ViewModeDirective';
 import { EditModeDirective } from './core/home-screen/EditModeDirective';
+import { MoreEventsDialogComponent } from './more-events-dialog/more-events-dialog.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +99,7 @@ import { EditModeDirective } from './core/home-screen/EditModeDirective';
     EventDetailsDialogComponent,
     ViewModeDirective,
     EditModeDirective,
+    MoreEventsDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -142,6 +145,7 @@ import { EditModeDirective } from './core/home-screen/EditModeDirective';
     DragAndDropModule,
     NgxMatMomentModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {

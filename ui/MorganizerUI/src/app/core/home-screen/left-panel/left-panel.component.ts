@@ -28,6 +28,8 @@ export class LeftPanelComponent implements OnInit {
   mycalendars: MyCalendarModel[] = [];
   calendarTitle: string;
   editField: string;
+  defaultProfileId: number;
+  defaultCalendarId: number;
 
   constructor(
     private profileService: ProfileService,
@@ -38,8 +40,50 @@ export class LeftPanelComponent implements OnInit {
     this.profileService.addProfileEvent.subscribe((profile) => {
       this.profiles = this.profiles.filter((profileModel)=>profileModel.profileId != profile.profileId);
       this.profiles.push(profile);
-      this.profiles.sort((a, b) => (a.name > b.name ? 1 : -1));
+      this.sortProfiles();
     });
+  }
+
+  sortProfiles(){
+    this.profiles.sort(profileSort(this.defaultProfileId));
+    function profileSort(defaultProfileId){
+      return function (a, b){
+      if (a.profileId == defaultProfileId){
+        return -1;
+      }
+      if (b.profileId == defaultProfileId){
+        return 1;
+      }
+      if (a.name == b.name){
+        return 0;
+      }
+      if (a.name > b.name){
+        return 1
+      }else{
+        return -1
+      }
+    }};
+  }
+
+  sortCalendars(){
+    this.mycalendars.sort(calendarSort(this.defaultCalendarId));
+    function calendarSort(defaultCalendarId){
+      return function (a, b){
+      if (a.calendarId == defaultCalendarId){
+        return -1;
+      }
+      if (b.calendarId == defaultCalendarId){
+        return 1;
+      }
+      if (a.name == b.name){
+        return 0;
+      }
+      if (a.name > b.name){
+        return 1
+      }else{
+        return -1
+      }
+    }};
   }
 
   fetchProfiles() {
@@ -50,7 +94,7 @@ export class LeftPanelComponent implements OnInit {
           // this.loading = false;
           if (response) {
             this.profiles = response;
-            this.profiles.sort((a, b) => (a.name > b.name ? 1 : -1));
+            this.sortProfiles();
             this.sendSelectedProfiles();
           }
         },
@@ -68,7 +112,7 @@ export class LeftPanelComponent implements OnInit {
         (response) => {
           if (response) {
             this.mycalendars = response;
-            this.mycalendars.sort((a, b) => (a.name > b.name ? 1 : -1));
+            this.sortCalendars();
             this.sendSelectedCalendars();
           }
         },
@@ -82,6 +126,8 @@ export class LeftPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.defaultProfileId = this.storeService.loggedInUser?.defaultProfileId;
+    this.defaultCalendarId = this.storeService.loggedInUser?.defaultCalendarId;
     this.fetchProfiles();
     this.fetchCalendars();
   }
