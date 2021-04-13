@@ -71,6 +71,7 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
 import { CalendarControlComponent } from './core/calendar-control/calendar-control.component';
 import { EventDetailsDialogComponent } from './core/home-screen/event-details-dialog/event-details-dialog.component';
 import { MoreEventsDialogComponent } from './more-events-dialog/more-events-dialog.component';
+import { UserAccountComponent } from './user-account/user-account.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { MoreEventsDialogComponent } from './more-events-dialog/more-events-dial
     CalendarControlComponent,
     EventDetailsDialogComponent,
     MoreEventsDialogComponent,
+    UserAccountComponent,
   ],
   imports: [
     BrowserModule,
