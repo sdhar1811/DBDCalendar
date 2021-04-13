@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morganizer.dto.CalendarRequest;
+import com.morganizer.dto.ProfileRequest;
 import com.morganizer.dto.TodoListRequest;
 import com.morganizer.entity.UserCredentials;
 import com.morganizer.entity.UserDetailsEntity;
@@ -38,6 +39,9 @@ public class UserSignupService {
     CalendarService calendarService;
 	
 	@Autowired
+    ProfileService profileService;
+	
+	@Autowired
 	TodoListService taskService;
 
 
@@ -54,14 +58,20 @@ public class UserSignupService {
 
 			Long calendarId = addDefaultCalendar(user.getId());
 			addDefaultToDoList(user.getId());
-			
+			Long profileId = addDefaultProfile(user);
 			user.setDefaultCalendarId(calendarId);	
-			
+			user.setDefaultProfileId(profileId);
 			encryptPassword(userInfo);
 		}
 	}
 
 	
+	private Long addDefaultProfile(UserDetailsEntity user) {
+		ProfileRequest profileRequest = new ProfileRequest(user.getId(), user.getFirstName(), user.getEmail(), user.getGender(), 
+				user.getPhoneNumber(), user.getBirthdate(), "#2055F8", true );
+		return profileService.addProfile(profileRequest).getProfileId();
+	}
+
 	public Long addDefaultCalendar(Long userId) {
 		CalendarRequest calendarRequest = new CalendarRequest("Home", "#394697", userId, true);
 		calendarService.saveCalendar(calendarRequest);

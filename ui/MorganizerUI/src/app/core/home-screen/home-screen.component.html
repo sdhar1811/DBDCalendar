@@ -79,6 +79,9 @@
                           matTooltip="{{ assignee.name }}"
                         ></span>
                       </div>
+                      <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
+                        <span matTooltip="No Assignee ">X</span>
+                      </div>
                       <span>
                         <span>
                           <small
@@ -109,6 +112,16 @@
                           style="visibility: hidden"
                           matTooltip="{{ assignee.name }}"
                         ></span>
+                      </div>
+                      <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
+                        <span matTooltip="No Assignee " class="mat-elevation-z2"></span>
+                        <span>
+                          <span>
+                            <small style="font-weight: 500; padding-left: 6px">
+                            </small>
+                          </span>
+                          <small class="title" style="margin-left: 3px"></small>
+                        </span>
                       </div>
                       <span>
                         <span>
@@ -146,6 +159,9 @@
                         [style.background]="assignee.color"
                         matTooltip="{{ assignee.name }}"
                       ></span>
+                    </div>
+                    <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
+                      <span matTooltip="No Assignee ">X</span>
                     </div>
                     <!-- <span>
                   <small style="font-weight: 500; padding-left: 6px"
