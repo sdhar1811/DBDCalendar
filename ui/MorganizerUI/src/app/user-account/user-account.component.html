@@ -89,7 +89,7 @@
               <input
                 formControlName="email"
                 matInput
-                variant = "filled"
+                [disabled]= true
               />
               <mat-error *ngIf="accountForm.get('email').errors?.required">
                 <strong> Email Id</strong> is required
@@ -121,7 +121,7 @@
               <input
                 formControlName="username"
                 matInput
-                variant = "filled"
+                [disabled]= true
               />
               <mat-error *ngIf="accountForm.get('username').errors?.required">
                 <strong> Username</strong> is required
