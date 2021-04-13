@@ -48,3 +48,15 @@ body {
 .cal-month-view .cal-day-number {
   opacity: 1;
 }
+
+.events-show-more-dialog-style {
+  mat-dialog-container {
+    padding: 15px;
+    border-radius: 16px;
+  }
+}
+.event-overview-dialog-style {
+  .mat-dialog-container {
+    padding-top: 6px;
+  }
+}
