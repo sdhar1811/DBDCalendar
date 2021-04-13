@@ -341,15 +341,22 @@ export class HomeScreenComponent implements OnInit {
   }
 
   updateEventsToDisplay() {
-    function eventFilter(selectedCalendars, selectedProfiles, defaultProfileId) {
+    function eventFilter(
+      selectedCalendars,
+      selectedProfiles,
+      defaultProfileId
+    ) {
       return function (event, index, array) {
         let flag = false;
         if (
           selectedCalendars.includes(event.meta.eventModel.calendar.calendarId)
         ) {
-          if (selectedProfiles.includes(defaultProfileId) && event.meta.eventModel.assigneeList.length == 0){
-            flag = true;            
-          }else{
+          if (
+            selectedProfiles.includes(defaultProfileId) &&
+            event.meta.eventModel.assigneeList.length == 0
+          ) {
+            flag = true;
+          } else {
             event.meta.eventModel.assigneeList.forEach((element) => {
               if (selectedProfiles.includes(element.profileId)) {
                 flag = true;
@@ -361,7 +368,11 @@ export class HomeScreenComponent implements OnInit {
       };
     }
     this.eventsToDisplay = this.events.filter(
-      eventFilter(this.selectedCalendars, this.selectedProfiles, this.defaultProfileId)
+      eventFilter(
+        this.selectedCalendars,
+        this.selectedProfiles,
+        this.defaultProfileId
+      )
     );
   }
   checkLongEvent(event) {
@@ -387,9 +398,8 @@ export class HomeScreenComponent implements OnInit {
 
     this.dialog.open(MoreEventsDialogComponent, {
       data: { events: day.events, refElement: target, date: day.date },
+      panelClass: 'events-show-more-dialog-style',
     });
-    // this.showMoreDate = day.date;
-    // this.showMore = !this.showMore;
   }
   /**
    * Below method is used to display the long spanning events first
@@ -408,7 +418,11 @@ export class HomeScreenComponent implements OnInit {
     const dialog = this.dialog.open(EventDetailsDialogComponent, {
       data: event,
       width: '500px',
-      panelClass: ['animate__animated', 'animate__slideInUp'],
+      panelClass: [
+        'animate__animated',
+        'animate__fadeIn',
+        'event-overview-dialog-style',
+      ],
     });
     dialog.afterClosed().subscribe((data) => {
       if (data) {

@@ -37,52 +37,56 @@ export class LeftPanelComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.profileService.addProfileEvent.subscribe((profile) => {
-      this.profiles = this.profiles.filter((profileModel)=>profileModel.profileId != profile.profileId);
-      this.profiles.push(profile);      
+      this.profiles = this.profiles.filter(
+        (profileModel) => profileModel.profileId != profile.profileId
+      );
+      this.profiles.push(profile);
       this.sortProfiles();
     });
   }
 
-  sortProfiles(){
+  sortProfiles() {
     this.profiles.sort(profileSort(this.defaultProfileId));
-    function profileSort(defaultProfileId){
-      return function (a, b){
-      if (a.profileId == defaultProfileId){
-        return -1;
-      }
-      if (b.profileId == defaultProfileId){
-        return 1;
-      }
-      if (a.name == b.name){
-        return 0;
-      }
-      if (a.name > b.name){
-        return 1
-      }else{
-        return -1
-      }      
-    }};
+    function profileSort(defaultProfileId) {
+      return function (a, b) {
+        if (a.profileId == defaultProfileId) {
+          return -1;
+        }
+        if (b.profileId == defaultProfileId) {
+          return 1;
+        }
+        if (a.name == b.name) {
+          return 0;
+        }
+        if (a.name > b.name) {
+          return 1;
+        } else {
+          return -1;
+        }
+      };
+    }
   }
 
-  sortCalendars(){
+  sortCalendars() {
     this.mycalendars.sort(calendarSort(this.defaultCalendarId));
-    function calendarSort(defaultCalendarId){
-      return function (a, b){
-      if (a.calendarId == defaultCalendarId){
-        return -1;
-      }
-      if (b.calendarId == defaultCalendarId){
-        return 1;
-      }
-      if (a.name == b.name){
-        return 0;
-      }
-      if (a.name > b.name){
-        return 1
-      }else{
-        return -1
-      }      
-    }};
+    function calendarSort(defaultCalendarId) {
+      return function (a, b) {
+        if (a.calendarId == defaultCalendarId) {
+          return -1;
+        }
+        if (b.calendarId == defaultCalendarId) {
+          return 1;
+        }
+        if (a.name == b.name) {
+          return 0;
+        }
+        if (a.name > b.name) {
+          return 1;
+        } else {
+          return -1;
+        }
+      };
+    }
   }
 
   fetchProfiles() {
@@ -230,8 +234,7 @@ export class LeftPanelComponent implements OnInit {
     this.triggerCalendarUpdate.emit(null);
   }
 
-  addProfile(){
-    console.log("Inside add profile");
+  addProfile() {
     // this.storeService.createProfileEmitter.next(true);
     let profileModel = new ProfileModel();
     // eventModel.color = { primary: '', secondary: '' };
@@ -239,19 +242,18 @@ export class LeftPanelComponent implements OnInit {
     let dialogRef = this.dialog.open(AddProfileComponent, {
       data: profileModel,
       width: '600px',
-      height: '60%',
+      height: '65%',
     });
   }
 
-  editProfile(profile){
+  editProfile(profile) {
     let profileModel = new ProfileModel();
-    profileModel = {...profile};
-    console.log("Inside edit profile");    
+    profileModel = { ...profile };
     profileModel.userId = this.storeService.loggedInUser?.id;
     let dialogRef = this.dialog.open(AddProfileComponent, {
       data: profileModel,
       width: '600px',
-      height: '60%',
+      height: '65%',
     });
   }
 }
