@@ -22,5 +22,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
-
+  openProfile(){
+  	let dialogRef = this.dialog.open(UserAccountComp, {
+        width: '600px',
+        height: '65%',
+      });
+  }
 }
