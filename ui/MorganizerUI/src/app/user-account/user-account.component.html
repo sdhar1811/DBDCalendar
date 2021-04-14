@@ -1,15 +1,11 @@
 <div class="container">
-  <mat-card class="mat-elevation-z5 signup-panel">
-    <mat-card-title class="register-title">Sign Up </mat-card-title>
+  <div class="signup-panel">
+    <div class="title">Account Information</div>
 
-    <mat-tab-group
-      [selectedIndex]="tabIndex"
-      (selectedIndexChange)="tabSelectionChanged($event)"
-      animationDuration="500ms"
-    >
-      <mat-tab label="Personal">
-        <form [formGroup]="personalForm" novalidate>
-          <div class="flex-vertical">
+    <form [formGroup]="personalForm" novalidate>
+      <div class="flex-vertical">
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
             <mat-form-field appearance="outline">
               <mat-label>First Name</mat-label>
               <input
@@ -22,6 +18,8 @@
                 <strong> First Name</strong> is required
               </mat-error>
             </mat-form-field>
+          </div>
+          <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
             <mat-form-field appearance="outline">
               <mat-label>Middle Name</mat-label>
               <input
@@ -30,6 +28,8 @@
                 placeholder="Enter your middle name"
               />
             </mat-form-field>
+          </div>
+          <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
             <mat-form-field appearance="outline">
               <mat-label>Last Name</mat-label>
               <input
@@ -42,6 +42,11 @@
                 <strong> Last Name</strong> is required
               </mat-error>
             </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
             <mat-form-field appearance="outline">
               <mat-label>Gender</mat-label>
               <mat-select formControlName="gender" required>
@@ -53,7 +58,9 @@
                 <strong> Gender</strong> is required
               </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="outline">
+          </div>
+          <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+            <mat-form-field appearance="outline" style="width: 95%">
               <mat-label>Date of Birth</mat-label>
               <input
                 formControlName="birthdate"
@@ -78,28 +85,8 @@
               </mat-datepicker>
             </mat-form-field>
           </div>
-        </form>
-      </mat-tab>
-
-      <mat-tab label="Account">
-        <form [formGroup]="accountForm" novalidate>
-          <div class="flex-vertical">
+          <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
             <mat-form-field appearance="outline">
-              <mat-label>Email ID</mat-label>
-              <input
-                formControlName="email"
-                matInput
-                [disabled]= true
-              />
-              <mat-error *ngIf="accountForm.get('email').errors?.required">
-                <strong> Email Id</strong> is required
-              </mat-error>
-              <mat-error *ngIf="accountForm.get('email').errors?.email">
-                <strong> Invalid Email Id</strong>
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-
               <mat-label>Phone Number</mat-label>
               <input
                 formControlName="phoneNumber"
@@ -108,109 +95,60 @@
                 placeholder="Enter your phone number"
               />
               <mat-error
-                *ngIf="accountForm.get('phoneNumber').errors?.required"
+                *ngIf="personalForm.get('phoneNumber').errors?.required"
               >
                 <strong> Phone Number</strong> is required
               </mat-error>
-              <mat-error *ngIf="accountForm.get('phoneNumber').errors?.pattern">
+              <mat-error
+                *ngIf="personalForm.get('phoneNumber').errors?.pattern"
+              >
                 Invalid Phone Number
               </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Username</mat-label>
-              <input
-                formControlName="username"
-                matInput
-                [disabled]= true
-              />
-              <mat-error *ngIf="accountForm.get('username').errors?.required">
-                <strong> Username</strong> is required
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Password</mat-label>
-              <input
-                formControlName="password"
-                type="password"
-                required
-                matInput
-                placeholder="Enter your password"
-              />
-
-              <mat-error *ngIf="accountForm.get('password').errors?.required">
-                <strong> Password</strong> is required
-              </mat-error>
-            </mat-form-field>
-            <div
-              *ngIf="accountForm.get('password').errors?.pattern"
-              style="color: red;"
-            >
-              <ul>
-                <li>Atleast 8 characters in length</li>
-                <li>Lowercase letters</li>
-                <li>Uppercase letters</li>
-                <li>Numbers</li>
-                <li>Atleast one special character(!,@,#,$,%,^,&)</li>
-              </ul>
-            </div>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Confirm Password</mat-label>
-              <input
-                formControlName="confirmPassword"
-                type="password"
-                required
-                matInput
-                placeholder="Confirm your password"
-              />
-              <mat-error
-                *ngIf="accountForm.get('confirmPassword').errors?.required"
-              >
-                <strong>Confirm password</strong> is required
-              </mat-error>
-              <mat-error
-                *ngIf="accountForm.get('confirmPassword').errors?.mustMatch"
-              >
-                <strong>Passwords must match</strong>
-              </mat-error>
-            </mat-form-field>
           </div>
-        </form>
-      </mat-tab>
-    </mat-tab-group>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input formControlName="email" matInput />
+          <mat-error *ngIf="personalForm.get('email').errors?.required">
+            <strong> Email</strong> is required
+          </mat-error>
+          <mat-error *ngIf="personalForm.get('email').errors?.email">
+            <strong> Invalid Email</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input formControlName="username" matInput />
+          <mat-error *ngIf="personalForm.get('username').errors?.required">
+            <strong> Username</strong> is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+    <!-- </mat-tab>
+    </mat-tab-group> -->
     <div class="navigation-btns">
       <button
         mat-raised-button
-        class="btn-animation btn-left-align"
+        class="btn-animation"
         color="primary"
-        style="margin: 0.5em;"
-        (click)="decrementIndex()"
-        [disabled]="tabIndex === 0"
-      >
-        Back
-      </button>
-      <button
-        *ngIf="tabIndex < 1"
-        mat-raised-button
-        class="btn-animation btn-right-align"
-        color="primary"
-        style="margin: 0.5em;"
-        (click)="incrementIndex()"
+        style="margin: 0.5em"
+        (click)="updateDetails()"
         [disabled]="!personalForm.valid"
       >
-        Next
+        Update
       </button>
       <button
-        *ngIf="tabIndex === 1"
         mat-raised-button
-        class="btn-animation btn-right-align"
+        class="btn-animation"
         color="primary"
-        style="margin: 0.5em;"
-        (click)="registerUser()"
-        [disabled]="!accountForm.valid || !personalForm.valid"
+        style="margin: 0.5em"
+        (click)="close()"
       >
-        Submit
+        Close
       </button>
     </div>
-  </mat-card>
+  </div>
 </div>
