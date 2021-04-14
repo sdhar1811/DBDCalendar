@@ -1,0 +1,8 @@
+<div class="modal-body">
+    <span style="font-size: large;" [innerHTML]="title"></span> <br/>
+    {{ message }}
+</div>
+<div class="modal-footer">
+    <button mat-button color="primary" (click)="decline()">{{ btnCancelText }}</button>
+    <button mat-button color="warn" (click)="accept()">{{ btnOkText }}</button>
+</div>

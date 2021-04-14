@@ -7,6 +7,7 @@ import { MyCalendarService } from 'src/app/services/mycalendar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { AddProfileComponent } from 'src/app/add-profile/add-profile.component';
+import { ConfirmationDialogService } from 'src/app/core/confirmation-dialog/confirmation-dialog.service';
 
 export interface MyCalendars {
   name: string;
@@ -17,7 +18,8 @@ export interface MyCalendars {
 @Component({
   selector: 'app-left-panel',
   templateUrl: './left-panel.component.html',
-  styleUrls: ['./left-panel.component.scss'],
+  styleUrls: ['./left-panel.component.scss'],  
+  providers: [ ConfirmationDialogService ],
 })
 export class LeftPanelComponent implements OnInit {
   @Output() emitSelectedProfiles = new EventEmitter();
@@ -34,7 +36,8 @@ export class LeftPanelComponent implements OnInit {
     private profileService: ProfileService,
     private storeService: StoreService,
     private calendarService: MyCalendarService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private confirmationDialogService: ConfirmationDialogService
   ) {
     this.profileService.addProfileEvent.subscribe((profile) => {
       this.profiles = this.profiles.filter(
@@ -159,29 +162,49 @@ export class LeftPanelComponent implements OnInit {
     this.calendarTitle = '';
   }
 
-  deleteCalendar(calendarToDelete: number) {
-    this.calendarService.deleteCalendarFromList(calendarToDelete).subscribe(
-      () => {
-        this.fetchCalendars();
-      },
-      (error) => {
-        console.log('Something went wrong');
-        // window.alert('#TODO: Something went wrong.');
-      }
-    );
+  deleteCalendar(calendarToDelete: any) {
+    this.confirmationDialogService.confirm('Are you sure you want to remove '+calendarToDelete.name.bold()+' calendar?', 
+    'You will no longer have access to this calendar and its events.', 'Remove Calendar', 'Cancel')
+    .then((confirmed) => {
+      console.log('User confirmed:', confirmed);
+      if (confirmed){
+        this.calendarService.deleteCalendarFromList(calendarToDelete.calendarId).subscribe(
+          () => {
+            this.fetchCalendars();
+          },
+          (error) => {
+            console.log('Something went wrong');
+            // window.alert('#TODO: Something went wrong.');
+          }
+        );
+      }      
+    })
+    .catch(() => {
+      console.log('User dismissed the dialog.');
+    });  
   }
 
-  deleteProfile(profileToDelete: number) {
-    this.profileService.deleteProfile(profileToDelete).subscribe(
-      () => {
-        this.fetchProfiles();
-        this.triggerCalendarUpdate.emit(null);
-      },
-      (error) => {
-        console.log('Could not delete profile:: ' + error);
-        //TODO: window.alert
-      }
-    );
+  deleteProfile(profileToDelete: any) {
+    this.confirmationDialogService.confirm('Are you sure you want to remove '+profileToDelete.name.bold()+'\'s profile?', 
+    'You will no longer have access to this profile and its events.', 'Remove Profile', 'Cancel')
+    .then((confirmed) => {
+      console.log('User confirmed:', confirmed);
+      if (confirmed){
+        this.profileService.deleteProfile(profileToDelete.profileId).subscribe(
+          () => {
+            this.fetchProfiles();
+            this.triggerCalendarUpdate.emit(null);
+          },
+          (error) => {
+            console.log('Could not delete profile:: ' + error);
+            //TODO: window.alert
+          }
+        );
+      }      
+    })
+    .catch(() => {
+      console.log('User dismissed the dialog.');
+    });    
   }
 
   updateProfile(profile) {
