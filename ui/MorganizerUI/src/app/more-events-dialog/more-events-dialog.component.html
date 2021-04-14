@@ -43,10 +43,13 @@
         ></span>
       </div>
       <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
-        <span matTooltip="No Assignee ">X</span>
+        <span matTooltip="No Assignee ">
+          <mat-icon class="material-icons md-12">block</mat-icon>
+        </span>
       </div>
       <span>
         <span>
+          <mat-icon class="material-icons md-13" *ngIf="event.meta.eventModel.recurringModeId!=1"> loop </mat-icon>
           <small
             *ngIf="!event.allDay"
             style="font-weight: 800; padding-left: 6px"
@@ -92,10 +95,13 @@
               ></span>
             </div>
             <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
-              <span matTooltip="No Assignee ">X</span>
+              <span matTooltip="No Assignee ">
+                <mat-icon class="material-icons md-12">block</mat-icon>
+              </span>
             </div>
             <span>
               <span>
+                <mat-icon class="material-icons md-13" *ngIf="event.meta.eventModel.recurringModeId!=1"> loop </mat-icon>
                 <small
                   *ngIf="!event.allDay"
                   style="font-weight: 800; padding-left: 6px"

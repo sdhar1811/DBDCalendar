@@ -19,4 +19,14 @@ export class EventDetailsDialogComponent implements OnInit {
   editEvent(mode) {
     this.dialogRef.close(mode);
   }
+
+  recurringEventsArr = [
+    'NA',
+    'None',
+    'Daily',
+    'Weekly',
+    'BiWeekly',
+    'Monthly',
+    'Yearly',
+  ];
 }
