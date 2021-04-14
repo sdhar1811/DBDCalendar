@@ -1,0 +1,25 @@
+<div>
+    <table style="width: 100%">
+        <tr *ngFor="let event of events">
+          <!-- <td style="width: 15%; vertical-align: top">
+            <ui-switch
+              size="small"
+              [(ngModel)]="profile.selected"
+              (click)="updateProfile(profile)"
+              switchColor="{{ profile.color }}"
+              style="--color:{{ profile.color }}"
+            ></ui-switch>
+          </td> -->
+          <td>
+              {{ event.startTime }}
+          </td>
+          <td>
+            {{ event.title }}
+          </td>
+          
+         
+        </tr>
+      </table>
+
+
+</div>
