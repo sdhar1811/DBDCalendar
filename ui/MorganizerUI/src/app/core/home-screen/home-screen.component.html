@@ -209,30 +209,33 @@
         <mwl-calendar-month-view
           *ngSwitchCase="CalendarView.Month"
           [viewDate]="viewDate"
-          [events]="eventsToDisplay"
+          [events]="recurringEventsToDisplay"
           [refresh]="refresh"
           [cellTemplate]="customCellTemplate"
           [activeDayIsOpen]="activeDayIsOpen"
           (eventClicked)="handleEvent('Clicked', $event.event)"
           (eventTimesChanged)="eventTimesChanged($event)"
+          (beforeViewRender)="updateCalendarEvents($event)"
         >
         </mwl-calendar-month-view>
         <mwl-calendar-week-view
           *ngSwitchCase="CalendarView.Week"
           [viewDate]="viewDate"
-          [events]="eventsToDisplay"
+          [events]="recurringEventsToDisplay"
           [refresh]="refresh"
           (eventClicked)="handleEvent('Clicked', $event.event)"
           (eventTimesChanged)="eventTimesChanged($event)"
+          (beforeViewRender)="updateCalendarEvents($event)"
         >
         </mwl-calendar-week-view>
         <mwl-calendar-day-view
           *ngSwitchCase="CalendarView.Day"
           [viewDate]="viewDate"
-          [events]="eventsToDisplay"
+          [events]="recurringEventsToDisplay"
           [refresh]="refresh"
           (eventClicked)="handleEvent('Clicked', $event.event)"
           (eventTimesChanged)="eventTimesChanged($event)"
+          (beforeViewRender)="updateCalendarEvents($event)"
         >
         </mwl-calendar-day-view>
       </div>

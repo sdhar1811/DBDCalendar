@@ -42,6 +42,9 @@
           matTooltip="{{ assignee.name }}"
         ></span>
       </div>
+      <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
+        <span matTooltip="No Assignee ">X</span>
+      </div>
       <span>
         <span>
           <small
@@ -87,6 +90,9 @@
                 [style.background]="assignee.color"
                 matTooltip="{{ assignee.name }}"
               ></span>
+            </div>
+            <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
+              <span matTooltip="No Assignee ">X</span>
             </div>
             <span>
               <span>

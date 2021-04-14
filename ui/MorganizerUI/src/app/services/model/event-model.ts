@@ -12,6 +12,7 @@ export class EventModel {
   lastUpdatedOn: string;
   color: any;
   // calendarId: number;
+  recurringModeId: number;
   reminderList: number[] = [];
   allDayEvent: boolean;
   calendar: MyCalendarModel;
