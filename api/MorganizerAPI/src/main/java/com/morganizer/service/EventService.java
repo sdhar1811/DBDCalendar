@@ -32,6 +32,7 @@ import com.morganizer.repository.RecurringModeRepository;
 import com.morganizer.repository.UserDetailsRepository;
 import com.morganizer.utils.EmailSenderUtil;
 import com.morganizer.utils.ModelMapperUtil;
+import com.morganizer.utils.TwilioSmsSender;
 
 @Service
 public class EventService {
@@ -55,6 +56,10 @@ public class EventService {
 	
 	@Autowired
 	public CalendarRepository calendarRepository;
+	
+	@Autowired
+	public TwilioSmsSender tsms;
+	
 
 
 	public void deleteEvent(Long eventId) {
@@ -131,6 +136,8 @@ public class EventService {
 		}
 		
 		EmailSenderUtil.sendmail(event, alertType);
+		
+		tsms.sendSms(event, alertType);
 		
 		return new EventRequest(savedEntity.getUser().getId(), savedEntity.getId(), savedEntity.getEventTitle(), null,
 				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
