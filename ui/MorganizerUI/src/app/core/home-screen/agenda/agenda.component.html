@@ -1,15 +1,7 @@
-<div>
+<!-- <div>
     <table style="width: 100%">
         <tr *ngFor="let event of events">
-          <!-- <td style="width: 15%; vertical-align: top">
-            <ui-switch
-              size="small"
-              [(ngModel)]="profile.selected"
-              (click)="updateProfile(profile)"
-              switchColor="{{ profile.color }}"
-              style="--color:{{ profile.color }}"
-            ></ui-switch>
-          </td> -->
+          
           <td>
               {{ event.startTime }}
           </td>
@@ -22,4 +14,37 @@
       </table>
 
 
+</div> -->
+<div>
+  <div>
+    <div class="row agenda-item" *ngFor="let event of events">
+      <div
+        class="col-md-1"
+        style="font-size: larger; color: gray; font-weight: lighter"
+      >
+        {{ event.start | date: "d, MMM" }}
+      </div>
+      <div class="col-md-2" style="display: flex">
+        <div
+          class="agenda-calendar-box"
+          style="--color: {{ event.meta.eventModel.calendar.color }}"
+          matTooltip="{{ event.meta.eventModel.calendar.name }}"
+        ></div>
+        <span>
+          {{ event.allDay ? "Add Day" : (event.start | date: "h:mm a") }}
+        </span>
+      </div>
+      <div class="col-md-2">
+        <span
+          *ngFor="let assignee of event.assigneeList"
+          class="cell-profile-dot mat-elevation-z2"
+          [style.background]="assignee.color"
+          matTooltip="{{ assignee.name }}"
+        ></span>
+      </div>
+      <div class="col-md-7">
+        {{ event.title }}
+      </div>
+    </div>
+  </div>
 </div>

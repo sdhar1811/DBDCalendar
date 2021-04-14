@@ -80,24 +80,33 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
   </div> -->
-  <div class="d-none d-sm-block col-xs-4 col-sm-4 col-md-4 col-lg-4">
-    <mat-select [value]="view">
-      <mat-option  
+  <div
+    class="d-none d-sm-block col-xs-1 col-sm-2 col-md-2 col-lg-2"
+    style="border: solid 1px; border-radius: 1em"
+  >
+    <mat-select
+      [value]="view"
+      disableOptionCentering
+      panelClass="month-dropdown-style"
+    >
+      <mat-option
         (click)="setView(CalendarView.Month)"
         value="{{ CalendarView.Month }}"
-      >Month</mat-option>
+        >Month</mat-option
+      >
       <mat-option
         (click)="setView(CalendarView.Week)"
         value="{{ CalendarView.Week }}"
-      >Week</mat-option>
+        >Week</mat-option
+      >
       <mat-option
         (click)="setView(CalendarView.Day)"
         value="{{ CalendarView.Day }}"
-      >Day</mat-option>
-      <mat-option
-        (click)="setView('agenda')"
-        value="'agenda'"
-      >Agenda</mat-option>
+        >Day</mat-option
+      >
+      <mat-option (click)="setView('agenda')" value="'agenda'"
+        >Agenda</mat-option
+      >
     </mat-select>
   </div>
 </div>

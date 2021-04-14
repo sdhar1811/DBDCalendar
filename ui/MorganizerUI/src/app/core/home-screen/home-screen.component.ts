@@ -124,7 +124,13 @@ export class HomeScreenComponent implements OnInit {
   ) {
     this.storeService.calendarViewChange.subscribe((calendarView) => {
       this.viewDate = calendarView.viewDate;
-      this.view = calendarView.view;
+      if (calendarView.showAgenda) {
+        this.view = CalendarView.Month;
+        this.showAgenda = true;
+      } else {
+        this.showAgenda = false;
+        this.view = calendarView.view;
+      }
     });
     this.storeService.createEventEmitter.subscribe((isClicked) => {
       if (isClicked) {

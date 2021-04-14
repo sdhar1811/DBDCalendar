@@ -1,0 +1,27 @@
+.cell-profile-dot {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 3px;
+  background-color: skyblue;
+  cursor: pointer;
+}
+
+.agenda-item {
+  padding: 10px;
+  border-bottom: solid #8080804a;
+  border-width: thin;
+  font-size: medium;
+}
+.agenda-calendar-box {
+  height: 15px;
+  width: 15px;
+  background-color: var(--color);
+  border-radius: 20%;
+  border: solid 1px;
+  cursor: pointer;
+  position: relative;
+  top: 5px;
+  margin-right: 5px;
+}
