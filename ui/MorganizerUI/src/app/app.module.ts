@@ -73,6 +73,7 @@ import { EventDetailsDialogComponent } from './core/home-screen/event-details-di
 import { MoreEventsDialogComponent } from './more-events-dialog/more-events-dialog.component';
 import { UserAccountComponent } from './user-account/user-account.component';
 import { AgendaComponent } from './core/home-screen/agenda/agenda.component';
+import { ConfirmationDialogComponent } from './core/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { AgendaComponent } from './core/home-screen/agenda/agenda.component';
     MoreEventsDialogComponent,
     UserAccountComponent,
     AgendaComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
