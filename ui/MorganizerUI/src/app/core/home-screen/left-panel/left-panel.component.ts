@@ -162,16 +162,26 @@ export class LeftPanelComponent implements OnInit {
     this.calendarTitle = '';
   }
 
-  deleteCalendar(calendarToDelete: number) {
-    this.calendarService.deleteCalendarFromList(calendarToDelete).subscribe(
-      () => {
-        this.fetchCalendars();
-      },
-      (error) => {
-        console.log('Something went wrong');
-        // window.alert('#TODO: Something went wrong.');
-      }
-    );
+  deleteCalendar(calendarToDelete: any) {
+    this.confirmationDialogService.confirm('Are you sure you want to remove '+calendarToDelete.name+' calendar?', 
+    'You will no longer have access to this calendar and its events.', 'Remove Calendar', 'Cancel')
+    .then((confirmed) => {
+      console.log('User confirmed:', confirmed);
+      if (confirmed){
+        this.calendarService.deleteCalendarFromList(calendarToDelete.calendarId).subscribe(
+          () => {
+            this.fetchCalendars();
+          },
+          (error) => {
+            console.log('Something went wrong');
+            // window.alert('#TODO: Something went wrong.');
+          }
+        );
+      }      
+    })
+    .catch(() => {
+      console.log('User dismissed the dialog.');
+    });  
   }
 
   deleteProfile(profileToDelete: any) {
