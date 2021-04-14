@@ -15,6 +15,7 @@
         ? 'col-xl-8 col-lg-8 col-md-8 col-sm-8'
         : 'col-xl-9 col-lg-9 col-md-9 col-sm-9'
     "
+    *ngIf= "view!='agenda'"
   >
     <!-- <ng-template #loading> -->
     <div *ngIf="loading" class="text-center" style="margin-left:40%; margin-top:20%">
@@ -237,6 +238,21 @@
         </mwl-calendar-day-view>
       </div>
     </div>
+  </div>
+
+  <div
+  [ngClass]="
+      showRightPanel
+        ? 'col-xl-8 col-lg-8 col-md-8 col-sm-8'
+        : 'col-xl-9 col-lg-9 col-md-9 col-sm-9'
+    "
+  *ngIf= "view=='agenda'"
+    >
+    <app-agenda 
+      [events]=events
+      >
+
+    </app-agenda>
   </div>
   <div
     [ngClass]="
