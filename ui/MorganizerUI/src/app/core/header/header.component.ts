@@ -21,4 +21,6 @@ export class HeaderComponent implements OnInit {
     sessionStorage.removeItem('user');
     this.router.navigate(['login']);
   }
+
+
 }
