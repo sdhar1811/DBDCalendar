@@ -8,7 +8,7 @@ import { StoreService } from 'src/app/services/store.service';
   styleUrls: ['./calendar-control.component.scss'],
 })
 export class CalendarControlComponent implements OnInit {
-  view: CalendarView = CalendarView.Month;
+  view: any = CalendarView.Month;
   viewDate: Date = new Date();
   CalendarView = CalendarView;
   activeDayIsOpen: boolean = false;
@@ -26,7 +26,7 @@ export class CalendarControlComponent implements OnInit {
 
   ngOnInit(): void {}
   addEvent() {}
-  setView(view: CalendarView) {
+  setView(view: any) {
     this.view = view;
     this.updateCalendarView();
   }

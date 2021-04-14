@@ -63,9 +63,9 @@ export class HomeScreenComponent implements OnInit {
   showRightPanel = false;
   calendarClass = 'col-md-9';
   rightPanelClass = 'col-md-1';
-  view: CalendarView = CalendarView.Month;
+  view: any = CalendarView.Month;
   loading = true;
-
+  showAgenda = false;
   selectedProfiles = [];
   selectedCalendars = [];
 
@@ -318,7 +318,7 @@ export class HomeScreenComponent implements OnInit {
     );
   }
 
-  setView(view: CalendarView) {
+  setView(view: any) {
     this.view = view;
   }
 

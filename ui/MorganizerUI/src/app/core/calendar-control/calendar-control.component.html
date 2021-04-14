@@ -55,19 +55,8 @@
       {{ viewDate | calendarDate: view + "ViewTitle":"en" }}
     </div> -->
   </div>
-  <div class="d-none d-sm-block col-xs-4 col-sm-4 col-md-4 col-lg-4">
+  <!-- <div class="d-none d-sm-block col-xs-4 col-sm-4 col-md-4 col-lg-4">
     <mat-button-toggle-group class="btn-group view-control" [value]="view">
-      <!-- <button
-        mat-raised-button
-        mwlCalendarPreviousView
-        [view]="view"
-        [(viewDate)]="viewDate"
-        (click)="updateCalendarView()"
-        (viewDateChange)="closeOpenMonthViewDay()"
-        style="border-radius: 0px"
-      >
-        <mat-icon>keyboard_arrow_left</mat-icon>
-      </button> -->
       <mat-button-toggle
         mat-raised-button
         (click)="setView(CalendarView.Month)"
@@ -89,17 +78,26 @@
       >
         Day
       </mat-button-toggle>
-      <!-- <button
-        mat-raised-button
-        mwlCalendarNextView
-        [view]="view"
-        [(viewDate)]="viewDate"
-        (viewDateChange)="closeOpenMonthViewDay()"
-        style="border-radius: 0px"
-        (click)="updateCalendarView()"
-      >
-        <mat-icon>keyboard_arrow_right</mat-icon>
-      </button> -->
     </mat-button-toggle-group>
+  </div> -->
+  <div class="d-none d-sm-block col-xs-4 col-sm-4 col-md-4 col-lg-4">
+    <mat-select [value]="view">
+      <mat-option  
+        (click)="setView(CalendarView.Month)"
+        value="{{ CalendarView.Month }}"
+      >Month</mat-option>
+      <mat-option
+        (click)="setView(CalendarView.Week)"
+        value="{{ CalendarView.Week }}"
+      >Week</mat-option>
+      <mat-option
+        (click)="setView(CalendarView.Day)"
+        value="{{ CalendarView.Day }}"
+      >Day</mat-option>
+      <mat-option
+        (click)="setView('agenda')"
+        value="'agenda'"
+      >Agenda</mat-option>
+    </mat-select>
   </div>
 </div>
