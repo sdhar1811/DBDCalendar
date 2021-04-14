@@ -163,7 +163,7 @@ export class LeftPanelComponent implements OnInit {
   }
 
   deleteCalendar(calendarToDelete: any) {
-    this.confirmationDialogService.confirm('Are you sure you want to remove '+calendarToDelete.name+' calendar?', 
+    this.confirmationDialogService.confirm('Are you sure you want to remove '+calendarToDelete.name.bold()+' calendar?', 
     'You will no longer have access to this calendar and its events.', 'Remove Calendar', 'Cancel')
     .then((confirmed) => {
       console.log('User confirmed:', confirmed);
@@ -185,7 +185,7 @@ export class LeftPanelComponent implements OnInit {
   }
 
   deleteProfile(profileToDelete: any) {
-    this.confirmationDialogService.confirm('Are you sure you want to remove '+profileToDelete.name+'\'s profile?', 
+    this.confirmationDialogService.confirm('Are you sure you want to remove '+profileToDelete.name.bold()+'\'s profile?', 
     'You will no longer have access to this profile and its events.', 'Remove Profile', 'Cancel')
     .then((confirmed) => {
       console.log('User confirmed:', confirmed);
