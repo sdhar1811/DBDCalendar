@@ -9,6 +9,9 @@ import { StoreService } from 'src/app/services/store.service';
 })
 export class HeaderComponent implements OnInit {
   loggedInUser: any;
+  private dialog: MatDialog
+
+
   constructor(private storeService: StoreService, private router: Router) {}
   ngOnInit() {
     this.storeService.loggedInUserChange.subscribe((value) => {
