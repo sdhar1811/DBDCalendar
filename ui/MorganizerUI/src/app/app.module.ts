@@ -72,6 +72,7 @@ import { CalendarControlComponent } from './core/calendar-control/calendar-contr
 import { EventDetailsDialogComponent } from './core/home-screen/event-details-dialog/event-details-dialog.component';
 import { MoreEventsDialogComponent } from './more-events-dialog/more-events-dialog.component';
 import { UserAccountComponent } from './user-account/user-account.component';
+import { AgendaComponent } from './core/home-screen/agenda/agenda.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { UserAccountComponent } from './user-account/user-account.component';
     EventDetailsDialogComponent,
     MoreEventsDialogComponent,
     UserAccountComponent,
+    AgendaComponent,
   ],
   imports: [
     BrowserModule,
