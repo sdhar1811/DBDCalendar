@@ -31,26 +31,38 @@ import { EventDetailsDialogComponent } from './event-details-dialog/event-detail
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DatePipe } from '@angular/common';
 import { MoreEventsDialogComponent } from 'src/app/more-events-dialog/more-events-dialog.component';
+import RRule from 'rrule';
+import * as moment from 'moment-timezone';
+import { ViewPeriod } from 'calendar-utils';
+import {
+  CalendarDayViewBeforeRenderEvent,
+  CalendarMonthViewBeforeRenderEvent,
+  CalendarWeekViewBeforeRenderEvent,
+} from 'angular-calendar';
+import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { blue, red, yellow } from 'colors';
 
-// const colors: any = {
-//   red: {
-//     primary: '#ad2121',
-//     secondary: '#FAE3E3',
-//   },
-//   blue: {
-//     primary: '#1e90ff',
-//     secondary: '#D1E8FF',
-//   },
-//   yellow: {
-//     primary: '#e3bc08',
-//     secondary: '#FDF1BA',
-//   },
-// };
+
+interface RecurringEvent {
+  title: string;
+  color: any;
+  rrule?: {
+    freq: any;
+    bymonth?: number;
+    bymonthday?: number;
+    byweekday?: any;
+  };
+}
+
+// moment.tz.setDefault('Utc');
+
+
 
 @Component({
   selector: 'app-home-screen',
   templateUrl: './home-screen.component.html',
   styleUrls: ['./home-screen.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: CalendarEventTitleFormatter,
@@ -65,13 +77,14 @@ export class HomeScreenComponent implements OnInit {
   rightPanelClass = 'col-md-1';
   view: CalendarView = CalendarView.Month;
   loading = true;
-
+  update: boolean = false;
   selectedProfiles = [];
   selectedCalendars = [];
 
   CalendarView = CalendarView;
-
-  viewDate: Date = new Date();
+  viewPeriod: ViewPeriod;
+  // viewDate: Date = new Date();
+  viewDate = moment().toDate();
   isLongEvent = false;
   modalData: {
     action: string;
@@ -104,6 +117,15 @@ export class HomeScreenComponent implements OnInit {
     },
   ];
 
+  rruleForDays = [
+    RRule.SU,
+    RRule.MO,
+    RRule.TU,
+    RRule.WE,
+    RRule.TH,
+    RRule.FR,
+    RRule.SA,
+  ]
   // asyncEvents$: Observable<CalendarEvent<{ eventModel: EventModel }>[]>;
   eventsToDisplay: CalendarEvent[] = [];
   events: CalendarEvent[] = [];
@@ -120,7 +142,8 @@ export class HomeScreenComponent implements OnInit {
     private modal: NgbModal,
     private storeService: StoreService,
     private eventService: EventService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {
     this.storeService.calendarViewChange.subscribe((calendarView) => {
       this.viewDate = calendarView.viewDate;
@@ -341,15 +364,22 @@ export class HomeScreenComponent implements OnInit {
   }
 
   updateEventsToDisplay() {
-    function eventFilter(selectedCalendars, selectedProfiles, defaultProfileId) {
+    function eventFilter(
+      selectedCalendars,
+      selectedProfiles,
+      defaultProfileId
+    ) {
       return function (event, index, array) {
         let flag = false;
         if (
           selectedCalendars.includes(event.meta.eventModel.calendar.calendarId)
         ) {
-          if (selectedProfiles.includes(defaultProfileId) && event.meta.eventModel.assigneeList.length == 0){
-            flag = true;            
-          }else{
+          if (
+            selectedProfiles.includes(defaultProfileId) &&
+            event.meta.eventModel.assigneeList.length == 0
+          ) {
+            flag = true;
+          } else {
             event.meta.eventModel.assigneeList.forEach((element) => {
               if (selectedProfiles.includes(element.profileId)) {
                 flag = true;
@@ -361,8 +391,16 @@ export class HomeScreenComponent implements OnInit {
       };
     }
     this.eventsToDisplay = this.events.filter(
-      eventFilter(this.selectedCalendars, this.selectedProfiles, this.defaultProfileId)
+      eventFilter(
+        this.selectedCalendars,
+        this.selectedProfiles,
+        this.defaultProfileId
+      )
     );
+    console.log(this.eventsToDisplay);
+    console.log("Inside updateEventsToDisplay");
+    this.update = true;
+    this.refresh.next();
   }
   checkLongEvent(event) {
     if (differenceInCalendarDays(event.end, event.start) > 0) {
@@ -415,5 +453,115 @@ export class HomeScreenComponent implements OnInit {
         this.handleEvent(data, event);
       }
     });
+  }
+
+  rule: RRule;
+  filterRecurEvents: CalendarEvent<any>[];
+  recurringEventsToDisplay: CalendarEvent<any>[];
+  updateCalendarEvents(
+    viewRender:
+      | CalendarMonthViewBeforeRenderEvent
+      | CalendarWeekViewBeforeRenderEvent
+      | CalendarDayViewBeforeRenderEvent
+  ): void {
+    console.log("Inside updateCalendarEvents");
+    console.log(viewRender);
+    console.log(this.viewPeriod);
+    console.log(this.update);
+    if (
+      !this.viewPeriod ||
+      !moment(this.viewPeriod.start).isSame(viewRender.period.start) ||
+      !moment(this.viewPeriod.end).isSame(viewRender.period.end) || this.update
+    ) {
+      this.update =false;
+      console.log("Inside if condition");
+      this.recurringEventsToDisplay = [];
+      //this.filterRecurEvents = this.eventsToDisplay.filter((event)=> event.meta.eventModel.recurringModeId!=1);
+      console.log(this.filterRecurEvents);
+      this.viewPeriod = viewRender.period;
+
+      this.eventsToDisplay.forEach((event) => {
+        // let rule: RRule;
+        if(event.meta.eventModel.recurringModeId == 1){
+          this.recurringEventsToDisplay.push(event);
+        }
+        else {
+          if(event.meta.eventModel.recurringModeId == 2){
+            //daily
+              console.log("daily");
+              this.rule = new RRule({
+              freq: RRule.DAILY,
+              //dtstart: moment(viewRender.period.start).startOf('day').toDate(),
+              dtstart: new Date(event.start),
+              until: moment(viewRender.period.end).endOf('day').toDate(),
+              });
+          }
+          else if(event.meta.eventModel.recurringModeId == 3){
+            //weekly
+            var d = new Date(event.start);
+            var extractDayOfWeek = d.getDay();
+            this.rule = new RRule({
+              freq: RRule.WEEKLY,
+              byweekday: [this.rruleForDays[extractDayOfWeek]],
+              //dtstart: moment(viewRender.period.start).startOf('day').toDate(),
+              dtstart: new Date(event.start),
+              until: moment(viewRender.period.end).endOf('day').toDate(),
+              });
+          }
+          else if(event.meta.eventModel.recurringModeId == 5){
+            //monthly
+            console.log("Monthly"+event.title);
+            var d = new Date(event.start);
+            var extractDay = d.getDate();
+            this.rule = new RRule({
+              freq: RRule.MONTHLY,
+              bymonthday: extractDay,
+              //dtstart: moment(viewRender.period.start).startOf('day').toDate(),
+              dtstart: new Date(event.start),
+              until: moment(viewRender.period.end).endOf('day').toDate(),
+              });
+          }
+          else if(event.meta.eventModel.recurringModeId == 6){
+            //yearly
+            var d = new Date(event.start);
+            var extractDay = d.getDate();
+            var extractMonth = d.getMonth()+1;
+            this.rule = new RRule({
+              freq: RRule.YEARLY,
+              bymonth: extractMonth,
+              bymonthday: extractDay,
+              //dtstart: moment(viewRender.period.start).startOf('day').toDate(),
+              dtstart: new Date(event.start),
+              until: moment(viewRender.period.end).endOf('day').toDate(),
+              });
+
+          }
+          console.log(this.rule.all());
+          this.rule.all().forEach((date) => {
+            let temp = {
+              title: event.title,
+              allDay: event.allDay,
+              start: moment(date).toDate(),
+              end: moment(date).toDate(),
+              color: {
+                primary: event.color.primary,
+                secondary: event.color.secondary,
+              },
+              actions: event.actions,
+              resizable: event.resizable,
+              draggable: true,
+              meta:event.meta,
+            };
+            temp['assigneeList'] = event.meta.eventModel.assigneeList;
+            // event.start = moment(date).toDate();
+            this.recurringEventsToDisplay.push(temp);
+          });
+        }
+
+    });
+    console.log(this.recurringEventsToDisplay);
+    this.cdr.detectChanges();
+
+    }
   }
 }
