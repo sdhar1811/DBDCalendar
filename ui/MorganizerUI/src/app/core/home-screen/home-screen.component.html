@@ -15,10 +15,14 @@
         ? 'col-xl-8 col-lg-8 col-md-8 col-sm-8'
         : 'col-xl-9 col-lg-9 col-md-9 col-sm-9'
     "
-    *ngIf= "view!='agenda'"
+    *ngIf="!showAgenda"
   >
     <!-- <ng-template #loading> -->
-    <div *ngIf="loading" class="text-center" style="margin-left:40%; margin-top:20%">
+    <div
+      *ngIf="loading"
+      class="text-center"
+      style="margin-left: 40%; margin-top: 20%"
+    >
       <mat-spinner aria-label="Loading..."></mat-spinner>
     </div>
     <!-- </ng-template> -->
@@ -80,7 +84,12 @@
                           matTooltip="{{ assignee.name }}"
                         ></span>
                       </div>
-                      <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
+                      <div
+                        class="cell-profile-dot-container"
+                        *ngIf="
+                          !event.assigneeList || event.assigneeList.length == 0
+                        "
+                      >
                         <span matTooltip="No Assignee ">X</span>
                       </div>
                       <span>
@@ -114,8 +123,16 @@
                           matTooltip="{{ assignee.name }}"
                         ></span>
                       </div>
-                      <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
-                        <span matTooltip="No Assignee " class="mat-elevation-z2"></span>
+                      <div
+                        class="cell-profile-dot-container"
+                        *ngIf="
+                          !event.assigneeList || event.assigneeList.length == 0
+                        "
+                      >
+                        <span
+                          matTooltip="No Assignee "
+                          class="mat-elevation-z2"
+                        ></span>
                         <span>
                           <span>
                             <small style="font-weight: 500; padding-left: 6px">
@@ -161,7 +178,12 @@
                         matTooltip="{{ assignee.name }}"
                       ></span>
                     </div>
-                    <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
+                    <div
+                      class="cell-profile-dot-container"
+                      *ngIf="
+                        !event.assigneeList || event.assigneeList.length == 0
+                      "
+                    >
                       <span matTooltip="No Assignee ">X</span>
                     </div>
                     <!-- <span>
@@ -241,18 +263,21 @@
   </div>
 
   <div
-  [ngClass]="
+    [ngClass]="
       showRightPanel
         ? 'col-xl-8 col-lg-8 col-md-8 col-sm-8'
         : 'col-xl-9 col-lg-9 col-md-9 col-sm-9'
     "
-  *ngIf= "view=='agenda'"
-    >
-    <app-agenda 
-      [events]=events
-      >
-
-    </app-agenda>
+    *ngIf="showAgenda"
+    style="
+      margin-top: 3px;
+      border-left: solid 1px lightgrey;
+      border-right: solid 1px lightgrey;
+      overflow-y: auto;
+      height: 90%;
+    "
+  >
+    <app-agenda [events]="events"> </app-agenda>
   </div>
   <div
     [ngClass]="

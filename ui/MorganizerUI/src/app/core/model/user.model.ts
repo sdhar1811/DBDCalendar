@@ -8,4 +8,5 @@ export class UserModel {
   phoneNumber: string;
   password: string;
   username: string;
+  userName: string;
 }

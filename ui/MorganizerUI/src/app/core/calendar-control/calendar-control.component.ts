@@ -13,6 +13,7 @@ export class CalendarControlComponent implements OnInit {
   CalendarView = CalendarView;
   activeDayIsOpen: boolean = false;
   today: Date = new Date();
+  showAgenda = false;
 
   constructor(private storeService: StoreService) {
     this.storeService.calendarDayClicked.subscribe((date) => {
@@ -27,7 +28,13 @@ export class CalendarControlComponent implements OnInit {
   ngOnInit(): void {}
   addEvent() {}
   setView(view: any) {
-    this.view = view;
+    if (view === 'agenda') {
+      this.view = CalendarView.Month;
+      this.showAgenda = true;
+    } else {
+      this.view = view;
+      this.showAgenda = false;
+    }
     this.updateCalendarView();
   }
   closeOpenMonthViewDay() {
@@ -37,6 +44,7 @@ export class CalendarControlComponent implements OnInit {
     this.storeService.calendarViewChange.next({
       viewDate: this.viewDate,
       view: this.view,
+      showAgenda: this.showAgenda,
     });
   }
 }
