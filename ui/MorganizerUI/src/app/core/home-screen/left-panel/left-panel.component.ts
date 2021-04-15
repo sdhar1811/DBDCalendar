@@ -29,6 +29,7 @@ export class LeftPanelComponent implements OnInit {
   profiles: ProfileModel[] = [];
   mycalendars: MyCalendarModel[] = [];
   calendarTitle: string;
+  editField: string;
   defaultProfileId: number;
   defaultCalendarId: number;
   colorPalette: Array<string> = [
@@ -298,5 +299,29 @@ export class LeftPanelComponent implements OnInit {
       width: '600px',
       height: '65%',
     });
+  }
+
+
+  renameCalendar(calendar:MyCalendarModel, property: string, event: any) {
+    let newCalendar = new MyCalendarModel();
+    const editField = event.target.textContent;
+    newCalendar = {...calendar};
+    newCalendar.name = editField;
+    newCalendar.userId = this.storeService.loggedInUser?.id;
+    this.calendarService.addCalendar(newCalendar).subscribe(
+      (response) => {
+        if (response) {
+          this.fetchCalendars();
+        }
+      },
+      (error) => {
+        console.log('Something went wrong');
+      }
+    );
+
+  }
+
+  changeValue(property: string, event: any) {
+    this.editField = event.target.textContent;
   }
 }

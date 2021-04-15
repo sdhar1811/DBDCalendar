@@ -86,4 +86,13 @@
       <div>{{ event.meta.eventModel.description }}</div>
     </div>
   </div>
+  <!-- Display only if all Day event/ Recurring Event-->
+  <div class="row" *ngIf="event.meta.eventModel.recurringModeId!=1">
+    <div class="col-md-2">
+      <mat-icon class="material-icons md-18"> loop </mat-icon>
+    </div>
+    <div class="col-md-10">
+      <div>{{ recurringEventsArr[event.meta.eventModel.recurringModeId] }}</div>
+    </div>
+  </div>
 </div>

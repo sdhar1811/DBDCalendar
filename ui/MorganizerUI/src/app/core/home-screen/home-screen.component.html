@@ -84,16 +84,14 @@
                           matTooltip="{{ assignee.name }}"
                         ></span>
                       </div>
-                      <div
-                        class="cell-profile-dot-container"
-                        *ngIf="
-                          !event.assigneeList || event.assigneeList.length == 0
-                        "
-                      >
-                        <span matTooltip="No Assignee ">X</span>
+                      <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
+                        <span matTooltip="No Assignee ">
+                          <mat-icon class="material-icons md-12">block</mat-icon>
+                        </span>
                       </div>
                       <span>
                         <span>
+                          <mat-icon class="material-icons md-13" *ngIf="event.meta.eventModel.recurringModeId!=1"> loop </mat-icon>
                           <small
                             *ngIf="!event.allDay"
                             style="font-weight: 800; padding-left: 6px"
@@ -178,13 +176,10 @@
                         matTooltip="{{ assignee.name }}"
                       ></span>
                     </div>
-                    <div
-                      class="cell-profile-dot-container"
-                      *ngIf="
-                        !event.assigneeList || event.assigneeList.length == 0
-                      "
-                    >
-                      <span matTooltip="No Assignee ">X</span>
+                    <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
+                      <span matTooltip="No Assignee ">
+                        <mat-icon class="material-icons md-12">block</mat-icon>
+                      </span>
                     </div>
                     <!-- <span>
                   <small style="font-weight: 500; padding-left: 6px"
@@ -196,6 +191,7 @@
                 }}</small> -->
                     <span>
                       <span>
+                        <mat-icon class="material-icons md-13" *ngIf="event.meta.eventModel.recurringModeId!=1"> loop </mat-icon>
                         <small
                           *ngIf="!event.allDay"
                           style="font-weight: 800; padding-left: 6px"
@@ -232,30 +228,33 @@
         <mwl-calendar-month-view
           *ngSwitchCase="CalendarView.Month"
           [viewDate]="viewDate"
-          [events]="eventsToDisplay"
+          [events]="recurringEventsToDisplay"
           [refresh]="refresh"
           [cellTemplate]="customCellTemplate"
           [activeDayIsOpen]="activeDayIsOpen"
           (eventClicked)="handleEvent('Clicked', $event.event)"
           (eventTimesChanged)="eventTimesChanged($event)"
+          (beforeViewRender)="updateCalendarEvents($event)"
         >
         </mwl-calendar-month-view>
         <mwl-calendar-week-view
           *ngSwitchCase="CalendarView.Week"
           [viewDate]="viewDate"
-          [events]="eventsToDisplay"
+          [events]="recurringEventsToDisplay"
           [refresh]="refresh"
           (eventClicked)="handleEvent('Clicked', $event.event)"
           (eventTimesChanged)="eventTimesChanged($event)"
+          (beforeViewRender)="updateCalendarEvents($event)"
         >
         </mwl-calendar-week-view>
         <mwl-calendar-day-view
           *ngSwitchCase="CalendarView.Day"
           [viewDate]="viewDate"
-          [events]="eventsToDisplay"
+          [events]="recurringEventsToDisplay"
           [refresh]="refresh"
           (eventClicked)="handleEvent('Clicked', $event.event)"
           (eventTimesChanged)="eventTimesChanged($event)"
+          (beforeViewRender)="updateCalendarEvents($event)"
         >
         </mwl-calendar-day-view>
       </div>

@@ -15,7 +15,7 @@
         <mat-icon
           matTooltip="Close"
           class="material-icons md-18"
-          (click)="close()"
+          (click)="close(false)"
           >close</mat-icon
         >
       </div>
@@ -196,11 +196,12 @@
       <div class="col-md-6">
         <mat-form-field appearance="outline">
           <mat-label>Recurring</mat-label>
-          <mat-select>
-            <mat-option value="none">None</mat-option>
-            <mat-option value="daily">Daily</mat-option>
-            <mat-option value="weekly">Weekly</mat-option>
-            <mat-option value="monthly">Monthly</mat-option>
+          <mat-select [(ngModel)]="data.recurringModeId">
+            <mat-option [value]="1">None</mat-option>
+            <mat-option [value]="2">Daily</mat-option>
+            <mat-option [value]="3">Weekly</mat-option>
+            <mat-option [value]="5">Monthly</mat-option>
+            <mat-option [value]="6">Yearly</mat-option>
           </mat-select>
         </mat-form-field>
       </div>

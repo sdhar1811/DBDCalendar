@@ -70,6 +70,8 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { CalendarControlComponent } from './core/calendar-control/calendar-control.component';
 import { EventDetailsDialogComponent } from './core/home-screen/event-details-dialog/event-details-dialog.component';
+import { ViewModeDirective } from './core/home-screen/ViewModeDirective';
+import { EditModeDirective } from './core/home-screen/EditModeDirective';
 import { MoreEventsDialogComponent } from './more-events-dialog/more-events-dialog.component';
 import { UserAccountComponent } from './user-account/user-account.component';
 import { AgendaComponent } from './core/home-screen/agenda/agenda.component';
@@ -98,6 +100,8 @@ import { ConfirmationDialogComponent } from './core/confirmation-dialog/confirma
     CustomDateFormat2,
     CalendarControlComponent,
     EventDetailsDialogComponent,
+    ViewModeDirective,
+    EditModeDirective,
     MoreEventsDialogComponent,
     UserAccountComponent,
     AgendaComponent,

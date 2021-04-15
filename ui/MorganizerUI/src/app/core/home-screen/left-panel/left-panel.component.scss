@@ -8,8 +8,8 @@ ul {
 // }
 
 ::ng-deep .switch.checked {
-  // background: #efefef !important;
-  background: rgba(black, 0.2);
+  background: #A9A9A9;
+  //background: rgba(black, 0.2);
 }
 ::ng-deep .switch.switch-small {
   height: 14px;
@@ -46,4 +46,17 @@ ul {
 .expanded-calendar-panel {
   height: 60%;
   overflow: auto;
+}
+
+@media all and (min-width: 768px) {
+  tr  {
+    td {
+      vertical-align: middle !important;
+    }
+    span {
+      &:not([class]) {
+        padding: 0.5rem 0.5rem;
+      }
+    }
+  }
 }

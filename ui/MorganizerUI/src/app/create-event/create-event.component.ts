@@ -24,6 +24,8 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
 import { ProfileService } from '../services/profile.service';
 import { StoreService } from '../services/store.service';
 import { MyCalendarService } from '../services/mycalendar.service';
+import * as moment from 'moment-timezone';
+import { EventModel } from '../services/model/event-model';
 
 @Component({
   selector: 'app-create-event',
@@ -60,8 +62,8 @@ export class CreateEventComponent implements OnInit {
     // this.data.participant = [1];
   }
 
-  close(): void {
-    this.dialogRef.close(this.data);
+  close(response): void {
+    this.dialogRef.close(response);
   }
 
   // colorChange(event): void {
@@ -69,13 +71,7 @@ export class CreateEventComponent implements OnInit {
   //   this.data.color = this.color;
   // }
 
-  assigneeLst = [
-    { name: 'Sharad', id: 1 },
-    { name: 'Satyen', id: 2 },
-    { name: 'Dhananjay', id: 3 },
-    { name: 'Asmi', id: 4 },
-    { name: 'Khushboo', id: 5 },
-  ];
+
 
   reminderLst = [
     { title: '5 minutes', value: '5', id: 1 },
@@ -88,7 +84,8 @@ export class CreateEventComponent implements OnInit {
 
   createEvent(): void {
     if (this.data.allDayEvent == true) {
-      this.data.endTime = this.data.startTime;
+      this.data.startTime = moment(this.data.startTime).startOf('day').toDate();
+      this.data.endTime = moment(this.data.startTime).endOf('day').toDate();
     }
     // this.data.color = this.calendarList
     //   .filter((calendar) => calendar.calendarId == this.data.calendarId)
@@ -98,41 +95,21 @@ export class CreateEventComponent implements OnInit {
       (response) => {
         if (response) {
           console.log('Event Created');
-          this.close();
+          this.close(true);
         }
       },
       (error) => {
         console.log('Something went wrong');
-        this.close();
+        this.close(false);
         // window.alert('#TODO: Something went wrong.');
       }
     );
   }
 
-  // editEvent(): void {
-  //   //this.data.color = { primary: this.color, secondary: this.color };
-  //   // this.data.color = this.color;
-  //   this.data.color = this.calendarList
-  //     .filter((calendar) => calendar.calendarId == this.data.calendarId)
-  //     .map((calendar) => calendar.color)[0];
 
-  //   this.eventService.updateEvent(this.data).subscribe(
-  //     (response) => {
-  //       if (response) {
-  //         console.log('Event Updated');
-  //         this.close();
-  //       }
-  //     },
-  //     (error) => {
-  //       console.log('Something went wrong');
-  //       // window.alert('#TODO: Something went wrong.');
-  //       this.close();
-  //     }
-  //   );
-  // }
 
   cancelUpdateToEvent(): void {
-    this.close();
+    this.close(false);
   }
 
   fetchMyCalendarList() {
