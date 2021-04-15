@@ -16,7 +16,7 @@
       #profilePanel
       [ngClass]="profilePanel.expanded ? 'expanded-profile-panel ' : null"
     >
-    
+
       <mat-expansion-panel-header>
         <mat-panel-title> <strong>My Profiles</strong></mat-panel-title>
         <mat-icon
@@ -69,6 +69,7 @@
                   [hideColorPicker]="false"
                   [(ngModel)]="profile.color"
                   (input)="updateProfileColor(profile)"
+                  [palette]="colorPalette"
                 >
                   Color
                 </ngx-colors>
