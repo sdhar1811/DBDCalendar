@@ -209,30 +209,7 @@ export class HomeScreenComponent implements OnInit {
       );
   }
 
-  // fetchAllEvents() {
-  //   this.asyncEvents$ = this.eventService.getAllEvents('3').pipe(
-  //     map((results) => {
-  //       console.log(results);
-  //       return results.map((eventModel: EventModel) => {
-  //         return {
-  //           title: eventModel.title,
-  //           start: new Date(eventModel.startTime + ' UTC'),
-  //           end: new Date(eventModel.endTime + ' UTC'),
-  //           color: { primary: eventModel.color, secondary: eventModel.color },
-  //           actions: this.actions,
-  //           resizable: {
-  //             beforeStart: true,
-  //             afterEnd: true,
-  //           },
-  //           draggable: true,
-  //           meta: {
-  //             eventModel,
-  //           },
-  //         };
-  //       });
-  //     })
-  //   );
-  // }
+
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -296,7 +273,7 @@ export class HomeScreenComponent implements OnInit {
 
     if (action === 'Edited' || action === 'Clicked') {
       let editEvent = new EventModel();
-      editEvent = event.meta.eventModel;
+      editEvent = {...event.meta.eventModel};
       editEvent.startTime = event.start;
       editEvent.endTime = event.end;
       let dialogRef = this.dialog.open(CreateEventComponent, {
@@ -306,7 +283,10 @@ export class HomeScreenComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((response) => {
-        this.fetchAllEvents();
+        console.log(this.recurringEventsToDisplay);
+        if (response){
+          this.fetchAllEvents();
+        }
       });
     } else if (action === 'Deleted') {
       this.deleteEvent(event.meta.eventModel.eventId);
@@ -324,7 +304,9 @@ export class HomeScreenComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((response) => {
-      this.fetchAllEvents();
+      if (response){
+        this.fetchAllEvents();
+      }
     });
   }
 
@@ -464,36 +446,26 @@ export class HomeScreenComponent implements OnInit {
       | CalendarWeekViewBeforeRenderEvent
       | CalendarDayViewBeforeRenderEvent
   ): void {
-    console.log("Inside updateCalendarEvents");
-    console.log(viewRender);
-    console.log(this.viewPeriod);
-    console.log(this.update);
     if (
       !this.viewPeriod ||
       !moment(this.viewPeriod.start).isSame(viewRender.period.start) ||
       !moment(this.viewPeriod.end).isSame(viewRender.period.end) || this.update
     ) {
       this.update =false;
-      console.log("Inside if condition");
       this.recurringEventsToDisplay = [];
-      //this.filterRecurEvents = this.eventsToDisplay.filter((event)=> event.meta.eventModel.recurringModeId!=1);
-      console.log(this.filterRecurEvents);
       this.viewPeriod = viewRender.period;
 
       this.eventsToDisplay.forEach((event) => {
-        // let rule: RRule;
         if(event.meta.eventModel.recurringModeId == 1){
           this.recurringEventsToDisplay.push(event);
         }
         else {
           if(event.meta.eventModel.recurringModeId == 2){
             //daily
-              console.log("daily");
               this.rule = new RRule({
-              freq: RRule.DAILY,
-              //dtstart: moment(viewRender.period.start).startOf('day').toDate(),
-              dtstart: new Date(event.start),
-              until: moment(viewRender.period.end).endOf('day').toDate(),
+                freq: RRule.DAILY,
+                dtstart: moment(event.start).startOf('day').toDate(),
+                until: moment(viewRender.period.end).endOf('day').toDate(),
               });
           }
           else if(event.meta.eventModel.recurringModeId == 3){
@@ -503,10 +475,9 @@ export class HomeScreenComponent implements OnInit {
             this.rule = new RRule({
               freq: RRule.WEEKLY,
               byweekday: [this.rruleForDays[extractDayOfWeek]],
-              //dtstart: moment(viewRender.period.start).startOf('day').toDate(),
-              dtstart: new Date(event.start),
+              dtstart: moment(event.start).startOf('day').toDate(),
               until: moment(viewRender.period.end).endOf('day').toDate(),
-              });
+            });
           }
           else if(event.meta.eventModel.recurringModeId == 5){
             //monthly
@@ -516,10 +487,9 @@ export class HomeScreenComponent implements OnInit {
             this.rule = new RRule({
               freq: RRule.MONTHLY,
               bymonthday: extractDay,
-              //dtstart: moment(viewRender.period.start).startOf('day').toDate(),
-              dtstart: new Date(event.start),
+              dtstart: moment(event.start).startOf('day').toDate(),
               until: moment(viewRender.period.end).endOf('day').toDate(),
-              });
+            });
           }
           else if(event.meta.eventModel.recurringModeId == 6){
             //yearly
@@ -530,19 +500,26 @@ export class HomeScreenComponent implements OnInit {
               freq: RRule.YEARLY,
               bymonth: extractMonth,
               bymonthday: extractDay,
-              //dtstart: moment(viewRender.period.start).startOf('day').toDate(),
-              dtstart: new Date(event.start),
+              dtstart: moment(event.start).startOf('day').toDate(),
               until: moment(viewRender.period.end).endOf('day').toDate(),
-              });
+            });
 
           }
-          console.log(this.rule.all());
           this.rule.all().forEach((date) => {
+            let hour = moment(event.start).toDate().getHours();
+            let min = moment(event.start).toDate().getMinutes();
+            let dur = moment.duration(
+              moment(event.end).diff(moment(event.start))
+            );
+            let startTime = moment(date).add(hour, 'h').add(min, 'm').toDate();
+            let endTime = moment(startTime)
+              .add(dur.asMilliseconds(), 'ms')
+              .toDate();
             let temp = {
               title: event.title,
               allDay: event.allDay,
-              start: moment(date).toDate(),
-              end: moment(date).toDate(),
+              start: startTime,
+              end: endTime,
               color: {
                 primary: event.color.primary,
                 secondary: event.color.secondary,
@@ -550,10 +527,9 @@ export class HomeScreenComponent implements OnInit {
               actions: event.actions,
               resizable: event.resizable,
               draggable: true,
-              meta:event.meta,
+              meta: event.meta,
             };
             temp['assigneeList'] = event.meta.eventModel.assigneeList;
-            // event.start = moment(date).toDate();
             this.recurringEventsToDisplay.push(temp);
           });
         }
