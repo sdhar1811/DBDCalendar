@@ -34,13 +34,17 @@
         let-locale="locale"
         let-trackBy="trackBy"
       >
-        <div id="cell_{{ day.date | date: 'shortDate' }}">
+        <div
+          id="cell_{{ day.date | date: 'shortDate' }}"
+          (dblclick)="addEvent(day)"
+        >
           <div style="margin-bottom: 2px">
             <div class="cal-cell-top">
               <span class="cal-day-number">{{
                 day.date | calendarDate: "monthViewDayNumber":locale
               }}</span>
             </div>
+
             <div
               *ngFor="
                 let event of getSortedEvents(day.events)
@@ -84,24 +88,36 @@
                           matTooltip="{{ assignee.name }}"
                         ></span>
                       </div>
-                      <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
+                      <div
+                        class="cell-profile-dot-container"
+                        *ngIf="
+                          !event.assigneeList || event.assigneeList.length == 0
+                        "
+                      >
                         <span matTooltip="No Assignee ">
-                          <mat-icon class="material-icons md-12">block</mat-icon>
+                          <mat-icon class="material-icons md-12"
+                          >block</mat-icon
+                          >
                         </span>
                       </div>
                       <span>
                         <span>
-                          <mat-icon class="material-icons md-13" *ngIf="event.meta.eventModel.recurringModeId!=1"> loop </mat-icon>
+                          <mat-icon
+                            class="material-icons md-13"
+                            *ngIf="event.meta.eventModel.recurringModeId != 1"
+                          >
+                            loop
+                          </mat-icon>
                           <small
                             *ngIf="!event.allDay"
                             style="font-weight: 800; padding-left: 6px"
-                            >{{ event.start | date: "hh:mm aa" }} -
+                          >{{ event.start | date: "hh:mm aa" }} -
                           </small>
                         </span>
                         <small
                           class="title"
                           style="margin-left: 3px; font-weight: 500"
-                          >{{ event.title }}</small
+                        >{{ event.title }}</small
                         >
                       </span>
                     </span>
@@ -176,7 +192,12 @@
                         matTooltip="{{ assignee.name }}"
                       ></span>
                     </div>
-                    <div class="cell-profile-dot-container" *ngIf="!event.assigneeList || event.assigneeList.length == 0">
+                    <div
+                      class="cell-profile-dot-container"
+                      *ngIf="
+                        !event.assigneeList || event.assigneeList.length == 0
+                      "
+                    >
                       <span matTooltip="No Assignee ">
                         <mat-icon class="material-icons md-12">block</mat-icon>
                       </span>
@@ -191,17 +212,22 @@
                 }}</small> -->
                     <span>
                       <span>
-                        <mat-icon class="material-icons md-13" *ngIf="event.meta.eventModel.recurringModeId!=1"> loop </mat-icon>
+                        <mat-icon
+                          class="material-icons md-13"
+                          *ngIf="event.meta.eventModel.recurringModeId != 1"
+                        >
+                          loop
+                        </mat-icon>
                         <small
                           *ngIf="!event.allDay"
                           style="font-weight: 800; padding-left: 6px"
-                          >{{ event.start | date: "hh:mm aa" }} -
+                        >{{ event.start | date: "hh:mm aa" }} -
                         </small>
                       </span>
                       <small
                         class="title"
                         style="margin-left: 3px; font-weight: 500"
-                        >{{ event.title }}</small
+                      >{{ event.title }}</small
                       >
                     </span>
                   </div>
@@ -211,7 +237,7 @@
           </div>
           <div class="cell-show-more-text">
             <span *ngIf="day.events.length > 2" (click)="showMoreEvents(day)"
-              ><strong>
+            ><strong>
                 {{ day.events.length - 2 }}
                 {{
                   (showMoreDate | date) === (day.date | date) && showMore
