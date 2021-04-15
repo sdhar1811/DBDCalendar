@@ -19,7 +19,7 @@ export interface MyCalendars {
   selector: 'app-left-panel',
   templateUrl: './left-panel.component.html',
   styleUrls: ['./left-panel.component.scss'],
-  providers: [ ConfirmationDialogService ],
+  providers: [ConfirmationDialogService],
 })
 export class LeftPanelComponent implements OnInit {
   @Output() emitSelectedProfiles = new EventEmitter();
@@ -33,25 +33,25 @@ export class LeftPanelComponent implements OnInit {
   defaultProfileId: number;
   defaultCalendarId: number;
   colorPalette: Array<string> = [
-      '#f44336',
-      '#e91e63',
-      '#9c27b0',
-      '#673ab7',
-      '#3f51b5',
-      '#2196f3',
-  //     '#03a9f4',
-  //     '#00bcd4',
-      '#009688',
-      '#4caf50',
-  //     '#8bc34a',
-  //     '#cddc39',
-      '#ffeb3b',
-      '#ffc107',
-      '#ff9800',
-      '#ff5722',
-      '#795548',
-      '#607d8b',
-    ];
+    '#f44336',
+    '#e91e63',
+    '#9c27b0',
+    '#673ab7',
+    '#3f51b5',
+    '#2196f3',
+    //     '#03a9f4',
+    //     '#00bcd4',
+    '#009688',
+    '#4caf50',
+    //     '#8bc34a',
+    //     '#cddc39',
+    '#ffeb3b',
+    '#ffc107',
+    '#ff9800',
+    '#ff5722',
+    '#795548',
+    '#607d8b',
+  ];
 
   constructor(
     private profileService: ProfileService,
@@ -184,54 +184,75 @@ export class LeftPanelComponent implements OnInit {
   }
 
   deleteCalendar(calendarToDelete: any) {
-    this.confirmationDialogService.confirm('Are you sure you want to remove '+calendarToDelete.name.bold()+' calendar?',
-    'You will no longer have access to this calendar and its events.', 'Remove Calendar', 'Cancel')
-    .then((confirmed) => {
-      console.log('User confirmed:', confirmed);
-      if (confirmed){
-        this.calendarService.deleteCalendarFromList(calendarToDelete.calendarId).subscribe(
-          () => {
-            this.fetchCalendars();
-          },
-          (error) => {
-            console.log('Something went wrong');
-            // window.alert('#TODO: Something went wrong.');
-          }
-        );
-      }
-    })
-    .catch(() => {
-      console.log('User dismissed the dialog.');
-    });
+    this.confirmationDialogService
+      .confirm(
+        'Are you sure you want to remove ' +
+          calendarToDelete.name.bold() +
+          ' calendar?',
+        'You will no longer have access to this calendar and its events.',
+        'Remove Calendar',
+        'Cancel'
+      )
+      .then((confirmed) => {
+        console.log('User confirmed:', confirmed);
+        if (confirmed) {
+          this.calendarService
+            .deleteCalendarFromList(calendarToDelete.calendarId)
+            .subscribe(
+              () => {
+                this.fetchCalendars();
+              },
+              (error) => {
+                console.log('Something went wrong');
+                // window.alert('#TODO: Something went wrong.');
+              }
+            );
+        }
+      })
+      .catch(() => {
+        console.log('User dismissed the dialog.');
+      });
   }
 
   deleteProfile(profileToDelete: any) {
-    this.confirmationDialogService.confirm('Are you sure you want to remove '+profileToDelete.name.bold()+'\'s profile?',
-    'You will no longer have access to this profile and its events.', 'Remove Profile', 'Cancel')
-    .then((confirmed) => {
-      console.log('User confirmed:', confirmed);
-      if (confirmed){
-        this.profileService.deleteProfile(profileToDelete.profileId).subscribe(
-          () => {
-            this.fetchProfiles();
-            this.triggerCalendarUpdate.emit(null);
-          },
-          (error) => {
-            console.log('Could not delete profile:: ' + error);
-            //TODO: window.alert
-          }
-        );
-      }
-    })
-    .catch(() => {
-      console.log('User dismissed the dialog.');
-    });
+    this.confirmationDialogService
+      .confirm(
+        'Are you sure you want to remove ' +
+          profileToDelete.name.bold() +
+          "'s profile?",
+        'You will no longer have access to this profile and its events.',
+        'Remove Profile',
+        'Cancel'
+      )
+      .then((confirmed) => {
+        console.log('User confirmed:', confirmed);
+        if (confirmed) {
+          this.profileService
+            .deleteProfile(profileToDelete.profileId)
+            .subscribe(
+              () => {
+                this.fetchProfiles();
+                this.triggerCalendarUpdate.emit(null);
+              },
+              (error) => {
+                console.log('Could not delete profile:: ' + error);
+                //TODO: window.alert
+              }
+            );
+        }
+      })
+      .catch(() => {
+        console.log('User dismissed the dialog.');
+      });
   }
 
-  updateProfile(profile) {
+  updateProfile(profile, fetchEvents = false) {
     this.profileService.addProfile(profile).subscribe(
       (response) => {
         this.sendSelectedProfiles();
+        if (fetchEvents) {
+          this.triggerCalendarUpdate.emit(null);
+        }
       },
       (error) => {
         //TODO:Handle API error
@@ -247,10 +268,13 @@ export class LeftPanelComponent implements OnInit {
     this.emitSelectedProfiles.emit(selectedProfiles);
   }
 
-  updateCalendar(calendar) {
+  updateCalendar(calendar, fetchEvents = false) {
     this.calendarService.addCalendar(calendar).subscribe(
       (response) => {
         this.sendSelectedCalendars();
+        if (fetchEvents) {
+          this.triggerCalendarUpdate.emit(null);
+        }
       },
       (error) => {
         //TODO:Handle API error
@@ -268,15 +292,15 @@ export class LeftPanelComponent implements OnInit {
   addEvent() {
     this.storeService.createEventEmitter.next(true);
   }
-  updateCalendarColor(calendar) {
-    this.updateCalendar(calendar);
-    this.triggerCalendarUpdate.emit(null);
-  }
+  // updateCalendarColor(calendar) {
+  //   this.updateCalendar(calendar);
+  //   this.triggerCalendarUpdate.emit(null);
+  // }
 
-  updateProfileColor(profile) {
-    this.updateProfile(profile);
-    this.triggerCalendarUpdate.emit(null);
-  }
+  // updateProfileColor(profile) {
+  //   this.updateProfile(profile);
+  //   this.triggerCalendarUpdate.emit(null);
+  // }
 
   addProfile() {
     // this.storeService.createProfileEmitter.next(true);
@@ -301,11 +325,10 @@ export class LeftPanelComponent implements OnInit {
     });
   }
 
-
-  renameCalendar(calendar:MyCalendarModel, property: string, event: any) {
+  renameCalendar(calendar: MyCalendarModel, property: string, event: any) {
     let newCalendar = new MyCalendarModel();
     const editField = event.target.textContent;
-    newCalendar = {...calendar};
+    newCalendar = { ...calendar };
     newCalendar.name = editField;
     newCalendar.userId = this.storeService.loggedInUser?.id;
     this.calendarService.addCalendar(newCalendar).subscribe(
@@ -318,7 +341,6 @@ export class LeftPanelComponent implements OnInit {
         console.log('Something went wrong');
       }
     );
-
   }
 
   changeValue(property: string, event: any) {
