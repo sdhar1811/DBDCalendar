@@ -18,7 +18,7 @@ export interface MyCalendars {
 @Component({
   selector: 'app-left-panel',
   templateUrl: './left-panel.component.html',
-  styleUrls: ['./left-panel.component.scss'],  
+  styleUrls: ['./left-panel.component.scss'],
   providers: [ ConfirmationDialogService ],
 })
 export class LeftPanelComponent implements OnInit {
@@ -31,6 +31,26 @@ export class LeftPanelComponent implements OnInit {
   calendarTitle: string;
   defaultProfileId: number;
   defaultCalendarId: number;
+  colorPalette: Array<string> = [
+      '#f44336',
+      '#e91e63',
+      '#9c27b0',
+      '#673ab7',
+      '#3f51b5',
+      '#2196f3',
+  //     '#03a9f4',
+  //     '#00bcd4',
+      '#009688',
+      '#4caf50',
+  //     '#8bc34a',
+  //     '#cddc39',
+      '#ffeb3b',
+      '#ffc107',
+      '#ff9800',
+      '#ff5722',
+      '#795548',
+      '#607d8b',
+    ];
 
   constructor(
     private profileService: ProfileService,
@@ -163,7 +183,7 @@ export class LeftPanelComponent implements OnInit {
   }
 
   deleteCalendar(calendarToDelete: any) {
-    this.confirmationDialogService.confirm('Are you sure you want to remove '+calendarToDelete.name.bold()+' calendar?', 
+    this.confirmationDialogService.confirm('Are you sure you want to remove '+calendarToDelete.name.bold()+' calendar?',
     'You will no longer have access to this calendar and its events.', 'Remove Calendar', 'Cancel')
     .then((confirmed) => {
       console.log('User confirmed:', confirmed);
@@ -177,15 +197,15 @@ export class LeftPanelComponent implements OnInit {
             // window.alert('#TODO: Something went wrong.');
           }
         );
-      }      
+      }
     })
     .catch(() => {
       console.log('User dismissed the dialog.');
-    });  
+    });
   }
 
   deleteProfile(profileToDelete: any) {
-    this.confirmationDialogService.confirm('Are you sure you want to remove '+profileToDelete.name.bold()+'\'s profile?', 
+    this.confirmationDialogService.confirm('Are you sure you want to remove '+profileToDelete.name.bold()+'\'s profile?',
     'You will no longer have access to this profile and its events.', 'Remove Profile', 'Cancel')
     .then((confirmed) => {
       console.log('User confirmed:', confirmed);
@@ -200,11 +220,11 @@ export class LeftPanelComponent implements OnInit {
             //TODO: window.alert
           }
         );
-      }      
+      }
     })
     .catch(() => {
       console.log('User dismissed the dialog.');
-    });    
+    });
   }
 
   updateProfile(profile) {
