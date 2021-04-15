@@ -38,4 +38,9 @@ public class UserController {
 		userSignupService.fetchUserRole(username);
 	}
 
+	@PostMapping("/user/account")
+	public void updateAccountDetails(@RequestBody UserModel userDetails) throws Exception {
+		signUpService.registerUser(userDetails);
+	}
+
 }
