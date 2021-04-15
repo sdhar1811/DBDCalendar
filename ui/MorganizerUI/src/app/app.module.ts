@@ -73,6 +73,9 @@ import { EventDetailsDialogComponent } from './core/home-screen/event-details-di
 import { ViewModeDirective } from './core/home-screen/ViewModeDirective';
 import { EditModeDirective } from './core/home-screen/EditModeDirective';
 import { MoreEventsDialogComponent } from './more-events-dialog/more-events-dialog.component';
+import { UserAccountComponent } from './user-account/user-account.component';
+import { AgendaComponent } from './core/home-screen/agenda/agenda.component';
+import { ConfirmationDialogComponent } from './core/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +103,9 @@ import { MoreEventsDialogComponent } from './more-events-dialog/more-events-dial
     ViewModeDirective,
     EditModeDirective,
     MoreEventsDialogComponent,
+    UserAccountComponent,
+    AgendaComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,

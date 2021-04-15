@@ -1,0 +1,29 @@
+.container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
+}
+.signup-panel {
+  width: max-content;
+}
+.navigation-btns {
+  text-align: center;
+}
+.btn-left-align {
+  float: left;
+}
+.btn-right-align {
+  float: right;
+}
+.title {
+  color: #424dc8;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.75em;
+  padding-bottom: 10px;
+}

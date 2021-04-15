@@ -75,9 +75,10 @@ export class HomeScreenComponent implements OnInit {
   showRightPanel = false;
   calendarClass = 'col-md-9';
   rightPanelClass = 'col-md-1';
-  view: CalendarView = CalendarView.Month;
+  view: any = CalendarView.Month;
   loading = true;
   update: boolean = false;
+  showAgenda = false;
   selectedProfiles = [];
   selectedCalendars = [];
 
@@ -147,7 +148,13 @@ export class HomeScreenComponent implements OnInit {
   ) {
     this.storeService.calendarViewChange.subscribe((calendarView) => {
       this.viewDate = calendarView.viewDate;
-      this.view = calendarView.view;
+      if (calendarView.showAgenda) {
+        this.view = CalendarView.Month;
+        this.showAgenda = true;
+      } else {
+        this.showAgenda = false;
+        this.view = calendarView.view;
+      }
     });
     this.storeService.createEventEmitter.subscribe((isClicked) => {
       if (isClicked) {
@@ -323,7 +330,7 @@ export class HomeScreenComponent implements OnInit {
     );
   }
 
-  setView(view: CalendarView) {
+  setView(view: any) {
     this.view = view;
   }
 
@@ -407,9 +414,8 @@ export class HomeScreenComponent implements OnInit {
 
     this.dialog.open(MoreEventsDialogComponent, {
       data: { events: day.events, refElement: target, date: day.date },
+      panelClass: 'events-show-more-dialog-style',
     });
-    // this.showMoreDate = day.date;
-    // this.showMore = !this.showMore;
   }
   /**
    * Below method is used to display the long spanning events first
@@ -428,7 +434,11 @@ export class HomeScreenComponent implements OnInit {
     const dialog = this.dialog.open(EventDetailsDialogComponent, {
       data: event,
       width: '500px',
-      panelClass: ['animate__animated', 'animate__slideInUp'],
+      panelClass: [
+        'animate__animated',
+        'animate__fadeIn',
+        'event-overview-dialog-style',
+      ],
     });
     dialog.afterClosed().subscribe((data) => {
       if (data) {

@@ -1,0 +1,154 @@
+<div class="container">
+  <div class="signup-panel">
+    <div class="title">Account Information</div>
+
+    <form [formGroup]="personalForm" novalidate>
+      <div class="flex-vertical">
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+            <mat-form-field appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input
+                formControlName="firstName"
+                matInput
+                required
+                placeholder="Enter your first name"
+              />
+              <mat-error *ngIf="personalForm.get('firstName').errors?.required">
+                <strong> First Name</strong> is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Middle Name</mat-label>
+              <input
+                formControlName="middleName"
+                matInput
+                placeholder="Enter your middle name"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input
+                formControlName="lastName"
+                matInput
+                required
+                placeholder="Enter your last name"
+              />
+              <mat-error *ngIf="personalForm.get('lastName').errors?.required">
+                <strong> Last Name</strong> is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Gender</mat-label>
+              <mat-select formControlName="gender" required>
+                <mat-option value="male">Male</mat-option>
+                <mat-option value="female">Female</mat-option>
+                <mat-option value="other">Other</mat-option>
+              </mat-select>
+              <mat-error *ngIf="personalForm.get('gender').errors?.required">
+                <strong> Gender</strong> is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+            <mat-form-field appearance="outline" style="width: 95%">
+              <mat-label>Date of Birth</mat-label>
+              <input
+                formControlName="birthdate"
+                matInput
+                required
+                [matDatepicker]="datepicker"
+              />
+              <mat-error *ngIf="personalForm.get('birthdate').errors?.required">
+                <strong> Date of Birth</strong> is required
+              </mat-error>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="datepicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #datepicker>
+                <mat-datepicker-actions>
+                  <button mat-button matDatepickerCancel>Cancel</button>
+                  <button mat-raised-button color="primary" matDatepickerApply>
+                    Apply
+                  </button>
+                </mat-datepicker-actions>
+              </mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Phone Number</mat-label>
+              <input
+                formControlName="phoneNumber"
+                required
+                matInput
+                placeholder="Enter your phone number"
+              />
+              <mat-error
+                *ngIf="personalForm.get('phoneNumber').errors?.required"
+              >
+                <strong> Phone Number</strong> is required
+              </mat-error>
+              <mat-error
+                *ngIf="personalForm.get('phoneNumber').errors?.pattern"
+              >
+                Invalid Phone Number
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input formControlName="email" matInput />
+          <mat-error *ngIf="personalForm.get('email').errors?.required">
+            <strong> Email</strong> is required
+          </mat-error>
+          <mat-error *ngIf="personalForm.get('email').errors?.email">
+            <strong> Invalid Email</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input formControlName="username" matInput />
+          <mat-error *ngIf="personalForm.get('username').errors?.required">
+            <strong> Username</strong> is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+    <!-- </mat-tab>
+    </mat-tab-group> -->
+    <div class="navigation-btns">
+      <button
+        mat-raised-button
+        class="btn-animation"
+        color="primary"
+        style="margin: 0.5em"
+        (click)="updateDetails()"
+        [disabled]="!personalForm.valid"
+      >
+        Update
+      </button>
+      <button
+        mat-raised-button
+        class="btn-animation"
+        color="primary"
+        style="margin: 0.5em"
+        (click)="close()"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>
