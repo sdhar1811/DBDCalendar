@@ -43,7 +43,6 @@ import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { blue, red, yellow } from 'colors';
 import { ConfirmationDialogService } from 'src/app/core/confirmation-dialog/confirmation-dialog.service';
 
-
 interface RecurringEvent {
   title: string;
   color: any;
@@ -56,8 +55,6 @@ interface RecurringEvent {
 }
 
 // moment.tz.setDefault('Utc');
-
-
 
 @Component({
   selector: 'app-home-screen',
@@ -128,7 +125,7 @@ export class HomeScreenComponent implements OnInit {
     RRule.TH,
     RRule.FR,
     RRule.SA,
-  ]
+  ];
 
   recurringEventsArr = [
     'NA',
@@ -229,8 +226,6 @@ export class HomeScreenComponent implements OnInit {
       );
   }
 
-
-
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -290,10 +285,9 @@ export class HomeScreenComponent implements OnInit {
     event: CalendarEvent<{ eventModel: EventModel }>
   ): void {
     this.modalData = { event, action };
-
     if (action === 'Edited' || action === 'Clicked') {
       let editEvent = new EventModel();
-      editEvent = {...event.meta.eventModel};
+      editEvent = { ...event.meta.eventModel };
       editEvent.startTime = event.start;
       editEvent.endTime = event.end;
       let dialogRef = this.dialog.open(CreateEventComponent, {
@@ -303,31 +297,42 @@ export class HomeScreenComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((response) => {
-        console.log(this.recurringEventsToDisplay);
-        if (response){
+        if (response) {
           this.fetchAllEvents();
         }
       });
     } else if (action === 'Deleted') {
       let recurMode = event.meta.eventModel.recurringModeId;
-      if(recurMode!=1){
-        this.confirmationDialogService.confirm('This is a '+this.recurringEventsArr[recurMode].bold()+' recurring event. Are you sure you want to remove it?',
-          'Removing to this event would remove all its corresponding instances.', 'Remove Recurring Event', 'Cancel')
+      if (recurMode != 1) {
+        this.confirmationDialogService
+          .confirm(
+            'This is a ' +
+              this.recurringEventsArr[recurMode].bold() +
+              ' recurring event. Are you sure you want to remove it?',
+            'Removing to this event would remove all its corresponding instances.',
+            'Remove Recurring Event',
+            'Cancel'
+          )
           .then((confirmed) => {
             console.log('User confirmed:', confirmed);
-            if (confirmed){
+            if (confirmed) {
               this.deleteEvent(event.meta.eventModel.eventId);
             }
           })
           .catch(() => {
             console.log('User dismissed the dialog.');
           });
-      }else{
-        this.confirmationDialogService.confirm('Are you sure you want to remove this event?',
-          '', 'Remove Event', 'Cancel')
+      } else {
+        this.confirmationDialogService
+          .confirm(
+            'Are you sure you want to remove this event?',
+            '',
+            'Remove Event',
+            'Cancel'
+          )
           .then((confirmed) => {
             console.log('User confirmed:', confirmed);
-            if (confirmed){
+            if (confirmed) {
               this.deleteEvent(event.meta.eventModel.eventId);
             }
           })
@@ -335,15 +340,16 @@ export class HomeScreenComponent implements OnInit {
             console.log('User dismissed the dialog.');
           });
       }
-
-
     }
   }
 
-  addEvent(): void {
+  addEvent(day = null): void {
     let eventModel = new EventModel();
     // eventModel.color = { primary: '', secondary: '' };
     eventModel.userId = this.storeService.loggedInUser?.id;
+    if (day) {
+      eventModel.startTime = day.date;
+    }
     let dialogRef = this.dialog.open(CreateEventComponent, {
       data: eventModel,
       width: '600px',
@@ -351,7 +357,7 @@ export class HomeScreenComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((response) => {
-      if (response){
+      if (response) {
         this.fetchAllEvents();
       }
     });
@@ -427,7 +433,7 @@ export class HomeScreenComponent implements OnInit {
       )
     );
     console.log(this.eventsToDisplay);
-    console.log("Inside updateEventsToDisplay");
+    console.log('Inside updateEventsToDisplay');
     this.update = true;
     this.refresh.next();
   }
@@ -499,26 +505,25 @@ export class HomeScreenComponent implements OnInit {
     if (
       !this.viewPeriod ||
       !moment(this.viewPeriod.start).isSame(viewRender.period.start) ||
-      !moment(this.viewPeriod.end).isSame(viewRender.period.end) || this.update
+      !moment(this.viewPeriod.end).isSame(viewRender.period.end) ||
+      this.update
     ) {
-      this.update =false;
+      this.update = false;
       this.recurringEventsToDisplay = [];
       this.viewPeriod = viewRender.period;
 
       this.eventsToDisplay.forEach((event) => {
-        if(event.meta.eventModel.recurringModeId == 1){
+        if (event.meta.eventModel.recurringModeId == 1) {
           this.recurringEventsToDisplay.push(event);
-        }
-        else {
-          if(event.meta.eventModel.recurringModeId == 2){
+        } else {
+          if (event.meta.eventModel.recurringModeId == 2) {
             //daily
-              this.rule = new RRule({
-                freq: RRule.DAILY,
-                dtstart: moment(event.start).startOf('day').toDate(),
-                until: moment(viewRender.period.end).endOf('day').toDate(),
-              });
-          }
-          else if(event.meta.eventModel.recurringModeId == 3){
+            this.rule = new RRule({
+              freq: RRule.DAILY,
+              dtstart: moment(event.start).startOf('day').toDate(),
+              until: moment(viewRender.period.end).endOf('day').toDate(),
+            });
+          } else if (event.meta.eventModel.recurringModeId == 3) {
             //weekly
             var d = new Date(event.start);
             var extractDayOfWeek = d.getDay();
@@ -528,10 +533,9 @@ export class HomeScreenComponent implements OnInit {
               dtstart: moment(event.start).startOf('day').toDate(),
               until: moment(viewRender.period.end).endOf('day').toDate(),
             });
-          }
-          else if(event.meta.eventModel.recurringModeId == 5){
+          } else if (event.meta.eventModel.recurringModeId == 5) {
             //monthly
-            console.log("Monthly"+event.title);
+            console.log('Monthly' + event.title);
             var d = new Date(event.start);
             var extractDay = d.getDate();
             this.rule = new RRule({
@@ -540,12 +544,11 @@ export class HomeScreenComponent implements OnInit {
               dtstart: moment(event.start).startOf('day').toDate(),
               until: moment(viewRender.period.end).endOf('day').toDate(),
             });
-          }
-          else if(event.meta.eventModel.recurringModeId == 6){
+          } else if (event.meta.eventModel.recurringModeId == 6) {
             //yearly
             var d = new Date(event.start);
             var extractDay = d.getDate();
-            var extractMonth = d.getMonth()+1;
+            var extractMonth = d.getMonth() + 1;
             this.rule = new RRule({
               freq: RRule.YEARLY,
               bymonth: extractMonth,
@@ -553,7 +556,6 @@ export class HomeScreenComponent implements OnInit {
               dtstart: moment(event.start).startOf('day').toDate(),
               until: moment(viewRender.period.end).endOf('day').toDate(),
             });
-
           }
           this.rule.all().forEach((date) => {
             let hour = moment(event.start).toDate().getHours();
@@ -583,11 +585,9 @@ export class HomeScreenComponent implements OnInit {
             this.recurringEventsToDisplay.push(temp);
           });
         }
-
-    });
-    console.log(this.recurringEventsToDisplay);
-    this.cdr.detectChanges();
-
+      });
+      console.log(this.recurringEventsToDisplay);
+      this.cdr.detectChanges();
     }
   }
 }
