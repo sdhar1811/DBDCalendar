@@ -1,20 +1,3 @@
-<!-- <div>
-    <table style="width: 100%">
-        <tr *ngFor="let event of events">
-          
-          <td>
-              {{ event.startTime }}
-          </td>
-          <td>
-            {{ event.title }}
-          </td>
-          
-         
-        </tr>
-      </table>
-
-
-</div> -->
 <div>
   <div>
     <div class="row agenda-item" *ngFor="let event of events">
@@ -31,7 +14,7 @@
           matTooltip="{{ event.meta.eventModel.calendar.name }}"
         ></div>
         <span>
-          {{ event.allDay ? "Add Day" : (event.start | date: "h:mm a") }}
+          {{ event.allDay ? "All Day" : (event.start | date: "h:mm a") }}
         </span>
       </div>
       <div class="col-md-2">
