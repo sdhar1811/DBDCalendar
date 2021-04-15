@@ -41,6 +41,7 @@ import {
 } from 'angular-calendar';
 import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { blue, red, yellow } from 'colors';
+import { ConfirmationDialogService } from 'src/app/core/confirmation-dialog/confirmation-dialog.service';
 
 
 interface RecurringEvent {
@@ -68,6 +69,7 @@ interface RecurringEvent {
       provide: CalendarEventTitleFormatter,
       useClass: CustomEventTitleFormatter,
     },
+    ConfirmationDialogService,
   ],
 })
 export class HomeScreenComponent implements OnInit {
@@ -127,6 +129,16 @@ export class HomeScreenComponent implements OnInit {
     RRule.FR,
     RRule.SA,
   ]
+
+  recurringEventsArr = [
+    'NA',
+    'None',
+    'Daily',
+    'Weekly',
+    'BiWeekly',
+    'Monthly',
+    'Yearly',
+  ];
   // asyncEvents$: Observable<CalendarEvent<{ eventModel: EventModel }>[]>;
   eventsToDisplay: CalendarEvent[] = [];
   events: CalendarEvent[] = [];
@@ -144,7 +156,8 @@ export class HomeScreenComponent implements OnInit {
     private storeService: StoreService,
     private eventService: EventService,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private confirmationDialogService: ConfirmationDialogService
   ) {
     this.storeService.calendarViewChange.subscribe((calendarView) => {
       this.viewDate = calendarView.viewDate;
@@ -296,7 +309,34 @@ export class HomeScreenComponent implements OnInit {
         }
       });
     } else if (action === 'Deleted') {
-      this.deleteEvent(event.meta.eventModel.eventId);
+      let recurMode = event.meta.eventModel.recurringModeId;
+      if(recurMode!=1){
+        this.confirmationDialogService.confirm('This is a '+this.recurringEventsArr[recurMode].bold()+' recurring event. Are you sure you want to remove it?',
+          'Removing to this event would remove all its corresponding instances.', 'Remove Recurring Event', 'Cancel')
+          .then((confirmed) => {
+            console.log('User confirmed:', confirmed);
+            if (confirmed){
+              this.deleteEvent(event.meta.eventModel.eventId);
+            }
+          })
+          .catch(() => {
+            console.log('User dismissed the dialog.');
+          });
+      }else{
+        this.confirmationDialogService.confirm('Are you sure you want to remove this event?',
+          '', 'Remove Event', 'Cancel')
+          .then((confirmed) => {
+            console.log('User confirmed:', confirmed);
+            if (confirmed){
+              this.deleteEvent(event.meta.eventModel.eventId);
+            }
+          })
+          .catch(() => {
+            console.log('User dismissed the dialog.');
+          });
+      }
+
+
     }
   }
 
