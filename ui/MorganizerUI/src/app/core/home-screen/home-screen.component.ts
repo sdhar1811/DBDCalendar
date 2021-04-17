@@ -314,14 +314,11 @@ export class HomeScreenComponent implements OnInit {
             'Cancel'
           )
           .then((confirmed) => {
-            console.log('User confirmed:', confirmed);
             if (confirmed) {
               this.deleteEvent(event.meta.eventModel.eventId);
             }
           })
-          .catch(() => {
-            console.log('User dismissed the dialog.');
-          });
+          .catch(() => {});
       } else {
         this.confirmationDialogService
           .confirm(
@@ -331,14 +328,11 @@ export class HomeScreenComponent implements OnInit {
             'Cancel'
           )
           .then((confirmed) => {
-            console.log('User confirmed:', confirmed);
             if (confirmed) {
               this.deleteEvent(event.meta.eventModel.eventId);
             }
           })
-          .catch(() => {
-            console.log('User dismissed the dialog.');
-          });
+          .catch(() => {});
       }
     }
   }
@@ -432,8 +426,7 @@ export class HomeScreenComponent implements OnInit {
         this.defaultProfileId
       )
     );
-    console.log(this.eventsToDisplay);
-    console.log('Inside updateEventsToDisplay');
+
     this.update = true;
     this.refresh.next();
   }
@@ -535,7 +528,7 @@ export class HomeScreenComponent implements OnInit {
             });
           } else if (event.meta.eventModel.recurringModeId == 5) {
             //monthly
-            console.log('Monthly' + event.title);
+
             var d = new Date(event.start);
             var extractDay = d.getDate();
             this.rule = new RRule({
@@ -586,7 +579,7 @@ export class HomeScreenComponent implements OnInit {
           });
         }
       });
-      console.log(this.recurringEventsToDisplay);
+
       this.cdr.detectChanges();
     }
   }

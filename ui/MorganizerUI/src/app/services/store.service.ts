@@ -29,6 +29,11 @@ export class StoreService {
   setProperty(key: string, value: any) {
     this.data[key] = value;
   }
+  removeProperty(key) {
+    if (this.data[key]) {
+      delete this.data[key];
+    }
+  }
   setLoggedInUserDetails(value) {
     this.loggedInUserChange.next(value);
   }

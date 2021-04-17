@@ -194,7 +194,6 @@ export class LeftPanelComponent implements OnInit {
         'Cancel'
       )
       .then((confirmed) => {
-        console.log('User confirmed:', confirmed);
         if (confirmed) {
           this.calendarService
             .deleteCalendarFromList(calendarToDelete.calendarId)
@@ -209,9 +208,7 @@ export class LeftPanelComponent implements OnInit {
             );
         }
       })
-      .catch(() => {
-        console.log('User dismissed the dialog.');
-      });
+      .catch(() => {});
   }
 
   deleteProfile(profileToDelete: any) {
@@ -225,7 +222,6 @@ export class LeftPanelComponent implements OnInit {
         'Cancel'
       )
       .then((confirmed) => {
-        console.log('User confirmed:', confirmed);
         if (confirmed) {
           this.profileService
             .deleteProfile(profileToDelete.profileId)
@@ -241,9 +237,7 @@ export class LeftPanelComponent implements OnInit {
             );
         }
       })
-      .catch(() => {
-        console.log('User dismissed the dialog.');
-      });
+      .catch(() => {});
   }
 
   updateProfile(profile, fetchEvents = false) {

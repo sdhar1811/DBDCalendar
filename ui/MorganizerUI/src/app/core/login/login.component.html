@@ -1,70 +1,98 @@
-<div class="container">
-  <mat-card [@headShake]="loginFailed" class="mat-elevation-z5 login-panel">
-    <mat-card-title class="login-title">
-      <div style="margin: 10px;">Weclome to Morganized</div>
-      <div style="text-align: center;">
-        <span>
-          <mat-icon class="material-icons md-18">lock</mat-icon>
-        </span>
-        Sign In
-      </div>
-    </mat-card-title>
-    <form [formGroup]="loginForm">
-      <div class="flex-vertical">
-        <mat-form-field appearance="outline">
-          <mat-label>Username</mat-label>
-          <input
-            formControlName="username"
-            matInput
-            required
-            placeholder="Enter your username"
-          />
-          <mat-error *ngIf="loginForm.get('username').errors?.required">
-            <strong> Username</strong> is required
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input
-            formControlName="password"
-            type="password"
-            required
-            matInput
-            placeholder="Enter your password"
-          />
-          <mat-error *ngIf="loginForm.get('password').errors?.required">
-            <strong> Password</strong> is required
-          </mat-error>
-        </mat-form-field>
-        <div *ngIf="loginFailed" style="color: red; text-align: center;">
-          {{ this.errorMessage.message }}:{{ this.errorMessage.error[0] }}
+<div style="width: 100%; display: flex; height: calc(100% - 64px)">
+  <div class="carousel-container">
+    <ngb-carousel
+      #carousel
+      [interval]="3000"
+      [pauseOnHover]="pauseOnHover"
+      [pauseOnFocus]="pauseOnFocus"
+      (slide)="onSlide($event)"
+    >
+      <ng-template ngbSlide *ngFor="let img of images; index as i">
+        <div class="carousel-caption"></div>
+        <div class="picsum-img-wrapper">
+          <img [src]="img" alt="My image {{ i + 1 }} description" />
         </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+  <div style="width: 40%; border-left: solid 1px #d6d6db">
+    <div class="container" *ngIf="!showSignUp">
+      <mat-card [@headShake]="loginFailed" class="mat-elevation-z5 login-panel">
+        <mat-card-title class="login-title">
+          <div style="margin: 10px">Weclome to Morganized</div>
+          <div style="text-align: center">
+            <span>
+              <mat-icon class="material-icons md-18">lock</mat-icon>
+            </span>
+            Sign In
+          </div>
+        </mat-card-title>
+        <form [formGroup]="loginForm">
+          <div class="flex-vertical">
+            <mat-form-field appearance="outline">
+              <mat-label>Username</mat-label>
+              <input
+                formControlName="username"
+                matInput
+                required
+                placeholder="Enter your username"
+              />
+              <mat-error *ngIf="loginForm.get('username').errors?.required">
+                <strong> Username</strong> is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Password</mat-label>
+              <input
+                formControlName="password"
+                type="password"
+                required
+                matInput
+                placeholder="Enter your password"
+              />
+              <mat-error *ngIf="loginForm.get('password').errors?.required">
+                <strong> Password</strong> is required
+              </mat-error>
+            </mat-form-field>
+            <!-- <div *ngIf="loginFailed" style="color: red; text-align: center">
+              {{ this.errorMessage.message }}:{{ this.errorMessage.error[0] }}
+            </div> -->
 
-        <button
-          mat-raised-button
-          class="btn-animation"
-          color="primary"
-          style="margin: 0.5em;"
-          (click)="login()"
-          [disabled]="!loginForm.valid"
-        >
-          Login
-        </button>
-        <button
-          mat-raised-button
-          class="btn-animation"
-          color="primary"
-          style="margin: 0.5em;"
-          (click)="goToRegister()"
-        >
-          Sign Up
-        </button>
-        <div>
-          <a [routerLink]="['/resetpassword']" class="btn btn-link pr-0"
-            >Forgot Password?</a
-          >
-        </div>
-      </div>
-    </form>
-  </mat-card>
+            <button
+              mat-raised-button
+              class="btn-animation"
+              color="primary"
+              style="margin: 0.5em"
+              (click)="login()"
+              [disabled]="!loginForm.valid"
+            >
+              Login
+            </button>
+            <button
+              mat-raised-button
+              class="btn-animation"
+              color="primary"
+              style="margin: 0.5em"
+              (click)="goToRegister()"
+            >
+              Sign Up
+            </button>
+            <div>
+              <a [routerLink]="['/resetpassword']" class="btn btn-link pr-0"
+                >Forgot Password?</a
+              >
+            </div>
+            <p *ngIf="loginFailed">
+              <ngb-alert [type]="error.type" (closed)="close()">{{
+                error.message
+              }}</ngb-alert>
+            </p>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+    <div class="container" *ngIf="showSignUp">
+      <app-register (closeRegisterEvent)="closeRegister()"> </app-register>
+    </div>
+  </div>
 </div>

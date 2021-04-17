@@ -1,4 +1,27 @@
 <app-header></app-header>
+<ngb-carousel
+  #carousel
+  [interval]="3000"
+  [pauseOnHover]="pauseOnHover"
+  [pauseOnFocus]="pauseOnFocus"
+  (slide)="onSlide($event)"
+>
+  <ng-template ngbSlide *ngFor="let img of images; index as i">
+    <div class="carousel-caption">
+      <h3>My slide {{ i + 1 }} title</h3>
+    </div>
+    <a
+      href="https://www.google.fr/?q=Number+{{ i + 1 }}"
+      target="_blank"
+      rel="nofollow noopener noreferrer"
+    >
+      <div class="picsum-img-wrapper">
+        <img [src]="img" alt="My image {{ i + 1 }} description" />
+      </div>
+    </a>
+  </ng-template>
+</ngb-carousel>
+
 <router-outlet></router-outlet>
 <!-- <app-login *ngIf="clickedSignUp=='false'" [clickedSignUp]="clickedSignUp"></app-login>
 <app-register *ngIf="clickedSignUp=='true'"></app-register> -->

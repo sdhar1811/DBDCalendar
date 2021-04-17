@@ -9,7 +9,7 @@
   flex-direction: column;
 }
 .signup-panel {
-  width: max-content;
+  max-width: 100%;
 }
 .navigation-btns {
   justify-content: space-between;
@@ -21,7 +21,12 @@
   float: right;
 }
 .register-title {
-  color: #424dc8;
+  color: var(--icon-color);
   text-align: center;
   font-weight: bold;
+}
+.return-icon {
+  transform: rotate(180deg);
+  color: var(--icon-color);
+  cursor: pointer;
 }

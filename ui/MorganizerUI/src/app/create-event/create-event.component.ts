@@ -32,7 +32,7 @@ import { ConfirmationDialogService } from 'src/app/core/confirmation-dialog/conf
   selector: 'app-create-event',
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.scss'],
-  providers: [ ConfirmationDialogService ],
+  providers: [ConfirmationDialogService],
   // providers: [
   //   { provide: NGX_MAT_DATE_FORMATS, multi:true, useValue: CUSTOM_DATE_ONLY_FORMAT },
   //   { provide: NGX_MAT_DATE_FORMATS, multi:true, useValue: CUSTOM_DATE_TIME_FORMAT },
@@ -83,7 +83,6 @@ export class CreateEventComponent implements OnInit {
     'Yearly',
   ];
 
-
   reminderLst = [
     { title: '5 minutes', value: '5', id: 1 },
     { title: '10 minutes', value: '10', id: 2 },
@@ -105,7 +104,6 @@ export class CreateEventComponent implements OnInit {
     this.eventService.addEvent(this.data).subscribe(
       (response) => {
         if (response) {
-          console.log('Event Created');
           this.close(true);
         }
       },
@@ -117,24 +115,27 @@ export class CreateEventComponent implements OnInit {
     );
   }
 
-  updateEvent(){
+  updateEvent() {
     let recurMode = this.data.recurringModeId;
-    if(recurMode!=1){
-      this.confirmationDialogService.confirm('This is a '+this.recurringEventsArr[recurMode].bold()+' recurring event. Are you sure you want to update it?',
-        'Changes to this event would update all its corresponding instances.', 'Update Recurring Event', 'Cancel')
+    if (recurMode != 1) {
+      this.confirmationDialogService
+        .confirm(
+          'This is a ' +
+            this.recurringEventsArr[recurMode].bold() +
+            ' recurring event. Are you sure you want to update it?',
+          'Changes to this event would update all its corresponding instances.',
+          'Update Recurring Event',
+          'Cancel'
+        )
         .then((confirmed) => {
-          console.log('User confirmed:', confirmed);
-          if (confirmed){
+          if (confirmed) {
             this.createEvent();
           }
         })
-        .catch(() => {
-          console.log('User dismissed the dialog.');
-        });
-    }else{
+        .catch(() => {});
+    } else {
       this.createEvent();
     }
-
   }
 
   cancelUpdateToEvent(): void {
