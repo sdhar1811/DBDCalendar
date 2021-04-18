@@ -8,11 +8,9 @@ import { ResetPasswordComponent } from './core/reset-password/reset-password.com
 import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
+  { path: 'landing', component: LandingComponent, pathMatch: 'full' },
   { path: '', component: LoginComponent, pathMatch: 'full' },
-  {
-    path: 'register',
-    component: RegisterComponent,
-  },
+
   {
     path: 'home',
     component: HomeScreenComponent,

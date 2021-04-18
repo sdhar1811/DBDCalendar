@@ -82,9 +82,7 @@ export class EditTaskComponent implements OnInit {
   removeTask() {
     this.taskService.deleteTask(this.data[this.taskIndex].id).subscribe(
       () => {},
-      (error) => {
-        console.log(error);
-      }
+      (error) => {}
     );
     this.data.splice(this.taskIndex, 1);
     this.closeEmitter.emit('remove');

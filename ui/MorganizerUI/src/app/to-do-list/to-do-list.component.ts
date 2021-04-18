@@ -152,7 +152,7 @@ export class ToDoListComponent implements OnInit {
     this.selectedTodoList.value.tasks.push(task);
 
     //task.calendarId = default calendar ID
-    let defaultCal =new MyCalendarModel();
+    let defaultCal = new MyCalendarModel();
     defaultCal.calendarId = this.storeService.loggedInUser?.defaultCalendarId;
     task.calendar = defaultCal;
     //task.calendar = this.storeService.defaultCalendar;
@@ -177,9 +177,7 @@ export class ToDoListComponent implements OnInit {
   removeTask(task) {
     this.taskService.deleteTask(task.id).subscribe(
       () => {},
-      (error) => {
-        console.log(error);
-      }
+      (error) => {}
     );
   }
   editTask(index) {

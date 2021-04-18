@@ -12,7 +12,12 @@
   width: max-content;
 }
 .login-title {
-  color: #424dc8;
+  color: var(--icon-color);
   text-align: center;
   font-weight: bold;
+}
+.carousel-container {
+  width: 60%;
+  text-align: center;
+  margin-top: 1%;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterEvent, RouterModule } from '@angular/router';
@@ -21,6 +21,9 @@ export class RegisterComponent implements OnInit {
   birthdate: string;
   personalForm: FormGroup;
   accountForm: FormGroup;
+  @Output() closeRegisterEvent = new EventEmitter();
+  error = {};
+  apiError = false;
   constructor(
     private registerService: RegisterService,
     public dialog: MatDialog,
@@ -103,9 +106,16 @@ export class RegisterComponent implements OnInit {
     this.userModel.birthdate = this.transformDateToSQL(
       this.userModel.birthdate
     );
-    this.registerService.registerUser(this.userModel).subscribe((response) => {
-      this.openSuccessDialog();
-    });
+    this.registerService.registerUser(this.userModel).subscribe(
+      (response) => {
+        this.openSuccessDialog();
+      },
+      (error) => {
+        this.apiError = true;
+        this.error['type'] = 'danger';
+        this.error['message'] = error.message;
+      }
+    );
   }
   openSuccessDialog() {
     const dialogRef = this.dialog.open(RegisterDialogComponent);
@@ -130,5 +140,14 @@ export class RegisterComponent implements OnInit {
   }
   tabSelectionChanged(event) {
     this.tabIndex = event;
+  }
+  backToLogin() {
+    this.accountForm.markAsUntouched();
+    this.personalForm.markAsUntouched();
+    this.closeRegisterEvent.emit(null);
+  }
+  closeErrorAlert() {
+    this.apiError = false;
+    this.error = {};
   }
 }

@@ -76,6 +76,7 @@ import { MoreEventsDialogComponent } from './more-events-dialog/more-events-dial
 import { UserAccountComponent } from './user-account/user-account.component';
 import { AgendaComponent } from './core/home-screen/agenda/agenda.component';
 import { ConfirmationDialogComponent } from './core/confirmation-dialog/confirmation-dialog.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -152,6 +153,7 @@ import { ConfirmationDialogComponent } from './core/confirmation-dialog/confirma
     NgxMatMomentModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    NgbModule,
   ],
   providers: [
     {

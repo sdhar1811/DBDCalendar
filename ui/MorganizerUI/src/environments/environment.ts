@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  morgainzedAPIURL: 'http://localhost:8080/',
+  // morgainzedAPIURL: 'http://localhost:8080/',
+  morgainzedAPIURL: 'http://morganized-api.us-east-2.elasticbeanstalk.com/',
 };
 
 /*

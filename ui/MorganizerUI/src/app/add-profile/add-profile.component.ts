@@ -33,12 +33,12 @@ export class AddProfileComponent implements OnInit {
     '#673ab7',
     '#3f51b5',
     '#2196f3',
-//     '#03a9f4',
-//     '#00bcd4',
+    //     '#03a9f4',
+    //     '#00bcd4',
     '#009688',
     '#4caf50',
-//     '#8bc34a',
-//     '#cddc39',
+    //     '#8bc34a',
+    //     '#cddc39',
     '#ffeb3b',
     '#ffc107',
     '#ff9800',
@@ -52,33 +52,32 @@ export class AddProfileComponent implements OnInit {
     private profileService: ProfileService,
     private storeService: StoreService,
     @Inject(MAT_DIALOG_DATA) public profileModel
-    ) {}
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.profileModel.name);
-    console.log(this.profileModel.name == null);
-    this.editFlag = (this.profileModel.name == undefined ? false : true);
-    console.log(this.editFlag);
+    this.editFlag = this.profileModel.name == undefined ? false : true;
+
     let letters = '0123456789ABCDEF';
     let randomcolor = '#';
     for (var i = 0; i < 6; i++) {
       randomcolor += letters[Math.floor(Math.random() * 16)];
     }
-    if (!this.editFlag){
+    if (!this.editFlag) {
       this.profileModel.color = randomcolor;
     }
-
   }
   close() {
     this.dialogRef.close();
   }
 
-  addProfile(){
+  addProfile() {
     this.profileModel.userId = this.storeService.loggedInUser?.id;
-    this.profileService.addProfile(this.profileModel).subscribe((response:ProfileModel)=>{
-      //set all fields of profileModel to '' or undefined or null
-      this.profileService.addProfileEvent.next(response);
-      this.close();
-    })
+    this.profileService
+      .addProfile(this.profileModel)
+      .subscribe((response: ProfileModel) => {
+        //set all fields of profileModel to '' or undefined or null
+        this.profileService.addProfileEvent.next(response);
+        this.close();
+      });
   }
 }
