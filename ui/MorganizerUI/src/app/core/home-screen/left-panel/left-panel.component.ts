@@ -177,7 +177,6 @@ export class LeftPanelComponent implements OnInit {
       },
       (error) => {
         console.log('Something went wrong');
-        // window.alert('#TODO: Something went wrong.');
       }
     );
     this.calendarTitle = '';
@@ -339,5 +338,32 @@ export class LeftPanelComponent implements OnInit {
 
   changeValue(property: string, event: any) {
     this.editField = event.target.textContent;
+  }
+
+  exportCalendar(calendar: MyCalendarModel) {
+    const ics = require('ics');
+    const { writeFileSync } = require('fs');
+    //const ics = require('./dist');
+    var __dirname = '../src/export-files/';
+    const { error, value } = ics.createEvents([
+      {
+        title: 'Lunch',
+        start: [2021, 4, 22, 12, 15],
+        duration: { minutes: 45 },
+      },
+      {
+        title: 'Dinner',
+        start: [2021, 4, 21, 12, 15],
+        duration: { hours: 1, minutes: 30 },
+      },
+    ]);
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    console.log(value);
+    writeFileSync(`${__dirname}/event.ics`, value);
   }
 }
