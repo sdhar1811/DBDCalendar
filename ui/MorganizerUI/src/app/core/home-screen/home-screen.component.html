@@ -11,9 +11,9 @@
   </div>
   <div
     [ngClass]="
-      showRightPanel
+      showTaskPanel
         ? 'col-xl-8 col-lg-8 col-md-8 col-sm-8'
-        : 'col-xl-9 col-lg-9 col-md-9 col-sm-9'
+        : 'col-xl-10 col-lg-10 col-md-10 col-sm-10'
     "
     *ngIf="!showAgenda"
   >
@@ -290,9 +290,9 @@
 
   <div
     [ngClass]="
-      showRightPanel
+      showTaskPanel
         ? 'col-xl-8 col-lg-8 col-md-8 col-sm-8'
-        : 'col-xl-9 col-lg-9 col-md-9 col-sm-9'
+        : 'col-xl-10 col-lg-10 col-md-10 col-sm-10'
     "
     *ngIf="showAgenda"
     style="
@@ -305,17 +305,11 @@
   >
     <app-agenda [events]="events"> </app-agenda>
   </div>
-  <div
-    [ngClass]="
-      showRightPanel
-        ? 'd-none d-sm-block col-xl-2 col-lg-2 col-md-2 col-sm-2 mat-elevation-z5'
-        : 'd-none d-sm-block col-xl-1 col-lg-1 col-md-1 col-sm-1 col-xs-1'
-    "
-    style="margin-top: 1px; padding-right: 1px"
+  <div 
+    *ngIf = "showTaskPanel"
+    class ="d-none d-sm-block col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-2 mat-elevation-z5"
+    style="margin-top: 1px; padding-right: 1px; "
   >
-    <app-right-panel
-      [showTaskPanel]="showRightPanel"
-      (updateRightPanelStatus)="updateRightPanelStatus($event)"
-    ></app-right-panel>
+    <app-to-do-list (closeTaskPanel)="closeTaskPanel()"></app-to-do-list>
   </div>
 </div>

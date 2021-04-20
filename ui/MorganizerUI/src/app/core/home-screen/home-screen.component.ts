@@ -71,7 +71,7 @@ interface RecurringEvent {
 })
 export class HomeScreenComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
-  showRightPanel = false;
+  showTaskPanel: boolean = false;
   calendarClass = 'col-md-9';
   rightPanelClass = 'col-md-1';
   view: any = CalendarView.Month;
@@ -176,6 +176,9 @@ export class HomeScreenComponent implements OnInit {
         this.showEventDetails(event);
       }
     });
+    this.storeService.showTaskPanelEmitter.subscribe((value) => {
+      this.showTaskPanel = value;
+    })
   }
 
   ngOnInit(): void {
@@ -380,8 +383,9 @@ export class HomeScreenComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  updateRightPanelStatus(value) {
-    this.showRightPanel = value;
+  closeTaskPanel(){
+    this.showTaskPanel = false;
+    this.storeService.showTaskPanelEmitter.next(this.showTaskPanel);
   }
 
   receiveSelectedProfiles(data) {
