@@ -128,9 +128,11 @@ export class ToDoListComponent implements OnInit {
           .createTask(result.name, this.storeService.loggedInUser.id)
           .subscribe(
             (response) => {
+              let taskList: TaskModel[] = [];
               this.todoLists.push({
                 name: response['title'],
                 id: response['id'],
+                tasks: taskList,
               });
               this.selectedTodoList.setValue(
                 this.todoLists[this.todoLists.length - 1]

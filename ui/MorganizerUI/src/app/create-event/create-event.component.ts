@@ -109,7 +109,7 @@ export class CreateEventComponent implements OnInit {
       },
       (error) => {
         console.log('Something went wrong');
-        this.close(false);
+        this.close(true);
         // window.alert('#TODO: Something went wrong.');
       }
     );

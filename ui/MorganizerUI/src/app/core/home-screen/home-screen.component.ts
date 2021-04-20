@@ -71,7 +71,7 @@ interface RecurringEvent {
 })
 export class HomeScreenComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
-  showRightPanel = false;
+  showTaskPanel: boolean = false;
   calendarClass = 'col-md-9';
   rightPanelClass = 'col-md-1';
   view: any = CalendarView.Month;
@@ -176,6 +176,9 @@ export class HomeScreenComponent implements OnInit {
         this.showEventDetails(event);
       }
     });
+    this.storeService.showTaskPanelEmitter.subscribe((value) => {
+      this.showTaskPanel = value;
+    })
   }
 
   ngOnInit(): void {
@@ -194,9 +197,11 @@ export class HomeScreenComponent implements OnInit {
           if (response) {
             this.events = [];
             response.forEach((eventModel) => {
+              let allDayFlag = false;
+              allDayFlag = !moment(eventModel.startTime).startOf('day').isSame(moment(eventModel.endTime).startOf('day'));
               let temp = {
                 title: eventModel.title,
-                allDay: eventModel.allDayEvent,
+                allDay: eventModel.allDayEvent || allDayFlag,
                 start: new Date(eventModel.startTime + ' UTC'),
                 end: new Date(eventModel.endTime + ' UTC'),
                 color: {
@@ -261,7 +266,7 @@ export class HomeScreenComponent implements OnInit {
       eventModel.endTime = newEnd ? newEnd : event.end;
     } else {
       eventModel = event;
-      eventModel.endTime = event['dueDate'] ? event['dueDate'] : newStart;
+      eventModel.endTime = event['dueDate'] ? event['dueDate'] : moment(newStart).endOf('day').toDate();
       this.eventService.triggerEventDropped(event);
     }
     eventModel.startTime = newStart ? newStart : event.start;
@@ -378,8 +383,9 @@ export class HomeScreenComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  updateRightPanelStatus(value) {
-    this.showRightPanel = value;
+  closeTaskPanel(){
+    this.showTaskPanel = false;
+    this.storeService.showTaskPanelEmitter.next(this.showTaskPanel);
   }
 
   receiveSelectedProfiles(data) {

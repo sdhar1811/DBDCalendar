@@ -1,6 +1,7 @@
 import { LOCALE_ID, Inject, Injectable } from '@angular/core';
 import { CalendarEventTitleFormatter, CalendarEvent } from 'angular-calendar';
 import { formatDate } from '@angular/common';
+import * as moment from 'moment';
 
 @Injectable()
 export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
@@ -9,8 +10,8 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
   }
 
   month(event: CalendarEvent): string {
-    if (!event.allDay) {
-      return `<b>${formatDate(event.start, 'h:m a', this.locale)}</b> ${
+    if (!event.meta.eventModel.allDayEvent) {
+      return `<b>${formatDate(event.start, 'hh:mm aa', this.locale)}</b> ${
         event.title
       }`;
     } else  {
@@ -19,8 +20,8 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
   }
 
   week(event: CalendarEvent): string {
-    if (!event.allDay) {
-      return `<b>${formatDate(event.start, 'h:m a', this.locale)}</b> ${
+    if (!event.meta.eventModel.allDayEvent) {
+      return `<b>${formatDate(event.start, 'hh:mm aa', this.locale)}</b> ${
         event.title
       }`;
     } else  {
@@ -30,8 +31,8 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
   }
 
   day(event: CalendarEvent): string {
-    if (!event.allDay) {
-      return `<b>${formatDate(event.start, 'h:m a', this.locale)}</b> ${
+    if (!event.meta.eventModel.allDayEvent) {
+      return `<b>${formatDate(event.start, 'hh:mm aa', this.locale)}</b> ${
         event.title
       }`;
     } else  {

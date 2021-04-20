@@ -8,12 +8,12 @@
     </div>
     <div
       *ngIf="loggedInUser"
-      class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 align-self-center"
+      class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 align-self-center"
     >
       <app-calendar-control></app-calendar-control>
     </div>
     <div
-      class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 align-self-center"
+      class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 align-self-center"
       style="text-align: end"
     >
       <div *ngIf="loggedInUser">
@@ -29,6 +29,10 @@
           <button mat-menu-item (click)="openAccountDialog()">Profile</button>
           <button mat-menu-item (click)="logOut()">Sign Out</button>
         </mat-menu>
+          <mat-icon
+          matTooltip="Create Tasks" 
+          class="material-icons md-24 task-icon align-self-center" style="cursor: pointer; text-align:end;padding-left: 22px; vertical-align:middle;margin-left: 20px; border-left: solid 2px;"
+          (click)=toggleTaskPanel()>sticky_note_2</mat-icon>
       </div>
     </div>
   </div>

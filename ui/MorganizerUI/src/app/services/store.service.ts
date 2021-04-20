@@ -12,6 +12,7 @@ export class StoreService {
   calendarDayClicked: Subject<any> = new Subject();
   createEventEmitter: Subject<any> = new Subject();
   showEventDetailsEmitter: Subject<any> = new Subject();
+  showTaskPanelEmitter: Subject<any> = new Subject();
 
   data = {};
   constructor() {
