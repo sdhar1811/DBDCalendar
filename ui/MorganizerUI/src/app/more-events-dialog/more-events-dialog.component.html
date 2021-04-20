@@ -51,7 +51,7 @@
         <span>
           <mat-icon class="material-icons md-13" *ngIf="event.meta.eventModel.recurringModeId!=1"> loop </mat-icon>
           <small
-            *ngIf="!event.allDay"
+            *ngIf="!event.meta.eventModel.allDayEvent"
             style="font-weight: 800; padding-left: 6px"
             >{{ event.start | date: "hh:mm aa" }} -
           </small>
@@ -103,7 +103,7 @@
               <span>
                 <mat-icon class="material-icons md-13" *ngIf="event.meta.eventModel.recurringModeId!=1"> loop </mat-icon>
                 <small
-                  *ngIf="!event.allDay"
+                  *ngIf="!event.meta.eventModel.allDayEvent"
                   style="font-weight: 800; padding-left: 6px"
                   >{{ event.start | date: "hh:mm aa" }} -
                 </small>

@@ -194,9 +194,11 @@ export class HomeScreenComponent implements OnInit {
           if (response) {
             this.events = [];
             response.forEach((eventModel) => {
+              let allDayFlag = false;
+              allDayFlag = !moment(eventModel.startTime).startOf('day').isSame(moment(eventModel.endTime).startOf('day'));
               let temp = {
                 title: eventModel.title,
-                allDay: eventModel.allDayEvent,
+                allDay: eventModel.allDayEvent || allDayFlag,
                 start: new Date(eventModel.startTime + ' UTC'),
                 end: new Date(eventModel.endTime + ' UTC'),
                 color: {
@@ -261,7 +263,7 @@ export class HomeScreenComponent implements OnInit {
       eventModel.endTime = newEnd ? newEnd : event.end;
     } else {
       eventModel = event;
-      eventModel.endTime = event['dueDate'] ? event['dueDate'] : newStart;
+      eventModel.endTime = event['dueDate'] ? event['dueDate'] : moment(newStart).endOf('day').toDate();
       this.eventService.triggerEventDropped(event);
     }
     eventModel.startTime = newStart ? newStart : event.start;

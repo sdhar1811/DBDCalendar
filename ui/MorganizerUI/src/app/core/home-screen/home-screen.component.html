@@ -109,7 +109,7 @@
                             loop
                           </mat-icon>
                           <small
-                            *ngIf="!event.allDay"
+                            *ngIf="!event.meta.eventModel.allDayEvent"
                             style="font-weight: 800; padding-left: 6px"
                           >{{ event.start | date: "hh:mm aa" }} -
                           </small>
@@ -219,7 +219,7 @@
                           loop
                         </mat-icon>
                         <small
-                          *ngIf="!event.allDay"
+                          *ngIf="!event.meta.eventModel.allDayEvent"
                           style="font-weight: 800; padding-left: 6px"
                         >{{ event.start | date: "hh:mm aa" }} -
                         </small>
@@ -265,6 +265,7 @@
         </mwl-calendar-month-view>
         <mwl-calendar-week-view
           *ngSwitchCase="CalendarView.Week"
+          precision="minutes"
           [viewDate]="viewDate"
           [events]="recurringEventsToDisplay"
           [refresh]="refresh"
