@@ -33,7 +33,23 @@ export class RegisterComponent implements OnInit {
     this.createForm();
   }
 
-  ngOnInit(): void {}
+  questionList: any;
+  ngOnInit(): void {
+    this.fetchAllQuestions();
+  }
+
+  fetchAllQuestions() {
+    this.registerService.getAllQuestions().subscribe(
+      (response) => {
+        console.log(response);
+        this.questionList = response;
+      },
+      (error) => {
+        // this.loading = false;
+        //TODO:Handle API error
+      }
+    );
+  }
 
   createForm() {
     this.createPersonalForm();
@@ -51,10 +67,6 @@ export class RegisterComponent implements OnInit {
             Validators.email,
           ],
         ],
-        phoneNumber: [
-          '',
-          [Validators.required, Validators.pattern('[0-9]{10}')],
-        ],
         username: ['', [Validators.required]],
         password: [
           '',
@@ -66,6 +78,8 @@ export class RegisterComponent implements OnInit {
           ],
         ],
         confirmPassword: ['', [Validators.required]],
+        securityQuestion: ['', [Validators.required]],
+        securityAnswer: ['', [Validators.required]]
       },
       {
         validator: MatchPassword('password', 'confirmPassword'),
@@ -93,6 +107,10 @@ export class RegisterComponent implements OnInit {
       ],
       gender: ['', [Validators.required]],
       birthdate: ['', [Validators.required]],
+      phoneNumber: [
+        '',
+        [Validators.required, Validators.pattern('[0-9]{10}')],
+      ],
     });
   }
   registerUser() {

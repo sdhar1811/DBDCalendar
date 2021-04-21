@@ -13,6 +13,9 @@ public class UserModel {
 	String birthdate;
 	String phoneNumber;
 	
+	Long securityQuestion;
+	String securityAnswer;
+	
 	public String getUsername() {
 		return username;
 	}
@@ -74,6 +77,18 @@ public class UserModel {
 	}
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+	public Long getSecurityQuestion() {
+		return securityQuestion;
+	}
+	public void setSecurityQuestion(Long securityQuestion) {
+		this.securityQuestion = securityQuestion;
+	}
+	public String getSecurityAnswer() {
+		return securityAnswer;
+	}
+	public void setSecurityAnswer(String securityAnswer) {
+		this.securityAnswer = securityAnswer;
 	}
 	
 	

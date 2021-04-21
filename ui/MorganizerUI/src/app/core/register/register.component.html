@@ -90,6 +90,16 @@
                 </mat-datepicker-actions>
               </mat-datepicker>
             </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Phone Number</mat-label>
+              <input formControlName="phoneNumber" required matInput placeholder="Enter your phone number" />
+              <mat-error *ngIf="personalForm.get('phoneNumber').errors?.required">
+                <strong> Phone Number</strong> is required
+              </mat-error>
+              <mat-error *ngIf="personalForm.get('phoneNumber').errors?.pattern">
+                Invalid Phone Number
+              </mat-error>
+            </mat-form-field>
           </div>
         </form>
       </mat-tab>
@@ -110,23 +120,6 @@
               </mat-error>
               <mat-error *ngIf="accountForm.get('email').errors?.email">
                 <strong> Invalid Email Id</strong>
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Phone Number</mat-label>
-              <input
-                formControlName="phoneNumber"
-                required
-                matInput
-                placeholder="Enter your phone number"
-              />
-              <mat-error
-                *ngIf="accountForm.get('phoneNumber').errors?.required"
-              >
-                <strong> Phone Number</strong> is required
-              </mat-error>
-              <mat-error *ngIf="accountForm.get('phoneNumber').errors?.pattern">
-                Invalid Phone Number
               </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
@@ -186,6 +179,29 @@
                 *ngIf="accountForm.get('confirmPassword').errors?.mustMatch"
               >
                 <strong>Passwords must match</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Security Question</mat-label>
+              <mat-select formControlName="securityQuestion" required matInput placeholder="Choose your security question">
+                <mat-option *ngFor="let q of questionList" [value]="q.questionid">{{q.questiontext}}
+                </mat-option>
+              </mat-select>
+              <!-- <mat-select [compareWith]="compareCalendarObjects" [(ngModel)]="data.calendar" required>
+                            <mat-option *ngFor="let calendar of calendarList" [value]="calendar">{{
+                              calendar.name
+                              }}</mat-option>
+                          </mat-select> -->
+              <!-- <input formControlName="securityQuestion" required matInput placeholder="Choose your security question" /> -->
+              <mat-error *ngIf="accountForm.get('securityQuestion').errors?.required">
+                <strong> Security Question</strong> is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Security Answer</mat-label>
+              <input formControlName="securityAnswer" required matInput placeholder="Enter your answer" />
+              <mat-error *ngIf="accountForm.get('securityAnswer').errors?.required">
+                <strong> Security Answer</strong> is required
               </mat-error>
             </mat-form-field>
           </div>

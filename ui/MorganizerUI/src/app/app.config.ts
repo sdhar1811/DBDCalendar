@@ -25,13 +25,19 @@ export interface IAppConfig {
   addCalendar: string;
   addProfile: string;
   deleteProfile: any;
+  secquestions: string;
+  checkUsername: any;
+  checkuser: string;
 }
 export const APPCONFIG: IAppConfig = {
   morganizerAPIEndpoint: environment.morgainzedAPIURL,
   login: '/user/login',
   logout: '/user/logout',
   register: '/user/register',
-  resetpassword: 'user/resetpassword',
+  secquestions: '/user/questions',
+  resetpassword: '/user/resetpassword',
+  checkUsername: (username: string) => `/user/checkusername/${username}`,
+  checkuser: '/user/checkusername',
   task: '/todoList',
   createTask: '/create',
   addTasks: '/add/tasks',
