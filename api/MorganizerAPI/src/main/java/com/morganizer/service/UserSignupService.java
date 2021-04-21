@@ -93,10 +93,11 @@ public class UserSignupService {
 	
 	
 	public void encryptPassword(UserModel userDetails) throws Exception {
+		ResetQuestionsEntity question = resetQnArepo.getOne(userDetails.getSecurityQuestion());
 		byte[] salt = PasswordUtil.getSalt(20);
 		String hashedPassword = securePassword.generateSecurePassword(userDetails.getPassword(), salt);
 		userCredentialsRepo.save(new UserCredentials(userDetails.getUsername(), hashedPassword,
-				Base64.getEncoder().encodeToString(salt), userDetails.getEmail()));
+				Base64.getEncoder().encodeToString(salt), userDetails.getEmail(),question,userDetails.getSecurityAnswer()));
 	}
 
 	public void fetchUserRole(String username) throws Exception {
@@ -114,19 +115,22 @@ public class UserSignupService {
 	public void saveResetPassword(UserModel userDetails) throws Exception {
 		byte[] salt = PasswordUtil.getSalt(20);
 		String hashedPassword = securePassword.generateSecurePassword(userDetails.getPassword(), salt);
-		userCredentialsRepo.save(new UserCredentials(userDetails.getUsername(), hashedPassword,
-				Base64.getEncoder().encodeToString(salt), userDetails.getEmail()));
+		UserCredentials usercred = userCredentialsRepo.findByUsername(userDetails.getUsername()).get(0);
+		usercred.setHash(hashedPassword);
+		usercred.setSalt(Base64.getEncoder().encodeToString(salt));
+		userCredentialsRepo.save(usercred);
 	}
 
-	public void fetchSecurityQnA(String username)throws Exception {
-		List<UserCredentials> userQnA = userCredentialsRepo.findByUsername(username);
-
-		if (userQnA.size()>0) {
-			Optional<ResetQuestionsEntity> resetQnA = resetQnArepo.findById(userQnA.get(0).getQuestionId());
-
-			if (resetQnA.isPresent()) {
-				System.out.println(resetQnA.get().getQuestiontext());
-			}
+	public UserCredentials fetchSecurityQnA(UserModel userDetails)throws Exception {
+		List<UserCredentials> userQnA = userCredentialsRepo.findByUsername(userDetails.getUsername());
+		if (userQnA.isEmpty()){
+			return null;
 		}
+		return userQnA.get(0);
+	}
+	
+	public List<ResetQuestionsEntity> fetchAllSecurityQuestions()throws Exception {
+		List<ResetQuestionsEntity> questions = resetQnArepo.findAll();
+		return questions;
 	}
 }

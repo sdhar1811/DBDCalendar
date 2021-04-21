@@ -1,8 +1,12 @@
 package com.morganizer.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.morganizer.entity.ResetQuestionsEntity;
+import com.morganizer.entity.UserCredentials;
 import com.morganizer.entity.UserDetailsEntity;
 import com.morganizer.model.UserModel;
 import com.morganizer.service.LoginService;
@@ -28,7 +32,7 @@ public class UserController {
 		
 	}
 	@PostMapping("/register")
-	public void registerUser(@RequestBody UserModel userDetails) throws Exception {		
+	public void registerUser(@RequestBody UserModel userDetails) throws Exception {	 
 		signUpService.registerUser(userDetails);
 		
 	}
@@ -41,6 +45,21 @@ public class UserController {
 	@PostMapping("/user/account")
 	public void updateAccountDetails(@RequestBody UserModel userDetails) throws Exception {
 		signUpService.registerUser(userDetails);
+	}
+	
+	@GetMapping("/questions")
+	public List<ResetQuestionsEntity> getAllResetQuestions() throws Exception {
+		return userSignupService.fetchAllSecurityQuestions();
+	}
+	
+	@PostMapping("/checkusername")
+	public UserCredentials fetchResetQnA(@RequestBody UserModel userDetails) throws Exception {
+		return userSignupService.fetchSecurityQnA(userDetails);
+	}
+
+	@PostMapping("/resetpassword")
+	public void resetPassword(@RequestBody UserModel userDetails) throws Exception {
+		userSignupService.saveResetPassword(userDetails);
 	}
 
 }

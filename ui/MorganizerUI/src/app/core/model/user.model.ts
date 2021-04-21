@@ -9,4 +9,6 @@ export class UserModel {
   password: string;
   username: string;
   userName: string;
+  securityQuestion: number;
+  securityAnswer: string;
 }

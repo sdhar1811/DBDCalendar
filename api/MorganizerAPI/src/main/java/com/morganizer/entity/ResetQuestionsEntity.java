@@ -9,20 +9,24 @@ import javax.persistence.Id;
 public class ResetQuestionsEntity {
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int questionid;
+	private Long questionid;
 	private String questiontext;
+	
+	public ResetQuestionsEntity() {
+		
+	}
 
-	public ResetQuestionsEntity(int questionid, String questiontext) {
+	public ResetQuestionsEntity(Long questionid, String questiontext) {
 		super();
 		this.questionid = questionid;
 		this.questiontext = questiontext;
 	}
 
-	public int getQuestionid() {
+	public Long getQuestionid() {
 		return questionid;
 	}
 
-	public void setQuestionid(int questionid) {
+	public void setQuestionid(Long questionid) {
 		this.questionid = questionid;
 	}
 
