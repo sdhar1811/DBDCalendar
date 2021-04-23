@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8080',
+  morgainzedAPIURL: 'http://morganized-api.us-east-2.elasticbeanstalk.com/',
 };

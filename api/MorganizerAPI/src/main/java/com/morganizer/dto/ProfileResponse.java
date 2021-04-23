@@ -1,24 +1,27 @@
 package com.morganizer.dto;
 
-public class ProfileResponse {
+public class ProfileResponse {	
 	private String name;
 	private String gender;
 	private String phoneNumber;
 	private String birthdate;
 	private String email;
-	private long profileId;
+	private Long profileId;
 	private long userId;
 	private String color;
+	private boolean selected;
 	
 	
 	
 	
 	
-	
+	public ProfileResponse() {
+		
+	}
 	
 	
 	public ProfileResponse(String name, String gender, String phoneNumber, String birthdate, String email,
-			long profileId, long userId, String color) {
+			Long profileId, long userId, String color, boolean selected) {
 		super();
 		this.name = name;
 		this.gender = gender;
@@ -28,7 +31,10 @@ public class ProfileResponse {
 		this.profileId = profileId;
 		this.userId = userId;
 		this.color = color;
+		this.selected = selected;
 	}
+
+
 	public String getName() {
 		return name;
 	}
@@ -59,10 +65,10 @@ public class ProfileResponse {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public long getProfileId() {
+	public Long getProfileId() {
 		return profileId;
 	}
-	public void setProfileId(long profileId) {
+	public void setProfileId(Long profileId) {
 		this.profileId = profileId;
 	}
 	public long getUserId() {
@@ -76,6 +82,12 @@ public class ProfileResponse {
 	}
 	public void setColor(String color) {
 		this.color = color;
+	}
+	public boolean isSelected() {
+		return selected;
+	}
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 	
 	

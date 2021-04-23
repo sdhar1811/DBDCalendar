@@ -15,6 +15,9 @@ import { StoreService } from 'src/app/services/store.service';
 import { NewListDialogComponent } from './new-list-dialog/new-list-dialog.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { EventService } from '../services/event.service';
+import { endOfToday, startOfDay, startOfToday } from 'date-fns';
+import { TaskModel } from '../services/model/task-model';
+import { MyCalendarModel } from '../services/model/mycalendar-model';
 
 @Component({
   selector: 'app-to-do-list',
@@ -43,15 +46,19 @@ export class ToDoListComponent implements OnInit {
 
   editMode = false;
   taskIndex = 0;
-
-  todoLists = [
-    { name: 'My List', id: 1 },
-    { name: 'School List', id: 2 },
+  previousTaskList = [];
+  completedTaskList = [];
+  todoLists = [];
+  assigneeList = [
+    { name: 'Sharad', id: 1 },
+    { name: 'Satyen', id: 2 },
+    { name: 'Dhananjay', id: 3 },
   ];
-
   name: string;
   taskTitle: string;
   tasks = [];
+  selectedIndex = 0;
+  myCal: any;
 
   constructor(
     public dialog: MatDialog,
@@ -60,9 +67,10 @@ export class ToDoListComponent implements OnInit {
     private storeService: StoreService
   ) {
     this.eventService.eventDropped.subscribe((event) => {
-      const index = this.tasks.indexOf(event);
-      if (this.tasks && index !== -1) {
-        this.tasks.splice(index, 1);
+      if (this.selectedTodoList.value && this.selectedTodoList.value.tasks) {
+        const index = this.selectedTodoList.value.tasks.indexOf(event);
+        this.removeTask(this.selectedTodoList.value.tasks[index]);
+        this.selectedTodoList.value.tasks.splice(index, 1);
       }
     });
   }
@@ -77,10 +85,34 @@ export class ToDoListComponent implements OnInit {
       .getTask(this.storeService.loggedInUser?.id)
       .subscribe((response) => {
         if (response) {
-          response.forEach((task) => {
-            this.todoLists.push({ name: task.title, id: task.id });
-            this.selectedTodoList.setValue(this.todoLists[0]);
+          this.completedTaskList = [];
+          response.forEach((todoList) => {
+            let taskList: TaskModel[] = [];
+
+            if (todoList.tasks) {
+              todoList.tasks.forEach((taskResponse) => {
+                const task: TaskModel = new TaskModel();
+                task.id = taskResponse.id;
+                task.complete = taskResponse.complete;
+                task.description = taskResponse.description;
+                task.dueDate = taskResponse.dueDate;
+                task.title = taskResponse.title;
+                task.todoListId = taskResponse.todoListId;
+                task.userId = this.storeService.loggedInUser.id;
+                if (task.complete) {
+                  this.completedTaskList.push(task);
+                } else {
+                  taskList.push(task);
+                }
+              });
+            }
+            this.todoLists.push({
+              name: todoList.title,
+              id: todoList.id,
+              tasks: taskList,
+            });
           });
+          this.selectedTodoList.setValue(this.todoLists[0]);
         }
       });
   }
@@ -93,15 +125,14 @@ export class ToDoListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.name !== '') {
         this.taskService
-          .createTask(
-            result.name,
-            this.storeService.getProperty('loggedInUser').id
-          )
+          .createTask(result.name, this.storeService.loggedInUser.id)
           .subscribe(
             (response) => {
+              let taskList: TaskModel[] = [];
               this.todoLists.push({
                 name: response['title'],
                 id: response['id'],
+                tasks: taskList,
               });
               this.selectedTodoList.setValue(
                 this.todoLists[this.todoLists.length - 1]
@@ -115,40 +146,79 @@ export class ToDoListComponent implements OnInit {
     });
   }
   addNewTask() {
-    this.tasks.push({
-      title: this.taskTitle,
-      description: null,
-      calendar: {},
-      color: undefined,
-      duedate: '',
-      checked: false,
-      draggable: true,
-      start: new Date(),
-      end: new Date(),
-      userId: this.storeService.loggedInUser?.id,
-    });
-    this.sortTaskList();
+    const task: TaskModel = new TaskModel();
+    task.title = this.taskTitle;
+    task.start = startOfToday();
+    task.userId = this.storeService.loggedInUser?.id;
+    task.todoListId = this.selectedTodoList.value.id;
+    this.selectedTodoList.value.tasks.push(task);
+
+    //task.calendarId = default calendar ID
+    let defaultCal = new MyCalendarModel();
+    defaultCal.calendarId = this.storeService.loggedInUser?.defaultCalendarId;
+    task.calendar = defaultCal;
+    //task.calendar = this.storeService.defaultCalendar;
+    //TODO:set default calendar here
+
+    // this.tasks.push(
+    //   // title: this.taskTitle,
+    //   // description: null,
+    //   // calendar: {},
+    //   // color: undefined,
+    //   // complete: false,
+    //   // draggable: true,
+    //   // start: new Date(),
+    //   // dueDate: endOfToday(),
+    //   // userId: this.storeService.loggedInUser?.id,
+    //   // todoListId: this.selectedTodoList.value.id,
+    //   task
+    // );
+    this.updateTask(task);
     this.taskTitle = '';
   }
-  removeTask(index) {
-    this.tasks.splice(index, 1);
+  removeTask(task) {
+    this.taskService.deleteTask(task.id).subscribe(
+      () => {},
+      (error) => {}
+    );
   }
   editTask(index) {
     this.taskIndex = index;
     this.editMode = true;
   }
   sortTaskList() {
-    this.tasks.sort((task1, task2) => {
-      return task1.checked - task2.checked;
+    this.selectedTodoList.value?.tasks?.sort((task1, task2) => {
+      return task1.complete - task2.complete;
     });
+    // this.tasks.sort((task1, task2) => {
+    //   return task1.complete - task2.complete;
+    // });
   }
   closeEditMode(event) {
+    if (this.selectedTodoList.value.tasks[this.taskIndex]) {
+      this.updateTask(this.selectedTodoList.value.tasks[this.taskIndex]);
+    }
     this.editMode = false;
   }
   close() {
+    //this.updateTasks();
     this.closeTaskPanel.emit(null);
   }
   drop(event: CdkDragDrop<any[]>) {
     moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+  }
+  todoListSelectionChanged(event) {
+    this.sortTaskList();
+  }
+  updateTask(task) {
+    //this.sortTaskList();
+    this.taskService.addTasksInTodoList(task).subscribe(
+      (response) => {
+        task.id = response.id;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

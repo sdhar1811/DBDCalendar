@@ -26,5 +26,11 @@ public class DateTimeUtil {
 	        throw new IllegalArgumentException(e);
 	    }
 	}
+	public static Timestamp parseTimestampWithTimezone(String timestamp) {
+		if(timestamp==null||timestamp.isEmpty()) {
+			return null;
+		}
+		return Timestamp.valueOf(timestamp.replaceAll("[A-Z]", " " ));
+	}
 
 }

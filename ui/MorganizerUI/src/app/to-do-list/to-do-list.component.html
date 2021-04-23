@@ -1,4 +1,4 @@
-<mat-card [@todoInOutAnimation] class="todo-panel">
+<div [@todoInOutAnimation] class="todo-panel">
   <div #createList class="flex-vertical" *ngIf="!editMode">
     <div
       class="row justify-content-between"
@@ -9,22 +9,26 @@
         color: gray;
       "
     >
-      <div class="col-md-10">Tasks</div>
+      <div class="col-md-10">To-Do List</div>
       <div class="col-md-2" class="task-panel-close">
         <mat-icon
-          matTooltip="Close Tasks"
+          matTooltip="Close"
           (click)="close()"
           class="material-icons md-18"
-          >close</mat-icon
         >
+          close
+        </mat-icon>
       </div>
     </div>
     <mat-form-field appearance="outline">
       <mat-label>Task List</mat-label>
       <mat-select [formControl]="selectedTodoList">
-        <mat-option *ngFor="let list of todoLists" [value]="list">{{
-          list.name
-        }}</mat-option>
+        <mat-option
+          *ngFor="let list of todoLists; let i = index"
+          (onSelectionChange)="todoListSelectionChanged($event)"
+          [value]="list"
+          >{{ list.name }}</mat-option
+        >
         <mat-option>
           <div class="add-task-list-btn" (click)="addNewList()">
             Create New List
@@ -40,7 +44,6 @@
         }}</mat-option>
       </mat-select>
     </mat-form-field> -->
-
     <mat-form-field appearance="outline">
       <input
         [(ngModel)]="taskTitle"
@@ -51,43 +54,48 @@
     </mat-form-field>
 
     <div
+      *ngIf="selectedTodoList.value"
       class="task-list-container"
       cdkDropList
       (cdkDropListDropped)="drop($event)"
     >
       <mat-card
-        style="margin-bottom: 10px;"
+        style="margin-bottom: 10px"
         class="mat-elevation-z5 task-card"
         cdkDrag
         mwlDraggable
-        *ngFor="let task of tasks; let i = index"
+        *ngFor="let task of selectedTodoList.value.tasks; let i = index"
         [dropData]="{ event: task }"
         [touchStartLongPress]="{ delay: 300, delta: 30 }"
         dragActiveClass="drag-active"
       >
         <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
         <div class="row">
-          <div class="col-md-2" style="align-self: center;">
+          <div class="col-md-2" style="align-self: center">
             <!-- style="float: left; margin: 0 10px" -->
             <mat-checkbox
               color="primary"
               class="custom-frame"
               matTooltip="{{
-                task.checked ? 'Mark incomplete' : 'Mark complete'
+                task.complete ? 'Mark incomplete' : 'Mark complete'
               }}"
-              [(ngModel)]="task.checked"
-              (change)="sortTaskList()"
+              [(ngModel)]="task.complete"
+              (change)="
+                selectedTodoList.value.tasks.splice(i, 1);
+                completedTaskList.push(task);
+                updateTask(task)
+              "
             >
             </mat-checkbox>
           </div>
           <div class="col-md-8">
             <mat-label
-              [ngClass]="task.checked ? 'strike-through' : none"
-              style="overflow-wrap: break-word;"
+              [ngClass]="task.complete ? 'strike-through' : none"
+              style="overflow-wrap: break-word"
               >{{ task.title }}</mat-label
             >
           </div>
-          <div class="col-md-2" style="align-self: center;">
+          <div class="col-md-2" style="align-self: center">
             <mat-icon
               matTooltip="Edit Task"
               (click)="editTask(i)"
@@ -102,9 +110,73 @@
   <div *ngIf="editMode">
     <app-edit-task
       (closeEmitter)="closeEditMode($event)"
-      [data]="tasks"
+      [data]="selectedTodoList.value.tasks"
       [taskIndex]="taskIndex"
     ></app-edit-task>
   </div>
-</mat-card>
+</div>
+<div class="completed-task-container">
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel
+      #panel
+      hideToggle="true"
+      style="box-shadow: none"
+      [expanded]="'false'"
+    >
+      <mat-expansion-panel-header>
+        <mat-icon>{{
+          panel.expanded ? "keyboard_arrow_down" : "keyboard_arrow_up"
+        }}</mat-icon>
+        <mat-panel-title>
+          Completed Tasks
+          <div *ngIf="completedTaskList.length > 0">
+            ({{ completedTaskList.length }})
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <!-- <mat-panel-description> -->
+      <div
+        class="completed-task-list"
+        *ngFor="let task of completedTaskList; let i = index"
+      >
+        <div class="row">
+          <div class="col-md-2" style="align-self: center">
+            <!-- style="float: left; margin: 0 10px" -->
+            <mat-checkbox
+              color="primary"
+              class="custom-frame"
+              matTooltip="{{
+                task.complete ? 'Mark incomplete' : 'Mark complete'
+              }}"
+              [(ngModel)]="task.complete"
+              (change)="
+                completedTaskList.splice(i, 1);
+                selectedTodoList.value.tasks.push(task);
+                updateTask(task)
+              "
+            >
+            </mat-checkbox>
+          </div>
+          <div class="col-md-8">
+            <mat-label
+              [ngClass]="task.complete ? 'strike-through' : none"
+              style="overflow-wrap: break-word"
+              >{{ task.title }}</mat-label
+            >
+          </div>
+          <div class="col-md-2" style="align-self: center">
+            <mat-icon
+              matTooltip="Delete"
+              (click)="completedTaskList.splice(i, 1); removeTask(task)"
+              class="material-icons md-18 edit-task-icon"
+              >delete
+            </mat-icon>
+          </div>
+        </div>
+      </div>
+      <!-- </mat-panel-description> -->
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
 <!-- </div> -->

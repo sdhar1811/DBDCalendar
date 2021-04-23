@@ -13,7 +13,7 @@ public class ProfileEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private long profileId;
+    private Long profileId;
 
     private String name;
     private String email;
@@ -24,22 +24,20 @@ public class ProfileEntity {
     
     
     
-    
-    
 
     @ManyToOne
     @JoinColumn(name="user_id",referencedColumnName = "user_id")
     private UserDetailsEntity user;
-
+    private boolean selected;
     
     public ProfileEntity() {
     	
     }
     
     
-	public ProfileEntity( String name, String email, String phoneNumber, String gender, String birthdate,
-			String color, UserDetailsEntity user) {
-		super();		
+	public ProfileEntity(String name, String email, String phoneNumber, String gender, String birthdate, String color,
+			UserDetailsEntity user, boolean selected) {
+		super();
 		this.name = name;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
@@ -47,13 +45,15 @@ public class ProfileEntity {
 		this.birthdate = birthdate;
 		this.color = color;
 		this.user = user;
+		this.selected = selected;
 	}
 
-	public long getProfileId() {
+
+	public Long getProfileId() {
 		return profileId;
 	}
 
-	public void setProfileId(long profileId) {
+	public void setProfileId(Long profileId) {
 		this.profileId = profileId;
 	}
 
@@ -111,6 +111,16 @@ public class ProfileEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 	
 	

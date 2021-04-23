@@ -26,6 +26,11 @@ public class UserDetailsEntity {
 	
 	private long roleId = 1;
 	
+	
+	private Long defaultCalendarId;
+	
+	private Long defaultProfileId;
+
 	public long getRoleid() {
 		return roleId;
 	}
@@ -123,7 +128,21 @@ public class UserDetailsEntity {
 	}
 	
 	
+	public Long getDefaultCalendarId() {
+		return defaultCalendarId;
+	}
 
+	public void setDefaultCalendarId(Long defaultCalendarId) {
+		this.defaultCalendarId = defaultCalendarId;
+	}
+
+	public Long getDefaultProfileId() {
+		return defaultProfileId;
+	}
+
+	public void setDefaultProfileId(Long defaultProfileId) {
+		this.defaultProfileId = defaultProfileId;
+	}
 	
-
+	
 }

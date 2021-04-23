@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { SubjectSubscriber } from 'rxjs/internal/Subject';
 
 @Injectable({
   providedIn: 'root',
@@ -7,6 +8,11 @@ import { Subject } from 'rxjs';
 export class StoreService {
   loggedInUser: any;
   loggedInUserChange: Subject<any> = new Subject();
+  calendarViewChange: Subject<any> = new Subject();
+  calendarDayClicked: Subject<any> = new Subject();
+  createEventEmitter: Subject<any> = new Subject();
+  showEventDetailsEmitter: Subject<any> = new Subject();
+  showTaskPanelEmitter: Subject<any> = new Subject();
 
   data = {};
   constructor() {
@@ -23,6 +29,11 @@ export class StoreService {
   }
   setProperty(key: string, value: any) {
     this.data[key] = value;
+  }
+  removeProperty(key) {
+    if (this.data[key]) {
+      delete this.data[key];
+    }
   }
   setLoggedInUserDetails(value) {
     this.loggedInUserChange.next(value);

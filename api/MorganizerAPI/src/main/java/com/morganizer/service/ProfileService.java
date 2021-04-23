@@ -21,13 +21,19 @@ public class ProfileService {
 
 	@Autowired
 	private UserDetailsRepository userRepo;
+	
+	@Autowired
+	private EventService eventService;
 
-	public void deleteProfile(ProfileRequest profileReq) {
+	public void deleteProfile(Long profileId) {
 
 		try {
-			profileRepository.deleteByProfileIdAndUserId(profileReq.getProfileId(), profileReq.getUserId());
+			ProfileEntity profile = this.profileRepository.getOne(profileId);
+			this.eventService.deleteAssignee(profile);
+			
+			this.profileRepository.deleteById(profileId);
 		} catch (Exception ex) {
-			// code to handle if user does not own the profile.
+			ex.printStackTrace();
 		}
 
 	}
@@ -38,7 +44,7 @@ public class ProfileService {
 		
 		List<ProfileResponse> result = new ArrayList<>();
 		for(ProfileEntity profile: profileList) {
-			result.add(new ProfileResponse(profile.getName(),profile.getGender(),profile.getPhoneNumber(), profile.getBirthdate(), profile.getEmail(), profile.getProfileId(), profile.getUser().getId(), profile.getColor()));
+			result.add(new ProfileResponse(profile.getName(),profile.getGender(),profile.getPhoneNumber(), profile.getBirthdate(), profile.getEmail(), profile.getProfileId(), profile.getUser().getId(), profile.getColor(),profile.isSelected()));
 		}
 		return result;
 	}
@@ -46,13 +52,14 @@ public class ProfileService {
 	public ProfileResponse addProfile(ProfileRequest profileRequest) {
 		UserDetailsEntity user = userRepo.getOne(profileRequest.getUserId());
 		ProfileEntity profile = new ProfileEntity(profileRequest.getName(), profileRequest.getEmail(), profileRequest.getPhoneNumber(),
-				profileRequest.getGender(), profileRequest.getBirthdate(), profileRequest.getColor(), user);
+				profileRequest.getGender(), profileRequest.getBirthdate(), profileRequest.getColor(), user, profileRequest.isSelected());
 		
-		if(profileRequest.getProfileId()!=0) {
+		if(profileRequest.getProfileId()!=null) {
 			profile.setProfileId(profileRequest.getProfileId());
 		}
+		
 		ProfileEntity profileEntity = profileRepository.save(profile);
-		return new ProfileResponse(profileEntity.getName(),profileEntity.getGender(),profileEntity.getPhoneNumber(), profileEntity.getBirthdate(), profileEntity.getEmail(), profileEntity.getProfileId(), profileEntity.getUser().getId(), profileEntity.getColor());
+		return new ProfileResponse(profileEntity.getName(),profileEntity.getGender(),profileEntity.getPhoneNumber(), profileEntity.getBirthdate(), profileEntity.getEmail(), profileEntity.getProfileId(), profileEntity.getUser().getId(), profileEntity.getColor(),profileEntity.isSelected());
 
 	}
 }

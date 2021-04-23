@@ -9,6 +9,12 @@ import {
 import { FormControl } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { getTime } from 'date-fns';
+import { TodoListService } from 'src/app/services/todo-list.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { StoreService } from 'src/app/services/store.service';
+import { ProfileModel } from 'src/app/services/model/profile-model';
+import { MyCalendarService } from 'src/app/services/mycalendar.service';
 
 @Component({
   selector: 'app-edit-task',
@@ -28,6 +34,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
 })
 export class EditTaskComponent implements OnInit {
+  public enableMeridian = true;
+  public defaultTime = [new Date().getHours, 0];
+
   selectedCalendar = new FormControl();
   @Input() data;
   @Input() taskIndex;
@@ -35,61 +44,53 @@ export class EditTaskComponent implements OnInit {
 
   calendarList = [];
 
-  assigneeList = [
-    { name: 'Sharad', id: 1 },
-    { name: 'Satyen', id: 2 },
-    { name: 'Dhananjay', id: 3 },
-    { name: 'Asmi', id: 4 },
-    { name: 'Khushboo', id: 5 }
-  ];
+  assigneeList: ProfileModel[] = [];
 
-  constructor() {}
+  constructor(
+    private taskService: TodoListService,
+    private profileService: ProfileService,
+    private storeService: StoreService,
+    private calendarService: MyCalendarService
+  ) {}
 
   ngOnInit(): void {
     this.getCalendarList();
+    this.fetchAssingeeList();
   }
   closeEditMode() {
+    this.data[this.taskIndex].calendarId = this.data[
+      this.taskIndex
+    ].calendar?.calendarId;
+    this.data[this.taskIndex].color = this.data[this.taskIndex].calendar?.color;
     this.closeEmitter.emit(null);
   }
 
+  fetchAssingeeList() {
+    this.profileService
+      .getAllProfile(this.storeService.loggedInUser.id)
+      .subscribe((response) => {
+        this.assigneeList = response;
+      });
+  }
   getCalendarList() {
-    this.calendarList.push({
-      name: 'Personal',
-      id: '1',
-      color: {
-        primary: '#ad2121',
-        secondary: '#FAE3E3',
-      },
-    });
-    this.calendarList.push({
-      name: 'Work',
-      id: '2',
-      color: {
-        primary: '#1e91DF',
-        secondary: '#D1E8FF',
-      },
-    });
-    this.calendarList.push({
-      name: 'College',
-      id: '3',
-      color: {
-        primary: '#1e90DF',
-        secondary: '#D1E8CF',
-      },
-    });
-    if (this.data[this.taskIndex].calendar?.length > 0) {
-      this.selectedCalendar.setValue(this.data[this.taskIndex].calendar);
-    }
+    this.calendarService
+      .getAllCalendars(this.storeService.loggedInUser.id)
+      .subscribe((response) => {
+        this.calendarList = response;
+      });
   }
   removeTask() {
+    this.taskService.deleteTask(this.data[this.taskIndex].id).subscribe(
+      () => {},
+      (error) => {}
+    );
     this.data.splice(this.taskIndex, 1);
-    this.closeEmitter.emit(null);
+    this.closeEmitter.emit('remove');
   }
-  updateSelectedCalendar() {
-    this.data[this.taskIndex].calendar = this.selectedCalendar.value;
-    this.data[this.taskIndex].color = this.selectedCalendar.value.color;
+  compareCalendars(c1: any, c2: any) {
+    return c1 && c2 ? c1.calendarId === c2.calendarId : c1 === c2;
   }
-  selectSavedValues(c1: any, c2: any) {
-    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  compareAssignees(a1: any, a2: any) {
+    return a1 && a2 ? a1.profileId === a2.profileId : a1 === a2;
   }
 }

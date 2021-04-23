@@ -50,18 +50,33 @@ import {
 } from '@angular-material-components/color-picker';
 import { ColorCircleModule } from 'ngx-color/circle';
 import { NgxColorsModule } from 'ngx-colors';
-import { CreateEventComponent } from './create-event/create-event.component';
+import {
+  CreateEventComponent,
+  CustomDateFormat1,
+  CustomDateFormat2,
+} from './create-event/create-event.component';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
   NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DragAndDropModule } from 'angular-draggable-droppable';
+import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
+import { CalendarControlComponent } from './core/calendar-control/calendar-control.component';
+import { EventDetailsDialogComponent } from './core/home-screen/event-details-dialog/event-details-dialog.component';
+import { ViewModeDirective } from './core/home-screen/ViewModeDirective';
+import { EditModeDirective } from './core/home-screen/EditModeDirective';
+import { MoreEventsDialogComponent } from './more-events-dialog/more-events-dialog.component';
+import { UserAccountComponent } from './user-account/user-account.component';
+import { AgendaComponent } from './core/home-screen/agenda/agenda.component';
+import { ConfirmationDialogComponent } from './core/confirmation-dialog/confirmation-dialog.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -82,6 +97,16 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
     EditTaskComponent,
     AddProfileComponent,
     CreateEventComponent,
+    CustomDateFormat1,
+    CustomDateFormat2,
+    CalendarControlComponent,
+    EventDetailsDialogComponent,
+    ViewModeDirective,
+    EditModeDirective,
+    MoreEventsDialogComponent,
+    UserAccountComponent,
+    AgendaComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -125,6 +150,10 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
     FontAwesomeModule,
     DragDropModule,
     DragAndDropModule,
+    NgxMatMomentModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    NgbModule,
   ],
   providers: [
     {

@@ -3,13 +3,14 @@ package com.morganizer.dto;
 public class ProfileRequest {
 
     private long userId;
-    private long profileId;
+    private Long profileId;
     private String name;
     private String email;
     private String gender;
     private String phoneNumber;
     private String birthdate;
     private String color;
+    private boolean selected;
     
     
     public ProfileRequest() {
@@ -20,17 +21,17 @@ public class ProfileRequest {
         this.profileId = profileId;
     }
     
-    public ProfileRequest(long userId, long profileId, String name, String email, String gender, String phoneNumber,
-			String birthdate, String color) {
+    public ProfileRequest(long userId, String name, String email, String gender, String phoneNumber, String birthdate,
+			String color, boolean selected) {
 		super();
 		this.userId = userId;
-		this.profileId = profileId;
 		this.name = name;
 		this.email = email;
 		this.gender = gender;
 		this.phoneNumber = phoneNumber;
 		this.birthdate = birthdate;
 		this.color = color;
+		this.selected = selected;
 	}
 	public String getColor() {
 		return color;
@@ -42,7 +43,7 @@ public class ProfileRequest {
         return userId;
     }
 
-    public long getProfileId() {
+    public Long getProfileId() {
         return profileId;
     }
 
@@ -50,7 +51,7 @@ public class ProfileRequest {
         this.userId = userId;
     }
 
-    public void setProfileId(long profileId) {
+    public void setProfileId(Long profileId) {
         this.profileId = profileId;
     }
 
@@ -92,6 +93,12 @@ public class ProfileRequest {
 
 	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
+	}
+	public boolean isSelected() {
+		return selected;
+	}
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 	
 	

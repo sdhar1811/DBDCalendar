@@ -2,7 +2,61 @@ ul {
   list-style-type: none;
 }
 
-::ng-deep .mat-checkbox-checked .mat-checkbox-background,
-.mat-checkbox-indeterminate .mat-checkbox-background {
-  background-color: rgb(247, 75, 75) !important;
+// ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+// .mat-checkbox-indeterminate .mat-checkbox-background {
+//   background-color:inherit!important;
+// }
+
+::ng-deep .switch.checked {
+  background: #A9A9A9;
+  //background: rgba(black, 0.2);
+}
+::ng-deep .switch.switch-small {
+  height: 14px;
+  min-width: 24px;
+}
+::ng-deep .switch.switch-small small {
+  width: 13px;
+  height: 13px;
+  right: calc(100% - 13px);
+}
+::ng-deep .switch.checked small {
+  right: 0;
+  left: auto;
+}
+.delete-icon {
+  margin-top: 5px;
+  cursor: pointer;
+  color: gray;
+}
+
+.more-options-icon {
+  margin-top: 5px;
+  cursor: pointer;
+  color: gray;
+}
+
+.create-event-btn {
+  border-radius: 25px;
+}
+.expanded-profile-panel {
+  height: 36%;
+  overflow: auto;
+}
+.expanded-calendar-panel {
+  height: 60%;
+  overflow: auto;
+}
+
+@media all and (min-width: 768px) {
+  tr  {
+    td {
+      vertical-align: middle !important;
+    }
+    span {
+      &:not([class]) {
+        padding: 0.5rem 0.5rem;
+      }
+    }
+  }
 }

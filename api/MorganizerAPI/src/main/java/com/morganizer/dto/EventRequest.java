@@ -1,5 +1,7 @@
 package com.morganizer.dto;
 
+import java.util.List;
+
 public class EventRequest {
 
 	private long userId;
@@ -10,13 +12,15 @@ public class EventRequest {
 	private String endTime;
 	private String location;
 	private String description;
-	private String reminder;
 	private String notificationType;
 	private long recurringModeId;
-	private String[] participant;
+	private List<ProfileResponse> assigneeList;
 	private String lastUpdateOn;
-	private String color;
-
+//	private String color;
+	private List<Long> reminderList;
+	private long calendarId;
+	private boolean allDayEvent;
+	private CalendarResponse calendar;
 	
 	public EventRequest() {
 		
@@ -25,10 +29,10 @@ public class EventRequest {
 		this.userId = userId;
 		this.eventId = eventId;
 	}
-
+	
 	public EventRequest(long userId, long eventId, String title, String category, String startTime, String endTime,
-			String location, String description, String reminder, String notificationType, long recurringMode,
-			String[] participant, String lastUpdateOn, String color) {
+			String location, String description, String notificationType, long recurringModeId, List<ProfileResponse> assigneeList,
+			String lastUpdateOn, List<Long> reminderList,long calendarId, boolean allDayEvent,CalendarResponse calendar) {
 		super();
 		this.userId = userId;
 		this.eventId = eventId;
@@ -38,14 +42,17 @@ public class EventRequest {
 		this.endTime = endTime;
 		this.location = location;
 		this.description = description;
-		this.reminder = reminder;
 		this.notificationType = notificationType;
-		this.recurringModeId = recurringMode;
-		this.participant = participant;
+		this.recurringModeId = recurringModeId;
+		this.assigneeList = assigneeList;
 		this.lastUpdateOn = lastUpdateOn;
-		this.color = color;
+//		this.color = color;
+		this.reminderList = reminderList;
+		this.calendarId = calendarId;
+		this.allDayEvent = allDayEvent;
+		this.calendar=calendar;
 	}
-
+		
 	public long getRecurringModeId() {
 		return recurringModeId == 0 ? 1 : recurringModeId;
 	}
@@ -102,14 +109,14 @@ public class EventRequest {
 		this.description = description;
 	}
 
-	public String getReminder() {
-		return reminder;
+	public List<Long> getReminderList() {
+		return reminderList;
 	}
-
-	public void setReminder(String reminder) {
-		this.reminder = reminder;
+	
+	public void setReminderList(List<Long> reminderList) {
+		this.reminderList = reminderList;
 	}
-
+	
 	public String getNotificationType() {
 		return notificationType;
 	}
@@ -134,12 +141,12 @@ public class EventRequest {
 		this.eventId = eventId;
 	}
 
-	public String[] getParticipant() {
-		return participant;
+	
+	public List<ProfileResponse> getAssigneeList() {
+		return assigneeList;
 	}
-
-	public void setParticipant(String[] participant) {
-		this.participant = participant;
+	public void setAssigneeList(List<ProfileResponse> assigneeList) {
+		this.assigneeList = assigneeList;
 	}
 
 	public String getLastUpdateOn() {
@@ -150,13 +157,33 @@ public class EventRequest {
 		this.lastUpdateOn = lastUpdateOn;
 	}
 	
-	public String getColor() {
-		return color;
+//	public String getColor() {
+//		return color;
+//	}
+//	public void setColor(String color) {
+//		this.color = color;
+//	}
+	
+	public long getCalendarId() {
+		return calendarId;
 	}
-	public void setColor(String color) {
-		this.color = color;
+	public void setCalendarId(long calendarId) {
+		this.calendarId = calendarId;
+	}
+	public boolean isAllDayEvent() {
+		return allDayEvent;
+	}
+	public void setAllDayEvent(boolean allDayEvent) {
+		this.allDayEvent = allDayEvent;
+	}
+	public CalendarResponse getCalendar() {
+		return calendar;
+	}
+	public void setCalendar(CalendarResponse calendar) {
+		this.calendar = calendar;
 	}
 	
 	
-
+	
+	
 }

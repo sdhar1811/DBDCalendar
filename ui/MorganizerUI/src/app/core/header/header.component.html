@@ -1,8 +1,47 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button aria-label="menu icon">
+<mat-toolbar color="primary" style="font-size: large">
+  <div class="row" style="width: 100%">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 align-self-center">
+      <button mat-icon-button aria-label="menu icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="company-title">Morganized</span>
+    </div>
+    <div
+      *ngIf="loggedInUser"
+      class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 align-self-center"
+    >
+      <app-calendar-control></app-calendar-control>
+    </div>
+    <div
+      class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 align-self-center"
+      style="text-align: end"
+    >
+      <div *ngIf="loggedInUser">
+        <span>Hi, {{ loggedInUser.firstName }}</span>
+        <button
+          mat-icon-button
+          aria-label="user profile icon"
+          [matMenuTriggerFor]="menu"
+        >
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openAccountDialog()">Profile</button>
+          <button mat-menu-item (click)="logOut()">Sign Out</button>
+        </mat-menu>
+          <mat-icon
+          matTooltip="Create Tasks" 
+          class="material-icons md-24 task-icon align-self-center" style="cursor: pointer; text-align:end;padding-left: 22px; vertical-align:middle;margin-left: 20px; border-left: solid 2px;"
+          (click)=toggleTaskPanel()>sticky_note_2</mat-icon>
+      </div>
+    </div>
+  </div>
+  <!-- <button mat-icon-button aria-label="menu icon">
     <mat-icon>menu</mat-icon>
   </button>
   <span>Morganized</span>
+  <span class="toolbar-spacer"></span>
+  <app-calendar-control *ngIf="loggedInUser"></app-calendar-control>
   <span class="toolbar-spacer"></span>
   <div *ngIf="loggedInUser">
     <span>Hi, {{ loggedInUser.firstName }}</span>
@@ -17,12 +56,5 @@
       <button mat-menu-item>Profile</button>
       <button mat-menu-item (click)="logOut()">Sign Out</button>
     </mat-menu>
-  </div>
-  <!-- <button
-    mat-icon-button
-    aria-label="Example icon-button with share icon"
-    [routerLink]="['/login']"
-  >
-    <mat-icon>home</mat-icon>
-  </button> -->
+  </div> -->
 </mat-toolbar>

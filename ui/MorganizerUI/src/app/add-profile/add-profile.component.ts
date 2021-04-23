@@ -1,5 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ProfileModel } from '../services/model/profile-model';
+import { ProfileService } from '../services/profile.service';
+import { LeftPanelComponent } from '../core/home-screen/left-panel/left-panel.component';
+import { StoreService } from '../services/store.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-profile',
@@ -19,7 +24,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
 })
 export class AddProfileComponent implements OnInit {
-  state = { hex: '#f44336' };
+  editFlag: boolean = false;
   color: any = '#673ab7';
   colorPalette: Array<string> = [
     '#f44336',
@@ -28,12 +33,12 @@ export class AddProfileComponent implements OnInit {
     '#673ab7',
     '#3f51b5',
     '#2196f3',
-    '#03a9f4',
-    '#00bcd4',
+    //     '#03a9f4',
+    //     '#00bcd4',
     '#009688',
     '#4caf50',
-    '#8bc34a',
-    '#cddc39',
+    //     '#8bc34a',
+    //     '#cddc39',
     '#ffeb3b',
     '#ffc107',
     '#ff9800',
@@ -41,16 +46,38 @@ export class AddProfileComponent implements OnInit {
     '#795548',
     '#607d8b',
   ];
-  @Output() closeTaskPanel = new EventEmitter();
 
-  constructor() {}
+  constructor(
+    private dialogRef: MatDialogRef<AddProfileComponent>,
+    private profileService: ProfileService,
+    private storeService: StoreService,
+    @Inject(MAT_DIALOG_DATA) public profileModel
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.editFlag = this.profileModel.name == undefined ? false : true;
 
-  changeComplete(event) {
-    // this.state.hex = event.color.hex;
+    let letters = '0123456789ABCDEF';
+    let randomcolor = '#';
+    for (var i = 0; i < 6; i++) {
+      randomcolor += letters[Math.floor(Math.random() * 16)];
+    }
+    if (!this.editFlag) {
+      this.profileModel.color = randomcolor;
+    }
   }
   close() {
-    this.closeTaskPanel.emit(null);
+    this.dialogRef.close();
+  }
+
+  addProfile() {
+    this.profileModel.userId = this.storeService.loggedInUser?.id;
+    this.profileService
+      .addProfile(this.profileModel)
+      .subscribe((response: ProfileModel) => {
+        //set all fields of profileModel to '' or undefined or null
+        this.profileService.addProfileEvent.next(response);
+        this.close();
+      });
   }
 }

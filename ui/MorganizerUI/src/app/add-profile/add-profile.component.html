@@ -1,4 +1,4 @@
-<mat-card [@addprofileInOutAnimation] class="addprofile-panel">
+<div [@addprofileInOutAnimation] class="addprofile-panel">
   <div class="flex-vertical">
     <div
       class="row justify-content-between"
@@ -9,28 +9,33 @@
         color: gray;
       "
     >
-      <div class="col-md-10">Add Profile</div>
+      <div class="col-md-10" *ngIf="!editFlag">Add Profile</div>
+      <div class="col-md-10" *ngIf="editFlag">Edit Profile</div>
       <div class="col-md-2" class="task-panel-close">
         <mat-icon
           (click)="close()"
-          matTooltip="Close Tasks"
+          matTooltip="Close"
           class="material-icons md-18"
           >close</mat-icon
         >
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-10">
-        <mat-form-field appearance="outline">
+    <div style="width: 100%; display: flex">
+      <div style="width: 90%">
+        <mat-form-field appearance="outline" style="width: 95%">
           <mat-label>Name</mat-label>
-          <input matInput required placeholder="Enter name" />
+          <input
+            matInput
+            placeholder="Enter name"
+            [(ngModel)]="profileModel.name"
+          />
         </mat-form-field>
       </div>
-      <div class="col-md-2">
+      <div style="width: 10%; text-align: center; position: relative; top: 8px">
         <div>
           <ngx-colors
             ngx-colors-trigger
-            [(ngModel)]="color"
+            [(ngModel)]="profileModel.color"
             [palette]="colorPalette"
             [hideTextInput]="'true'"
             [hideColorPicker]="'false'"
@@ -42,7 +47,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Gender</mat-label>
-      <mat-select>
+      <mat-select [(ngModel)]="profileModel.gender">
         <mat-option value="male">Male</mat-option>
         <mat-option value="female">Female</mat-option>
         <mat-option value="other">Other</mat-option>
@@ -51,17 +56,29 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Email ID</mat-label>
-      <input matInput required placeholder="Enter your email ID" />
+      <input
+        matInput
+        placeholder="Enter your email ID"
+        [(ngModel)]="profileModel.email"
+      />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Phone Number</mat-label>
-      <input required matInput placeholder="Enter your phone number" />
+      <input
+        matInput
+        placeholder="Enter your phone number"
+        [(ngModel)]="profileModel.phoneNumber"
+      />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Date of Birth</mat-label>
-      <input matInput required [matDatepicker]="datepicker" />
+      <input
+        matInput
+        [matDatepicker]="datepicker"
+        [(ngModel)]="profileModel.birthdate"
+      />
       <mat-datepicker-toggle
         matSuffix
         [for]="datepicker"
@@ -76,8 +93,25 @@
       </mat-datepicker>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" style="margin: 0.5em;">
-      Add Profile
-    </button>
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin: 0.5em"
+        (click)="close()"
+      >
+        Cancel
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin: 0.5em"
+        (click)="addProfile()"
+      >
+        <span *ngIf="!editFlag">Create Profile</span>
+        <span *ngIf="editFlag">Update Profile</span>
+      </button>
+    </div>
   </div>
-</mat-card>
+</div>

@@ -1,9 +1,9 @@
 <div [@todoInOutAnimation]>
-  <div style="border-bottom: solid #d1d1d1; border-bottom-width: 2px;">
+  <div style="border-bottom: solid #d1d1d1; border-bottom-width: 2px">
     <div class="row">
       <div class="col-md-2">
         <mat-icon
-          style="cursor: pointer; color: gray;"
+          style="cursor: pointer; color: gray"
           matRipple
           matTooltip="Back"
           [matTooltipPosition]="'right'"
@@ -13,12 +13,12 @@
           >keyboard_arrow_left</mat-icon
         >
       </div>
-      <div class="col-md-8" style="text-align: center; color: gray;">
+      <div class="col-md-8" style="text-align: center; color: gray">
         <mat-label>Edit Task</mat-label>
       </div>
       <div class="col-md-2">
         <mat-icon
-          style="float: right;"
+          style="float: right"
           matTooltip="Delete Task"
           class="material-icons md-18 delete-task"
           (click)="removeTask()"
@@ -27,8 +27,8 @@
       </div>
     </div>
   </div>
-  <div class="flex-vertical" style="margin-top: 10px; margin-left: 10px;">
-    <mat-form-field appearance="outline" style="width: 100%;">
+  <div class="flex-vertical" style="margin-top: 10px; margin-left: 10px">
+    <mat-form-field appearance="outline" style="width: 100%">
       <mat-label>Title</mat-label>
       <input
         matInput
@@ -36,7 +36,7 @@
         placeholder="Enter title"
       />
     </mat-form-field>
-    <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-form-field appearance="outline" style="width: 100%">
       <mat-label>Task Details</mat-label>
       <textarea
         matInput
@@ -47,28 +47,32 @@
         placeholder="Add details"
       ></textarea>
     </mat-form-field>
-    <mat-form-field appearance="outline" style="width: 100%;">
+    <!-- <mat-form-field appearance="outline" style="width: 100%">
       <mat-label>Calendar</mat-label>
       <mat-select
-        [formControl]="selectedCalendar"
-        [compareWith]="selectSavedValues"
-        (selectionChange)="updateSelectedCalendar()"
+        [compareWith]="compareCalendars"
+        [(ngModel)]="data[taskIndex].calendar"
       >
         <mat-option *ngFor="let calendar of calendarList" [value]="calendar">{{
           calendar.name
         }}</mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
 
-    <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-form-field appearance="outline" style="width: 100%">
       <input
-        [(ngModel)]="data[taskIndex].duedate"
+        [(ngModel)]="data[taskIndex].dueDate"
         matInput
         [ngxMatDatetimePicker]="picker"
         placeholder="Due date and time"
       />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #picker>
+      <ngx-mat-datetime-picker
+        #picker
+        [enableMeridian]="enableMeridian"
+        [stepMinute]="15"
+        [defaultTime]="defaultTime"
+      >
         <!-- Custom icon or text of Apply icon -->
         <ng-template>
           <!-- <mat-icon>star</mat-icon> -->
@@ -77,14 +81,17 @@
       </ngx-mat-datetime-picker>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-form-field appearance="outline" style="width: 100%">
       <mat-label>Assignee</mat-label>
-      <mat-select multiple>
+      <mat-select
+        [compareWith]="compareAssignees"
+        multiple
+        [(ngModel)]="data[taskIndex].assigneeList"
+      >
         <mat-option *ngFor="let person of assigneeList" [value]="person">{{
           person.name
         }}</mat-option>
       </mat-select>
     </mat-form-field>
-
   </div>
 </div>

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity(name = "login_cred")
 public class UserCredentials {
@@ -19,8 +21,12 @@ public class UserCredentials {
 	
 	private String email;
 	
+	@ManyToOne
+    @JoinColumn(name="question_id",referencedColumnName="questionid")
+    private ResetQuestionsEntity question;
 	
-
+	String answer;
+	
 	public UserCredentials() {
 		
 	}
@@ -30,6 +36,31 @@ public class UserCredentials {
 		this.hash = hash;
 		this.salt = salt;
 		this.email = email;
+	}
+	
+	
+
+	public UserCredentials(long id, String username, String hash, String salt, String email,
+			ResetQuestionsEntity question, String answer) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.hash = hash;
+		this.salt = salt;
+		this.email = email;
+		this.question = question;
+		this.answer = answer;
+	}
+
+	public UserCredentials(String username, String hash, String salt, String email, ResetQuestionsEntity question,
+			String answer) {
+		super();
+		this.username = username;
+		this.hash = hash;
+		this.salt = salt;
+		this.email = email;
+		this.question = question;
+		this.answer = answer;
 	}
 
 	public String getUsername() {
@@ -63,4 +94,22 @@ public class UserCredentials {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public ResetQuestionsEntity getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(ResetQuestionsEntity question) {
+		this.question = question;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+	
+	
 }

@@ -1,37 +1,30 @@
-package com.morganizer.entity;
+package com.morganizer.dto;
 
 import java.sql.Timestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
-// TO-DO
-@Entity(name="todo_items")
-public class ItemEntity {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+import com.morganizer.entity.TaskEntity;
+
+public class TaskItemRequest {
+
 	private long id;
 	private String description;
 	private String title;
 	private Timestamp duedate;
 	private String repeatType;
 	private boolean complete;
+	private int task_id;
 	
-	@ManyToOne
-	@JoinColumn(name = "task_id", referencedColumnName = "id")
-	private TaskEntity task;
-	
-	
-	
-	public TaskEntity getTask() {
-		return task;
-	}
-	public void setTask(TaskEntity task) {
-		this.task = task;
+	public TaskItemRequest(long id, String description, String title, Timestamp duedate, String repeatType,
+			boolean complete, int task_id) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.title = title;
+		this.duedate = duedate;
+		this.repeatType = repeatType;
+		this.complete = complete;
+		this.task_id = task_id;
 	}
 	
 	public long getId() {
@@ -71,8 +64,11 @@ public class ItemEntity {
 		this.complete = complete;
 	}
 	
-	
-	
-	
+	public int getTask_id() {
+		return task_id;
+	}
+	public void setTask_id(int task_id) {
+		this.task_id = task_id;
+	}
 	
 }

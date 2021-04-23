@@ -1,6 +1,10 @@
 package com.morganizer.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.morganizer.dto.EventRequest;
-import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.NotificationTypesEntity;
 import com.morganizer.entity.RecurringModeEntity;
 import com.morganizer.service.EventService;
@@ -24,13 +27,12 @@ import com.morganizer.service.EventService;
 public class EventController {
     @Autowired
     EventService eventService;
-	
 	@DeleteMapping("/remove/{eventId}")
     public void deleteEvent(@PathVariable Long eventId) {
 		eventService.deleteEvent(eventId);
     }
-	
-    @GetMapping("/notification/types")
+
+	@GetMapping("/notification/types")
     public List<NotificationTypesEntity> getNotificationType() {
         return eventService.getNotificationType();
     }
@@ -44,14 +46,20 @@ public class EventController {
     public List<EventRequest> fetchAllEvents(@PathVariable Long userId){
 	    return eventService.fetchAllEvents(userId);
     }
-    
+
+//    @GetMapping("/fetchEventCategories")
+//    public List<EventCategoriesEntity> fetchEventCategories() {
+//        return eventService.fetchEventCategories();
+//    }
+
     @PostMapping("/add")
-    public EventRequest addEvent(@RequestBody EventRequest eventRequest) {
-    	return eventService.addEvent(eventRequest);
+    public EventRequest addEvent(@RequestBody EventRequest eventRequest) throws AddressException, MessagingException, IOException {
+    	return eventService.saveEvent(eventRequest);
     }
     
     @PostMapping("/update")
-    public EventRequest updateEvent(@RequestBody EventRequest eventRequest) {
-    	return eventService.updateEvent(eventRequest);
+    public EventRequest updateEvent(@RequestBody EventRequest eventRequest) throws AddressException, MessagingException, IOException {
+    	return eventService.saveEvent(eventRequest);
     }
+    
 }

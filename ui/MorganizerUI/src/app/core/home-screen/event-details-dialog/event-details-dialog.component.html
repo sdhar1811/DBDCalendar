@@ -1,0 +1,98 @@
+<div class="container">
+  <div class="d-flex flex-row-reverse">
+    <div class="p-2">
+      <mat-icon
+        class="material-icons md-18"
+        style="cursor: pointer"
+        matTooltip="Close"
+        (click)="closeDialog()"
+        >close</mat-icon
+      >
+    </div>
+    <div class="p-2">
+      <mat-icon
+        class="material-icons md-18"
+        style="cursor: pointer"
+        matTooltip="Delete Event"
+        (click)="editEvent('Deleted')"
+        >delete</mat-icon
+      >
+    </div>
+    <div class="p-2">
+      <mat-icon
+        class="material-icons md-18"
+        style="cursor: pointer"
+        matTooltip="Edit Event"
+        (click)="editEvent('Edited')"
+        >mode</mat-icon
+      >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-10 event-title">
+      <div class="title">{{ event.title }}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-10">
+      <span class="event-duration"
+        >{{ event.start | date }},{{ event.start | date: "hh:mm aa" }} -
+        {{ event.end | date }},{{ event.end | date: "hh:mm aa" }}</span
+      >
+    </div>
+  </div>
+  <div
+    class="row"
+    *ngIf="
+      event.meta.eventModel.assigneeList &&
+      event.meta.eventModel.assigneeList.length > 0
+    "
+  >
+    <div class="col-md-2">
+      <mat-icon class=".material-icons.md-18">people</mat-icon>
+    </div>
+    <div class="col-md-10">
+      <span
+        *ngFor="let assignee of event.assigneeList"
+        class="cell-profile-dot mat-elevation-z2"
+        [style.background]="assignee.color"
+        matTooltip="{{ assignee.name }}"
+      ></span>
+    </div>
+  </div>
+  <div class="row" *ngIf="event.meta.eventModel.location">
+    <div class="col-md-2">
+      <mat-icon class="material-icons md-18"> place </mat-icon>
+    </div>
+    <div class="col-md-10">
+      <div>{{ event.meta.eventModel.location }}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <mat-icon class="material-icons md-18"> event </mat-icon>
+    </div>
+    <div class="col-md-10">
+      <div>{{ event.meta.eventModel.calendar.name }}</div>
+    </div>
+  </div>
+  <div class="row" *ngIf="event.meta.eventModel.description">
+    <div class="col-md-2">
+      <mat-icon class="material-icons md-18"> notes </mat-icon>
+    </div>
+    <div class="col-md-10">
+      <div>{{ event.meta.eventModel.description }}</div>
+    </div>
+  </div>
+  <!-- Display only if all Day event/ Recurring Event-->
+  <div class="row" *ngIf="event.meta.eventModel.recurringModeId!=1">
+    <div class="col-md-2">
+      <mat-icon class="material-icons md-18"> loop </mat-icon>
+    </div>
+    <div class="col-md-10">
+      <div>{{ recurringEventsArr[event.meta.eventModel.recurringModeId] }}</div>
+    </div>
+  </div>
+</div>
