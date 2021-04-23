@@ -137,7 +137,7 @@ public class EventService {
 		
 		EmailSenderUtil.sendmail(event, alertType);
 		
-		tsms.sendSms(event, alertType);
+		//tsms.sendSms(event, alertType);
 		
 		return new EventRequest(savedEntity.getUser().getId(), savedEntity.getId(), savedEntity.getEventTitle(), null,
 				savedEntity.getStartTime().toString(), savedEntity.getEndTime().toString(), savedEntity.getLocation(),
