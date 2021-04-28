@@ -18,14 +18,19 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
+import com.morganizer.MorganizerApiApplication;
 import com.morganizer.entity.EventDetailsEntity;
 import com.morganizer.entity.ProfileEntity;
 
 @Configuration
 public class EmailSenderUtil 
+
 {
+	private static final org.slf4j.Logger log = LoggerFactory.getLogger(EmailSenderUtil.class);
+	
 	public static void sendmail(EventDetailsEntity event, String alertType) throws AddressException, MessagingException, IOException {
 		
 		List<String> recipientEmails = new ArrayList<String>();
@@ -95,7 +100,11 @@ public class EmailSenderUtil
 		multipart.addBodyPart(messageBodyPart);
 		
 		msg.setContent(multipart);
+		try {
 		Transport.send(msg);
+		}catch(Exception ex) {
+			log.warn(ex.getMessage());
+		}
 		
 	}
 }
