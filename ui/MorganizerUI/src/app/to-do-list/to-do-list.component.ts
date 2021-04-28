@@ -99,6 +99,10 @@ export class ToDoListComponent implements OnInit {
                 task.title = taskResponse.title;
                 task.todoListId = taskResponse.todoListId;
                 task.userId = this.storeService.loggedInUser.id;
+                let defaultCal = new MyCalendarModel();
+                defaultCal.calendarId = this.storeService.loggedInUser?.defaultCalendarId;
+                task.calendar = defaultCal;
+
                 if (task.complete) {
                   this.completedTaskList.push(task);
                 } else {
@@ -153,26 +157,9 @@ export class ToDoListComponent implements OnInit {
     task.todoListId = this.selectedTodoList.value.id;
     this.selectedTodoList.value.tasks.push(task);
 
-    //task.calendarId = default calendar ID
     let defaultCal = new MyCalendarModel();
     defaultCal.calendarId = this.storeService.loggedInUser?.defaultCalendarId;
     task.calendar = defaultCal;
-    //task.calendar = this.storeService.defaultCalendar;
-    //TODO:set default calendar here
-
-    // this.tasks.push(
-    //   // title: this.taskTitle,
-    //   // description: null,
-    //   // calendar: {},
-    //   // color: undefined,
-    //   // complete: false,
-    //   // draggable: true,
-    //   // start: new Date(),
-    //   // dueDate: endOfToday(),
-    //   // userId: this.storeService.loggedInUser?.id,
-    //   // todoListId: this.selectedTodoList.value.id,
-    //   task
-    // );
     this.updateTask(task);
     this.taskTitle = '';
   }
